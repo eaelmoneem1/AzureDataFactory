@@ -1,0 +1,1986 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory Name",
+			"defaultValue": "p21d19901010001"
+		},
+		"Booking_Actuals_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "@concat ('CM_Bookings_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"Booking_Actuals_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "CEOCFO/Sales"
+		},
+		"Booking_Current_Actuals_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "ELT 9April19_Booking_Current_Actuals.csv"
+		},
+		"Booking_Current_Actuals_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "Sales"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"structure": [
+					{
+						"name": "id",
+						"type": "String"
+					},
+					{
+						"name": "Name",
+						"type": "String"
+					},
+					{
+						"name": "CreatedDate",
+						"type": "String"
+					},
+					{
+						"name": "LastModifiedDate",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[Sales_SFDC_Campaign]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable10')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"typeProperties": {
+					"tableName": "[[dbo].[test]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable11')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Opportunity_18chr_Id",
+						"type": "varchar"
+					},
+					{
+						"name": "Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Opportunity_Number",
+						"type": "varchar"
+					},
+					{
+						"name": "AccountId",
+						"type": "varchar"
+					},
+					{
+						"name": "Sales_Region_FY07",
+						"type": "varchar"
+					},
+					{
+						"name": "Status",
+						"type": "varchar"
+					},
+					{
+						"name": "StageName",
+						"type": "varchar"
+					},
+					{
+						"name": "Probability",
+						"type": "varchar"
+					},
+					{
+						"name": "Date_opportunity_moved_to_SS2",
+						"type": "varchar"
+					},
+					{
+						"name": "Date_opportunity_moved_to_SS4",
+						"type": "varchar"
+					},
+					{
+						"name": "ILF_CommValue_CSH",
+						"type": "varchar"
+					},
+					{
+						"name": "ACV_ACV_Equiv_CSH",
+						"type": "varchar"
+					},
+					{
+						"name": "IST_Rep",
+						"type": "varchar"
+					},
+					{
+						"name": "CreatedDate",
+						"type": "date"
+					},
+					{
+						"name": "LastModifiedDate",
+						"type": "date"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[V_Marketing_SFDC_Opportunity]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable12')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Lead_18chr_Id",
+						"type": "varchar"
+					},
+					{
+						"name": "MQL_Datestamp",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "MTL_Datestamp",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "SQL_Datestamp",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Status",
+						"type": "varchar"
+					},
+					{
+						"name": "Company",
+						"type": "varchar"
+					},
+					{
+						"name": "Lead_Country",
+						"type": "varchar"
+					},
+					{
+						"name": "Title",
+						"type": "varchar"
+					},
+					{
+						"name": "FirstName",
+						"type": "varchar"
+					},
+					{
+						"name": "LastName",
+						"type": "varchar"
+					},
+					{
+						"name": "Email",
+						"type": "varchar"
+					},
+					{
+						"name": "MQL_Program",
+						"type": "varchar"
+					},
+					{
+						"name": "Qualified_Out_Reason",
+						"type": "varchar"
+					},
+					{
+						"name": "Status_Reason",
+						"type": "varchar"
+					},
+					{
+						"name": "Sales_Region",
+						"type": "varchar"
+					},
+					{
+						"name": "Sub_Region",
+						"type": "varchar"
+					},
+					{
+						"name": "ConvertedAccountId",
+						"type": "varchar"
+					},
+					{
+						"name": "ConvertedContactId",
+						"type": "varchar"
+					},
+					{
+						"name": "ConvertedOpportunityId",
+						"type": "varchar"
+					},
+					{
+						"name": "CreatedDate",
+						"type": "date"
+					},
+					{
+						"name": "Owner_ID",
+						"type": "varchar"
+					},
+					{
+						"name": "LastModifiedDate",
+						"type": "date"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[V_Marketing_SFDC_Lead]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable13')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "AccountId",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ContactId18__c",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Contact_Name__c",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Contact_Type__c",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CreatedDate",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Salutation",
+						"type": "nvarchar"
+					},
+					{
+						"name": "FirstName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "LastName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Title",
+						"type": "nvarchar"
+					},
+					{
+						"name": "LeadSource",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Email",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Owner_ID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "LastModifiedDate",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Rec_CRE_TMS",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[Marketing_SFDC_Contact]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable14')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Account_18chr_Id",
+						"type": "varchar"
+					},
+					{
+						"name": "Account_Number",
+						"type": "varchar"
+					},
+					{
+						"name": "Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Owner_ID",
+						"type": "varchar"
+					},
+					{
+						"name": "Country",
+						"type": "varchar"
+					},
+					{
+						"name": "CreatedDate",
+						"type": "date"
+					},
+					{
+						"name": "LastModifiedDate",
+						"type": "date"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[V_Marketing_SFDC_Account]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable15')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "FiscalYear",
+						"type": "varchar"
+					},
+					{
+						"name": "Category",
+						"type": "varchar"
+					},
+					{
+						"name": "Target",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[V_Marketing_Targets]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable16')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Account_Name",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[V_Marketing_lkp_TAMlist]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable17')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"tableName": "[[STG].[V_Marketing_lkp_Country]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"typeProperties": {
+					"tableName": "[[STG].[Sales_SFDC_Booking]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable3')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"typeProperties": {
+					"tableName": "[[STG].[Sales_SFDC_Booking]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable4')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"structure": [
+					{
+						"name": "id",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Name",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Ownerid",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "owner_name",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Owner_Sub_Region_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "CloseDate",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "StageName",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Deal_Type_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "MainProduct_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "OpportunityHEALTH_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "RLF_percent_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Regional_Sales_Manager_Comments_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Accountid",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Account_Name",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Opportunity_18chr_Id_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Amount",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Order_Number_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Sales_Region_FY07_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Pricing_Country_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Misys_Forecast_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Term_Estimate_Months_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Commercial_Prop_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "ILF_Amount_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Total_ILF_In_Qtr_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Accretive_RLF_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "RLF_Amount_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "PS_Amount_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "ASP_Amount_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "TCV_CSH_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "ACV_ACV_Equiv_CSH_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Strength_of_Sale_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Global_Account_Manager_Comments_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Executive_Sponsor_alignment_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Next_Step_Due_Date_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "NextStep",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Approval_Status_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "sbaa_ApprovalStatus_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Term_CSH_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Deal_Category_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Service_Type_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Service_Sub_Type_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Campaignid",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Opportunity_Partner_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Original_Opportunity_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "RecordTypeid",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "RecordType_Name",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "LastModifiedDate",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "CreatedDate",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Existing_RLF_Currency_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "CurrencyIsoCode",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "SBU_Strategic_Business_Unit_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "FiscalPeriod_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Rec_CRE_TMS",
+						"type": "DateTime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[Sales_SFDC_Booking]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable5')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"structure": [
+					{
+						"name": "id",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Opportunity_18chr_Id_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Order_Number_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Name",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Ownerid",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "owner_name",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Opportunity_Partner_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "OpportunityHEALTH_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Original_Opportunity_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "CloseDate",
+						"type": "Date",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "StageName",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Deal_Type_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "MainProduct_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Sales_Region_FY07_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Regional_Sales_Manager_Comments_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Accountid",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Account_Name",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Executive_Sponsor_alignment_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Next_Step_Due_Date_c",
+						"type": "Date",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "NextStep",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Approval_Status_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "sbaa_ApprovalStatus_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Term_CSH_c",
+						"type": "Int32",
+						"precision": 10,
+						"scale": 255
+					},
+					{
+						"name": "Deal_Category_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Service_Type_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Service_Sub_Type_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Strength_of_Sale_c",
+						"type": "Int32",
+						"precision": 10,
+						"scale": 255
+					},
+					{
+						"name": "Global_Account_Manager_Comments_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Campaignid",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "CampaignName",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "RecordTypeid",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "RecordType_Name",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Pricing_Country_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "LastModifiedDate",
+						"type": "Date",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Term_Estimate_Months_c",
+						"type": "Decimal",
+						"precision": 10
+					},
+					{
+						"name": "Commercial_Prop_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "Misys_Forecast_c",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "RLF_Amount_c",
+						"type": "Decimal",
+						"precision": 32,
+						"scale": 2
+					},
+					{
+						"name": "Accretive_RLF_c",
+						"type": "Decimal",
+						"precision": 32,
+						"scale": 2
+					},
+					{
+						"name": "RLF_percent_c",
+						"type": "Decimal",
+						"precision": 3,
+						"scale": 2
+					},
+					{
+						"name": "PS_Amount_c",
+						"type": "Decimal",
+						"precision": 32,
+						"scale": 2
+					},
+					{
+						"name": "ASP_Amount_c",
+						"type": "Decimal",
+						"precision": 32,
+						"scale": 2
+					},
+					{
+						"name": "ILF_Amount_c",
+						"type": "Decimal",
+						"precision": 32,
+						"scale": 2
+					},
+					{
+						"name": "Total_ILF_Booking_Converted",
+						"type": "Decimal",
+						"precision": 32,
+						"scale": 2
+					},
+					{
+						"name": "Total_ILF_In_Qtr_c",
+						"type": "Decimal",
+						"precision": 32,
+						"scale": 2
+					},
+					{
+						"name": "Amount",
+						"type": "Decimal",
+						"precision": 32,
+						"scale": 2
+					},
+					{
+						"name": "TCV_CSH_c",
+						"type": "Decimal",
+						"precision": 32,
+						"scale": 2
+					},
+					{
+						"name": "ACV_ACV_Equiv_CSH_c",
+						"type": "Decimal",
+						"precision": 32,
+						"scale": 2
+					},
+					{
+						"name": "CurrencyIsoCode",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[INT].[FactSales_SFDC_Booking]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable6')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"structure": [
+					{
+						"name": "test",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					},
+					{
+						"name": "test2",
+						"type": "String",
+						"precision": 255,
+						"scale": 255
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[dbo].[test]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable7')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"typeProperties": {
+					"tableName": "[[dbo].[test]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable8')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"typeProperties": {
+					"tableName": "[[dbo].[test]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable9')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Booking_Actuals')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileShare",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "FileShare",
+				"structure": [
+					{
+						"name": "GL Period",
+						"type": "String"
+					},
+					{
+						"name": "TransID",
+						"type": "String"
+					},
+					{
+						"name": "Region",
+						"type": "String"
+					},
+					{
+						"name": "Softrax",
+						"type": "String"
+					},
+					{
+						"name": "Name",
+						"type": "String"
+					},
+					{
+						"name": "Sales Rep",
+						"type": "String"
+					},
+					{
+						"name": "LOB",
+						"type": "String"
+					},
+					{
+						"name": "Product",
+						"type": "String"
+					},
+					{
+						"name": "Booking ACV",
+						"type": "String"
+					},
+					{
+						"name": "Renewal ACV",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"rowDelimiter": "",
+						"quoteChar": "\"",
+						"nullValue": "",
+						"treatEmptyAsNull": true,
+						"skipLineCount": 0,
+						"firstRowAsHeader": true
+					},
+					"fileName": {
+						"value": "[parameters('Booking_Actuals_properties_typeProperties_fileName')]",
+						"type": "Expression"
+					},
+					"folderPath": "[parameters('Booking_Actuals_properties_typeProperties_folderPath')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Booking_Current_Actuals')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileShare",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "FileShare",
+				"structure": [
+					{
+						"name": "GL Period",
+						"type": "String"
+					},
+					{
+						"name": "TransID",
+						"type": "String"
+					},
+					{
+						"name": "Region",
+						"type": "String"
+					},
+					{
+						"name": "Softrax",
+						"type": "String"
+					},
+					{
+						"name": "Name",
+						"type": "String"
+					},
+					{
+						"name": "Sales Rep",
+						"type": "String"
+					},
+					{
+						"name": "LOB",
+						"type": "String"
+					},
+					{
+						"name": "Product",
+						"type": "String"
+					},
+					{
+						"name": "Booking ACV",
+						"type": "String"
+					},
+					{
+						"name": "Renewal ACV",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"rowDelimiter": "",
+						"quoteChar": "\"",
+						"nullValue": "",
+						"treatEmptyAsNull": true,
+						"skipLineCount": 0,
+						"firstRowAsHeader": true
+					},
+					"fileName": "[parameters('Booking_Current_Actuals_properties_typeProperties_fileName')]",
+					"folderPath": "[parameters('Booking_Current_Actuals_properties_typeProperties_folderPath')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CS_FF_NPS_Destination')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"structure": [
+					{
+						"name": "Start_Date",
+						"type": "String"
+					},
+					{
+						"name": "End_Date",
+						"type": "String"
+					},
+					{
+						"name": "Survey_Details",
+						"type": "String"
+					},
+					{
+						"name": "Contact_Name",
+						"type": "String"
+					},
+					{
+						"name": "Contact_Email",
+						"type": "String"
+					},
+					{
+						"name": "Contact_Record_ID",
+						"type": "String"
+					},
+					{
+						"name": "Company_ID",
+						"type": "String"
+					},
+					{
+						"name": "Company",
+						"type": "String"
+					},
+					{
+						"name": "Company_Country_Code",
+						"type": "String"
+					},
+					{
+						"name": "Company_Country",
+						"type": "String"
+					},
+					{
+						"name": "Company_Email",
+						"type": "String"
+					},
+					{
+						"name": "Region_Code",
+						"type": "String"
+					},
+					{
+						"name": "Region",
+						"type": "String"
+					},
+					{
+						"name": "Survey_Name",
+						"type": "String"
+					},
+					{
+						"name": "Invitation_Date",
+						"type": "String"
+					},
+					{
+						"name": "Survey_Language",
+						"type": "String"
+					},
+					{
+						"name": "Survey_Medium",
+						"type": "String"
+					},
+					{
+						"name": "Reminder1_Date",
+						"type": "String"
+					},
+					{
+						"name": "Reminder2_Date",
+						"type": "String"
+					},
+					{
+						"name": "Reminder3_Date",
+						"type": "String"
+					},
+					{
+						"name": "Response_Received_Date",
+						"type": "String"
+					},
+					{
+						"name": "Response_Collected_Date",
+						"type": "String"
+					},
+					{
+						"name": "Address_Line_1",
+						"type": "String"
+					},
+					{
+						"name": "Address_Line_2",
+						"type": "String"
+					},
+					{
+						"name": "Address_Line_3",
+						"type": "String"
+					},
+					{
+						"name": "Primary_Addr_Postal_code",
+						"type": "String"
+					},
+					{
+						"name": "Person_ID",
+						"type": "String"
+					},
+					{
+						"name": "Salutation",
+						"type": "String"
+					},
+					{
+						"name": "First_Name",
+						"type": "String"
+					},
+					{
+						"name": "Person_Middle_Name",
+						"type": "String"
+					},
+					{
+						"name": "Last_Name",
+						"type": "String"
+					},
+					{
+						"name": "Person_Gender_Code",
+						"type": "String"
+					},
+					{
+						"name": "Person_Age",
+						"type": "String"
+					},
+					{
+						"name": "Person_Age_Group_Code",
+						"type": "String"
+					},
+					{
+						"name": "Primary_Address_Text",
+						"type": "String"
+					},
+					{
+						"name": "Primary_addr_city_name",
+						"type": "String"
+					},
+					{
+						"name": "Primary_addr_state_code",
+						"type": "String"
+					},
+					{
+						"name": "Primary_addr_state_name",
+						"type": "String"
+					},
+					{
+						"name": "Primary_Addr_Country_Code",
+						"type": "String"
+					},
+					{
+						"name": "Primary_Addr_Country_Name",
+						"type": "String"
+					},
+					{
+						"name": "Purchase_Influence_Level",
+						"type": "String"
+					},
+					{
+						"name": "Primary_Job_Role_Name",
+						"type": "String"
+					},
+					{
+						"name": "Primary_Job_Role_Title",
+						"type": "String"
+					},
+					{
+						"name": "Primary_Job_Department_Name",
+						"type": "String"
+					},
+					{
+						"name": "Primary_Phone_Number",
+						"type": "String"
+					},
+					{
+						"name": "Assignee",
+						"type": "String"
+					},
+					{
+						"name": "Last_Follow-up_Date",
+						"type": "String"
+					},
+					{
+						"name": "Last_Follow-Up_Comment",
+						"type": "String"
+					},
+					{
+						"name": "Follow-up_Status",
+						"type": "String"
+					},
+					{
+						"name": "Assignee_Email",
+						"type": "String"
+					},
+					{
+						"name": "Assignee_Title",
+						"type": "String"
+					},
+					{
+						"name": "Person_Identifier",
+						"type": "String"
+					},
+					{
+						"name": "Survey_ID",
+						"type": "String"
+					},
+					{
+						"name": "Initiating_Event_TimeStamp",
+						"type": "String"
+					},
+					{
+						"name": "Person_Identifier_Type_Code",
+						"type": "String"
+					},
+					{
+						"name": "Followup_Contact_Party_ID",
+						"type": "String"
+					},
+					{
+						"name": "Initiating_Event_Description",
+						"type": "String"
+					},
+					{
+						"name": "Company_Duns_Number",
+						"type": "String"
+					},
+					{
+						"name": "Person_Birth_Date",
+						"type": "String"
+					},
+					{
+						"name": "Person_Name_Suffix",
+						"type": "String"
+					},
+					{
+						"name": "Person_Income_Amount",
+						"type": "String"
+					},
+					{
+						"name": "Person_Income_Group_Code",
+						"type": "String"
+					},
+					{
+						"name": "Primary_Fax_Number",
+						"type": "String"
+					},
+					{
+						"name": "Primary_Mobile_Phone_Number",
+						"type": "String"
+					},
+					{
+						"name": "Primary_Phone_Extension_Number",
+						"type": "String"
+					},
+					{
+						"name": "Prefer_Text_Only_Email_Y/N?",
+						"type": "String"
+					},
+					{
+						"name": "Survey_Locale_Select_Enabled_Y/N?",
+						"type": "String"
+					},
+					{
+						"name": "Response_Rate_Notification_Recipient",
+						"type": "String"
+					},
+					{
+						"name": "Response_Rate_Notification_CC_1",
+						"type": "String"
+					},
+					{
+						"name": "Response_Rate_Notification_CC_2",
+						"type": "String"
+					},
+					{
+						"name": "Follow-up_Escalation_ID",
+						"type": "String"
+					},
+					{
+						"name": "Integration_Reference_Id",
+						"type": "String"
+					},
+					{
+						"name": "How_satisfied_are_you_for_Adoption-Value",
+						"type": "String"
+					},
+					{
+						"name": "How_satisfied_are_you_for_Delivery-Value",
+						"type": "String"
+					},
+					{
+						"name": "How_satisfied_are_you_for_Onboarding-Value",
+						"type": "String"
+					},
+					{
+						"name": "How_satisfied_are_you_for_Product-Value",
+						"type": "String"
+					},
+					{
+						"name": "How_satisfied_are_you_for_Responsiveness_to_new_business_demands-Value",
+						"type": "String"
+					},
+					{
+						"name": "How_satisfied_are_you_for_Support-Value",
+						"type": "String"
+					},
+					{
+						"name": "How_satisfied_are_you_for_Your_purchase_process-Value",
+						"type": "String"
+					},
+					{
+						"name": "How_satisfied_are_you_for_Your_renewal_process-Value",
+						"type": "String"
+					},
+					{
+						"name": "How_satisfied_are_you_with_Brand-Value",
+						"type": "String"
+					},
+					{
+						"name": "How_satisfied_are_you_with_Product-Value",
+						"type": "String"
+					},
+					{
+						"name": "How_satisfied_are_you_with_Service-Value",
+						"type": "String"
+					},
+					{
+						"name": "How_satisfied_are_you_with_Value_for_Money-Value",
+						"type": "String"
+					},
+					{
+						"name": "Improvement_Comment",
+						"type": "String"
+					},
+					{
+						"name": "LTR-Value",
+						"type": "String"
+					},
+					{
+						"name": "Next_action_you_are_most_likely_to_take",
+						"type": "String"
+					},
+					{
+						"name": "Product_List",
+						"type": "String"
+					},
+					{
+						"name": "Relationship_with_Finastra",
+						"type": "String"
+					},
+					{
+						"name": "Satisfaction_Comment",
+						"type": "String"
+					},
+					{
+						"name": "Satisfaction_for_supported_by_a_Finastra_partner-Value",
+						"type": "String"
+					},
+					{
+						"name": "Supported_by_a_Finastra_partner",
+						"type": "String"
+					},
+					{
+						"name": "What_is_the_problem_for_Adopting_your_solution_to_get_business_value",
+						"type": "String"
+					},
+					{
+						"name": "What_is_the_problem_for_Delivery",
+						"type": "String"
+					},
+					{
+						"name": "What_is_the_problem_for_Onboarding_your_solution_to_get_business_value",
+						"type": "String"
+					},
+					{
+						"name": "What_is_the_problem_for_Product",
+						"type": "String"
+					},
+					{
+						"name": "What_is_the_problem_for_Responsiveness_to_new_business_demands",
+						"type": "String"
+					},
+					{
+						"name": "What_is_the_problem_for_Support",
+						"type": "String"
+					},
+					{
+						"name": "What_is_the_problem_for_Your_purchase_process",
+						"type": "String"
+					},
+					{
+						"name": "What_is_the_problem_for_Your_renewal_process",
+						"type": "String"
+					},
+					{
+						"name": "NewBusiness",
+						"type": "String"
+					},
+					{
+						"name": "Go_To_Market",
+						"type": "String"
+					},
+					{
+						"name": "Closed_Loop_Alert",
+						"type": "String"
+					},
+					{
+						"name": "Modified_On",
+						"type": "String"
+					},
+					{
+						"name": "Created_On",
+						"type": "String"
+					},
+					{
+						"name": "Title",
+						"type": "String"
+					},
+					{
+						"name": "C-Level",
+						"type": "String"
+					},
+					{
+						"name": "Do_not_allow_Emails",
+						"type": "String"
+					},
+					{
+						"name": "Do_not_allow_Bulk_Emails",
+						"type": "String"
+					},
+					{
+						"name": "Case_Management_User",
+						"type": "String"
+					},
+					{
+						"name": "Customer_Center_Admin",
+						"type": "String"
+					},
+					{
+						"name": "Softrax_ID",
+						"type": "String"
+					},
+					{
+						"name": "Account_Name",
+						"type": "String"
+					},
+					{
+						"name": "websiteurl",
+						"type": "String"
+					},
+					{
+						"name": "Asset",
+						"type": "String"
+					},
+					{
+						"name": "Core_Risk_Level",
+						"type": "String"
+					},
+					{
+						"name": "Core_Segment",
+						"type": "String"
+					},
+					{
+						"name": "Lending_Risk_Level",
+						"type": "String"
+					},
+					{
+						"name": "Lending_Segment",
+						"type": "String"
+					},
+					{
+						"name": "Active_Product_Family_Owned_for_Support",
+						"type": "String"
+					},
+					{
+						"name": "No._of_Employees",
+						"type": "String"
+					},
+					{
+						"name": "NPS_Survey",
+						"type": "String"
+					},
+					{
+						"name": "Last_NPS_Survey_Sent",
+						"type": "String"
+					},
+					{
+						"name": "Selected_for_Survey?",
+						"type": "String"
+					},
+					{
+						"name": "Asset_Tier",
+						"type": "String"
+					},
+					{
+						"name": "Account_Type",
+						"type": "String"
+					},
+					{
+						"name": "Region_1",
+						"type": "String"
+					},
+					{
+						"name": "Lending_Account_Exec",
+						"type": "String"
+					},
+					{
+						"name": "Core_RM",
+						"type": "String"
+					},
+					{
+						"name": "Trailing_12_Rev_Rank",
+						"type": "String"
+					},
+					{
+						"name": "Prior_Year_Revenue",
+						"type": "String"
+					},
+					{
+						"name": "Prior_Year_Lending_Rev",
+						"type": "String"
+					},
+					{
+						"name": "Prior_Year_Mortgage_Rev",
+						"type": "String"
+					},
+					{
+						"name": "Prior_Year_Retail_Rev",
+						"type": "String"
+					},
+					{
+						"name": "3_Yr_Revenue_Rank",
+						"type": "String"
+					},
+					{
+						"name": "3_Year_Avg_Rev",
+						"type": "String"
+					},
+					{
+						"name": "Count_of_Won_Opportunities",
+						"type": "String"
+					},
+					{
+						"name": "Count_of_Lost_Opportunities",
+						"type": "String"
+					},
+					{
+						"name": "Parent_account",
+						"type": "String"
+					},
+					{
+						"name": "Account_Governance_profile",
+						"type": "String"
+					},
+					{
+						"name": "Account_18chr_Id",
+						"type": "String"
+					},
+					{
+						"name": "GTM_Target",
+						"type": "String"
+					},
+					{
+						"name": "Full_Name",
+						"type": "String"
+					},
+					{
+						"name": "Mobile",
+						"type": "String"
+					},
+					{
+						"name": "GTM_Persona",
+						"type": "String"
+					},
+					{
+						"name": "Max_of_Annual_Revenue",
+						"type": "String"
+					},
+					{
+						"name": "Map_Name",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[CS_FF_NPS]"
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}

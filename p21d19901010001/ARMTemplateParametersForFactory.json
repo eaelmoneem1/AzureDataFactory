@@ -1,0 +1,306 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "p21d19901010001"
+		},
+		"AzureSqlDatabase_finastra_connectionString": {
+			"value": ""
+		},
+		"FileShare_password": {
+			"value": ""
+		},
+		"HttpServer1_password": {
+			"value": ""
+		},
+		"RestService1_password": {
+			"value": ""
+		},
+		"RestService2_password": {
+			"value": ""
+		},
+		"Salesforce1_password": {
+			"value": ""
+		},
+		"Salesforce1_securityToken": {
+			"value": ""
+		},
+		"blob_storage_connectionString": {
+			"value": ""
+		},
+		"AzureBlob1_properties_typeProperties_fileName": {
+			"value": "test.csv"
+		},
+		"AzureBlob1_properties_typeProperties_folderPath": {
+			"value": "sourcefiles"
+		},
+		"AzureBlob2_properties_typeProperties_fileName": {
+			"value": "opp_test"
+		},
+		"AzureBlob2_properties_typeProperties_folderPath": {
+			"value": "sourcefiles"
+		},
+		"AzureDataLakeStoreFile1_properties_typeProperties_fileName": {
+			"value": "@concat ('FileName_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.txt')"
+		},
+		"AzureDataLakeStoreFile1_properties_typeProperties_folderPath": {
+			"value": "HR"
+		},
+		"AzureDataLakeStoreFile2_properties_typeProperties_fileName": {
+			"value": "@concat ('Marketing_SFDC_Opportunity_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')"
+		},
+		"AzureDataLakeStoreFile2_properties_typeProperties_folderPath": {
+			"value": "LandingArchive/ELT/Marketing"
+		},
+		"AzureDataLakeStoreFile3_properties_typeProperties_fileName": {
+			"value": "@concat ('Marketing_SFDC_LEAD_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')"
+		},
+		"AzureDataLakeStoreFile3_properties_typeProperties_folderPath": {
+			"value": "LandingArchive/ELT/Marketing"
+		},
+		"AzureDataLakeStoreFile4_properties_typeProperties_fileName": {
+			"value": "@concat ('Marketing_SFDC_Contact_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')"
+		},
+		"AzureDataLakeStoreFile4_properties_typeProperties_folderPath": {
+			"value": "LandingArchive/ELT/Marketing"
+		},
+		"AzureDataLakeStoreFile5_properties_typeProperties_fileName": {
+			"value": "@concat ('Marketing_SFDC_Account_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')"
+		},
+		"AzureDataLakeStoreFile5_properties_typeProperties_folderPath": {
+			"value": "LandingArchive/ELT/Marketing"
+		},
+		"Booking_Actuals_properties_typeProperties_fileName": {
+			"value": "@concat ('CM_Bookings_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"Booking_Actuals_properties_typeProperties_folderPath": {
+			"value": "CEOCFO/Sales"
+		},
+		"Booking_Current_Actuals_properties_typeProperties_fileName": {
+			"value": "ELT 9April19_Booking_Current_Actuals.csv"
+		},
+		"Booking_Current_Actuals_properties_typeProperties_folderPath": {
+			"value": "Sales"
+		},
+		"CS_FF_NPS_Destination_Archive_properties_typeProperties_fileName": {
+			"value": "@concat ('NPS_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"CS_FF_NPS_Destination_Archive_properties_typeProperties_folderPath": {
+			"value": "LandingArchive/CEOCFO/CustomerSupport"
+		},
+		"CS_FF_NPS_Source_properties_typeProperties_fileName": {
+			"value": "@concat ('NPS_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"CS_FF_NPS_Source_properties_typeProperties_folderPath": {
+			"value": "CEOCFO/CustomerSupport"
+		},
+		"Finace_RevenueCost_Destination_properties_typeProperties_fileName": {
+			"value": "@concat ('dbo_FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"Finace_RevenueCost_Destination_properties_typeProperties_folderPath": {
+			"value": "LandingArchive/CEOCFO/Finance/dbo"
+		},
+		"HR_Maclean_EXM_Location_Directory_Source_properties_typeProperties_fileName": {
+			"value": "DimGeographical_Location.csv"
+		},
+		"HR_Maclean_EXM_Location_Directory_Source_properties_typeProperties_folderPath": {
+			"value": "HR"
+		},
+		"HR_Maclean_EXM_Location_Source_properties_typeProperties_fileName": {
+			"value": "@concat ('EXM_Location_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"HR_Maclean_EXM_Location_Source_properties_typeProperties_folderPath": {
+			"value": "CEOCFO/HR"
+		},
+		"HR_Maclean_EXM_Region_Archive_Destination_properties_typeProperties_fileName": {
+			"value": "@concat ('EXM_Region_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"HR_Maclean_EXM_Region_Archive_Destination_properties_typeProperties_folderPath": {
+			"value": "LandingArchive/CEOCFO/HR"
+		},
+		"HR_Maclean_EXM_Region_Source_properties_typeProperties_fileName": {
+			"value": "@concat ('EXM_Region_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"HR_Maclean_EXM_Region_Source_properties_typeProperties_folderPath": {
+			"value": "CEOCFO/HR"
+		},
+		"HR_WORKDAY_HC_properties_typeProperties_fileName": {
+			"value": "HR_Workday_HeadCount.csv"
+		},
+		"HR_WORKDAY_HC_properties_typeProperties_folderPath": {
+			"value": "Landing"
+		},
+		"HR_WORKDAY_HC_Archive_Destination_properties_typeProperties_fileName": {
+			"value": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"HR_WORKDAY_HC_Archive_Destination_properties_typeProperties_folderPath": {
+			"value": "LandingArchive/CEOCFO/HR"
+		},
+		"HR_WORKDAY_HC_Source_properties_typeProperties_fileName": {
+			"value": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"HR_WORKDAY_HC_Source_properties_typeProperties_folderPath": {
+			"value": "CEOCFO/HR"
+		},
+		"HR_WORKDAY_REQ_Archive_Destination_properties_typeProperties_fileName": {
+			"value": "@concat ('HR_WORKDAY_REQ_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"HR_WORKDAY_REQ_Archive_Destination_properties_typeProperties_folderPath": {
+			"value": "LandingArchive/HR"
+		},
+		"HR_WORKDAY_REQ_Source_properties_typeProperties_fileName": {
+			"value": "HR_Workday_Requisitions.csv"
+		},
+		"HR_WORKDAY_REQ_Source_properties_typeProperties_folderPath": {
+			"value": "HR"
+		},
+		"Opportunity_Incremintal_Archiving_properties_typeProperties_fileName": {
+			"value": "@concat ('Opportunity_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')"
+		},
+		"Opportunity_Incremintal_Archiving_properties_typeProperties_folderPath": {
+			"value": "LandingArchive/CEOCFO/Sales/Opportunity"
+		},
+		"Revenue_Archive_Destination_properties_typeProperties_fileName": {
+			"value": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"Revenue_Archive_Destination_properties_typeProperties_folderPath": {
+			"value": "LandingArchive/CEOCFO/Finance"
+		},
+		"Revenue_cost_source_properties_typeProperties_fileName": {
+			"value": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"Revenue_cost_source_properties_typeProperties_folderPath": {
+			"value": "CEOCFO/Finance"
+		},
+		"SFDC_Archive_Campaign_properties_typeProperties_fileName": {
+			"value": "@concat ('Campaign_Initial_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')"
+		},
+		"SFDC_Archive_Campaign_properties_typeProperties_folderPath": {
+			"value": "LandingArchive/CEOCFO/Sales/Campaign"
+		},
+		"SFDC_Archive_FX_Rate_properties_typeProperties_fileName": {
+			"value": "@concat ('FXRate_Conversion_Initial_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')"
+		},
+		"SFDC_Archive_FX_Rate_properties_typeProperties_folderPath": {
+			"value": "LandingArchive/CEOCFO/Sales/FXRate_Conversion"
+		},
+		"SFDC_Archive_Opportunity_properties_typeProperties_fileName": {
+			"value": "@concat ('Opportunity_Initial_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')"
+		},
+		"SFDC_Archive_Opportunity_properties_typeProperties_folderPath": {
+			"value": "LandingArchive/CEOCFO/Sales/Opportunity"
+		},
+		"Sales_FF_Forecast_Archive_Destination_properties_typeProperties_fileName": {
+			"value": "@concat ('ForecastPlan_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"Sales_FF_Forecast_Archive_Destination_properties_typeProperties_folderPath": {
+			"value": "LandingArchive/CEOCFO/Dimentions/Forcecast Plan"
+		},
+		"Sales_FF_Forecast_source_properties_typeProperties_fileName": {
+			"value": "@concat ('ForecastPlan_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"Sales_FF_Forecast_source_properties_typeProperties_folderPath": {
+			"value": "CEOCFO/Dimentions/Forecast Plan"
+		},
+		"Sales_MSCRM_Booking_Archive_DL_properties_typeProperties_fileName": {
+			"value": "@concat ('CM_Bookings_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"Sales_MSCRM_Booking_Archive_DL_properties_typeProperties_folderPath": {
+			"value": "LandingArchive/CEOCFO/Sales/CM_Bookings"
+		},
+		"Sales_MSCRM_OrderBook_Archive_properties_typeProperties_fileName": {
+			"value": "@concat ('CM_OrderBook_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"Sales_MSCRM_OrderBook_Archive_properties_typeProperties_folderPath": {
+			"value": "LandingArchive/CEOCFO/Sales/CM_OrderBook"
+		},
+		"Sales_MSCRM_OrderBook_source_properties_typeProperties_fileName": {
+			"value": "@concat ('CM_OrderBook_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"Sales_MSCRM_OrderBook_source_properties_typeProperties_folderPath": {
+			"value": "CEOCFO/Sales"
+		},
+		"TimeDimensionDate_Archive_Destination_properties_typeProperties_fileName": {
+			"value": "@concat ('TimeDimensionDate_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"TimeDimensionDate_Archive_Destination_properties_typeProperties_folderPath": {
+			"value": "LandingArchive/CEOCFO/Dimentions/Time"
+		},
+		"TimeDimensionDate_Source_properties_typeProperties_fileName": {
+			"value": ""
+		},
+		"TimeDimensionDate_Source_properties_typeProperties_folderPath": {
+			"value": "CEOCFO/Dimentions/Time"
+		},
+		"TimeDimension_Archive_Destination_properties_typeProperties_fileName": {
+			"value": "@concat ('TimeDimension_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"TimeDimension_Archive_Destination_properties_typeProperties_folderPath": {
+			"value": "LandingArchive/CEOCFO/Dimentions/Time"
+		},
+		"TimeDimension_Source_properties_typeProperties_fileName": {
+			"value": "TimeDimension.csv"
+		},
+		"TimeDimension_Source_properties_typeProperties_folderPath": {
+			"value": "CEOCFO/Dimentions/Time"
+		},
+		"V_HR_Maclean_EXM_Location_Archive_Destination_properties_typeProperties_fileName": {
+			"value": "@concat ('EXM_Location_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"V_HR_Maclean_EXM_Location_Archive_Destination_properties_typeProperties_folderPath": {
+			"value": "LandingArchive/CEOCFO/HR"
+		},
+		"V_HR_Maclean_EXM_Location_Directory_Archive_Destination_properties_typeProperties_fileName": {
+			"value": "@concat ('HR_Maclean_EXM_Location_Directory_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"V_HR_Maclean_EXM_Location_Directory_Archive_Destination_properties_typeProperties_folderPath": {
+			"value": "LandingArchive/HR"
+		},
+		"test_properties_typeProperties_fileName": {
+			"value": "TimeDimens.csv"
+		},
+		"test_properties_typeProperties_folderPath": {
+			"value": "Time"
+		},
+		"AzureDataLakeStore_properties_typeProperties_dataLakeStoreUri": {
+			"value": "https://p21d19901011001.azuredatalakestore.net/webhdfs/v1"
+		},
+		"AzureDataLakeStore_properties_typeProperties_tenant": {
+			"value": "e17e2402-2a40-42ce-ad75-5848b8d4f6b6"
+		},
+		"AzureDataLakeStore_properties_typeProperties_subscriptionId": {
+			"value": "f4c6caf2-122a-491f-928a-ffa197a45fcd"
+		},
+		"AzureDataLakeStore_properties_typeProperties_resourceGroupName": {
+			"value": "AZR-C21-DV-199-01"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"value": "https://p21d19901506001.vault.azure.net/"
+		},
+		"FileShare_properties_typeProperties_userId": {
+			"value": "p21d19901015001"
+		},
+		"HttpServer1_properties_typeProperties_url": {
+			"value": "https://3431250-sb1.restlets.api.netsuite.com/app/site/hosting/restlet.nl?script=660&deploy=1&searchId=6336&startIndex=0&endIndex=1000"
+		},
+		"HttpServer1_properties_typeProperties_userName": {
+			"value": "azureuser@test.com"
+		},
+		"RestService1_properties_typeProperties_url": {
+			"value": "https://3431250-sb1.restlets.api.netsuite.com/app/site/hosting/restlet.nl?script=660&deploy=1&searchId=6336&startIndex=0&endIndex=1000 "
+		},
+		"RestService1_properties_typeProperties_userName": {
+			"value": "azureuser@test.com"
+		},
+		"RestService2_properties_typeProperties_url": {
+			"value": "https://3431250-sb1.restlets.api.netsuite.com/app/site/hosting/restlet.nl?script=660&deploy=1&searchId=6336&startIndex=0&endIndex=1000"
+		},
+		"RestService2_properties_typeProperties_userName": {
+			"value": "azureuser@test.com"
+		},
+		"Salesforce1_properties_typeProperties_username": {
+			"value": "eltdashboard@finastra.com"
+		}
+	}
+}
