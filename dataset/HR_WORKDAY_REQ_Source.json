@@ -67,7 +67,10 @@
 				"skipLineCount": 0,
 				"firstRowAsHeader": true
 			},
-			"fileName": "HR_Workday_Requisitions.csv",
+			"fileName": {
+				"value": "@concat ('Requisations_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+				"type": "Expression"
+			},
 			"folderPath": "HR"
 		}
 	},
