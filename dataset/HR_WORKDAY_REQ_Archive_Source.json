@@ -1,0 +1,14 @@
+{
+	"name": "HR_WORKDAY_REQ_Archive_Source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"typeProperties": {
+			"tableName": "[STG].[V_HR_WORKDAY_REQ]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

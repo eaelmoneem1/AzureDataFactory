@@ -1,0 +1,44 @@
+{
+	"name": "Sales_SFDC_FXRate_Conversion",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Salesforce1",
+			"type": "LinkedServiceReference"
+		},
+		"type": "SalesforceObject",
+		"structure": [
+			{
+				"name": "Id",
+				"type": "String"
+			},
+			{
+				"name": "IsoCode",
+				"type": "String"
+			},
+			{
+				"name": "ConversionRate",
+				"type": "Decimal"
+			},
+			{
+				"name": "StartDate",
+				"type": "DateTime"
+			},
+			{
+				"name": "NextStartDate",
+				"type": "DateTime"
+			},
+			{
+				"name": "LastModifiedDate",
+				"type": "DateTime"
+			},
+			{
+				"name": "CreatedDate",
+				"type": "DateTime"
+			}
+		],
+		"typeProperties": {
+			"objectApiName": "DatedConversionRate"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

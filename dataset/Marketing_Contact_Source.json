@@ -1,0 +1,74 @@
+{
+	"name": "Marketing_Contact_Source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "AccountId",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ContactId18__c",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Contact_Name__c",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Contact_Type__c",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CreatedDate",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Salutation",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FirstName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "LastName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Title",
+				"type": "nvarchar"
+			},
+			{
+				"name": "LeadSource",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Email",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Owner_ID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "LastModifiedDate",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Rec_CRE_TMS",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"tableName": "[STG].[Marketing_SFDC_Contact]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

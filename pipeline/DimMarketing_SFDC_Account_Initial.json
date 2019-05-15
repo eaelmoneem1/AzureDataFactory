@@ -1,0 +1,145 @@
+{
+	"name": "DimMarketing_SFDC_Account_Initial",
+	"properties": {
+		"activities": [
+			{
+				"name": "Landing",
+				"type": "Copy",
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"source": {
+						"type": "SalesforceSource",
+						"query": {
+							"value": "SELECT \nAccount_18chr_Id__c,\nAccount_Number__c,\nName,\nOwnerId,\nCountry__c,\nCreatedDate,\nLastModifiedDate\nFROM Account\n",
+							"type": "Expression"
+						},
+						"readBehavior": "query"
+					},
+					"sink": {
+						"type": "SqlSink",
+						"writeBatchSize": 10000
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"columnMappings": {
+							"Account_18chr_Id__c": "Account_18chr_Id",
+							"Account_Number__c": "Account_Number",
+							"Name": "Name",
+							"OwnerId": "Owner_ID",
+							"Country__c": "Country",
+							"CreatedDate": "CreatedDate",
+							"LastModifiedDate": "LastModifiedDate"
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SFDC_Account",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Account_SQL",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Loading Int tables",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Landing",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[sp_INT_DimMarketing_SFDC_Account]"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Hash Generate",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Loading Int tables",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[sp_INT_GenerateHashes]",
+					"storedProcedureParameters": {
+						"TableName": {
+							"value": "DimMarketing_SFDC_Account",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Loading dbo table",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Hash Generate",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[sp_INT_ApplyDimMarketing_SFDC_Account]"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"folder": {
+			"name": "Marketing"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

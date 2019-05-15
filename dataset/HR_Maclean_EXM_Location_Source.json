@@ -1,0 +1,102 @@
+{
+	"name": "HR_Maclean_EXM_Location_Source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "FileShare",
+			"type": "LinkedServiceReference"
+		},
+		"type": "FileShare",
+		"structure": [
+			{
+				"name": "Location",
+				"type": "String"
+			},
+			{
+				"name": "Responses",
+				"type": "String"
+			},
+			{
+				"name": "Detractors",
+				"type": "String"
+			},
+			{
+				"name": "Passives",
+				"type": "String"
+			},
+			{
+				"name": "Promoters",
+				"type": "String"
+			},
+			{
+				"name": "Score",
+				"type": "String"
+			},
+			{
+				"name": "Avg. Response",
+				"type": "String"
+			},
+			{
+				"name": "0",
+				"type": "String"
+			},
+			{
+				"name": "1",
+				"type": "String"
+			},
+			{
+				"name": "2",
+				"type": "String"
+			},
+			{
+				"name": "3",
+				"type": "String"
+			},
+			{
+				"name": "4",
+				"type": "String"
+			},
+			{
+				"name": "5",
+				"type": "String"
+			},
+			{
+				"name": "6",
+				"type": "String"
+			},
+			{
+				"name": "7",
+				"type": "String"
+			},
+			{
+				"name": "8",
+				"type": "String"
+			},
+			{
+				"name": "9",
+				"type": "String"
+			},
+			{
+				"name": "10",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": ",",
+				"rowDelimiter": "",
+				"quoteChar": "\"",
+				"nullValue": "",
+				"treatEmptyAsNull": true,
+				"skipLineCount": 0,
+				"firstRowAsHeader": true
+			},
+			"fileName": {
+				"value": "@concat ('EXM_Location_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+				"type": "Expression"
+			},
+			"folderPath": "CEOCFO/HR"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

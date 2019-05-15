@@ -1,0 +1,14 @@
+{
+	"name": "AzureSqlTable7",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"typeProperties": {
+			"tableName": "[dbo].[test]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

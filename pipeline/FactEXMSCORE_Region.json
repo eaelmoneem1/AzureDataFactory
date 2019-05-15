@@ -1,0 +1,192 @@
+{
+	"name": "FactEXMSCORE_Region",
+	"properties": {
+		"activities": [
+			{
+				"name": "Loading STG tables",
+				"type": "Copy",
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"source": {
+						"type": "FileSystemSource",
+						"recursive": true
+					},
+					"sink": {
+						"type": "SqlSink",
+						"writeBatchSize": 10000
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"columnMappings": {
+							"Region": "Region",
+							"Responses": "Responses",
+							"Detractors_Percentage": "Detractors_Percentage",
+							"Passives_Percentage": "Passives_Percentage",
+							"Promoters_Percentage": "Promoters_Percentage",
+							"Score": "Score",
+							"Avg_Response": "Avg_Response",
+							"Response_Distribution_0": "Response_Distribution_0",
+							"Response_Distribution_1": "Response_Distribution_1",
+							"Response_Distribution_2": "Response_Distribution_2",
+							"Response_Distribution_3": "Response_Distribution_3",
+							"Response_Distribution_4": "Response_Distribution_4",
+							"Response_Distribution_5": "Response_Distribution_5",
+							"Response_Distribution_6": "Response_Distribution_6",
+							"Response_Distribution_7": "Response_Distribution_7",
+							"Response_Distribution_8": "Response_Distribution_8",
+							"Response_Distribution_9": "Response_Distribution_9",
+							"Response_Distribution_10": "Response_Distribution_10"
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "HR_Maclean_EXM_Region_Source",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "FactEXMSCORE_Region_Destination",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Archiving data in DL",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Loading dbo table",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"source": {
+						"type": "SqlSource"
+					},
+					"sink": {
+						"type": "AzureDataLakeStoreSink"
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "FactEXMSCORE_Region_Archive_Source",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "HR_Maclean_EXM_Region_Archive_Destination",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Loading Int tables",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Loading STG tables",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[sp_INT_FactEXMSCORE_Region]"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Hash Generate",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Loading Int tables",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[sp_INT_GenerateHashes]",
+					"storedProcedureParameters": {
+						"TableName": {
+							"value": "FactEXMSCORE_Region",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Loading dbo table",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Hash Generate",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[sp_INT_ApplyFactEXMSCORE_Region]"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"folder": {
+			"name": "HR"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

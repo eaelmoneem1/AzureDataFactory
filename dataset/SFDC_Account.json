@@ -1,0 +1,44 @@
+{
+	"name": "SFDC_Account",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Salesforce1",
+			"type": "LinkedServiceReference"
+		},
+		"type": "SalesforceObject",
+		"structure": [
+			{
+				"name": "Account_18chr_Id__c",
+				"type": "String"
+			},
+			{
+				"name": "Account_Number__c",
+				"type": "String"
+			},
+			{
+				"name": "Name",
+				"type": "String"
+			},
+			{
+				"name": "OwnerId",
+				"type": "String"
+			},
+			{
+				"name": "Country__c",
+				"type": "String"
+			},
+			{
+				"name": "CreatedDate",
+				"type": "DateTime"
+			},
+			{
+				"name": "LastModifiedDate",
+				"type": "DateTime"
+			}
+		],
+		"typeProperties": {
+			"objectApiName": "Account"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

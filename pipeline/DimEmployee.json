@@ -1,0 +1,191 @@
+{
+	"name": "DimEmployee",
+	"properties": {
+		"activities": [
+			{
+				"name": "Loading Int tables",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Loading STG tables",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 3,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[sp_INT_DimEmployee]"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Hash Generate",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Loading Int tables",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 3,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[sp_INT_GenerateHashes]",
+					"storedProcedureParameters": {
+						"TableName": {
+							"value": "DimEmployee"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Loading dbo table",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Hash Generate",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 3,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[sp_INT_ApplyDimEmployee]"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Loading STG tables",
+				"type": "Copy",
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"source": {
+						"type": "FileSystemSource",
+						"recursive": true
+					},
+					"sink": {
+						"type": "SqlSink",
+						"writeBatchSize": 10000
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"columnMappings": {
+							"Employee ID": "Employee_ID",
+							"On Leave": "On_Leave",
+							"Hire Date": "Hire_Date",
+							"Number of Direct Reports": "Number_of_Direct_Reports",
+							"Worker Type": "Worker_Type",
+							"Location": "Location",
+							"Country": "Country",
+							"Org Layer": "Org_Layer",
+							"Product": "Product",
+							"Product Family": "Product_Family",
+							"Product Line": "Product_Line",
+							"Cost Center - ID": "Cost_Center_ID",
+							"Cost Center": "Cost_Center_Name",
+							"Cost Center Hierarchy": "Cost_Centre_Hierarchy_Finastra",
+							"Function": "Function_Finastra",
+							"Cost Centre - Legacy DH Mapping to Finastra": "Cost_Centre_Legacy_DH_Mapping_to_Finastra",
+							"Reporting Region": "Reporting_Region",
+							"High / Low Cost": "High_Low_Cost"
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "HR_WORKDAY_HC_Source",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "HR_WORKDAY_HC_Destination",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Archiving data in DL",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Loading dbo table",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"source": {
+						"type": "SqlSource"
+					},
+					"sink": {
+						"type": "AzureDataLakeStoreSink"
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "HR_WORKDAY_HC_Archive_Source",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "HR_WORKDAY_HC_Archive_Destination",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "HR"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

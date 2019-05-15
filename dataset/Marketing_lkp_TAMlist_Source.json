@@ -1,0 +1,28 @@
+{
+	"name": "Marketing_lkp_TAMlist_Source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "FileShare",
+			"type": "LinkedServiceReference"
+		},
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "FileServerLocation",
+				"fileName": "Marketing_lkp_TAMlist.csv",
+				"folderPath": "ELT/Marketing"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Account Name (TAM List)",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

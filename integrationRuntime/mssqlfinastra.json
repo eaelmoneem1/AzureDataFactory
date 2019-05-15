@@ -1,0 +1,7 @@
+{
+	"name": "mssqlfinastra",
+	"properties": {
+		"type": "SelfHosted",
+		"description": "Self hosted IR"
+	}
+}

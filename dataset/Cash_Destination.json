@@ -1,0 +1,38 @@
+{
+	"name": "Cash_Destination",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "date",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Cash_Balance",
+				"type": "nvarchar"
+			},
+			{
+				"name": "RCF_Drawn",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Cash_Net_of_RCF",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Rec_CRE_TMS",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"tableName": "[STG].[Finance_FF_Cash]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

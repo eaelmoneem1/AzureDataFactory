@@ -1,0 +1,21 @@
+{
+	"name": "AzureDataLakeStoreFile3",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStore",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureDataLakeStoreFile",
+		"typeProperties": {
+			"format": {
+				"type": "OrcFormat"
+			},
+			"fileName": {
+				"value": "@concat ('Marketing_SFDC_LEAD_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')",
+				"type": "Expression"
+			},
+			"folderPath": "LandingArchive/ELT/Marketing"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,34 @@
+{
+	"name": "Marketing_lkp_Country_Dest",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Country",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Sales_Region",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Sub_Region",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Rec_CRE_TMS",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"tableName": "[STG].[Marketing_lkp_Country]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

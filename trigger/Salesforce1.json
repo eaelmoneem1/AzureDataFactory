@@ -1,0 +1,23 @@
+{
+	"name": "Salesforce1",
+	"properties": {
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "FactOpportunity_All Job",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Day",
+				"interval": 1,
+				"startTime": "2019-04-21T01:00:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}

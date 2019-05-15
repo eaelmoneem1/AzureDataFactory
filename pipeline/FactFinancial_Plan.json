@@ -1,0 +1,196 @@
+{
+	"name": "FactFinancial_Plan",
+	"properties": {
+		"activities": [
+			{
+				"name": "Loading STG tables",
+				"type": "Copy",
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"source": {
+						"type": "FileSystemSource",
+						"recursive": true
+					},
+					"sink": {
+						"type": "SqlSink",
+						"writeBatchSize": 10000
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"columnMappings": {
+							"Account": "Account",
+							"Account Type": "Account_Type",
+							"Cost Centre": "Cost_Centre",
+							"CC code": "CC_code",
+							"Function": "Function",
+							"Product Family": "Product_Family",
+							"Product Line": "Product_Line",
+							"Sub Region": "Sub_Region",
+							"Region": "Region",
+							"Source System": "Source_System",
+							"Jun": "Jun",
+							"Jul": "Jul",
+							"Aug": "Aug",
+							"Sep": "Sep",
+							"Oct": "Oct",
+							"Nov": "Nov",
+							"Dec": "Dec",
+							"Jan": "Jan",
+							"Feb": "Feb",
+							"Mar": "Mar",
+							"Apr": "Apr",
+							"May": "May"
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Sales_FF_Forecast_source",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Sales_FF_Forecast_Destination",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Loading Int tables",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Loading STG tables",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[sp_INT_FactFinancial_Plan]"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Loading dbo table",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Hash Generate",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[sp_INT_ApplyFactFinancial_Plan]"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Hash Generate",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Loading Int tables",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[sp_INT_GenerateHashes]",
+					"storedProcedureParameters": {
+						"TableName": {
+							"value": "FactFinancial_Plan",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Archiving data in DL",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Loading dbo table",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"source": {
+						"type": "SqlSource"
+					},
+					"sink": {
+						"type": "AzureDataLakeStoreSink"
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "Sales_FF_Forecast_Archive_Source",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Sales_FF_Forecast_Archive_Destination",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "Forecast"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,50 @@
+{
+	"name": "Marketing_Account_Source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Account_18chr_Id",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Account_Number",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Owner_ID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Country",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CreatedDate",
+				"type": "nvarchar"
+			},
+			{
+				"name": "LastModifiedDate",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Rec_CRE_TMS",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"tableName": "[STG].[Marketing_SFDC_Account]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,224 @@
+{
+	"name": "Salesforce_Opportunity",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Salesforce1",
+			"type": "LinkedServiceReference"
+		},
+		"type": "SalesforceObject",
+		"structure": [
+			{
+				"name": "Id",
+				"type": "String"
+			},
+			{
+				"name": "Name",
+				"type": "String"
+			},
+			{
+				"name": "OwnerId",
+				"type": "String"
+			},
+			{
+				"name": "Owner.Name",
+				"type": "String"
+			},
+			{
+				"name": "Owner.Sub_Region__c",
+				"type": "String"
+			},
+			{
+				"name": "CloseDate",
+				"type": "DateTime"
+			},
+			{
+				"name": "StageName",
+				"type": "String"
+			},
+			{
+				"name": "Deal_Type__c",
+				"type": "String"
+			},
+			{
+				"name": "MainProduct__c",
+				"type": "String"
+			},
+			{
+				"name": "OpportunityHEALTH__c",
+				"type": "String"
+			},
+			{
+				"name": "RLF_percent__c",
+				"type": "Decimal"
+			},
+			{
+				"name": "Regional_Sales_Manager_Comments__c",
+				"type": "String"
+			},
+			{
+				"name": "AccountId",
+				"type": "String"
+			},
+			{
+				"name": "Account.Name",
+				"type": "String"
+			},
+			{
+				"name": "Opportunity_18chr_Id__c",
+				"type": "String"
+			},
+			{
+				"name": "Amount",
+				"type": "Decimal"
+			},
+			{
+				"name": "Order_Number__c",
+				"type": "String"
+			},
+			{
+				"name": "Sales_Region_FY07__c",
+				"type": "String"
+			},
+			{
+				"name": "Pricing_Country__c",
+				"type": "String"
+			},
+			{
+				"name": "Misys_Forecast__c",
+				"type": "String"
+			},
+			{
+				"name": "Term_Estimate_Months__c",
+				"type": "Decimal"
+			},
+			{
+				"name": "Commercial_Prop__c",
+				"type": "String"
+			},
+			{
+				"name": "ILF_Amount__c",
+				"type": "Decimal"
+			},
+			{
+				"name": "Total_ILF_In_Qtr__c",
+				"type": "Decimal"
+			},
+			{
+				"name": "Accretive_RLF__c",
+				"type": "Decimal"
+			},
+			{
+				"name": "RLF_Amount__c",
+				"type": "Decimal"
+			},
+			{
+				"name": "PS_Amount__c",
+				"type": "Decimal"
+			},
+			{
+				"name": "ASP_Amount__c",
+				"type": "Decimal"
+			},
+			{
+				"name": "TCV_CSH__c",
+				"type": "Decimal"
+			},
+			{
+				"name": "ACV_ACV_Equiv_CSH__c",
+				"type": "Decimal"
+			},
+			{
+				"name": "Strength_of_Sale__c",
+				"type": "Decimal"
+			},
+			{
+				"name": "Global_Account_Manager_Comments__c",
+				"type": "String"
+			},
+			{
+				"name": "Executive_Sponsor_alignment__c",
+				"type": "String"
+			},
+			{
+				"name": "Next_Step_Due_Date__c",
+				"type": "DateTime"
+			},
+			{
+				"name": "NextStep",
+				"type": "String"
+			},
+			{
+				"name": "Approval_Status__c",
+				"type": "String"
+			},
+			{
+				"name": "sbaa__ApprovalStatus__c",
+				"type": "String"
+			},
+			{
+				"name": "Term_CSH__c",
+				"type": "Decimal"
+			},
+			{
+				"name": "Deal_Category__c",
+				"type": "String"
+			},
+			{
+				"name": "Service_Type__c",
+				"type": "String"
+			},
+			{
+				"name": "Service_Sub_Type__c",
+				"type": "String"
+			},
+			{
+				"name": "CampaignId",
+				"type": "String"
+			},
+			{
+				"name": "Opportunity_Partner__c",
+				"type": "String"
+			},
+			{
+				"name": "Original_Opportunity__c",
+				"type": "String"
+			},
+			{
+				"name": "RecordTypeId",
+				"type": "String"
+			},
+			{
+				"name": "RecordType.Name",
+				"type": "String"
+			},
+			{
+				"name": "LastModifiedDate",
+				"type": "DateTime"
+			},
+			{
+				"name": "CreatedDate",
+				"type": "DateTime"
+			},
+			{
+				"name": "Existing_RLF_Currency__c",
+				"type": "String"
+			},
+			{
+				"name": "CurrencyIsoCode",
+				"type": "String"
+			},
+			{
+				"name": "SBU_Strategic_Business_Unit__c",
+				"type": "String"
+			},
+			{
+				"name": "FiscalPeriod__c",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"objectApiName": "Opportunity"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

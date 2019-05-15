@@ -1,0 +1,21 @@
+{
+	"name": "Opportunity_Incremintal_Archiving",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStore",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureDataLakeStoreFile",
+		"typeProperties": {
+			"format": {
+				"type": "OrcFormat"
+			},
+			"fileName": {
+				"value": "@concat ('Opportunity_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')",
+				"type": "Expression"
+			},
+			"folderPath": "LandingArchive/CEOCFO/Sales/Opportunity"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

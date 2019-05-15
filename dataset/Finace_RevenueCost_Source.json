@@ -1,0 +1,100 @@
+{
+	"name": "Finace_RevenueCost_Source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"structure": [
+			{
+				"name": "RevenuelSK",
+				"type": "Int64"
+			},
+			{
+				"name": "RevenueBK",
+				"type": "String"
+			},
+			{
+				"name": "Account",
+				"type": "String"
+			},
+			{
+				"name": "Cost_Centre",
+				"type": "String"
+			},
+			{
+				"name": "CC_Code",
+				"type": "String"
+			},
+			{
+				"name": "Product_Function",
+				"type": "String"
+			},
+			{
+				"name": "Product_Family",
+				"type": "String"
+			},
+			{
+				"name": "Product_line",
+				"type": "String"
+			},
+			{
+				"name": "Sub_Region",
+				"type": "String"
+			},
+			{
+				"name": "Region",
+				"type": "String"
+			},
+			{
+				"name": "Source_System",
+				"type": "String"
+			},
+			{
+				"name": "Fiscal_Period",
+				"type": "Int32"
+			},
+			{
+				"name": "Actuals",
+				"type": "Decimal"
+			},
+			{
+				"name": "Year",
+				"type": "String"
+			},
+			{
+				"name": "dwEffectiveFrom",
+				"type": "Date"
+			},
+			{
+				"name": "dwEffectiveTo",
+				"type": "Date"
+			},
+			{
+				"name": "dwActiveRec",
+				"type": "Boolean"
+			},
+			{
+				"name": "dwCreateDate",
+				"type": "Date"
+			},
+			{
+				"name": "dwUpdateDate",
+				"type": "Date"
+			},
+			{
+				"name": "dwType1Hash",
+				"type": "Byte[]"
+			},
+			{
+				"name": "dwType2Hash",
+				"type": "Byte[]"
+			}
+		],
+		"typeProperties": {
+			"tableName": "[dbo].[FactRevenue_Cost]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

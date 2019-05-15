@@ -1,0 +1,26 @@
+{
+	"name": "Marketing_lkp_TAMlist_Dest",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Account_Name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Rec_CRE_TMS",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"tableName": "[STG].[Marketing_lkp_TAMlist]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

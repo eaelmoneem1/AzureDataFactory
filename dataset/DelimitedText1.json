@@ -1,0 +1,76 @@
+{
+	"name": "DelimitedText1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "FileShare",
+			"type": "LinkedServiceReference"
+		},
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "FileServerLocation",
+				"fileName": "Integration– ELT Dashboard Project Terminations 2019-04-24 14_02 EEST.csv",
+				"folderPath": "CEOCFO/HR"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Employee ID",
+				"type": "String"
+			},
+			{
+				"name": "Worker Type",
+				"type": "String"
+			},
+			{
+				"name": "Termination Date",
+				"type": "String"
+			},
+			{
+				"name": "ELT",
+				"type": "String"
+			},
+			{
+				"name": "ELT - 1",
+				"type": "String"
+			},
+			{
+				"name": "ELT - 2",
+				"type": "String"
+			},
+			{
+				"name": "Cost Centre ID",
+				"type": "String"
+			},
+			{
+				"name": "Function",
+				"type": "String"
+			},
+			{
+				"name": "Finastra Product",
+				"type": "String"
+			},
+			{
+				"name": "Finastra (FAM)",
+				"type": "String"
+			},
+			{
+				"name": "Finastra (LINE)",
+				"type": "String"
+			},
+			{
+				"name": "Country",
+				"type": "String"
+			},
+			{
+				"name": "Location",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

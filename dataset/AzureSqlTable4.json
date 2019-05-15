@@ -1,0 +1,334 @@
+{
+	"name": "AzureSqlTable4",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"structure": [
+			{
+				"name": "id",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Name",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Ownerid",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "owner_name",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Owner_Sub_Region_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "CloseDate",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "StageName",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Deal_Type_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "MainProduct_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "OpportunityHEALTH_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "RLF_percent_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Regional_Sales_Manager_Comments_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Accountid",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Account_Name",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Opportunity_18chr_Id_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Amount",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Order_Number_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Sales_Region_FY07_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Pricing_Country_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Misys_Forecast_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Term_Estimate_Months_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Commercial_Prop_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "ILF_Amount_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Total_ILF_In_Qtr_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Accretive_RLF_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "RLF_Amount_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "PS_Amount_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "ASP_Amount_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "TCV_CSH_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "ACV_ACV_Equiv_CSH_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Strength_of_Sale_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Global_Account_Manager_Comments_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Executive_Sponsor_alignment_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Next_Step_Due_Date_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "NextStep",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Approval_Status_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "sbaa_ApprovalStatus_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Term_CSH_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Deal_Category_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Service_Type_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Service_Sub_Type_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Campaignid",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Opportunity_Partner_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Original_Opportunity_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "RecordTypeid",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "RecordType_Name",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "LastModifiedDate",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "CreatedDate",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Existing_RLF_Currency_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "CurrencyIsoCode",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "SBU_Strategic_Business_Unit_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "FiscalPeriod_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Rec_CRE_TMS",
+				"type": "DateTime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"tableName": "[STG].[Sales_SFDC_Booking]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

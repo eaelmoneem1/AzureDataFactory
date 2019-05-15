@@ -1,0 +1,14 @@
+{
+	"name": "Opportunity_Last_Load_Modified",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"typeProperties": {
+			"tableName": "[STG].[V_Sales_SFDC_Booking]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

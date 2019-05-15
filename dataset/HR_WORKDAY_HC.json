@@ -1,0 +1,25 @@
+{
+	"name": "HR_WORKDAY_HC",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStore",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureDataLakeStoreFile",
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": ",",
+				"rowDelimiter": "",
+				"quoteChar": "\"",
+				"nullValue": "",
+				"treatEmptyAsNull": true,
+				"skipLineCount": 0,
+				"firstRowAsHeader": true
+			},
+			"fileName": "HR_Workday_HeadCount.csv",
+			"folderPath": "Landing"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

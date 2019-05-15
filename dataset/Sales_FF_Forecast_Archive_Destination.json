@@ -1,0 +1,28 @@
+{
+	"name": "Sales_FF_Forecast_Archive_Destination",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStore",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureDataLakeStoreFile",
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": ",",
+				"rowDelimiter": "",
+				"quoteChar": "\"",
+				"nullValue": "",
+				"treatEmptyAsNull": true,
+				"skipLineCount": 0,
+				"firstRowAsHeader": true
+			},
+			"fileName": {
+				"value": "@concat ('ForecastPlan_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+				"type": "Expression"
+			},
+			"folderPath": "LandingArchive/CEOCFO/Dimentions/Forcecast Plan"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

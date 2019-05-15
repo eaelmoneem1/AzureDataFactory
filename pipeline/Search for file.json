@@ -1,0 +1,158 @@
+{
+	"name": "Search for file",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get Metadata1",
+				"type": "GetMetadata",
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "test",
+						"type": "DatasetReference"
+					},
+					"fieldList": [
+						"exists"
+					]
+				}
+			},
+			{
+				"name": "d",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "GetMetadata2",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"typeProperties": {
+					"expression": {
+						"value": "@activity('GetMetadata2').output.exists",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "Wait3",
+							"type": "Wait",
+							"typeProperties": {
+								"waitTimeInSeconds": 1
+							}
+						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "Execute Pipeline1",
+							"type": "ExecutePipeline",
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "FactOpportunity_All_incremental",
+									"type": "PipelineReference"
+								}
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "Wait1",
+				"type": "Wait",
+				"dependsOn": [
+					{
+						"activity": "Filter1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"typeProperties": {
+					"waitTimeInSeconds": 1
+				}
+			},
+			{
+				"name": "GetMetadata2",
+				"type": "GetMetadata",
+				"dependsOn": [
+					{
+						"activity": "Wait1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "test",
+						"type": "DatasetReference"
+					},
+					"fieldList": [
+						"exists"
+					]
+				}
+			},
+			{
+				"name": "Wait2",
+				"type": "Wait",
+				"dependsOn": [
+					{
+						"activity": "GetMetadata2",
+						"dependencyConditions": [
+							"Failed"
+						]
+					},
+					{
+						"activity": "Filter1",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"typeProperties": {
+					"waitTimeInSeconds": 10
+				}
+			},
+			{
+				"name": "Filter1",
+				"type": "Filter",
+				"dependsOn": [
+					{
+						"activity": "Get Metadata1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"typeProperties": {
+					"items": {
+						"value": "@array(activity('Get Metadata1').output.exists)",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@equals(item(),'xx')",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"exists": {
+				"type": "Boolean"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

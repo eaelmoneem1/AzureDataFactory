@@ -1,0 +1,28 @@
+{
+	"name": "V_HR_Maclean_EXM_Location_Archive_Destination",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStore",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureDataLakeStoreFile",
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": ",",
+				"rowDelimiter": "",
+				"quoteChar": "\"",
+				"nullValue": "",
+				"treatEmptyAsNull": true,
+				"skipLineCount": 0,
+				"firstRowAsHeader": true
+			},
+			"fileName": {
+				"value": "@concat ('EXM_Location_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+				"type": "Expression"
+			},
+			"folderPath": "LandingArchive/CEOCFO/HR"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

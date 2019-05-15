@@ -1,0 +1,14 @@
+{
+	"name": "SFDC_FX_Rate_Last_Created",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"typeProperties": {
+			"tableName": "[STG].[Sales_SFDC_FXRate_Conversion]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

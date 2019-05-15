@@ -1,0 +1,10 @@
+{
+	"name": "AzureKeyVault1",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://p21d19901506001.vault.azure.net/"
+		}
+	}
+}

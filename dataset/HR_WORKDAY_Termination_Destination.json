@@ -1,0 +1,72 @@
+{
+	"name": "HR_WORKDAY_Termination_Destination",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Employee_ID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Worker_Type",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Termination_Date",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ELT",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ELT_1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ELT_2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Cost_Centre_ID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Function",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Finastra_Product",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Finastra_FAM",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Finastra_LINE",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Country",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Location",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Rec_CRE_TMS",
+				"type": "date"
+			}
+		],
+		"typeProperties": {
+			"tableName": "[STG].[HR_WORKDAY_Terminations]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

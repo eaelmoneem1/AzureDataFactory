@@ -1,0 +1,309 @@
+{
+	"name": "AzureSqlTable5",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"structure": [
+			{
+				"name": "id",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Opportunity_18chr_Id_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Order_Number_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Name",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Ownerid",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "owner_name",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Opportunity_Partner_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "OpportunityHEALTH_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Original_Opportunity_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "CloseDate",
+				"type": "Date",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "StageName",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Deal_Type_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "MainProduct_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Sales_Region_FY07_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Regional_Sales_Manager_Comments_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Accountid",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Account_Name",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Executive_Sponsor_alignment_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Next_Step_Due_Date_c",
+				"type": "Date",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "NextStep",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Approval_Status_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "sbaa_ApprovalStatus_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Term_CSH_c",
+				"type": "Int32",
+				"precision": 10,
+				"scale": 255
+			},
+			{
+				"name": "Deal_Category_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Service_Type_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Service_Sub_Type_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Strength_of_Sale_c",
+				"type": "Int32",
+				"precision": 10,
+				"scale": 255
+			},
+			{
+				"name": "Global_Account_Manager_Comments_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Campaignid",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "CampaignName",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "RecordTypeid",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "RecordType_Name",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Pricing_Country_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "LastModifiedDate",
+				"type": "Date",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Term_Estimate_Months_c",
+				"type": "Decimal",
+				"precision": 10
+			},
+			{
+				"name": "Commercial_Prop_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "Misys_Forecast_c",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "RLF_Amount_c",
+				"type": "Decimal",
+				"precision": 32,
+				"scale": 2
+			},
+			{
+				"name": "Accretive_RLF_c",
+				"type": "Decimal",
+				"precision": 32,
+				"scale": 2
+			},
+			{
+				"name": "RLF_percent_c",
+				"type": "Decimal",
+				"precision": 3,
+				"scale": 2
+			},
+			{
+				"name": "PS_Amount_c",
+				"type": "Decimal",
+				"precision": 32,
+				"scale": 2
+			},
+			{
+				"name": "ASP_Amount_c",
+				"type": "Decimal",
+				"precision": 32,
+				"scale": 2
+			},
+			{
+				"name": "ILF_Amount_c",
+				"type": "Decimal",
+				"precision": 32,
+				"scale": 2
+			},
+			{
+				"name": "Total_ILF_Booking_Converted",
+				"type": "Decimal",
+				"precision": 32,
+				"scale": 2
+			},
+			{
+				"name": "Total_ILF_In_Qtr_c",
+				"type": "Decimal",
+				"precision": 32,
+				"scale": 2
+			},
+			{
+				"name": "Amount",
+				"type": "Decimal",
+				"precision": 32,
+				"scale": 2
+			},
+			{
+				"name": "TCV_CSH_c",
+				"type": "Decimal",
+				"precision": 32,
+				"scale": 2
+			},
+			{
+				"name": "ACV_ACV_Equiv_CSH_c",
+				"type": "Decimal",
+				"precision": 32,
+				"scale": 2
+			},
+			{
+				"name": "CurrencyIsoCode",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			}
+		],
+		"typeProperties": {
+			"tableName": "[INT].[FactSales_SFDC_Booking]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

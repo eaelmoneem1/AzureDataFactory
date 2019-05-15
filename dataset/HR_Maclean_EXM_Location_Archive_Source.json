@@ -1,0 +1,14 @@
+{
+	"name": "HR_Maclean_EXM_Location_Archive_Source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"typeProperties": {
+			"tableName": "[STG].[V_HR_Maclean_EXM_Location]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

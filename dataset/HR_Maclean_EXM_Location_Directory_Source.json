@@ -1,0 +1,39 @@
+{
+	"name": "HR_Maclean_EXM_Location_Directory_Source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "FileShare",
+			"type": "LinkedServiceReference"
+		},
+		"type": "FileShare",
+		"structure": [
+			{
+				"name": "Location",
+				"type": "String"
+			},
+			{
+				"name": "Country",
+				"type": "String"
+			},
+			{
+				"name": "Region",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": ",",
+				"rowDelimiter": "",
+				"quoteChar": "\"",
+				"nullValue": "",
+				"treatEmptyAsNull": true,
+				"skipLineCount": 0,
+				"firstRowAsHeader": true
+			},
+			"fileName": "DimGeographical_Location.csv",
+			"folderPath": "HR"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,23 @@
+{
+	"name": "Weekly Job",
+	"properties": {
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Weekly Jobs",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Week",
+				"interval": 1,
+				"startTime": "2019-05-16T01:00:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}

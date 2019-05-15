@@ -1,0 +1,76 @@
+{
+	"name": "Marketing_Stg",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"structure": [
+			{
+				"name": "Opportunity_18chr_Id",
+				"type": "String"
+			},
+			{
+				"name": "Name",
+				"type": "String"
+			},
+			{
+				"name": "Opportunity_Number",
+				"type": "String"
+			},
+			{
+				"name": "AccountId",
+				"type": "String"
+			},
+			{
+				"name": "Sales_Region_FY07",
+				"type": "String"
+			},
+			{
+				"name": "Status",
+				"type": "String"
+			},
+			{
+				"name": "StageName",
+				"type": "String"
+			},
+			{
+				"name": "Probability",
+				"type": "String"
+			},
+			{
+				"name": "Date_opportunity_moved_to_SS2",
+				"type": "String"
+			},
+			{
+				"name": "Date_opportunity_moved_to_SS4",
+				"type": "String"
+			},
+			{
+				"name": "ILF_CommValue_CSH",
+				"type": "String"
+			},
+			{
+				"name": "ACV_ACV_Equiv_CSH",
+				"type": "String"
+			},
+			{
+				"name": "IST_Rep",
+				"type": "String"
+			},
+			{
+				"name": "CreatedDate",
+				"type": "String"
+			},
+			{
+				"name": "LastModifiedDate",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"tableName": "[STG].[Marketing_SFDC_Opportunity]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,57 @@
+{
+	"name": "FactOpportunity_All Job",
+	"properties": {
+		"activities": [
+			{
+				"name": "Execute Campaign",
+				"type": "ExecutePipeline",
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "DimSales_SFDC_Campaign_incremental",
+						"type": "PipelineReference"
+					}
+				}
+			},
+			{
+				"name": "FXRate_Conversion",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Execute Campaign",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "DimSales_SFDC_FXRate_Conversion_incremental",
+						"type": "PipelineReference"
+					}
+				}
+			},
+			{
+				"name": "Opportunity",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "FXRate_Conversion",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "FactOpportunity_All_incremental",
+						"type": "PipelineReference"
+					}
+				}
+			}
+		],
+		"folder": {
+			"name": "ETL Jobs"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

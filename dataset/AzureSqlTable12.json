@@ -1,0 +1,110 @@
+{
+	"name": "AzureSqlTable12",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Lead_18chr_Id",
+				"type": "varchar"
+			},
+			{
+				"name": "MQL_Datestamp",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "MTL_Datestamp",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "SQL_Datestamp",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Status",
+				"type": "varchar"
+			},
+			{
+				"name": "Company",
+				"type": "varchar"
+			},
+			{
+				"name": "Lead_Country",
+				"type": "varchar"
+			},
+			{
+				"name": "Title",
+				"type": "varchar"
+			},
+			{
+				"name": "FirstName",
+				"type": "varchar"
+			},
+			{
+				"name": "LastName",
+				"type": "varchar"
+			},
+			{
+				"name": "Email",
+				"type": "varchar"
+			},
+			{
+				"name": "MQL_Program",
+				"type": "varchar"
+			},
+			{
+				"name": "Qualified_Out_Reason",
+				"type": "varchar"
+			},
+			{
+				"name": "Status_Reason",
+				"type": "varchar"
+			},
+			{
+				"name": "Sales_Region",
+				"type": "varchar"
+			},
+			{
+				"name": "Sub_Region",
+				"type": "varchar"
+			},
+			{
+				"name": "ConvertedAccountId",
+				"type": "varchar"
+			},
+			{
+				"name": "ConvertedContactId",
+				"type": "varchar"
+			},
+			{
+				"name": "ConvertedOpportunityId",
+				"type": "varchar"
+			},
+			{
+				"name": "CreatedDate",
+				"type": "date"
+			},
+			{
+				"name": "Owner_ID",
+				"type": "varchar"
+			},
+			{
+				"name": "LastModifiedDate",
+				"type": "date"
+			}
+		],
+		"typeProperties": {
+			"tableName": "[STG].[V_Marketing_SFDC_Lead]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

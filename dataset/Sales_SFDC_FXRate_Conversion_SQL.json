@@ -1,0 +1,44 @@
+{
+	"name": "Sales_SFDC_FXRate_Conversion_SQL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"structure": [
+			{
+				"name": "id",
+				"type": "String"
+			},
+			{
+				"name": "IsoCode",
+				"type": "String"
+			},
+			{
+				"name": "ConversionRate",
+				"type": "String"
+			},
+			{
+				"name": "StartDate",
+				"type": "String"
+			},
+			{
+				"name": "NextStartDate",
+				"type": "String"
+			},
+			{
+				"name": "lastmodifieddate",
+				"type": "String"
+			},
+			{
+				"name": "CreatedDate",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"tableName": "[STG].[Sales_SFDC_FXRate_Conversion]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,151 @@
+{
+	"name": "DimMarketing_SFDC_Contact_initial",
+	"properties": {
+		"activities": [
+			{
+				"name": "Landing",
+				"type": "Copy",
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"source": {
+						"type": "SalesforceSource",
+						"query": {
+							"value": "SELECT \nAccountId,\nContactId18__c,\nContact_Name__c,\nContact_Type__c,\nCreatedDate,\nSalutation,\nFirstName,\nLastName,\nTitle,\nLeadSource,\nEmail,\nOwnerId,\nLastModifiedDate\nFROM Contact ",
+							"type": "Expression"
+						},
+						"readBehavior": "query"
+					},
+					"sink": {
+						"type": "SqlSink",
+						"writeBatchSize": 10000
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"columnMappings": {
+							"AccountId": "AccountId",
+							"ContactId18__c": "ContactId18__c",
+							"Contact_Name__c": "Contact_Name__c",
+							"Contact_Type__c": "Contact_Type__c",
+							"CreatedDate": "CreatedDate",
+							"Salutation": "Salutation",
+							"FirstName": "FirstName",
+							"LastName": "LastName",
+							"Title": "Title",
+							"LeadSource": "LeadSource",
+							"Email": "Email",
+							"OwnerId": "Owner_ID",
+							"LastModifiedDate": "LastModifiedDate"
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SFDC_Contact",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Contact_sql",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Loading dbo table",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Hash Generate",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[sp_INT_ApplyDimMarketing_SFDC_Contact]"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Hash Generate",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Loading Int tables",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[sp_INT_GenerateHashes]",
+					"storedProcedureParameters": {
+						"TableName": {
+							"value": "DimMarketing_SFDC_Contact",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Loading Int tables",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Landing",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[sp_INT_DimMarketing_SFDC_Contact]"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"folder": {
+			"name": "Marketing"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

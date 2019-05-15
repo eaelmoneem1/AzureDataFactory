@@ -1,0 +1,224 @@
+{
+	"name": "LND_SFDC_2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"structure": [
+			{
+				"name": "id",
+				"type": "String"
+			},
+			{
+				"name": "Name",
+				"type": "String"
+			},
+			{
+				"name": "Ownerid",
+				"type": "String"
+			},
+			{
+				"name": "owner_name",
+				"type": "String"
+			},
+			{
+				"name": "Owner_Sub_Region_c",
+				"type": "String"
+			},
+			{
+				"name": "CloseDate",
+				"type": "String"
+			},
+			{
+				"name": "StageName",
+				"type": "String"
+			},
+			{
+				"name": "Deal_Type_c",
+				"type": "String"
+			},
+			{
+				"name": "MainProduct_c",
+				"type": "String"
+			},
+			{
+				"name": "OpportunityHEALTH_c",
+				"type": "String"
+			},
+			{
+				"name": "RLF_percent_c",
+				"type": "String"
+			},
+			{
+				"name": "Regional_Sales_Manager_Comments_c",
+				"type": "String"
+			},
+			{
+				"name": "Accountid",
+				"type": "String"
+			},
+			{
+				"name": "Account_Name",
+				"type": "String"
+			},
+			{
+				"name": "Opportunity_18chr_Id_c",
+				"type": "String"
+			},
+			{
+				"name": "Amount",
+				"type": "String"
+			},
+			{
+				"name": "Order_Number_c",
+				"type": "String"
+			},
+			{
+				"name": "Sales_Region_FY07_c",
+				"type": "String"
+			},
+			{
+				"name": "Pricing_Country_c",
+				"type": "String"
+			},
+			{
+				"name": "Misys_Forecast_c",
+				"type": "String"
+			},
+			{
+				"name": "Term_Estimate_Months_c",
+				"type": "String"
+			},
+			{
+				"name": "Commercial_Prop_c",
+				"type": "String"
+			},
+			{
+				"name": "ILF_Amount_c",
+				"type": "String"
+			},
+			{
+				"name": "Total_ILF_In_Qtr_c",
+				"type": "String"
+			},
+			{
+				"name": "Accretive_RLF_c",
+				"type": "String"
+			},
+			{
+				"name": "RLF_Amount_c",
+				"type": "String"
+			},
+			{
+				"name": "PS_Amount_c",
+				"type": "String"
+			},
+			{
+				"name": "ASP_Amount_c",
+				"type": "String"
+			},
+			{
+				"name": "TCV_CSH_c",
+				"type": "String"
+			},
+			{
+				"name": "ACV_ACV_Equiv_CSH_c",
+				"type": "String"
+			},
+			{
+				"name": "Strength_of_Sale_c",
+				"type": "String"
+			},
+			{
+				"name": "Global_Account_Manager_Comments_c",
+				"type": "String"
+			},
+			{
+				"name": "Executive_Sponsor_alignment_c",
+				"type": "String"
+			},
+			{
+				"name": "Next_Step_Due_Date_c",
+				"type": "String"
+			},
+			{
+				"name": "NextStep",
+				"type": "String"
+			},
+			{
+				"name": "Approval_Status_c",
+				"type": "String"
+			},
+			{
+				"name": "sbaa_ApprovalStatus_c",
+				"type": "String"
+			},
+			{
+				"name": "Term_CSH_c",
+				"type": "String"
+			},
+			{
+				"name": "Deal_Category_c",
+				"type": "String"
+			},
+			{
+				"name": "Service_Type_c",
+				"type": "String"
+			},
+			{
+				"name": "Service_Sub_Type_c",
+				"type": "String"
+			},
+			{
+				"name": "Campaignid",
+				"type": "String"
+			},
+			{
+				"name": "Opportunity_Partner_c",
+				"type": "String"
+			},
+			{
+				"name": "Original_Opportunity_c",
+				"type": "String"
+			},
+			{
+				"name": "RecordTypeid",
+				"type": "String"
+			},
+			{
+				"name": "RecordType_Name",
+				"type": "String"
+			},
+			{
+				"name": "LastModifiedDate",
+				"type": "String"
+			},
+			{
+				"name": "CreatedDate",
+				"type": "String"
+			},
+			{
+				"name": "Existing_RLF_Currency_c",
+				"type": "String"
+			},
+			{
+				"name": "CurrencyIsoCode",
+				"type": "String"
+			},
+			{
+				"name": "SBU_Strategic_Business_Unit_c",
+				"type": "String"
+			},
+			{
+				"name": "FiscalPeriod_c",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"tableName": "[STG].[Sales_SFDC_Booking]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

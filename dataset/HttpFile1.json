@@ -1,0 +1,27 @@
+{
+	"name": "HttpFile1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "HttpServer1",
+			"type": "LinkedServiceReference"
+		},
+		"type": "HttpFile",
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": ",",
+				"rowDelimiter": "",
+				"quoteChar": "\"",
+				"nullValue": "",
+				"encodingName": null,
+				"treatEmptyAsNull": true,
+				"skipLineCount": 0,
+				"firstRowAsHeader": false
+			},
+			"relativeUrl": "",
+			"requestMethod": "GET",
+			"additionalHeaders": "Authorization:  NLAuth nlauth_account=3431250_SB1, nlauth_email=azureuser@test.com, nlauth_signature=Fin@straAzure2019, nlauth_role=1099"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

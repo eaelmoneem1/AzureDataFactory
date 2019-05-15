@@ -1,0 +1,28 @@
+{
+	"name": "HR_Maclean_EXM_Location_Directory_Destination",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"structure": [
+			{
+				"name": "Location",
+				"type": "String"
+			},
+			{
+				"name": "Country",
+				"type": "String"
+			},
+			{
+				"name": "Region",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"tableName": "[STG].[HR_Maclean_EXM_Location_Directory]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

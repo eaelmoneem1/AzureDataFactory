@@ -1,0 +1,136 @@
+{
+	"name": "Weekly Jobs",
+	"properties": {
+		"activities": [
+			{
+				"name": "FactSALES_MSCRM_Bookings",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "FactOpportunity_All",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "FactSALES_MSCRM_Bookings",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "FactSALES_MSCRM_Orderbook",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "FactSALES_MSCRM_Bookings",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "FactSALES_MSCRM_Orderbook",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "FactEXMSCORE_Location",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "FactSALES_MSCRM_Orderbook",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "FactEXMSCORE_Location",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "FactEXMSCORE_Region",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "FactEXMSCORE_Location",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "FactEXMSCORE_Region",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "DimEmployee",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "FactEXMSCORE_Region",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "DimEmployee",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "FactOpportunity_All",
+				"type": "ExecutePipeline",
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "FactOpportunity_All Job",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "FactEmployee_Requisitions",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "DimEmployee",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "FactEmployee_Requisitions",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"folder": {
+			"name": "ETL Jobs"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

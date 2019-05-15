@@ -1,0 +1,20 @@
+{
+	"name": "AzureSqlTable16",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Account_Name",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"tableName": "[STG].[V_Marketing_lkp_TAMlist]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

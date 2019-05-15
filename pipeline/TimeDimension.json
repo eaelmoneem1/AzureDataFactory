@@ -1,0 +1,151 @@
+{
+	"name": "TimeDimension",
+	"properties": {
+		"activities": [
+			{
+				"name": "STG",
+				"type": "Copy",
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"source": {
+						"type": "FileSystemSource",
+						"recursive": true
+					},
+					"sink": {
+						"type": "SqlSink",
+						"writeBatchSize": 10000
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"columnMappings": {
+							"FISCAL_PERIOD_SKEY": "FISCAL_PERIOD_SKEY",
+							"FISCAL_PERIOD_CREAT_DT": "FISCAL_PERIOD_CREAT_DT",
+							"FISCAL_PERIOD_LAST_UPD_DT": "FISCAL_PERIOD_LAST_UPD_DT",
+							"FISC_PERIOD_BKEY": "FISC_PERIOD_BKEY",
+							"FISC_PERIOD_CAPTION": "FISC_PERIOD_CAPTION",
+							"FISC_PERIOD_CODE": "FISC_PERIOD_CODE",
+							"FISC_PERIOD_NAME": "FISC_PERIOD_NAME",
+							"FISC_PERIOD_SERIES": "FISC_PERIOD_SERIES",
+							"FISC_PERIOD_BEG_DT": "FISC_PERIOD_BEG_DT",
+							"FISC_PERIOD_END_DT": "FISC_PERIOD_END_DT",
+							"FISC_QTR_BKEY": "FISC_QTR_BKEY",
+							"FISC_QTR_CAPTION": "FISC_QTR_CAPTION",
+							"FISC_QTR_CODE": "FISC_QTR_CODE",
+							"FISC_QTR_NAME": "FISC_QTR_NAME",
+							"FISC_QTR_SERIES": "FISC_QTR_SERIES",
+							"FISC_QTR_BEG_DT": "FISC_QTR_BEG_DT",
+							"FISC_QTR_END_DT": "FISC_QTR_END_DT",
+							"FISC_HALF_YEAR_BKEY": "FISC_HALF_YEAR_BKEY",
+							"FISC_HALF_YEAR_CAPTION": "FISC_HALF_YEAR_CAPTION",
+							"FISC_HALF_YEAR_CODE": "FISC_HALF_YEAR_CODE",
+							"FISC_HALF_YEAR_NAME": "FISC_HALF_YEAR_NAME",
+							"FISC_HALF_YEAR_SERIES": "FISC_HALF_YEAR_SERIES",
+							"FISC_HALF_YEAR_BEG_DT": "FISC_HALF_YEAR_BEG_DT",
+							"FISC_HALF_YEAR_END_DT": "FISC_HALF_YEAR_END_DT",
+							"FISC_YEAR_BKEY": "FISC_YEAR_BKEY",
+							"FISC_YEAR_CAPTION": "FISC_YEAR_CAPTION",
+							"FISC_YEAR_CODE": "FISC_YEAR_CODE",
+							"FISC_YEAR_SERIES": "FISC_YEAR_SERIES",
+							"FISC_YEAR_BEG_DT": "FISC_YEAR_BEG_DT",
+							"FISC_YEAR_END_DT": "FISC_YEAR_END_DT",
+							"FISC_YEAR_NAME": "FISC_YEAR_NAME",
+							"CAL_MONTH_BKEY": "CAL_MONTH_BKEY",
+							"CAL_MONTH_CAPTION": "CAL_MONTH_CAPTION",
+							"CAL_MONTH_CODE": "CAL_MONTH_CODE",
+							"CAL_MONTH_NAME": "CAL_MONTH_NAME",
+							"CAL_MONTH_SERIES": "CAL_MONTH_SERIES",
+							"CAL_MONTH_BEG_DT": "CAL_MONTH_BEG_DT",
+							"CAL_MONTH_END_DT": "CAL_MONTH_END_DT",
+							"CAL_QTR_BKEY": "CAL_QTR_BKEY",
+							"CAL_QTR_CAPTION": "CAL_QTR_CAPTION",
+							"CAL_QTR_CODE": "CAL_QTR_CODE",
+							"CAL_QTR_NAME": "CAL_QTR_NAME",
+							"CAL_QTR_SERIES": "CAL_QTR_SERIES",
+							"CAL_QTR_BEG_DT": "CAL_QTR_BEG_DT",
+							"CAL_QTR_END_DT": "CAL_QTR_END_DT",
+							"CAL_HALF_YEAR_BKEY": "CAL_HALF_YEAR_BKEY",
+							"CAL_HALF_YEAR_CAPTION": "CAL_HALF_YEAR_CAPTION",
+							"CAL_HALF_YEAR_CODE": "CAL_HALF_YEAR_CODE",
+							"CAL_HALF_YEAR_NAME": "CAL_HALF_YEAR_NAME",
+							"CAL_HALF_YEAR_SERIES": "CAL_HALF_YEAR_SERIES",
+							"CAL_HALF_YEAR_BEG_DT": "CAL_HALF_YEAR_BEG_DT",
+							"CAL_HALF_YEAR_END_DT": "CAL_HALF_YEAR_END_DT",
+							"CAL_YEAR_BKEY": "CAL_YEAR_BKEY",
+							"CAL_YEAR_CAPTION": "CAL_YEAR_CAPTION",
+							"CAL_YEAR_CODE": "CAL_YEAR_CODE",
+							"CAL_YEAR_SERIES": "CAL_YEAR_SERIES",
+							"CAL_YEAR_BEG_DT": "CAL_YEAR_BEG_DT",
+							"CAL_YEAR_END_DT": "CAL_YEAR_END_DT",
+							"CAL_YEAR_NAME": "CAL_YEAR_NAME",
+							"SOURCE_SYSTEM": "SOURCE_SYSTEM"
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "TimeDimension_Source",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "TimeDimension_Destination",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Archiving data in DL",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "STG",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"source": {
+						"type": "FileSystemSource",
+						"recursive": true
+					},
+					"sink": {
+						"type": "AzureDataLakeStoreSink"
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "TimeDimension_Source",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "TimeDimension_Archive_Destination",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "Time"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

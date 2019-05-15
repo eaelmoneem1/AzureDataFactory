@@ -1,0 +1,70 @@
+{
+	"name": "Booking_Actuals",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "FileShare",
+			"type": "LinkedServiceReference"
+		},
+		"type": "FileShare",
+		"structure": [
+			{
+				"name": "GL Period",
+				"type": "String"
+			},
+			{
+				"name": "TransID",
+				"type": "String"
+			},
+			{
+				"name": "Region",
+				"type": "String"
+			},
+			{
+				"name": "Softrax",
+				"type": "String"
+			},
+			{
+				"name": "Name",
+				"type": "String"
+			},
+			{
+				"name": "Sales Rep",
+				"type": "String"
+			},
+			{
+				"name": "LOB",
+				"type": "String"
+			},
+			{
+				"name": "Product",
+				"type": "String"
+			},
+			{
+				"name": "Booking ACV",
+				"type": "String"
+			},
+			{
+				"name": "Renewal ACV",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": ",",
+				"rowDelimiter": "",
+				"quoteChar": "\"",
+				"nullValue": "",
+				"treatEmptyAsNull": true,
+				"skipLineCount": 0,
+				"firstRowAsHeader": true
+			},
+			"fileName": {
+				"value": "@concat ('CM_Bookings_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+				"type": "Expression"
+			},
+			"folderPath": "CEOCFO/Sales"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

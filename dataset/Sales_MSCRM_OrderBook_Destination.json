@@ -1,0 +1,112 @@
+{
+	"name": "Sales_MSCRM_OrderBook_Destination",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"structure": [
+			{
+				"name": "Accountid (Custom_SQL_Query)",
+				"type": "String"
+			},
+			{
+				"name": "AccountName",
+				"type": "String"
+			},
+			{
+				"name": "Createdon (DAY)",
+				"type": "String"
+			},
+			{
+				"name": "Estimated Close Date (DAY)",
+				"type": "String"
+			},
+			{
+				"name": "Modifiedon (DAY)",
+				"type": "String"
+			},
+			{
+				"name": "Employeeid",
+				"type": "String"
+			},
+			{
+				"name": "Forecast Category",
+				"type": "String"
+			},
+			{
+				"name": "LOB",
+				"type": "String"
+			},
+			{
+				"name": "Main Product",
+				"type": "String"
+			},
+			{
+				"name": "Name",
+				"type": "String"
+			},
+			{
+				"name": "Opportunityid",
+				"type": "String"
+			},
+			{
+				"name": "Quarter",
+				"type": "String"
+			},
+			{
+				"name": "Region",
+				"type": "String"
+			},
+			{
+				"name": "Sale Type",
+				"type": "String"
+			},
+			{
+				"name": "Sales Rep",
+				"type": "String"
+			},
+			{
+				"name": "Sales Stage",
+				"type": "String"
+			},
+			{
+				"name": "Statecodename",
+				"type": "String"
+			},
+			{
+				"name": "ACV + ACV Equiv (AVG)",
+				"type": "String"
+			},
+			{
+				"name": "ACV Booking (AVG)",
+				"type": "String"
+			},
+			{
+				"name": "ACV Renewal (AVG)",
+				"type": "String"
+			},
+			{
+				"name": "Contract Term (Months) (AVG)",
+				"type": "String"
+			},
+			{
+				"name": "ILF (AVG)",
+				"type": "String"
+			},
+			{
+				"name": "Services (AVG)",
+				"type": "String"
+			},
+			{
+				"name": "Term in Years (AVG)",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"tableName": "[STG].[SALES_MSCRM_Orderbook]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

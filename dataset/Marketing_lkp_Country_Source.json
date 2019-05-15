@@ -1,0 +1,36 @@
+{
+	"name": "Marketing_lkp_Country_Source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "FileShare",
+			"type": "LinkedServiceReference"
+		},
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "FileServerLocation",
+				"fileName": "Marketing_lkp_Country.csv",
+				"folderPath": "ELT/Marketing"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "/",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Country",
+				"type": "String"
+			},
+			{
+				"name": "Sales Region",
+				"type": "String"
+			},
+			{
+				"name": "Sub-Region",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,14 @@
+{
+	"name": "Sales_MSCRM_Booking_Archive",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"typeProperties": {
+			"tableName": "[STG].[V_SALES_MSCRM_Bookings]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

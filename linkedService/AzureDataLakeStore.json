@@ -1,0 +1,13 @@
+{
+	"name": "AzureDataLakeStore",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"type": "AzureDataLakeStore",
+		"typeProperties": {
+			"dataLakeStoreUri": "https://p21d19901011001.azuredatalakestore.net/webhdfs/v1",
+			"tenant": "e17e2402-2a40-42ce-ad75-5848b8d4f6b6",
+			"subscriptionId": "f4c6caf2-122a-491f-928a-ffa197a45fcd",
+			"resourceGroupName": "AZR-C21-DV-199-01"
+		}
+	}
+}

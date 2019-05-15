@@ -1,0 +1,28 @@
+{
+	"name": "AzureSqlTable6",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"structure": [
+			{
+				"name": "test",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "test2",
+				"type": "String",
+				"precision": 255,
+				"scale": 255
+			}
+		],
+		"typeProperties": {
+			"tableName": "[dbo].[test]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

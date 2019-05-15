@@ -1,0 +1,56 @@
+{
+	"name": "Sales_MSCRM_Booking_Actual",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"structure": [
+			{
+				"name": "GL_Period",
+				"type": "String"
+			},
+			{
+				"name": "TransID",
+				"type": "String"
+			},
+			{
+				"name": "Region",
+				"type": "String"
+			},
+			{
+				"name": "Softrax",
+				"type": "String"
+			},
+			{
+				"name": "Name",
+				"type": "String"
+			},
+			{
+				"name": "Sales_Rep",
+				"type": "String"
+			},
+			{
+				"name": "LOB",
+				"type": "String"
+			},
+			{
+				"name": "Product",
+				"type": "String"
+			},
+			{
+				"name": "Booking_ACV",
+				"type": "String"
+			},
+			{
+				"name": "Renewal_ACV",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"tableName": "[STG].[SALES_MSCRM_Bookings]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
