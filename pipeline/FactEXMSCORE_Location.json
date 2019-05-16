@@ -118,7 +118,7 @@
 					"secureInput": false
 				},
 				"typeProperties": {
-					"storedProcedureName": "[dbo].[sp_INT_ApplyFactEXMSCORE_Location]"
+					"storedProcedureName": "[dbo].[sp_INT_FactEXMSCORE_Location]"
 				},
 				"linkedServiceName": {
 					"referenceName": "AzureSqlDatabase_finastra",
