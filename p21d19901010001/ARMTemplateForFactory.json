@@ -5219,7 +5219,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_ApplyFactEXMSCORE_Location]"
+							"storedProcedureName": "[[dbo].[sp_INT_FactEXMSCORE_Location]"
 						},
 						"linkedServiceName": {
 							"referenceName": "AzureSqlDatabase_finastra",
@@ -21179,8 +21179,7 @@
 						"frequency": "Week",
 						"interval": 1,
 						"startTime": "2019-05-23T23:00:00.000Z",
-						"timeZone": "UTC",
-						"schedule": {}
+						"timeZone": "UTC"
 					}
 				}
 			},
