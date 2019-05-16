@@ -71,7 +71,7 @@
 				"value": "@concat ('Requisations_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
 				"type": "Expression"
 			},
-			"folderPath": "HR"
+			"folderPath": "CEOCFO/HR"
 		}
 	},
 	"type": "Microsoft.DataFactory/factories/datasets"
