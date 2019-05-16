@@ -77,7 +77,7 @@
 		},
 		"HR_WORKDAY_REQ_Source_properties_typeProperties_folderPath": {
 			"type": "string",
-			"defaultValue": "HR"
+			"defaultValue": "CEOCFO/HR"
 		}
 	},
 	"variables": {

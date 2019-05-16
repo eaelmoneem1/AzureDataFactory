@@ -153,7 +153,7 @@
 			"value": "@concat ('Requisations_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
 		},
 		"HR_WORKDAY_REQ_Source_properties_typeProperties_folderPath": {
-			"value": "HR"
+			"value": "CEOCFO/HR"
 		},
 		"Opportunity_Incremintal_Archiving_properties_typeProperties_fileName": {
 			"value": "@concat ('Opportunity_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')"

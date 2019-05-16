@@ -205,7 +205,7 @@
 		},
 		"HR_WORKDAY_REQ_Source_properties_typeProperties_folderPath": {
 			"type": "string",
-			"defaultValue": "HR"
+			"defaultValue": "CEOCFO/HR"
 		},
 		"Opportunity_Incremintal_Archiving_properties_typeProperties_fileName": {
 			"type": "string",
