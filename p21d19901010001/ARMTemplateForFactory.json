@@ -6874,7 +6874,7 @@
 						"type": "SqlServerStoredProcedure",
 						"dependsOn": [
 							{
-								"activity": "Loading STG tables",
+								"activity": "fix corrupted Values",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -7042,6 +7042,34 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "fix corrupted Values",
+						"description": "",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading STG tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_FactFinanceRevenue_Cost_Corrupted_fix]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
 					}
 				],
 				"folder": {
