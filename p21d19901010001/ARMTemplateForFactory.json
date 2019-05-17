@@ -8038,6 +8038,9 @@
 						}
 					}
 				],
+				"folder": {
+					"name": "ETL Jobs"
+				},
 				"annotations": []
 			},
 			"dependsOn": [
