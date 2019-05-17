@@ -12,7 +12,8 @@
 				"fileName": {
 					"value": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
 					"type": "Expression"
-				}
+				},
+				"folderPath": "Storage"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
