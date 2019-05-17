@@ -1,5 +1,5 @@
 {
-	"name": "FileCopy Job",
+	"name": "Files Copy Job",
 	"properties": {
 		"activities": [
 			{
