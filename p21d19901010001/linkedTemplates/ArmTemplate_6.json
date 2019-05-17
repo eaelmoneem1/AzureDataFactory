@@ -38,44 +38,88 @@
 		"TimeDimensionDate_Archive_Destination_properties_typeProperties_folderPath": {
 			"type": "string",
 			"defaultValue": "LandingArchive/CEOCFO/Dimentions/Time"
-		},
-		"TimeDimensionDate_Source_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": ""
-		},
-		"TimeDimensionDate_Source_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "CEOCFO/Dimentions/Time"
-		},
-		"TimeDimension_Archive_Destination_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "@concat ('TimeDimension_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
-		},
-		"TimeDimension_Archive_Destination_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "LandingArchive/CEOCFO/Dimentions/Time"
-		},
-		"TimeDimension_Source_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "TimeDimension.csv"
-		},
-		"TimeDimension_Source_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "CEOCFO/Dimentions/Time"
-		},
-		"V_HR_Maclean_EXM_Location_Archive_Destination_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "@concat ('EXM_Location_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
-		},
-		"V_HR_Maclean_EXM_Location_Archive_Destination_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "LandingArchive/CEOCFO/HR"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/Sales_MSCRM_Booking_Actual')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"structure": [
+					{
+						"name": "GL_Period",
+						"type": "String"
+					},
+					{
+						"name": "TransID",
+						"type": "String"
+					},
+					{
+						"name": "Region",
+						"type": "String"
+					},
+					{
+						"name": "Softrax",
+						"type": "String"
+					},
+					{
+						"name": "Name",
+						"type": "String"
+					},
+					{
+						"name": "Sales_Rep",
+						"type": "String"
+					},
+					{
+						"name": "LOB",
+						"type": "String"
+					},
+					{
+						"name": "Product",
+						"type": "String"
+					},
+					{
+						"name": "Booking_ACV",
+						"type": "String"
+					},
+					{
+						"name": "Renewal_ACV",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[SALES_MSCRM_Bookings]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Sales_MSCRM_Booking_Archive')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"typeProperties": {
+					"tableName": "[[STG].[V_SALES_MSCRM_Bookings]"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Sales_MSCRM_Booking_Archive_DL')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -1064,6 +1108,122 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/SharedFolder2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SharedFolder2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"fileName": {
+							"value": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+							"type": "Expression"
+						},
+						"folderPath": "Storage"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SharedFolder3')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SharedFolder3",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"fileName": {
+							"value": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+							"type": "Expression"
+						},
+						"folderPath": "Storage"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SharedFolder3_Dest')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SharedFolder3",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"fileName": {
+							"value": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+							"type": "Expression"
+						},
+						"folderPath": "Storage"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SharedFoler2_Dest')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SharedFolder2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"fileName": {
+							"value": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+							"type": "Expression"
+						},
+						"folderPath": "Storage"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/TimeDimensionDate_Archive_Destination')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1090,1230 +1250,6 @@
 						"type": "Expression"
 					},
 					"folderPath": "[parameters('TimeDimensionDate_Archive_Destination_properties_typeProperties_folderPath')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/TimeDimensionDate_Destination')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"structure": [
-					{
-						"name": "DATE_SKEY",
-						"type": "String"
-					},
-					{
-						"name": "DATE_CREAT_DT",
-						"type": "String"
-					},
-					{
-						"name": "DATE_LAST_UPD_DT",
-						"type": "String"
-					},
-					{
-						"name": "DATE_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "DATE_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "DATE_CODE",
-						"type": "String"
-					},
-					{
-						"name": "DATE_DT",
-						"type": "String"
-					},
-					{
-						"name": "DATE_DAY_NAME",
-						"type": "String"
-					},
-					{
-						"name": "DATE_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "DATE_DAY_OF_WEEK",
-						"type": "String"
-					},
-					{
-						"name": "CAL_MONTH_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "CAL_MONTH_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "CAL_MONTH_CODE",
-						"type": "String"
-					},
-					{
-						"name": "CAL_MONTH_NAME",
-						"type": "String"
-					},
-					{
-						"name": "CAL_MONTH_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "CAL_MONTH_BEG_DT",
-						"type": "String"
-					},
-					{
-						"name": "CAL_MONTH_END_DT",
-						"type": "String"
-					},
-					{
-						"name": "CAL_QTR_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "CAL_QTR_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "CAL_QTR_CODE",
-						"type": "String"
-					},
-					{
-						"name": "CAL_QTR_NAME",
-						"type": "String"
-					},
-					{
-						"name": "CAL_QTR_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "CAL_QTR_BEG_DT",
-						"type": "String"
-					},
-					{
-						"name": "CAL_QTR_END_DT",
-						"type": "String"
-					},
-					{
-						"name": "CAL_HALF_YEAR_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "CAL_HALF_YEAR_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "CAL_HALF_YEAR_CODE",
-						"type": "String"
-					},
-					{
-						"name": "CAL_HALF_YEAR_NAME",
-						"type": "String"
-					},
-					{
-						"name": "CAL_HALF_YEAR_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "CAL_HALF_YEAR_BEG_DT",
-						"type": "String"
-					},
-					{
-						"name": "CAL_HALF_YEAR_END_DT",
-						"type": "String"
-					},
-					{
-						"name": "CAL_YEAR_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "CAL_YEAR_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "CAL_YEAR_CODE",
-						"type": "String"
-					},
-					{
-						"name": "CAL_YEAR_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "CAL_YEAR_BEG_DT",
-						"type": "String"
-					},
-					{
-						"name": "CAL_YEAR_END_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_PERIOD_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "FISC_PERIOD_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "FISC_PERIOD_CODE",
-						"type": "String"
-					},
-					{
-						"name": "FISC_PERIOD_NAME",
-						"type": "String"
-					},
-					{
-						"name": "FISC_PERIOD_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "FISC_PERIOD_BEG_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_PERIOD_END_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_QTR_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "FISC_QTR_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "FISC_QTR_CODE",
-						"type": "String"
-					},
-					{
-						"name": "FISC_QTR_NAME",
-						"type": "String"
-					},
-					{
-						"name": "FISC_QTR_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "FISC_QTR_BEG_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_QTR_END_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_HALF_YEAR_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "FISC_HALF_YEAR_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "FISC_HALF_YEAR_CODE",
-						"type": "String"
-					},
-					{
-						"name": "FISC_HALF_YEAR_NAME",
-						"type": "String"
-					},
-					{
-						"name": "FISC_HALF_YEAR_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "FISC_HALF_YEAR_BEG_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_HALF_YEAR_END_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_YEAR_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "FISC_YEAR_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "FISC_YEAR_CODE",
-						"type": "String"
-					},
-					{
-						"name": "FISC_YEAR_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "FISC_YEAR_BEG_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_YEAR_END_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_YEAR_NAME",
-						"type": "String"
-					},
-					{
-						"name": "FISC_WEEK_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "FISC_WEEK_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "FISC_WEEK_CODE",
-						"type": "String"
-					},
-					{
-						"name": "FISC_WEEK_NAME",
-						"type": "String"
-					},
-					{
-						"name": "FISC_WEEK_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "FISC_WEEK_BEG_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_WEEK_END_DT",
-						"type": "String"
-					},
-					{
-						"name": "SOURCE_SYSTEM",
-						"type": "String"
-					}
-				],
-				"typeProperties": {
-					"tableName": "[[STG].[TimeDimensionDate]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/TimeDimensionDate_Source')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileShare",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "FileShare",
-				"structure": [
-					{
-						"name": "DATE_SKEY",
-						"type": "String"
-					},
-					{
-						"name": "DATE_CREAT_DT",
-						"type": "String"
-					},
-					{
-						"name": "DATE_LAST_UPD_DT",
-						"type": "String"
-					},
-					{
-						"name": "DATE_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "DATE_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "DATE_CODE",
-						"type": "String"
-					},
-					{
-						"name": "DATE_DT",
-						"type": "String"
-					},
-					{
-						"name": "DATE_DAY_NAME",
-						"type": "String"
-					},
-					{
-						"name": "DATE_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "DATE_DAY_OF_WEEK",
-						"type": "String"
-					},
-					{
-						"name": "CAL_MONTH_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "CAL_MONTH_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "CAL_MONTH_CODE",
-						"type": "String"
-					},
-					{
-						"name": "CAL_MONTH_NAME",
-						"type": "String"
-					},
-					{
-						"name": "CAL_MONTH_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "CAL_MONTH_BEG_DT",
-						"type": "String"
-					},
-					{
-						"name": "CAL_MONTH_END_DT",
-						"type": "String"
-					},
-					{
-						"name": "CAL_QTR_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "CAL_QTR_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "CAL_QTR_CODE",
-						"type": "String"
-					},
-					{
-						"name": "CAL_QTR_NAME",
-						"type": "String"
-					},
-					{
-						"name": "CAL_QTR_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "CAL_QTR_BEG_DT",
-						"type": "String"
-					},
-					{
-						"name": "CAL_QTR_END_DT",
-						"type": "String"
-					},
-					{
-						"name": "CAL_HALF_YEAR_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "CAL_HALF_YEAR_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "CAL_HALF_YEAR_CODE",
-						"type": "String"
-					},
-					{
-						"name": "CAL_HALF_YEAR_NAME",
-						"type": "String"
-					},
-					{
-						"name": "CAL_HALF_YEAR_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "CAL_HALF_YEAR_BEG_DT",
-						"type": "String"
-					},
-					{
-						"name": "CAL_HALF_YEAR_END_DT",
-						"type": "String"
-					},
-					{
-						"name": "CAL_YEAR_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "CAL_YEAR_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "CAL_YEAR_CODE",
-						"type": "String"
-					},
-					{
-						"name": "CAL_YEAR_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "CAL_YEAR_BEG_DT",
-						"type": "String"
-					},
-					{
-						"name": "CAL_YEAR_END_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_PERIOD_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "FISC_PERIOD_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "FISC_PERIOD_CODE",
-						"type": "String"
-					},
-					{
-						"name": "FISC_PERIOD_NAME",
-						"type": "String"
-					},
-					{
-						"name": "FISC_PERIOD_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "FISC_PERIOD_BEG_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_PERIOD_END_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_QTR_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "FISC_QTR_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "FISC_QTR_CODE",
-						"type": "String"
-					},
-					{
-						"name": "FISC_QTR_NAME",
-						"type": "String"
-					},
-					{
-						"name": "FISC_QTR_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "FISC_QTR_BEG_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_QTR_END_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_HALF_YEAR_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "FISC_HALF_YEAR_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "FISC_HALF_YEAR_CODE",
-						"type": "String"
-					},
-					{
-						"name": "FISC_HALF_YEAR_NAME",
-						"type": "String"
-					},
-					{
-						"name": "FISC_HALF_YEAR_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "FISC_HALF_YEAR_BEG_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_HALF_YEAR_END_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_YEAR_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "FISC_YEAR_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "FISC_YEAR_CODE",
-						"type": "String"
-					},
-					{
-						"name": "FISC_YEAR_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "FISC_YEAR_BEG_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_YEAR_END_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_YEAR_NAME",
-						"type": "String"
-					},
-					{
-						"name": "FISC_WEEK_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "FISC_WEEK_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "FISC_WEEK_CODE",
-						"type": "String"
-					},
-					{
-						"name": "FISC_WEEK_NAME",
-						"type": "String"
-					},
-					{
-						"name": "FISC_WEEK_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "FISC_WEEK_BEG_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_WEEK_END_DT",
-						"type": "String"
-					},
-					{
-						"name": "SOURCE_SYSTEM",
-						"type": "String"
-					}
-				],
-				"typeProperties": {
-					"format": {
-						"type": "TextFormat",
-						"columnDelimiter": ",",
-						"rowDelimiter": "",
-						"quoteChar": "\"",
-						"nullValue": "",
-						"treatEmptyAsNull": true,
-						"skipLineCount": 0,
-						"firstRowAsHeader": true
-					},
-					"fileName": "[parameters('TimeDimensionDate_Source_properties_typeProperties_fileName')]",
-					"folderPath": "[parameters('TimeDimensionDate_Source_properties_typeProperties_folderPath')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/TimeDimension_Archive_Destination')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStore",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureDataLakeStoreFile",
-				"typeProperties": {
-					"format": {
-						"type": "TextFormat",
-						"columnDelimiter": ",",
-						"rowDelimiter": "",
-						"quoteChar": "\"",
-						"nullValue": "",
-						"treatEmptyAsNull": true,
-						"skipLineCount": 0,
-						"firstRowAsHeader": true
-					},
-					"fileName": {
-						"value": "[parameters('TimeDimension_Archive_Destination_properties_typeProperties_fileName')]",
-						"type": "Expression"
-					},
-					"folderPath": "[parameters('TimeDimension_Archive_Destination_properties_typeProperties_folderPath')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/TimeDimension_Destination')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"structure": [
-					{
-						"name": "FISCAL_PERIOD_SKEY",
-						"type": "String"
-					},
-					{
-						"name": "FISCAL_PERIOD_CREAT_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISCAL_PERIOD_LAST_UPD_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_PERIOD_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "FISC_PERIOD_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "FISC_PERIOD_CODE",
-						"type": "String"
-					},
-					{
-						"name": "FISC_PERIOD_NAME",
-						"type": "String"
-					},
-					{
-						"name": "FISC_PERIOD_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "FISC_PERIOD_BEG_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_PERIOD_END_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_QTR_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "FISC_QTR_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "FISC_QTR_CODE",
-						"type": "String"
-					},
-					{
-						"name": "FISC_QTR_NAME",
-						"type": "String"
-					},
-					{
-						"name": "FISC_QTR_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "FISC_QTR_BEG_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_QTR_END_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_HALF_YEAR_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "FISC_HALF_YEAR_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "FISC_HALF_YEAR_CODE",
-						"type": "String"
-					},
-					{
-						"name": "FISC_HALF_YEAR_NAME",
-						"type": "String"
-					},
-					{
-						"name": "FISC_HALF_YEAR_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "FISC_HALF_YEAR_BEG_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_HALF_YEAR_END_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_YEAR_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "FISC_YEAR_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "FISC_YEAR_CODE",
-						"type": "String"
-					},
-					{
-						"name": "FISC_YEAR_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "FISC_YEAR_BEG_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_YEAR_END_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_YEAR_NAME",
-						"type": "String"
-					},
-					{
-						"name": "CAL_MONTH_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "CAL_MONTH_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "CAL_MONTH_CODE",
-						"type": "String"
-					},
-					{
-						"name": "CAL_MONTH_NAME",
-						"type": "String"
-					},
-					{
-						"name": "CAL_MONTH_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "CAL_MONTH_BEG_DT",
-						"type": "String"
-					},
-					{
-						"name": "CAL_MONTH_END_DT",
-						"type": "String"
-					},
-					{
-						"name": "CAL_QTR_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "CAL_QTR_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "CAL_QTR_CODE",
-						"type": "String"
-					},
-					{
-						"name": "CAL_QTR_NAME",
-						"type": "String"
-					},
-					{
-						"name": "CAL_QTR_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "CAL_QTR_BEG_DT",
-						"type": "String"
-					},
-					{
-						"name": "CAL_QTR_END_DT",
-						"type": "String"
-					},
-					{
-						"name": "CAL_HALF_YEAR_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "CAL_HALF_YEAR_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "CAL_HALF_YEAR_CODE",
-						"type": "String"
-					},
-					{
-						"name": "CAL_HALF_YEAR_NAME",
-						"type": "String"
-					},
-					{
-						"name": "CAL_HALF_YEAR_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "CAL_HALF_YEAR_BEG_DT",
-						"type": "String"
-					},
-					{
-						"name": "CAL_HALF_YEAR_END_DT",
-						"type": "String"
-					},
-					{
-						"name": "CAL_YEAR_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "CAL_YEAR_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "CAL_YEAR_CODE",
-						"type": "String"
-					},
-					{
-						"name": "CAL_YEAR_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "CAL_YEAR_BEG_DT",
-						"type": "String"
-					},
-					{
-						"name": "CAL_YEAR_END_DT",
-						"type": "String"
-					},
-					{
-						"name": "CAL_YEAR_NAME",
-						"type": "String"
-					},
-					{
-						"name": "SOURCE_SYSTEM",
-						"type": "String"
-					}
-				],
-				"typeProperties": {
-					"tableName": "[[STG].[TimeDimension]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/TimeDimension_Source')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileShare",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "FileShare",
-				"structure": [
-					{
-						"name": "FISCAL_PERIOD_SKEY",
-						"type": "String"
-					},
-					{
-						"name": "FISCAL_PERIOD_CREAT_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISCAL_PERIOD_LAST_UPD_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_PERIOD_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "FISC_PERIOD_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "FISC_PERIOD_CODE",
-						"type": "String"
-					},
-					{
-						"name": "FISC_PERIOD_NAME",
-						"type": "String"
-					},
-					{
-						"name": "FISC_PERIOD_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "FISC_PERIOD_BEG_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_PERIOD_END_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_QTR_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "FISC_QTR_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "FISC_QTR_CODE",
-						"type": "String"
-					},
-					{
-						"name": "FISC_QTR_NAME",
-						"type": "String"
-					},
-					{
-						"name": "FISC_QTR_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "FISC_QTR_BEG_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_QTR_END_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_HALF_YEAR_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "FISC_HALF_YEAR_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "FISC_HALF_YEAR_CODE",
-						"type": "String"
-					},
-					{
-						"name": "FISC_HALF_YEAR_NAME",
-						"type": "String"
-					},
-					{
-						"name": "FISC_HALF_YEAR_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "FISC_HALF_YEAR_BEG_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_HALF_YEAR_END_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_YEAR_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "FISC_YEAR_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "FISC_YEAR_CODE",
-						"type": "String"
-					},
-					{
-						"name": "FISC_YEAR_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "FISC_YEAR_BEG_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_YEAR_END_DT",
-						"type": "String"
-					},
-					{
-						"name": "FISC_YEAR_NAME",
-						"type": "String"
-					},
-					{
-						"name": "CAL_MONTH_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "CAL_MONTH_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "CAL_MONTH_CODE",
-						"type": "String"
-					},
-					{
-						"name": "CAL_MONTH_NAME",
-						"type": "String"
-					},
-					{
-						"name": "CAL_MONTH_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "CAL_MONTH_BEG_DT",
-						"type": "String"
-					},
-					{
-						"name": "CAL_MONTH_END_DT",
-						"type": "String"
-					},
-					{
-						"name": "CAL_QTR_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "CAL_QTR_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "CAL_QTR_CODE",
-						"type": "String"
-					},
-					{
-						"name": "CAL_QTR_NAME",
-						"type": "String"
-					},
-					{
-						"name": "CAL_QTR_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "CAL_QTR_BEG_DT",
-						"type": "String"
-					},
-					{
-						"name": "CAL_QTR_END_DT",
-						"type": "String"
-					},
-					{
-						"name": "CAL_HALF_YEAR_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "CAL_HALF_YEAR_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "CAL_HALF_YEAR_CODE",
-						"type": "String"
-					},
-					{
-						"name": "CAL_HALF_YEAR_NAME",
-						"type": "String"
-					},
-					{
-						"name": "CAL_HALF_YEAR_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "CAL_HALF_YEAR_BEG_DT",
-						"type": "String"
-					},
-					{
-						"name": "CAL_HALF_YEAR_END_DT",
-						"type": "String"
-					},
-					{
-						"name": "CAL_YEAR_BKEY",
-						"type": "String"
-					},
-					{
-						"name": "CAL_YEAR_CAPTION",
-						"type": "String"
-					},
-					{
-						"name": "CAL_YEAR_CODE",
-						"type": "String"
-					},
-					{
-						"name": "CAL_YEAR_SERIES",
-						"type": "String"
-					},
-					{
-						"name": "CAL_YEAR_BEG_DT",
-						"type": "String"
-					},
-					{
-						"name": "CAL_YEAR_END_DT",
-						"type": "String"
-					},
-					{
-						"name": "CAL_YEAR_NAME",
-						"type": "String"
-					},
-					{
-						"name": "SOURCE_SYSTEM",
-						"type": "String"
-					}
-				],
-				"typeProperties": {
-					"format": {
-						"type": "TextFormat",
-						"columnDelimiter": ",",
-						"rowDelimiter": "",
-						"quoteChar": "\"",
-						"nullValue": "",
-						"treatEmptyAsNull": true,
-						"skipLineCount": 0,
-						"firstRowAsHeader": true
-					},
-					"fileName": "[parameters('TimeDimension_Source_properties_typeProperties_fileName')]",
-					"folderPath": "[parameters('TimeDimension_Source_properties_typeProperties_folderPath')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/V_HR_Maclean_EXM_Location_Archive_Destination')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStore",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureDataLakeStoreFile",
-				"typeProperties": {
-					"format": {
-						"type": "TextFormat",
-						"columnDelimiter": ",",
-						"rowDelimiter": "",
-						"quoteChar": "\"",
-						"nullValue": "",
-						"treatEmptyAsNull": true,
-						"skipLineCount": 0,
-						"firstRowAsHeader": true
-					},
-					"fileName": {
-						"value": "[parameters('V_HR_Maclean_EXM_Location_Archive_Destination_properties_typeProperties_fileName')]",
-						"type": "Expression"
-					},
-					"folderPath": "[parameters('V_HR_Maclean_EXM_Location_Archive_Destination_properties_typeProperties_folderPath')]"
 				}
 			},
 			"dependsOn": []

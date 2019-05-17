@@ -7,6 +7,22 @@
 			"metadata": "Data Factory Name",
 			"defaultValue": "p21d19901010001"
 		},
+		"FileShare2_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"FileShare2_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "Storage"
+		},
+		"FileShare3_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"FileShare3_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "Storage"
+		},
 		"Finace_RevenueCost_Destination_properties_typeProperties_fileName": {
 			"type": "string",
 			"defaultValue": "@concat ('dbo_FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
@@ -78,20 +94,70 @@
 		"HR_WORKDAY_REQ_Archive_Destination_properties_typeProperties_folderPath": {
 			"type": "string",
 			"defaultValue": "LandingArchive/HR"
-		},
-		"HR_WORKDAY_REQ_Source_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "@concat ('Requisations_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
-		},
-		"HR_WORKDAY_REQ_Source_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "CEOCFO/HR"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/FileShare2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SharedFolder2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "FileShare",
+				"typeProperties": {
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"rowDelimiter": "",
+						"treatEmptyAsNull": true,
+						"skipLineCount": 0,
+						"firstRowAsHeader": false
+					},
+					"fileName": {
+						"value": "[parameters('FileShare2_properties_typeProperties_fileName')]",
+						"type": "Expression"
+					},
+					"folderPath": "[parameters('FileShare2_properties_typeProperties_folderPath')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FileShare3')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SharedFolder3",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "FileShare",
+				"typeProperties": {
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"rowDelimiter": "",
+						"treatEmptyAsNull": true,
+						"skipLineCount": 0,
+						"firstRowAsHeader": false
+					},
+					"fileName": {
+						"value": "[parameters('FileShare3_properties_typeProperties_fileName')]",
+						"type": "Expression"
+					},
+					"folderPath": "[parameters('FileShare3_properties_typeProperties_folderPath')]"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Finace_RevenueCost_Destination')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -1048,162 +1114,6 @@
 				],
 				"typeProperties": {
 					"tableName": "[[STG].[HR_WORKDAY_REQ]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_REQ_Source')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileShare",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "FileShare",
-				"structure": [
-					{
-						"name": "Job Req. ID",
-						"type": "String"
-					},
-					{
-						"name": "Job Requisition Status",
-						"type": "String"
-					},
-					{
-						"name": "Primary Location",
-						"type": "String"
-					},
-					{
-						"name": "Country",
-						"type": "String"
-					},
-					{
-						"name": "Cost Centre ID",
-						"type": "String"
-					},
-					{
-						"name": "Function",
-						"type": "String"
-					},
-					{
-						"name": "Worker Type",
-						"type": "String"
-					},
-					{
-						"name": "Count of Active Candidates",
-						"type": "String"
-					},
-					{
-						"name": "In Offer",
-						"type": "String"
-					},
-					{
-						"name": "Number of Openings Not in Offer",
-						"type": "String"
-					},
-					{
-						"name": "Candidate Stage",
-						"type": "String"
-					},
-					{
-						"name": "Internal Candidate?",
-						"type": "String"
-					}
-				],
-				"typeProperties": {
-					"format": {
-						"type": "TextFormat",
-						"columnDelimiter": ",",
-						"rowDelimiter": "",
-						"quoteChar": "\"",
-						"nullValue": "",
-						"treatEmptyAsNull": true,
-						"skipLineCount": 0,
-						"firstRowAsHeader": true
-					},
-					"fileName": {
-						"value": "[parameters('HR_WORKDAY_REQ_Source_properties_typeProperties_fileName')]",
-						"type": "Expression"
-					},
-					"folderPath": "[parameters('HR_WORKDAY_REQ_Source_properties_typeProperties_folderPath')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_Termination_Destination')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "Employee_ID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Worker_Type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Termination_Date",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ELT",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ELT_1",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ELT_2",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Cost_Centre_ID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Function",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Finastra_Product",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Finastra_FAM",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Finastra_LINE",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Country",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Location",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Rec_CRE_TMS",
-						"type": "date"
-					}
-				],
-				"typeProperties": {
-					"tableName": "[[STG].[HR_WORKDAY_Terminations]"
 				}
 			},
 			"dependsOn": []

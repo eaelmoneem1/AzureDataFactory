@@ -110,6 +110,18 @@
 		"FileShare1_properties_typeProperties_folderPath": {
 			"value": "Storage"
 		},
+		"FileShare2_properties_typeProperties_fileName": {
+			"value": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"FileShare2_properties_typeProperties_folderPath": {
+			"value": "Storage"
+		},
+		"FileShare3_properties_typeProperties_fileName": {
+			"value": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"FileShare3_properties_typeProperties_folderPath": {
+			"value": "Storage"
+		},
 		"Finace_RevenueCost_Destination_properties_typeProperties_fileName": {
 			"value": "@concat ('dbo_FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
 		},
