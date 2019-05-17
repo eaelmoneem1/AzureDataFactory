@@ -71,7 +71,7 @@
 						"referenceName": "FileShare1",
 						"type": "DatasetReference"
 					},
-					"recursive": false,
+					"recursive": true,
 					"enableLogging": false
 				}
 			}
