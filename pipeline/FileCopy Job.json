@@ -221,6 +221,9 @@
 					"enableLogging": false
 				}
 			}
-		]
+		],
+		"folder": {
+			"name": "ETL Jobs"
+		}
 	}
 }
