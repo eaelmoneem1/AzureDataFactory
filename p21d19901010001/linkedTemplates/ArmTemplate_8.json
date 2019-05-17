@@ -4367,7 +4367,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/FileCopy Job')]",
+			"name": "[concat(parameters('factoryName'), '/Files Copy Job')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {

@@ -589,7 +589,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Weekly Jobs')]",
+			"name": "[concat(parameters('factoryName'), '/Weekly Job')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -784,7 +784,7 @@
 				"pipelines": [
 					{
 						"pipelineReference": {
-							"referenceName": "Weekly Jobs",
+							"referenceName": "Weekly Job",
 							"type": "PipelineReference"
 						},
 						"parameters": {}
@@ -801,7 +801,7 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Weekly Jobs')]"
+				"[concat(variables('factoryId'), '/pipelines/Weekly Job')]"
 			]
 		}
 	]
