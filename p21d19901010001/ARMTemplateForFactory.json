@@ -145,7 +145,7 @@
 		},
 		"FileShare1_properties_typeProperties_folderPath": {
 			"type": "string",
-			"defaultValue": ""
+			"defaultValue": "Storage"
 		},
 		"Finace_RevenueCost_Destination_properties_typeProperties_fileName": {
 			"type": "string",
@@ -19843,7 +19843,8 @@
 						"fileName": {
 							"value": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
 							"type": "Expression"
-						}
+						},
+						"folderPath": "Storage"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",

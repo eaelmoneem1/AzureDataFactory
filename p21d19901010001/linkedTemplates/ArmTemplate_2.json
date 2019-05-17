@@ -45,7 +45,7 @@
 		},
 		"FileShare1_properties_typeProperties_folderPath": {
 			"type": "string",
-			"defaultValue": ""
+			"defaultValue": "Storage"
 		}
 	},
 	"variables": {
