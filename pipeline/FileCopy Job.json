@@ -68,16 +68,10 @@
 				},
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "AzureBlob1",
+						"referenceName": "FileShare1",
 						"type": "DatasetReference"
 					},
-					"logStorageSettings": {
-						"linkedServiceName": {
-							"referenceName": "blob_storage",
-							"type": "LinkedServiceReference"
-						}
-					},
-					"enableLogging": true
+					"enableLogging": false
 				}
 			}
 		]
