@@ -26,6 +26,15 @@
 		"Salesforce1_securityToken": {
 			"value": ""
 		},
+		"SharedFolder1_password": {
+			"value": ""
+		},
+		"SharedFolder2_password": {
+			"value": ""
+		},
+		"SharedFolder3_password": {
+			"value": ""
+		},
 		"blob_storage_connectionString": {
 			"value": ""
 		},
@@ -301,6 +310,15 @@
 		},
 		"Salesforce1_properties_typeProperties_username": {
 			"value": "eltdashboard@finastra.com"
+		},
+		"SharedFolder1_properties_typeProperties_userId": {
+			"value": "p21d19901015001"
+		},
+		"SharedFolder2_properties_typeProperties_userId": {
+			"value": "p21d19901015001"
+		},
+		"SharedFolder3_properties_typeProperties_userId": {
+			"value": "p21d19901015001"
 		}
 	}
 }

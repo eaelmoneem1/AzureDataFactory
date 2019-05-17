@@ -7,27 +7,107 @@
 			"metadata": "Data Factory Name",
 			"defaultValue": "p21d19901010001"
 		},
-		"Booking_Actuals_properties_typeProperties_fileName": {
+		"AzureDataLakeStoreFile3_properties_typeProperties_fileName": {
 			"type": "string",
-			"defaultValue": "@concat ('CM_Bookings_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+			"defaultValue": "@concat ('Marketing_SFDC_LEAD_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')"
 		},
-		"Booking_Actuals_properties_typeProperties_folderPath": {
+		"AzureDataLakeStoreFile3_properties_typeProperties_folderPath": {
 			"type": "string",
-			"defaultValue": "CEOCFO/Sales"
+			"defaultValue": "LandingArchive/ELT/Marketing"
 		},
-		"Booking_Current_Actuals_properties_typeProperties_fileName": {
+		"AzureDataLakeStoreFile4_properties_typeProperties_fileName": {
 			"type": "string",
-			"defaultValue": "ELT 9April19_Booking_Current_Actuals.csv"
+			"defaultValue": "@concat ('Marketing_SFDC_Contact_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')"
 		},
-		"Booking_Current_Actuals_properties_typeProperties_folderPath": {
+		"AzureDataLakeStoreFile4_properties_typeProperties_folderPath": {
 			"type": "string",
-			"defaultValue": "Sales"
+			"defaultValue": "LandingArchive/ELT/Marketing"
+		},
+		"AzureDataLakeStoreFile5_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "@concat ('Marketing_SFDC_Account_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')"
+		},
+		"AzureDataLakeStoreFile5_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "LandingArchive/ELT/Marketing"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStoreFile3')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStore",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureDataLakeStoreFile",
+				"typeProperties": {
+					"format": {
+						"type": "OrcFormat"
+					},
+					"fileName": {
+						"value": "[parameters('AzureDataLakeStoreFile3_properties_typeProperties_fileName')]",
+						"type": "Expression"
+					},
+					"folderPath": "[parameters('AzureDataLakeStoreFile3_properties_typeProperties_folderPath')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStoreFile4')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStore",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureDataLakeStoreFile",
+				"typeProperties": {
+					"format": {
+						"type": "OrcFormat"
+					},
+					"fileName": {
+						"value": "[parameters('AzureDataLakeStoreFile4_properties_typeProperties_fileName')]",
+						"type": "Expression"
+					},
+					"folderPath": "[parameters('AzureDataLakeStoreFile4_properties_typeProperties_folderPath')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStoreFile5')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStore",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureDataLakeStoreFile",
+				"typeProperties": {
+					"format": {
+						"type": "OrcFormat"
+					},
+					"fileName": {
+						"value": "[parameters('AzureDataLakeStoreFile5_properties_typeProperties_fileName')]",
+						"type": "Expression"
+					},
+					"folderPath": "[parameters('AzureDataLakeStoreFile5_properties_typeProperties_folderPath')]"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -1229,756 +1309,6 @@
 				"annotations": [],
 				"type": "AzureSqlTable",
 				"typeProperties": {}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Booking_Actuals')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileShare",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "FileShare",
-				"structure": [
-					{
-						"name": "GL Period",
-						"type": "String"
-					},
-					{
-						"name": "TransID",
-						"type": "String"
-					},
-					{
-						"name": "Region",
-						"type": "String"
-					},
-					{
-						"name": "Softrax",
-						"type": "String"
-					},
-					{
-						"name": "Name",
-						"type": "String"
-					},
-					{
-						"name": "Sales Rep",
-						"type": "String"
-					},
-					{
-						"name": "LOB",
-						"type": "String"
-					},
-					{
-						"name": "Product",
-						"type": "String"
-					},
-					{
-						"name": "Booking ACV",
-						"type": "String"
-					},
-					{
-						"name": "Renewal ACV",
-						"type": "String"
-					}
-				],
-				"typeProperties": {
-					"format": {
-						"type": "TextFormat",
-						"columnDelimiter": ",",
-						"rowDelimiter": "",
-						"quoteChar": "\"",
-						"nullValue": "",
-						"treatEmptyAsNull": true,
-						"skipLineCount": 0,
-						"firstRowAsHeader": true
-					},
-					"fileName": {
-						"value": "[parameters('Booking_Actuals_properties_typeProperties_fileName')]",
-						"type": "Expression"
-					},
-					"folderPath": "[parameters('Booking_Actuals_properties_typeProperties_folderPath')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Booking_Current_Actuals')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileShare",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "FileShare",
-				"structure": [
-					{
-						"name": "GL Period",
-						"type": "String"
-					},
-					{
-						"name": "TransID",
-						"type": "String"
-					},
-					{
-						"name": "Region",
-						"type": "String"
-					},
-					{
-						"name": "Softrax",
-						"type": "String"
-					},
-					{
-						"name": "Name",
-						"type": "String"
-					},
-					{
-						"name": "Sales Rep",
-						"type": "String"
-					},
-					{
-						"name": "LOB",
-						"type": "String"
-					},
-					{
-						"name": "Product",
-						"type": "String"
-					},
-					{
-						"name": "Booking ACV",
-						"type": "String"
-					},
-					{
-						"name": "Renewal ACV",
-						"type": "String"
-					}
-				],
-				"typeProperties": {
-					"format": {
-						"type": "TextFormat",
-						"columnDelimiter": ",",
-						"rowDelimiter": "",
-						"quoteChar": "\"",
-						"nullValue": "",
-						"treatEmptyAsNull": true,
-						"skipLineCount": 0,
-						"firstRowAsHeader": true
-					},
-					"fileName": "[parameters('Booking_Current_Actuals_properties_typeProperties_fileName')]",
-					"folderPath": "[parameters('Booking_Current_Actuals_properties_typeProperties_folderPath')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CS_FF_NPS_Destination')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"structure": [
-					{
-						"name": "Start_Date",
-						"type": "String"
-					},
-					{
-						"name": "End_Date",
-						"type": "String"
-					},
-					{
-						"name": "Survey_Details",
-						"type": "String"
-					},
-					{
-						"name": "Contact_Name",
-						"type": "String"
-					},
-					{
-						"name": "Contact_Email",
-						"type": "String"
-					},
-					{
-						"name": "Contact_Record_ID",
-						"type": "String"
-					},
-					{
-						"name": "Company_ID",
-						"type": "String"
-					},
-					{
-						"name": "Company",
-						"type": "String"
-					},
-					{
-						"name": "Company_Country_Code",
-						"type": "String"
-					},
-					{
-						"name": "Company_Country",
-						"type": "String"
-					},
-					{
-						"name": "Company_Email",
-						"type": "String"
-					},
-					{
-						"name": "Region_Code",
-						"type": "String"
-					},
-					{
-						"name": "Region",
-						"type": "String"
-					},
-					{
-						"name": "Survey_Name",
-						"type": "String"
-					},
-					{
-						"name": "Invitation_Date",
-						"type": "String"
-					},
-					{
-						"name": "Survey_Language",
-						"type": "String"
-					},
-					{
-						"name": "Survey_Medium",
-						"type": "String"
-					},
-					{
-						"name": "Reminder1_Date",
-						"type": "String"
-					},
-					{
-						"name": "Reminder2_Date",
-						"type": "String"
-					},
-					{
-						"name": "Reminder3_Date",
-						"type": "String"
-					},
-					{
-						"name": "Response_Received_Date",
-						"type": "String"
-					},
-					{
-						"name": "Response_Collected_Date",
-						"type": "String"
-					},
-					{
-						"name": "Address_Line_1",
-						"type": "String"
-					},
-					{
-						"name": "Address_Line_2",
-						"type": "String"
-					},
-					{
-						"name": "Address_Line_3",
-						"type": "String"
-					},
-					{
-						"name": "Primary_Addr_Postal_code",
-						"type": "String"
-					},
-					{
-						"name": "Person_ID",
-						"type": "String"
-					},
-					{
-						"name": "Salutation",
-						"type": "String"
-					},
-					{
-						"name": "First_Name",
-						"type": "String"
-					},
-					{
-						"name": "Person_Middle_Name",
-						"type": "String"
-					},
-					{
-						"name": "Last_Name",
-						"type": "String"
-					},
-					{
-						"name": "Person_Gender_Code",
-						"type": "String"
-					},
-					{
-						"name": "Person_Age",
-						"type": "String"
-					},
-					{
-						"name": "Person_Age_Group_Code",
-						"type": "String"
-					},
-					{
-						"name": "Primary_Address_Text",
-						"type": "String"
-					},
-					{
-						"name": "Primary_addr_city_name",
-						"type": "String"
-					},
-					{
-						"name": "Primary_addr_state_code",
-						"type": "String"
-					},
-					{
-						"name": "Primary_addr_state_name",
-						"type": "String"
-					},
-					{
-						"name": "Primary_Addr_Country_Code",
-						"type": "String"
-					},
-					{
-						"name": "Primary_Addr_Country_Name",
-						"type": "String"
-					},
-					{
-						"name": "Purchase_Influence_Level",
-						"type": "String"
-					},
-					{
-						"name": "Primary_Job_Role_Name",
-						"type": "String"
-					},
-					{
-						"name": "Primary_Job_Role_Title",
-						"type": "String"
-					},
-					{
-						"name": "Primary_Job_Department_Name",
-						"type": "String"
-					},
-					{
-						"name": "Primary_Phone_Number",
-						"type": "String"
-					},
-					{
-						"name": "Assignee",
-						"type": "String"
-					},
-					{
-						"name": "Last_Follow-up_Date",
-						"type": "String"
-					},
-					{
-						"name": "Last_Follow-Up_Comment",
-						"type": "String"
-					},
-					{
-						"name": "Follow-up_Status",
-						"type": "String"
-					},
-					{
-						"name": "Assignee_Email",
-						"type": "String"
-					},
-					{
-						"name": "Assignee_Title",
-						"type": "String"
-					},
-					{
-						"name": "Person_Identifier",
-						"type": "String"
-					},
-					{
-						"name": "Survey_ID",
-						"type": "String"
-					},
-					{
-						"name": "Initiating_Event_TimeStamp",
-						"type": "String"
-					},
-					{
-						"name": "Person_Identifier_Type_Code",
-						"type": "String"
-					},
-					{
-						"name": "Followup_Contact_Party_ID",
-						"type": "String"
-					},
-					{
-						"name": "Initiating_Event_Description",
-						"type": "String"
-					},
-					{
-						"name": "Company_Duns_Number",
-						"type": "String"
-					},
-					{
-						"name": "Person_Birth_Date",
-						"type": "String"
-					},
-					{
-						"name": "Person_Name_Suffix",
-						"type": "String"
-					},
-					{
-						"name": "Person_Income_Amount",
-						"type": "String"
-					},
-					{
-						"name": "Person_Income_Group_Code",
-						"type": "String"
-					},
-					{
-						"name": "Primary_Fax_Number",
-						"type": "String"
-					},
-					{
-						"name": "Primary_Mobile_Phone_Number",
-						"type": "String"
-					},
-					{
-						"name": "Primary_Phone_Extension_Number",
-						"type": "String"
-					},
-					{
-						"name": "Prefer_Text_Only_Email_Y/N?",
-						"type": "String"
-					},
-					{
-						"name": "Survey_Locale_Select_Enabled_Y/N?",
-						"type": "String"
-					},
-					{
-						"name": "Response_Rate_Notification_Recipient",
-						"type": "String"
-					},
-					{
-						"name": "Response_Rate_Notification_CC_1",
-						"type": "String"
-					},
-					{
-						"name": "Response_Rate_Notification_CC_2",
-						"type": "String"
-					},
-					{
-						"name": "Follow-up_Escalation_ID",
-						"type": "String"
-					},
-					{
-						"name": "Integration_Reference_Id",
-						"type": "String"
-					},
-					{
-						"name": "How_satisfied_are_you_for_Adoption-Value",
-						"type": "String"
-					},
-					{
-						"name": "How_satisfied_are_you_for_Delivery-Value",
-						"type": "String"
-					},
-					{
-						"name": "How_satisfied_are_you_for_Onboarding-Value",
-						"type": "String"
-					},
-					{
-						"name": "How_satisfied_are_you_for_Product-Value",
-						"type": "String"
-					},
-					{
-						"name": "How_satisfied_are_you_for_Responsiveness_to_new_business_demands-Value",
-						"type": "String"
-					},
-					{
-						"name": "How_satisfied_are_you_for_Support-Value",
-						"type": "String"
-					},
-					{
-						"name": "How_satisfied_are_you_for_Your_purchase_process-Value",
-						"type": "String"
-					},
-					{
-						"name": "How_satisfied_are_you_for_Your_renewal_process-Value",
-						"type": "String"
-					},
-					{
-						"name": "How_satisfied_are_you_with_Brand-Value",
-						"type": "String"
-					},
-					{
-						"name": "How_satisfied_are_you_with_Product-Value",
-						"type": "String"
-					},
-					{
-						"name": "How_satisfied_are_you_with_Service-Value",
-						"type": "String"
-					},
-					{
-						"name": "How_satisfied_are_you_with_Value_for_Money-Value",
-						"type": "String"
-					},
-					{
-						"name": "Improvement_Comment",
-						"type": "String"
-					},
-					{
-						"name": "LTR-Value",
-						"type": "String"
-					},
-					{
-						"name": "Next_action_you_are_most_likely_to_take",
-						"type": "String"
-					},
-					{
-						"name": "Product_List",
-						"type": "String"
-					},
-					{
-						"name": "Relationship_with_Finastra",
-						"type": "String"
-					},
-					{
-						"name": "Satisfaction_Comment",
-						"type": "String"
-					},
-					{
-						"name": "Satisfaction_for_supported_by_a_Finastra_partner-Value",
-						"type": "String"
-					},
-					{
-						"name": "Supported_by_a_Finastra_partner",
-						"type": "String"
-					},
-					{
-						"name": "What_is_the_problem_for_Adopting_your_solution_to_get_business_value",
-						"type": "String"
-					},
-					{
-						"name": "What_is_the_problem_for_Delivery",
-						"type": "String"
-					},
-					{
-						"name": "What_is_the_problem_for_Onboarding_your_solution_to_get_business_value",
-						"type": "String"
-					},
-					{
-						"name": "What_is_the_problem_for_Product",
-						"type": "String"
-					},
-					{
-						"name": "What_is_the_problem_for_Responsiveness_to_new_business_demands",
-						"type": "String"
-					},
-					{
-						"name": "What_is_the_problem_for_Support",
-						"type": "String"
-					},
-					{
-						"name": "What_is_the_problem_for_Your_purchase_process",
-						"type": "String"
-					},
-					{
-						"name": "What_is_the_problem_for_Your_renewal_process",
-						"type": "String"
-					},
-					{
-						"name": "NewBusiness",
-						"type": "String"
-					},
-					{
-						"name": "Go_To_Market",
-						"type": "String"
-					},
-					{
-						"name": "Closed_Loop_Alert",
-						"type": "String"
-					},
-					{
-						"name": "Modified_On",
-						"type": "String"
-					},
-					{
-						"name": "Created_On",
-						"type": "String"
-					},
-					{
-						"name": "Title",
-						"type": "String"
-					},
-					{
-						"name": "C-Level",
-						"type": "String"
-					},
-					{
-						"name": "Do_not_allow_Emails",
-						"type": "String"
-					},
-					{
-						"name": "Do_not_allow_Bulk_Emails",
-						"type": "String"
-					},
-					{
-						"name": "Case_Management_User",
-						"type": "String"
-					},
-					{
-						"name": "Customer_Center_Admin",
-						"type": "String"
-					},
-					{
-						"name": "Softrax_ID",
-						"type": "String"
-					},
-					{
-						"name": "Account_Name",
-						"type": "String"
-					},
-					{
-						"name": "websiteurl",
-						"type": "String"
-					},
-					{
-						"name": "Asset",
-						"type": "String"
-					},
-					{
-						"name": "Core_Risk_Level",
-						"type": "String"
-					},
-					{
-						"name": "Core_Segment",
-						"type": "String"
-					},
-					{
-						"name": "Lending_Risk_Level",
-						"type": "String"
-					},
-					{
-						"name": "Lending_Segment",
-						"type": "String"
-					},
-					{
-						"name": "Active_Product_Family_Owned_for_Support",
-						"type": "String"
-					},
-					{
-						"name": "No._of_Employees",
-						"type": "String"
-					},
-					{
-						"name": "NPS_Survey",
-						"type": "String"
-					},
-					{
-						"name": "Last_NPS_Survey_Sent",
-						"type": "String"
-					},
-					{
-						"name": "Selected_for_Survey?",
-						"type": "String"
-					},
-					{
-						"name": "Asset_Tier",
-						"type": "String"
-					},
-					{
-						"name": "Account_Type",
-						"type": "String"
-					},
-					{
-						"name": "Region_1",
-						"type": "String"
-					},
-					{
-						"name": "Lending_Account_Exec",
-						"type": "String"
-					},
-					{
-						"name": "Core_RM",
-						"type": "String"
-					},
-					{
-						"name": "Trailing_12_Rev_Rank",
-						"type": "String"
-					},
-					{
-						"name": "Prior_Year_Revenue",
-						"type": "String"
-					},
-					{
-						"name": "Prior_Year_Lending_Rev",
-						"type": "String"
-					},
-					{
-						"name": "Prior_Year_Mortgage_Rev",
-						"type": "String"
-					},
-					{
-						"name": "Prior_Year_Retail_Rev",
-						"type": "String"
-					},
-					{
-						"name": "3_Yr_Revenue_Rank",
-						"type": "String"
-					},
-					{
-						"name": "3_Year_Avg_Rev",
-						"type": "String"
-					},
-					{
-						"name": "Count_of_Won_Opportunities",
-						"type": "String"
-					},
-					{
-						"name": "Count_of_Lost_Opportunities",
-						"type": "String"
-					},
-					{
-						"name": "Parent_account",
-						"type": "String"
-					},
-					{
-						"name": "Account_Governance_profile",
-						"type": "String"
-					},
-					{
-						"name": "Account_18chr_Id",
-						"type": "String"
-					},
-					{
-						"name": "GTM_Target",
-						"type": "String"
-					},
-					{
-						"name": "Full_Name",
-						"type": "String"
-					},
-					{
-						"name": "Mobile",
-						"type": "String"
-					},
-					{
-						"name": "GTM_Persona",
-						"type": "String"
-					},
-					{
-						"name": "Max_of_Annual_Revenue",
-						"type": "String"
-					},
-					{
-						"name": "Map_Name",
-						"type": "String"
-					}
-				],
-				"typeProperties": {
-					"tableName": "[[STG].[CS_FF_NPS]"
-				}
 			},
 			"dependsOn": []
 		}
