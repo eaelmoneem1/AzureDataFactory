@@ -21,6 +21,36 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/HttpFile1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "HttpServer1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "HttpFile",
+				"typeProperties": {
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"rowDelimiter": "",
+						"quoteChar": "\"",
+						"nullValue": "",
+						"encodingName": null,
+						"treatEmptyAsNull": true,
+						"skipLineCount": 0,
+						"firstRowAsHeader": false
+					},
+					"relativeUrl": "",
+					"requestMethod": "GET",
+					"additionalHeaders": "Authorization:  NLAuth nlauth_account=3431250_SB1, nlauth_email=azureuser@test.com, nlauth_signature=Fin@straAzure2019, nlauth_role=1099"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/LND_SFDC_1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -4712,29 +4742,6 @@
 				"type": "AzureSqlTable",
 				"typeProperties": {
 					"tableName": "[[STG].[V_Sales_SFDC_Booking]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/RestResource1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "RestService1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "RestResource",
-				"typeProperties": {
-					"relativeUrl": "",
-					"requestMethod": "GET",
-					"additionalHeaders": {
-						"Authorization": "NLAuth nlauth_account=3431250_SB1, nlauth_email=azureuser@test.com, nlauth_signature=Fin@straAzure2019, nlauth_role=1099",
-						"Content-Type": "application/json",
-						"Accept": "application/json"
-					}
 				}
 			},
 			"dependsOn": []

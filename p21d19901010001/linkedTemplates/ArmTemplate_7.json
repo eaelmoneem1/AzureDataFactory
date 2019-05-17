@@ -7,6 +7,14 @@
 			"metadata": "Data Factory Name",
 			"defaultValue": "p21d19901010001"
 		},
+		"V_HR_Maclean_EXM_Location_Directory_Archive_Destination_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "@concat ('HR_Maclean_EXM_Location_Directory_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"V_HR_Maclean_EXM_Location_Directory_Archive_Destination_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "LandingArchive/HR"
+		},
 		"test_properties_typeProperties_fileName": {
 			"type": "string",
 			"defaultValue": "TimeDimens.csv"
@@ -20,6 +28,37 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/V_HR_Maclean_EXM_Location_Directory_Archive_Destination')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStore",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureDataLakeStoreFile",
+				"typeProperties": {
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"rowDelimiter": "",
+						"quoteChar": "\"",
+						"nullValue": "",
+						"treatEmptyAsNull": true,
+						"skipLineCount": 0,
+						"firstRowAsHeader": true
+					},
+					"fileName": {
+						"value": "[parameters('V_HR_Maclean_EXM_Location_Directory_Archive_Destination_properties_typeProperties_fileName')]",
+						"type": "Expression"
+					},
+					"folderPath": "[parameters('V_HR_Maclean_EXM_Location_Directory_Archive_Destination_properties_typeProperties_folderPath')]"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/test')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -640,7 +679,9 @@
 				},
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/V_HR_Maclean_EXM_Location_Directory_Archive_Destination')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/DimMarketing_SFDC_Account_Incremental')]",
@@ -3923,198 +3964,6 @@
 				],
 				"folder": {
 					"name": "Sales"
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Employee_Terminations')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy Data1",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "FileServerReadSetting"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSetting"
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"writeBatchSize": 10000
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "Employee ID",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Employee_ID",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Worker Type",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Worker_Type",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Termination Date",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Termination_Date",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "ELT",
-											"type": "String"
-										},
-										"sink": {
-											"name": "ELT",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "ELT - 1",
-											"type": "String"
-										},
-										"sink": {
-											"name": "ELT_1",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "ELT - 2",
-											"type": "String"
-										},
-										"sink": {
-											"name": "ELT_2",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Cost Centre ID",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Cost_Centre_ID",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Function",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Function",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Finastra Product",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Finastra_Product",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Finastra (FAM)",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Finastra_FAM",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Finastra (LINE)",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Finastra_LINE",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Country",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Country",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Location",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Location",
-											"type": "String"
-										}
-									}
-								]
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "DelimitedText1",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "HR_WORKDAY_Termination_Destination",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"folder": {
-					"name": "HR"
 				},
 				"annotations": []
 			},

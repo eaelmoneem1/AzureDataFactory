@@ -13,6 +13,198 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/Employee_Terminations')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy Data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBatchSize": 10000
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Employee ID",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Employee_ID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Worker Type",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Worker_Type",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Termination Date",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Termination_Date",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ELT",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ELT",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ELT - 1",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ELT_1",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "ELT - 2",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ELT_2",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Cost Centre ID",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Cost_Centre_ID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Function",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Function",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Finastra Product",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Finastra_Product",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Finastra (FAM)",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Finastra_FAM",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Finastra (LINE)",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Finastra_LINE",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Country",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Country",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Location",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Location",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "DelimitedText1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "HR_WORKDAY_Termination_Destination",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "HR"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/FactCash')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -2909,17 +3101,11 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataset": {
-								"referenceName": "AzureBlob1",
+								"referenceName": "FileShare1",
 								"type": "DatasetReference",
 								"parameters": {}
 							},
-							"logStorageSettings": {
-								"linkedServiceName": {
-									"referenceName": "blob_storage",
-									"type": "LinkedServiceReference"
-								}
-							},
-							"enableLogging": true
+							"enableLogging": false
 						}
 					}
 				],
@@ -3505,167 +3691,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/FactOpportunity_All_incremental')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Weekly Jobs')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "FactSALES_MSCRM_Bookings",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "FactOpportunity_All",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "FactSALES_MSCRM_Bookings",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "FactSALES_MSCRM_Orderbook",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "FactSALES_MSCRM_Bookings",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "FactSALES_MSCRM_Orderbook",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "FactEXMSCORE_Location",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "FactSALES_MSCRM_Orderbook",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "FactEXMSCORE_Location",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "FactEXMSCORE_Region",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "FactEXMSCORE_Location",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "FactEXMSCORE_Region",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "DimEmployee",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "FactEXMSCORE_Region",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "DimEmployee",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "FactOpportunity_All",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "FactOpportunity_All Job",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "FactEmployee_Requisitions",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "DimEmployee",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "FactEmployee_Requisitions",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					}
-				],
-				"folder": {
-					"name": "ETL Jobs"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/FactSALES_MSCRM_Bookings')]",
-				"[concat(variables('factoryId'), '/pipelines/FactSALES_MSCRM_Orderbook')]",
-				"[concat(variables('factoryId'), '/pipelines/FactEXMSCORE_Location')]",
-				"[concat(variables('factoryId'), '/pipelines/FactEXMSCORE_Region')]",
-				"[concat(variables('factoryId'), '/pipelines/FactOpportunity_All Job')]",
-				"[concat(variables('factoryId'), '/pipelines/FactEmployee_Requisitions')]"
 			]
 		}
 	]
