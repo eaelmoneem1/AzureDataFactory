@@ -7859,6 +7859,7 @@
 								"type": "DatasetReference",
 								"parameters": {}
 							},
+							"recursive": true,
 							"enableLogging": false
 						}
 					}
