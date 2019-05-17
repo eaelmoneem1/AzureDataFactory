@@ -143,6 +143,10 @@
 			"type": "string",
 			"defaultValue": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
 		},
+		"FileShare1_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "sharedfolder1"
+		},
 		"Finace_RevenueCost_Destination_properties_typeProperties_fileName": {
 			"type": "string",
 			"defaultValue": "@concat ('dbo_FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
@@ -645,6 +649,9 @@
 					},
 					"FileShare1_properties_typeProperties_fileName": {
 						"value": "[parameters('FileShare1_properties_typeProperties_fileName')]"
+					},
+					"FileShare1_properties_typeProperties_folderPath": {
+						"value": "[parameters('FileShare1_properties_typeProperties_folderPath')]"
 					}
 				}
 			},

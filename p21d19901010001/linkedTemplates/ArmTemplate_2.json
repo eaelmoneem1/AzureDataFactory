@@ -42,6 +42,10 @@
 		"FileShare1_properties_typeProperties_fileName": {
 			"type": "string",
 			"defaultValue": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"FileShare1_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "sharedfolder1"
 		}
 	},
 	"variables": {
@@ -1956,10 +1960,19 @@
 				"annotations": [],
 				"type": "FileShare",
 				"typeProperties": {
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"rowDelimiter": "",
+						"treatEmptyAsNull": true,
+						"skipLineCount": 0,
+						"firstRowAsHeader": true
+					},
 					"fileName": {
 						"value": "[parameters('FileShare1_properties_typeProperties_fileName')]",
 						"type": "Expression"
-					}
+					},
+					"folderPath": "[parameters('FileShare1_properties_typeProperties_folderPath')]"
 				}
 			},
 			"dependsOn": []

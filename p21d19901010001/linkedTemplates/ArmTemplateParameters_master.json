@@ -107,6 +107,9 @@
 		"FileShare1_properties_typeProperties_fileName": {
 			"value": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
 		},
+		"FileShare1_properties_typeProperties_folderPath": {
+			"value": "sharedfolder1"
+		},
 		"Finace_RevenueCost_Destination_properties_typeProperties_fileName": {
 			"value": "@concat ('dbo_FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
 		},
