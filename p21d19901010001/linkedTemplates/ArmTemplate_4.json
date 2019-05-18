@@ -14,20 +14,79 @@
 		"HR_WORKDAY_REQ_Source_properties_typeProperties_folderPath": {
 			"type": "string",
 			"defaultValue": "CEOCFO/HR"
-		},
-		"Opportunity_Incremintal_Archiving_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "@concat ('Opportunity_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')"
-		},
-		"Opportunity_Incremintal_Archiving_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "LandingArchive/CEOCFO/Sales/Opportunity"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_REQ_Destination')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"structure": [
+					{
+						"name": "Job_Req_ID",
+						"type": "String"
+					},
+					{
+						"name": "New_Position",
+						"type": "String"
+					},
+					{
+						"name": "Job_Requisition_Status",
+						"type": "String"
+					},
+					{
+						"name": "Primary_Location",
+						"type": "String"
+					},
+					{
+						"name": "Country",
+						"type": "String"
+					},
+					{
+						"name": "Cost_Centre_ID",
+						"type": "String"
+					},
+					{
+						"name": "Function",
+						"type": "String"
+					},
+					{
+						"name": "Worker_Type",
+						"type": "String"
+					},
+					{
+						"name": "Count_of_Active_Candidates",
+						"type": "String"
+					},
+					{
+						"name": "In_Offer",
+						"type": "String"
+					},
+					{
+						"name": "Candidate_Stage",
+						"type": "String"
+					},
+					{
+						"name": "Internal_Candidate",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[HR_WORKDAY_REQ]"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_REQ_Source')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -4848,30 +4907,6 @@
 				],
 				"typeProperties": {
 					"objectApiName": "Opportunity"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Opportunity_Incremintal_Archiving')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStore",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureDataLakeStoreFile",
-				"typeProperties": {
-					"format": {
-						"type": "OrcFormat"
-					},
-					"fileName": {
-						"value": "[parameters('Opportunity_Incremintal_Archiving_properties_typeProperties_fileName')]",
-						"type": "Expression"
-					},
-					"folderPath": "[parameters('Opportunity_Incremintal_Archiving_properties_typeProperties_folderPath')]"
 				}
 			},
 			"dependsOn": []
