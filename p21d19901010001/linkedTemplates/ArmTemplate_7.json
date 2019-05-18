@@ -9,7 +9,7 @@
 		},
 		"TimeDimensionDate_Source_properties_typeProperties_fileName": {
 			"type": "string",
-			"defaultValue": ""
+			"defaultValue": "TimeDimensionDate.csv"
 		},
 		"TimeDimensionDate_Source_properties_typeProperties_folderPath": {
 			"type": "string",
@@ -1720,7 +1720,8 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "SqlSource"
+								"type": "FileSystemSource",
+								"recursive": true
 							},
 							"sink": {
 								"type": "AzureDataLakeStoreSink"
@@ -1729,7 +1730,7 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "HR_WORKDAY_HC_Archive_Source",
+								"referenceName": "HR_WORKDAY_HC_Source",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -1823,7 +1824,8 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "SqlSource"
+								"type": "FileSystemSource",
+								"recursive": true
 							},
 							"sink": {
 								"type": "AzureDataLakeStoreSink"
@@ -1832,7 +1834,7 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "HR_Maclean_EXM_Location_Directory_Archive_Source",
+								"referenceName": "HR_Maclean_EXM_Location_Directory_Source",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -3848,7 +3850,13 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "AzureSqlSource"
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
 							},
 							"sink": {
 								"type": "DelimitedTextSink",
@@ -3865,7 +3873,7 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "AzureSqlTable15",
+								"referenceName": "Marketing_Targets_Source",
 								"type": "DatasetReference",
 								"parameters": {}
 							}

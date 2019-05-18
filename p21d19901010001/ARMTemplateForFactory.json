@@ -341,7 +341,7 @@
 		},
 		"TimeDimensionDate_Source_properties_typeProperties_fileName": {
 			"type": "string",
-			"defaultValue": ""
+			"defaultValue": "TimeDimensionDate.csv"
 		},
 		"TimeDimensionDate_Source_properties_typeProperties_folderPath": {
 			"type": "string",
@@ -836,7 +836,8 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "SqlSource"
+								"type": "FileSystemSource",
+								"recursive": true
 							},
 							"sink": {
 								"type": "AzureDataLakeStoreSink"
@@ -845,7 +846,7 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "HR_WORKDAY_HC_Archive_Source",
+								"referenceName": "HR_WORKDAY_HC_Source",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -868,7 +869,6 @@
 				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase_finastra')]",
 				"[concat(variables('factoryId'), '/datasets/HR_WORKDAY_HC_Source')]",
 				"[concat(variables('factoryId'), '/datasets/HR_WORKDAY_HC_Destination')]",
-				"[concat(variables('factoryId'), '/datasets/HR_WORKDAY_HC_Archive_Source')]",
 				"[concat(variables('factoryId'), '/datasets/HR_WORKDAY_HC_Archive_Destination')]"
 			]
 		},
@@ -945,7 +945,8 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "SqlSource"
+								"type": "FileSystemSource",
+								"recursive": true
 							},
 							"sink": {
 								"type": "AzureDataLakeStoreSink"
@@ -954,7 +955,7 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "HR_Maclean_EXM_Location_Directory_Archive_Source",
+								"referenceName": "HR_Maclean_EXM_Location_Directory_Source",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -1063,7 +1064,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/HR_Maclean_EXM_Location_Directory_Source')]",
 				"[concat(variables('factoryId'), '/datasets/HR_Maclean_EXM_Location_Directory_Destination')]",
-				"[concat(variables('factoryId'), '/datasets/HR_Maclean_EXM_Location_Directory_Archive_Source')]",
 				"[concat(variables('factoryId'), '/datasets/V_HR_Maclean_EXM_Location_Directory_Archive_Destination')]",
 				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase_finastra')]"
 			]
@@ -3018,7 +3018,13 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "AzureSqlSource"
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
 							},
 							"sink": {
 								"type": "DelimitedTextSink",
@@ -3035,7 +3041,7 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "AzureSqlTable15",
+								"referenceName": "Marketing_Targets_Source",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -3058,7 +3064,6 @@
 				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase_finastra')]",
 				"[concat(variables('factoryId'), '/datasets/Marketing_Targets_Source')]",
 				"[concat(variables('factoryId'), '/datasets/Marketing_Targets_Dest')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSqlTable15')]",
 				"[concat(variables('factoryId'), '/datasets/DelimitedText2')]"
 			]
 		},
@@ -3167,7 +3172,13 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "AzureSqlSource"
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
 							},
 							"sink": {
 								"type": "DelimitedTextSink",
@@ -3184,7 +3195,7 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "AzureSqlTable17",
+								"referenceName": "Marketing_lkp_Country_Source",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -3293,7 +3304,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/Marketing_lkp_Country_Source')]",
 				"[concat(variables('factoryId'), '/datasets/Marketing_lkp_Country_Dest')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSqlTable17')]",
 				"[concat(variables('factoryId'), '/datasets/DelimitedText4')]",
 				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase_finastra')]"
 			]
@@ -3383,7 +3393,13 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "AzureSqlSource"
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
 							},
 							"sink": {
 								"type": "DelimitedTextSink",
@@ -3400,7 +3416,7 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "AzureSqlTable16",
+								"referenceName": "Marketing_lkp_TAMlist_Source",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -3509,7 +3525,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/Marketing_lkp_TAMlist_Source')]",
 				"[concat(variables('factoryId'), '/datasets/Marketing_lkp_TAMlist_Dest')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSqlTable16')]",
 				"[concat(variables('factoryId'), '/datasets/DelimitedText3')]",
 				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase_finastra')]"
 			]
@@ -5314,7 +5329,8 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "SqlSource"
+								"type": "FileSystemSource",
+								"recursive": true
 							},
 							"sink": {
 								"type": "AzureDataLakeStoreSink"
@@ -5323,7 +5339,7 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "HR_Maclean_EXM_Location_Archive_Source",
+								"referenceName": "HR_Maclean_EXM_Location_Source",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -5432,7 +5448,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/HR_Maclean_EXM_Location_Source')]",
 				"[concat(variables('factoryId'), '/datasets/HR_Maclean_EXM_Location_Destination')]",
-				"[concat(variables('factoryId'), '/datasets/HR_Maclean_EXM_Location_Archive_Source')]",
 				"[concat(variables('factoryId'), '/datasets/V_HR_Maclean_EXM_Location_Archive_Destination')]",
 				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase_finastra')]"
 			]
@@ -5525,7 +5540,8 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "SqlSource"
+								"type": "FileSystemSource",
+								"recursive": true
 							},
 							"sink": {
 								"type": "AzureDataLakeStoreSink"
@@ -5534,7 +5550,7 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "FactEXMSCORE_Region_Archive_Source",
+								"referenceName": "HR_Maclean_EXM_Region_Source",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -5643,7 +5659,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/HR_Maclean_EXM_Region_Source')]",
 				"[concat(variables('factoryId'), '/datasets/FactEXMSCORE_Region_Destination')]",
-				"[concat(variables('factoryId'), '/datasets/FactEXMSCORE_Region_Archive_Source')]",
 				"[concat(variables('factoryId'), '/datasets/HR_Maclean_EXM_Region_Archive_Destination')]",
 				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase_finastra')]"
 			]
@@ -5816,7 +5831,8 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "SqlSource"
+								"type": "FileSystemSource",
+								"recursive": true
 							},
 							"sink": {
 								"type": "AzureDataLakeStoreSink"
@@ -5825,7 +5841,7 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "HR_WORKDAY_REQ_Archive_Source",
+								"referenceName": "HR_WORKDAY_REQ_Source",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -5848,7 +5864,6 @@
 				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase_finastra')]",
 				"[concat(variables('factoryId'), '/datasets/HR_WORKDAY_REQ_Source')]",
 				"[concat(variables('factoryId'), '/datasets/HR_WORKDAY_REQ_Destination')]",
-				"[concat(variables('factoryId'), '/datasets/HR_WORKDAY_REQ_Archive_Source')]",
 				"[concat(variables('factoryId'), '/datasets/HR_WORKDAY_REQ_Archive_Destination')]"
 			]
 		},
@@ -6031,7 +6046,8 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "SqlSource"
+								"type": "FileSystemSource",
+								"recursive": true
 							},
 							"sink": {
 								"type": "AzureDataLakeStoreSink"
@@ -6040,7 +6056,7 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "Sales_FF_Forecast_Archive_Source",
+								"referenceName": "Sales_FF_Forecast_source",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -6063,7 +6079,6 @@
 				"[concat(variables('factoryId'), '/datasets/Sales_FF_Forecast_source')]",
 				"[concat(variables('factoryId'), '/datasets/Sales_FF_Forecast_Destination')]",
 				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase_finastra')]",
-				"[concat(variables('factoryId'), '/datasets/Sales_FF_Forecast_Archive_Source')]",
 				"[concat(variables('factoryId'), '/datasets/Sales_FF_Forecast_Archive_Destination')]"
 			]
 		},
@@ -8108,6 +8123,78 @@
 								]
 							}
 						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "FileShare3",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"recursive": true,
+							"enableLogging": false
+						}
+					},
+					{
+						"name": "Copy1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "FileServerWriteSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSetting",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "SharedFolder3",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SharedFolder3_Dest",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Delete1",
+						"type": "Delete",
+						"dependsOn": [],
 						"policy": {
 							"timeout": "7.00:00:00",
 							"retry": 0,

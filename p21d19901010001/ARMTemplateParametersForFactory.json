@@ -255,7 +255,7 @@
 			"value": "LandingArchive/CEOCFO/Dimentions/Time"
 		},
 		"TimeDimensionDate_Source_properties_typeProperties_fileName": {
-			"value": ""
+			"value": "TimeDimensionDate.csv"
 		},
 		"TimeDimensionDate_Source_properties_typeProperties_folderPath": {
 			"value": "CEOCFO/Dimentions/Time"

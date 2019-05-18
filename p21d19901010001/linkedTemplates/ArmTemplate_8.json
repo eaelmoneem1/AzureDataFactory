@@ -117,7 +117,13 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "AzureSqlSource"
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
 							},
 							"sink": {
 								"type": "DelimitedTextSink",
@@ -134,7 +140,7 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "AzureSqlTable17",
+								"referenceName": "Marketing_lkp_Country_Source",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -327,7 +333,13 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "AzureSqlSource"
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
 							},
 							"sink": {
 								"type": "DelimitedTextSink",
@@ -344,7 +356,7 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "AzureSqlTable16",
+								"referenceName": "Marketing_lkp_TAMlist_Source",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -2209,7 +2221,8 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "SqlSource"
+								"type": "FileSystemSource",
+								"recursive": true
 							},
 							"sink": {
 								"type": "AzureDataLakeStoreSink"
@@ -2218,7 +2231,7 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "HR_Maclean_EXM_Location_Archive_Source",
+								"referenceName": "HR_Maclean_EXM_Location_Source",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -2414,7 +2427,8 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "SqlSource"
+								"type": "FileSystemSource",
+								"recursive": true
 							},
 							"sink": {
 								"type": "AzureDataLakeStoreSink"
@@ -2423,7 +2437,7 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "FactEXMSCORE_Region_Archive_Source",
+								"referenceName": "HR_Maclean_EXM_Region_Source",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -2699,7 +2713,8 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "SqlSource"
+								"type": "FileSystemSource",
+								"recursive": true
 							},
 							"sink": {
 								"type": "AzureDataLakeStoreSink"
@@ -2708,7 +2723,7 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "HR_WORKDAY_REQ_Archive_Source",
+								"referenceName": "HR_WORKDAY_REQ_Source",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -2908,7 +2923,8 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "SqlSource"
+								"type": "FileSystemSource",
+								"recursive": true
 							},
 							"sink": {
 								"type": "AzureDataLakeStoreSink"
@@ -2917,7 +2933,7 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "Sales_FF_Forecast_Archive_Source",
+								"referenceName": "Sales_FF_Forecast_source",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -4678,6 +4694,78 @@
 								]
 							}
 						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "FileShare3",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"recursive": true,
+							"enableLogging": false
+						}
+					},
+					{
+						"name": "Copy1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "FileServerWriteSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSetting",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "SharedFolder3",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SharedFolder3_Dest",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Delete1",
+						"type": "Delete",
+						"dependsOn": [],
 						"policy": {
 							"timeout": "7.00:00:00",
 							"retry": 0,

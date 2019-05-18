@@ -341,7 +341,7 @@
 		},
 		"TimeDimensionDate_Source_properties_typeProperties_fileName": {
 			"type": "string",
-			"defaultValue": ""
+			"defaultValue": "TimeDimensionDate.csv"
 		},
 		"TimeDimensionDate_Source_properties_typeProperties_folderPath": {
 			"type": "string",
