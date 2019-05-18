@@ -5021,7 +5021,8 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "SqlSource"
+								"type": "FileSystemSource",
+								"recursive": true
 							},
 							"sink": {
 								"type": "AzureDataLakeStoreSink"
@@ -5030,7 +5031,7 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "CS_FF_NPS_Source_Archive",
+								"referenceName": "CS_FF_NPS_Source",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -5218,7 +5219,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/CS_FF_NPS_Source')]",
 				"[concat(variables('factoryId'), '/datasets/CS_FF_NPS_Destination')]",
-				"[concat(variables('factoryId'), '/datasets/CS_FF_NPS_Source_Archive')]",
 				"[concat(variables('factoryId'), '/datasets/CS_FF_NPS_Destination_Archive')]",
 				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase_finastra')]",
 				"[concat(variables('factoryId'), '/datasets/SharedFolder1')]",
