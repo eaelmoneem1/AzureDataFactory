@@ -167,7 +167,8 @@
 				},
 				"typeProperties": {
 					"source": {
-						"type": "SqlSource"
+						"type": "FileSystemSource",
+						"recursive": true
 					},
 					"sink": {
 						"type": "AzureDataLakeStoreSink"
@@ -176,7 +177,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Sales_FF_Forecast_Archive_Source",
+						"referenceName": "Sales_FF_Forecast_source",
 						"type": "DatasetReference"
 					}
 				],

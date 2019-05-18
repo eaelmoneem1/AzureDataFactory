@@ -76,7 +76,13 @@
 				},
 				"typeProperties": {
 					"source": {
-						"type": "AzureSqlSource"
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "FileServerReadSetting"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSetting"
+						}
 					},
 					"sink": {
 						"type": "DelimitedTextSink",
@@ -93,7 +99,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "AzureSqlTable16",
+						"referenceName": "Marketing_lkp_TAMlist_Source",
 						"type": "DatasetReference"
 					}
 				],

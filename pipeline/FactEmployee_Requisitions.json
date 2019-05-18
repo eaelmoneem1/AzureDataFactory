@@ -156,7 +156,8 @@
 				},
 				"typeProperties": {
 					"source": {
-						"type": "SqlSource"
+						"type": "FileSystemSource",
+						"recursive": true
 					},
 					"sink": {
 						"type": "AzureDataLakeStoreSink"
@@ -165,7 +166,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "HR_WORKDAY_REQ_Archive_Source",
+						"referenceName": "HR_WORKDAY_REQ_Source",
 						"type": "DatasetReference"
 					}
 				],

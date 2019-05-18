@@ -79,7 +79,8 @@
 				},
 				"typeProperties": {
 					"source": {
-						"type": "SqlSource"
+						"type": "FileSystemSource",
+						"recursive": true
 					},
 					"sink": {
 						"type": "AzureDataLakeStoreSink"
@@ -88,7 +89,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "HR_Maclean_EXM_Location_Archive_Source",
+						"referenceName": "HR_Maclean_EXM_Location_Source",
 						"type": "DatasetReference"
 					}
 				],

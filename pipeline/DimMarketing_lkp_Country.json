@@ -96,7 +96,13 @@
 				},
 				"typeProperties": {
 					"source": {
-						"type": "AzureSqlSource"
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "FileServerReadSetting"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSetting"
+						}
 					},
 					"sink": {
 						"type": "DelimitedTextSink",
@@ -113,7 +119,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "AzureSqlTable17",
+						"referenceName": "Marketing_lkp_Country_Source",
 						"type": "DatasetReference"
 					}
 				],
