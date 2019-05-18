@@ -141,7 +141,7 @@
 		},
 		"FileShare1_properties_typeProperties_fileName": {
 			"type": "string",
-			"defaultValue": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+			"defaultValue": "@concat ('NPS_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
 		},
 		"FileShare1_properties_typeProperties_folderPath": {
 			"type": "string",
@@ -4806,7 +4806,14 @@
 					{
 						"name": "Loading STG tables",
 						"type": "Copy",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "Delete File",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "7.00:00:00",
 							"retry": 0,
@@ -5122,6 +5129,85 @@
 							"referenceName": "AzureSqlDatabase_finastra",
 							"type": "LinkedServiceReference"
 						}
+					},
+					{
+						"name": "SharedFolder1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "FileServerWriteSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSetting",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "SharedFolder1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SharedFolder1_Dest",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Delete File",
+						"type": "Delete",
+						"dependsOn": [
+							{
+								"activity": "SharedFolder1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "FileShare1",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"recursive": true,
+							"enableLogging": false
+						}
 					}
 				],
 				"folder": {
@@ -5134,7 +5220,10 @@
 				"[concat(variables('factoryId'), '/datasets/CS_FF_NPS_Destination')]",
 				"[concat(variables('factoryId'), '/datasets/CS_FF_NPS_Source_Archive')]",
 				"[concat(variables('factoryId'), '/datasets/CS_FF_NPS_Destination_Archive')]",
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase_finastra')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase_finastra')]",
+				"[concat(variables('factoryId'), '/datasets/SharedFolder1')]",
+				"[concat(variables('factoryId'), '/datasets/SharedFolder1_Dest')]",
+				"[concat(variables('factoryId'), '/datasets/FileShare1')]"
 			]
 		},
 		{
@@ -20086,7 +20175,7 @@
 					"location": {
 						"type": "FileServerLocation",
 						"fileName": {
-							"value": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+							"value": "@concat ('NPS_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
 							"type": "Expression"
 						},
 						"folderPath": "Storage"
@@ -20206,10 +20295,10 @@
 					"location": {
 						"type": "FileServerLocation",
 						"fileName": {
-							"value": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+							"value": "@concat ('NPS_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
 							"type": "Expression"
 						},
-						"folderPath": "CEOCFO/Finance"
+						"folderPath": "CEOCFO/CustomerSupport"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",

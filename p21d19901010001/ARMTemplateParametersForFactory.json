@@ -105,7 +105,7 @@
 			"value": "CEOCFO/CustomerSupport"
 		},
 		"FileShare1_properties_typeProperties_fileName": {
-			"value": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+			"value": "@concat ('NPS_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
 		},
 		"FileShare1_properties_typeProperties_folderPath": {
 			"value": "Storage"
