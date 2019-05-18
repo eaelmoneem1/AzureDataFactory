@@ -16,7 +16,7 @@
 				"firstRowAsHeader": true
 			},
 			"fileName": {
-				"value": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+				"value": "@concat ('NPS_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
 				"type": "Expression"
 			},
 			"folderPath": "Storage"
