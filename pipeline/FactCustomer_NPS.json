@@ -216,7 +216,8 @@
 				},
 				"typeProperties": {
 					"source": {
-						"type": "SqlSource"
+						"type": "FileSystemSource",
+						"recursive": true
 					},
 					"sink": {
 						"type": "AzureDataLakeStoreSink"
@@ -225,7 +226,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "CS_FF_NPS_Source_Archive",
+						"referenceName": "CS_FF_NPS_Source",
 						"type": "DatasetReference"
 					}
 				],
