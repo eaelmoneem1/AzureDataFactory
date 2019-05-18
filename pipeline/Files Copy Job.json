@@ -306,7 +306,7 @@
 				},
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "SharedFolder1",
+						"referenceName": "DelimitedText5",
 						"type": "DatasetReference"
 					},
 					"fieldList": [
