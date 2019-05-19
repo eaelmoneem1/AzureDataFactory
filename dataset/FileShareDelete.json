@@ -1,5 +1,5 @@
 {
-	"name": "FileShare4",
+	"name": "FileShareDelete",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "FileShare",
@@ -16,7 +16,7 @@
 				"firstRowAsHeader": false
 			},
 			"fileName": "",
-			"folderPath": "CEOCFO/CustomerSupport",
+			"folderPath": "ELT",
 			"modifiedDatetimeEnd": {
 				"value": "@adddays(pipeline().triggerTime, -30)",
 				"type": "Expression"
