@@ -1,0 +1,26 @@
+{
+	"name": "FileShare4",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "FileShare",
+			"type": "LinkedServiceReference"
+		},
+		"type": "FileShare",
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": ",",
+				"rowDelimiter": "",
+				"treatEmptyAsNull": true,
+				"skipLineCount": 0,
+				"firstRowAsHeader": false
+			},
+			"fileName": "",
+			"folderPath": "CEOCFO/CustomerSupport",
+			"modifiedDatetimeEnd": {
+				"value": "@adddays(pipeline().triggerTime, -30)",
+				"type": "Expression"
+			}
+		}
+	}
+}

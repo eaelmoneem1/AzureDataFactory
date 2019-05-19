@@ -3,8 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy Data1",
-				"type": "Copy",
+				"name": "Delete1",
+				"type": "Delete",
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -13,26 +13,12 @@
 					"secureInput": false
 				},
 				"typeProperties": {
-					"source": {
-						"type": "AzureSqlSource"
-					},
-					"sink": {
-						"type": "AzureSqlSink"
-					},
-					"enableStaging": false
-				},
-				"inputs": [
-					{
-						"referenceName": "Account_SQL",
+					"dataset": {
+						"referenceName": "FileShare4",
 						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "Account_SQL",
-						"type": "DatasetReference"
-					}
-				]
+					},
+					"enableLogging": false
+				}
 			}
 		]
 	}
