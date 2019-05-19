@@ -1,0 +1,15 @@
+{
+	"name": "Clean Old Landing Files Job-Monthly",
+	"properties": {
+		"runtimeState": "Stopped",
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Month",
+				"interval": 1,
+				"startTime": "2019-06-01T23:59:00.000Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}
