@@ -1,5 +1,5 @@
 {
-	"name": "FileShareDelete",
+	"name": "FileShareDelete5",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "FileShare",
@@ -7,16 +7,8 @@
 		},
 		"type": "FileShare",
 		"typeProperties": {
-			"format": {
-				"type": "TextFormat",
-				"columnDelimiter": ",",
-				"rowDelimiter": "",
-				"treatEmptyAsNull": true,
-				"skipLineCount": 0,
-				"firstRowAsHeader": false
-			},
 			"fileName": "",
-			"folderPath": "CEOCFO/HR",
+			"folderPath": "CEOCFO/Sales",
 			"modifiedDatetimeEnd": {
 				"value": "@adddays(pipeline().triggerTime, -30)",
 				"type": "Expression"

@@ -1,11 +1,19 @@
 {
-	"name": "DeleteOldLandingFiles",
+	"name": "Delete old Landing Files",
 	"properties": {
-		"description": "Delete files from 1 month",
+		"description": "Delete files more than 30 days",
 		"activities": [
 			{
 				"name": "Delete HR",
 				"type": "Delete",
+				"dependsOn": [
+					{
+						"activity": "Delete Forecast Plan",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -20,7 +28,132 @@
 					},
 					"enableLogging": false
 				}
+			},
+			{
+				"name": "Delete Customer Support",
+				"type": "Delete",
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "FileShareDelete2",
+						"type": "DatasetReference"
+					},
+					"enableLogging": false
+				}
+			},
+			{
+				"name": "Delete Finance",
+				"type": "Delete",
+				"dependsOn": [
+					{
+						"activity": "Delete HR",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "FileShareDelete3",
+						"type": "DatasetReference"
+					},
+					"enableLogging": false
+				}
+			},
+			{
+				"name": "Delete Marketing",
+				"type": "Delete",
+				"dependsOn": [
+					{
+						"activity": "Delete Finance",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "FileShareDelete4",
+						"type": "DatasetReference"
+					},
+					"enableLogging": false
+				}
+			},
+			{
+				"name": "Delete Sales",
+				"type": "Delete",
+				"dependsOn": [
+					{
+						"activity": "Delete Marketing",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "FileShareDelete5",
+						"type": "DatasetReference"
+					},
+					"enableLogging": false
+				}
+			},
+			{
+				"name": "Delete Forecast Plan",
+				"type": "Delete",
+				"dependsOn": [
+					{
+						"activity": "Delete Customer Support",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "FileShareDelete6",
+						"type": "DatasetReference"
+					},
+					"enableLogging": false
+				}
 			}
-		]
+		],
+		"folder": {
+			"name": "ETL Jobs"
+		}
 	}
 }
