@@ -163,13 +163,13 @@
 			"type": "string",
 			"defaultValue": "Storage"
 		},
-		"FileShare4_properties_typeProperties_fileName": {
+		"FileShareDelete_properties_typeProperties_fileName": {
 			"type": "string",
 			"defaultValue": ""
 		},
-		"FileShare4_properties_typeProperties_folderPath": {
+		"FileShareDelete_properties_typeProperties_folderPath": {
 			"type": "string",
-			"defaultValue": "CEOCFO/CustomerSupport"
+			"defaultValue": "ELT"
 		},
 		"Finace_RevenueCost_Destination_properties_typeProperties_fileName": {
 			"type": "string",
@@ -709,11 +709,11 @@
 					"FileShare3_properties_typeProperties_folderPath": {
 						"value": "[parameters('FileShare3_properties_typeProperties_folderPath')]"
 					},
-					"FileShare4_properties_typeProperties_fileName": {
-						"value": "[parameters('FileShare4_properties_typeProperties_fileName')]"
+					"FileShareDelete_properties_typeProperties_fileName": {
+						"value": "[parameters('FileShareDelete_properties_typeProperties_fileName')]"
 					},
-					"FileShare4_properties_typeProperties_folderPath": {
-						"value": "[parameters('FileShare4_properties_typeProperties_folderPath')]"
+					"FileShareDelete_properties_typeProperties_folderPath": {
+						"value": "[parameters('FileShareDelete_properties_typeProperties_folderPath')]"
 					},
 					"Finace_RevenueCost_Destination_properties_typeProperties_fileName": {
 						"value": "[parameters('Finace_RevenueCost_Destination_properties_typeProperties_fileName')]"

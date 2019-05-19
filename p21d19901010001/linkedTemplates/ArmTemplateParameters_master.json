@@ -122,11 +122,11 @@
 		"FileShare3_properties_typeProperties_folderPath": {
 			"value": "Storage"
 		},
-		"FileShare4_properties_typeProperties_fileName": {
+		"FileShareDelete_properties_typeProperties_fileName": {
 			"value": ""
 		},
-		"FileShare4_properties_typeProperties_folderPath": {
-			"value": "CEOCFO/CustomerSupport"
+		"FileShareDelete_properties_typeProperties_folderPath": {
+			"value": "ELT"
 		},
 		"Finace_RevenueCost_Destination_properties_typeProperties_fileName": {
 			"value": "@concat ('dbo_FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"

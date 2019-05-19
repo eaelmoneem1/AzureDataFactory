@@ -889,7 +889,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataset": {
-								"referenceName": "FileShare4",
+								"referenceName": "FileShareDelete",
 								"type": "DatasetReference",
 								"parameters": {}
 							},

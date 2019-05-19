@@ -31,13 +31,13 @@
 			"type": "string",
 			"defaultValue": "Storage"
 		},
-		"FileShare4_properties_typeProperties_fileName": {
+		"FileShareDelete_properties_typeProperties_fileName": {
 			"type": "string",
 			"defaultValue": ""
 		},
-		"FileShare4_properties_typeProperties_folderPath": {
+		"FileShareDelete_properties_typeProperties_folderPath": {
 			"type": "string",
-			"defaultValue": "CEOCFO/CustomerSupport"
+			"defaultValue": "ELT"
 		},
 		"Finace_RevenueCost_Destination_properties_typeProperties_fileName": {
 			"type": "string",
@@ -204,7 +204,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/FileShare4')]",
+			"name": "[concat(parameters('factoryName'), '/FileShareDelete')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -223,8 +223,8 @@
 						"skipLineCount": 0,
 						"firstRowAsHeader": false
 					},
-					"fileName": "[parameters('FileShare4_properties_typeProperties_fileName')]",
-					"folderPath": "[parameters('FileShare4_properties_typeProperties_folderPath')]",
+					"fileName": "[parameters('FileShareDelete_properties_typeProperties_fileName')]",
+					"folderPath": "[parameters('FileShareDelete_properties_typeProperties_folderPath')]",
 					"modifiedDatetimeEnd": {
 						"value": "@adddays(pipeline().triggerTime, -30)",
 						"type": "Expression"
