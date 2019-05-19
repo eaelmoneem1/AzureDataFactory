@@ -126,7 +126,37 @@
 			"value": ""
 		},
 		"FileShareDelete_properties_typeProperties_folderPath": {
-			"value": "ELT/HR"
+			"value": "CEOCFO/HR"
+		},
+		"FileShareDelete2_properties_typeProperties_fileName": {
+			"value": ""
+		},
+		"FileShareDelete2_properties_typeProperties_folderPath": {
+			"value": "CEOCFO/CustomerSupport"
+		},
+		"FileShareDelete3_properties_typeProperties_fileName": {
+			"value": ""
+		},
+		"FileShareDelete3_properties_typeProperties_folderPath": {
+			"value": "CEOCFO/Finance"
+		},
+		"FileShareDelete4_properties_typeProperties_fileName": {
+			"value": ""
+		},
+		"FileShareDelete4_properties_typeProperties_folderPath": {
+			"value": "CEOCFO/Marketing"
+		},
+		"FileShareDelete5_properties_typeProperties_fileName": {
+			"value": ""
+		},
+		"FileShareDelete5_properties_typeProperties_folderPath": {
+			"value": "CEOCFO/Sales"
+		},
+		"FileShareDelete6_properties_typeProperties_fileName": {
+			"value": ""
+		},
+		"FileShareDelete6_properties_typeProperties_folderPath": {
+			"value": "CEOCFO/Dimentions/Forecast Plan"
 		},
 		"Finace_RevenueCost_Destination_properties_typeProperties_fileName": {
 			"value": "@concat ('dbo_FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"

@@ -169,7 +169,47 @@
 		},
 		"FileShareDelete_properties_typeProperties_folderPath": {
 			"type": "string",
-			"defaultValue": "ELT/HR"
+			"defaultValue": "CEOCFO/HR"
+		},
+		"FileShareDelete2_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": ""
+		},
+		"FileShareDelete2_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "CEOCFO/CustomerSupport"
+		},
+		"FileShareDelete3_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": ""
+		},
+		"FileShareDelete3_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "CEOCFO/Finance"
+		},
+		"FileShareDelete4_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": ""
+		},
+		"FileShareDelete4_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "CEOCFO/Marketing"
+		},
+		"FileShareDelete5_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": ""
+		},
+		"FileShareDelete5_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "CEOCFO/Sales"
+		},
+		"FileShareDelete6_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": ""
+		},
+		"FileShareDelete6_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "CEOCFO/Dimentions/Forecast Plan"
 		},
 		"Finace_RevenueCost_Destination_properties_typeProperties_fileName": {
 			"type": "string",
@@ -715,6 +755,36 @@
 					"FileShareDelete_properties_typeProperties_folderPath": {
 						"value": "[parameters('FileShareDelete_properties_typeProperties_folderPath')]"
 					},
+					"FileShareDelete2_properties_typeProperties_fileName": {
+						"value": "[parameters('FileShareDelete2_properties_typeProperties_fileName')]"
+					},
+					"FileShareDelete2_properties_typeProperties_folderPath": {
+						"value": "[parameters('FileShareDelete2_properties_typeProperties_folderPath')]"
+					},
+					"FileShareDelete3_properties_typeProperties_fileName": {
+						"value": "[parameters('FileShareDelete3_properties_typeProperties_fileName')]"
+					},
+					"FileShareDelete3_properties_typeProperties_folderPath": {
+						"value": "[parameters('FileShareDelete3_properties_typeProperties_folderPath')]"
+					},
+					"FileShareDelete4_properties_typeProperties_fileName": {
+						"value": "[parameters('FileShareDelete4_properties_typeProperties_fileName')]"
+					},
+					"FileShareDelete4_properties_typeProperties_folderPath": {
+						"value": "[parameters('FileShareDelete4_properties_typeProperties_folderPath')]"
+					},
+					"FileShareDelete5_properties_typeProperties_fileName": {
+						"value": "[parameters('FileShareDelete5_properties_typeProperties_fileName')]"
+					},
+					"FileShareDelete5_properties_typeProperties_folderPath": {
+						"value": "[parameters('FileShareDelete5_properties_typeProperties_folderPath')]"
+					},
+					"FileShareDelete6_properties_typeProperties_fileName": {
+						"value": "[parameters('FileShareDelete6_properties_typeProperties_fileName')]"
+					},
+					"FileShareDelete6_properties_typeProperties_folderPath": {
+						"value": "[parameters('FileShareDelete6_properties_typeProperties_folderPath')]"
+					},
 					"Finace_RevenueCost_Destination_properties_typeProperties_fileName": {
 						"value": "[parameters('Finace_RevenueCost_Destination_properties_typeProperties_fileName')]"
 					},
@@ -750,24 +820,6 @@
 					},
 					"HR_WORKDAY_HC_properties_typeProperties_folderPath": {
 						"value": "[parameters('HR_WORKDAY_HC_properties_typeProperties_folderPath')]"
-					},
-					"HR_WORKDAY_HC_Archive_Destination_properties_typeProperties_fileName": {
-						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination_properties_typeProperties_fileName')]"
-					},
-					"HR_WORKDAY_HC_Archive_Destination_properties_typeProperties_folderPath": {
-						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination_properties_typeProperties_folderPath')]"
-					},
-					"HR_WORKDAY_HC_Source_properties_typeProperties_fileName": {
-						"value": "[parameters('HR_WORKDAY_HC_Source_properties_typeProperties_fileName')]"
-					},
-					"HR_WORKDAY_HC_Source_properties_typeProperties_folderPath": {
-						"value": "[parameters('HR_WORKDAY_HC_Source_properties_typeProperties_folderPath')]"
-					},
-					"HR_WORKDAY_REQ_Archive_Destination_properties_typeProperties_fileName": {
-						"value": "[parameters('HR_WORKDAY_REQ_Archive_Destination_properties_typeProperties_fileName')]"
-					},
-					"HR_WORKDAY_REQ_Archive_Destination_properties_typeProperties_folderPath": {
-						"value": "[parameters('HR_WORKDAY_REQ_Archive_Destination_properties_typeProperties_folderPath')]"
 					}
 				}
 			},
@@ -788,6 +840,24 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"HR_WORKDAY_HC_Archive_Destination_properties_typeProperties_fileName": {
+						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination_properties_typeProperties_fileName')]"
+					},
+					"HR_WORKDAY_HC_Archive_Destination_properties_typeProperties_folderPath": {
+						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination_properties_typeProperties_folderPath')]"
+					},
+					"HR_WORKDAY_HC_Source_properties_typeProperties_fileName": {
+						"value": "[parameters('HR_WORKDAY_HC_Source_properties_typeProperties_fileName')]"
+					},
+					"HR_WORKDAY_HC_Source_properties_typeProperties_folderPath": {
+						"value": "[parameters('HR_WORKDAY_HC_Source_properties_typeProperties_folderPath')]"
+					},
+					"HR_WORKDAY_REQ_Archive_Destination_properties_typeProperties_fileName": {
+						"value": "[parameters('HR_WORKDAY_REQ_Archive_Destination_properties_typeProperties_fileName')]"
+					},
+					"HR_WORKDAY_REQ_Archive_Destination_properties_typeProperties_folderPath": {
+						"value": "[parameters('HR_WORKDAY_REQ_Archive_Destination_properties_typeProperties_folderPath')]"
 					},
 					"HR_WORKDAY_REQ_Source_properties_typeProperties_fileName": {
 						"value": "[parameters('HR_WORKDAY_REQ_Source_properties_typeProperties_fileName')]"
@@ -850,12 +920,6 @@
 					},
 					"SFDC_Archive_Opportunity_properties_typeProperties_folderPath": {
 						"value": "[parameters('SFDC_Archive_Opportunity_properties_typeProperties_folderPath')]"
-					},
-					"Sales_FF_Forecast_Archive_Destination_properties_typeProperties_fileName": {
-						"value": "[parameters('Sales_FF_Forecast_Archive_Destination_properties_typeProperties_fileName')]"
-					},
-					"Sales_FF_Forecast_Archive_Destination_properties_typeProperties_folderPath": {
-						"value": "[parameters('Sales_FF_Forecast_Archive_Destination_properties_typeProperties_folderPath')]"
 					}
 				}
 			},
@@ -876,6 +940,12 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"Sales_FF_Forecast_Archive_Destination_properties_typeProperties_fileName": {
+						"value": "[parameters('Sales_FF_Forecast_Archive_Destination_properties_typeProperties_fileName')]"
+					},
+					"Sales_FF_Forecast_Archive_Destination_properties_typeProperties_folderPath": {
+						"value": "[parameters('Sales_FF_Forecast_Archive_Destination_properties_typeProperties_folderPath')]"
 					},
 					"Sales_FF_Forecast_source_properties_typeProperties_fileName": {
 						"value": "[parameters('Sales_FF_Forecast_source_properties_typeProperties_fileName')]"
