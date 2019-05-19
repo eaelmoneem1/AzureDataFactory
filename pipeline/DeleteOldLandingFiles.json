@@ -1,9 +1,10 @@
 {
-	"name": "pipeline1",
+	"name": "DeleteOldLandingFiles",
 	"properties": {
+		"description": "Delete files from 1 month",
 		"activities": [
 			{
-				"name": "Delete1",
+				"name": "Delete HR",
 				"type": "Delete",
 				"policy": {
 					"timeout": "7.00:00:00",
