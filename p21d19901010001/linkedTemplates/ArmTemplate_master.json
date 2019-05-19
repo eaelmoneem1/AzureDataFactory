@@ -169,7 +169,7 @@
 		},
 		"FileShareDelete_properties_typeProperties_folderPath": {
 			"type": "string",
-			"defaultValue": "ELT"
+			"defaultValue": "ELT/HR"
 		},
 		"Finace_RevenueCost_Destination_properties_typeProperties_fileName": {
 			"type": "string",

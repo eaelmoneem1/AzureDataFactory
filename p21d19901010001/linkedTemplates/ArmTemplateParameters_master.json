@@ -126,7 +126,7 @@
 			"value": ""
 		},
 		"FileShareDelete_properties_typeProperties_folderPath": {
-			"value": "ELT"
+			"value": "ELT/HR"
 		},
 		"Finace_RevenueCost_Destination_properties_typeProperties_fileName": {
 			"value": "@concat ('dbo_FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
