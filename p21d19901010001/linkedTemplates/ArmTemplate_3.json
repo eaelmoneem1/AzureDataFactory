@@ -31,6 +31,14 @@
 			"type": "string",
 			"defaultValue": "Storage"
 		},
+		"FileShare4_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": ""
+		},
+		"FileShare4_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "CEOCFO/CustomerSupport"
+		},
 		"Finace_RevenueCost_Destination_properties_typeProperties_fileName": {
 			"type": "string",
 			"defaultValue": "@concat ('dbo_FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
@@ -191,6 +199,36 @@
 						"type": "Expression"
 					},
 					"folderPath": "[parameters('FileShare3_properties_typeProperties_folderPath')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FileShare4')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileShare",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "FileShare",
+				"typeProperties": {
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"rowDelimiter": "",
+						"treatEmptyAsNull": true,
+						"skipLineCount": 0,
+						"firstRowAsHeader": false
+					},
+					"fileName": "[parameters('FileShare4_properties_typeProperties_fileName')]",
+					"folderPath": "[parameters('FileShare4_properties_typeProperties_folderPath')]",
+					"modifiedDatetimeEnd": {
+						"value": "@adddays(pipeline().triggerTime, -30)",
+						"type": "Expression"
+					}
 				}
 			},
 			"dependsOn": []
@@ -1067,23 +1105,6 @@
 						"type": "Expression"
 					},
 					"folderPath": "[parameters('HR_WORKDAY_REQ_Archive_Destination_properties_typeProperties_folderPath')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_REQ_Archive_Source')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"typeProperties": {
-					"tableName": "[[STG].[V_HR_WORKDAY_REQ]"
 				}
 			},
 			"dependsOn": []

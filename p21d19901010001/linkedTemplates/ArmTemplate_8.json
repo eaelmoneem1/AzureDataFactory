@@ -13,6 +13,169 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/DimMarketing_SFDC_Opportunity_Initial')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Landing",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceSource",
+								"query": {
+									"value": "SELECT\nOpportunity_18chr_Id__c,\nName,\nOpportunity_Number__c,\nAccountId,\nSales_Region_FY07__c,\nStatus__c,\nStageName,\nProbability,\nDate_opportunity_moved_to_SS2__c,\nDate_opportunity_moved_to_SS4__c,\nILF_CommValue_CSH__c,\nACV_ACV_Equiv_CSH__c,\nIST_Rep,\nCreatedDate,\nLastModifiedDate\nFROM Opportunity\n\n",
+									"type": "Expression"
+								},
+								"readBehavior": "query"
+							},
+							"sink": {
+								"type": "SqlSink",
+								"writeBatchSize": 10000
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"columnMappings": {
+									"Opportunity_18chr_Id__c": "Opportunity_18chr_Id",
+									"Name": "Name",
+									"Opportunity_Number__c": "Opportunity_Number",
+									"AccountId": "AccountId",
+									"Sales_Region_FY07__c": "Sales_Region_FY07",
+									"Status__c": "Status",
+									"StageName": "StageName",
+									"Probability": "Probability",
+									"Date_opportunity_moved_to_SS2__c": "Date_opportunity_moved_to_SS2",
+									"Date_opportunity_moved_to_SS4__c": "Date_opportunity_moved_to_SS4",
+									"ILF_CommValue_CSH__c": "ILF_CommValue_CSH",
+									"ACV_ACV_Equiv_CSH__c": "ACV_ACV_Equiv_CSH",
+									"IST_Rep": "IST_Rep",
+									"CreatedDate": "CreatedDate",
+									"LastModifiedDate": "LastModifiedDate"
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Salesforce_Marketing",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Marketing_Stg",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Loading dbo table",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Hash Generate",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_ApplyDimMarketing_SFDC_Opportunity]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Hash Generate",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading Int tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
+							"storedProcedureParameters": {
+								"TableName": {
+									"value": "DimMarketing_SFDC_Opportunity",
+									"type": "String"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Loading Int tables",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Landing",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_DimMarketing_SFDC_Opportunity]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"folder": {
+					"name": "Marketing"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DimMarketing_Targets')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -4481,217 +4644,6 @@
 						"outputs": [
 							{
 								"referenceName": "Sales_MSCRM_Booking_Archive_DL",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"folder": {
-					"name": "Sales"
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/FactSALES_MSCRM_Orderbook')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Loading Int tables",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Loading STG tables",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 3,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_FactSALES_MSCRM_Orderbook]"
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabase_finastra",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Hash Generate",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Loading Int tables",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 3,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
-							"storedProcedureParameters": {
-								"TableName": {
-									"value": "FactSALES_MSCRM_Orderbook"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabase_finastra",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Loading dbo table",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Hash Generate",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 3,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_ApplyFactSALES_MSCRM_Orderbook]"
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabase_finastra",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Loading STG tables",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "FileSystemSource",
-								"recursive": true
-							},
-							"sink": {
-								"type": "SqlSink",
-								"writeBatchSize": 10000
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"columnMappings": {
-									"accountid (Custom_SQL_Query)": "Accountid (Custom_SQL_Query)",
-									"AccountName": "AccountName",
-									"Createdon (DAY)": "Createdon (DAY)",
-									"Estimated Close Date (DAY)": "Estimated Close Date (DAY)",
-									"Modifiedon (DAY)": "Modifiedon (DAY)",
-									"Employeeid": "Employeeid",
-									"Forecast Category": "Forecast Category",
-									"LOB": "LOB",
-									"Main Product": "Main Product",
-									"Name": "Name",
-									"Opportunityid": "Opportunityid",
-									"Quarter": "Quarter",
-									"Region": "Region",
-									"Sale Type": "Sale Type",
-									"Sales Rep": "Sales Rep",
-									"Sales Stage": "Sales Stage",
-									"Statecodename": "Statecodename",
-									"ACV + ACV Equiv (AVG)": "ACV + ACV Equiv (AVG)",
-									"ACV Booking (AVG)": "ACV Booking (AVG)",
-									"ACV Renewal (AVG)": "ACV Renewal (AVG)",
-									"Contract Term (Months) (AVG)": "Contract Term (Months) (AVG)",
-									"ILF (AVG)": "ILF (AVG)",
-									"Services (AVG)": "Services (AVG)",
-									"Term in Years (AVG)": "Term in Years (AVG)"
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "Sales_MSCRM_OrderBook_source",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Sales_MSCRM_OrderBook_Destination",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "Archiving data in DL",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "Loading dbo table",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "FileSystemSource",
-								"recursive": true
-							},
-							"sink": {
-								"type": "AzureDataLakeStoreSink"
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "Sales_MSCRM_OrderBook_source",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Sales_MSCRM_OrderBook_Archive",
 								"type": "DatasetReference",
 								"parameters": {}
 							}

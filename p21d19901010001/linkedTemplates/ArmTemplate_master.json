@@ -163,6 +163,14 @@
 			"type": "string",
 			"defaultValue": "Storage"
 		},
+		"FileShare4_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": ""
+		},
+		"FileShare4_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "CEOCFO/CustomerSupport"
+		},
 		"Finace_RevenueCost_Destination_properties_typeProperties_fileName": {
 			"type": "string",
 			"defaultValue": "@concat ('dbo_FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
@@ -700,6 +708,12 @@
 					},
 					"FileShare3_properties_typeProperties_folderPath": {
 						"value": "[parameters('FileShare3_properties_typeProperties_folderPath')]"
+					},
+					"FileShare4_properties_typeProperties_fileName": {
+						"value": "[parameters('FileShare4_properties_typeProperties_fileName')]"
+					},
+					"FileShare4_properties_typeProperties_folderPath": {
+						"value": "[parameters('FileShare4_properties_typeProperties_folderPath')]"
 					},
 					"Finace_RevenueCost_Destination_properties_typeProperties_fileName": {
 						"value": "[parameters('Finace_RevenueCost_Destination_properties_typeProperties_fileName')]"

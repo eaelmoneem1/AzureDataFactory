@@ -163,6 +163,14 @@
 			"type": "string",
 			"defaultValue": "Storage"
 		},
+		"FileShare4_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": ""
+		},
+		"FileShare4_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "CEOCFO/CustomerSupport"
+		},
 		"Finace_RevenueCost_Destination_properties_typeProperties_fileName": {
 			"type": "string",
 			"defaultValue": "@concat ('dbo_FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
@@ -8912,8 +8920,8 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "Copy Data1",
-						"type": "Copy",
+						"name": "Delete1",
+						"type": "Delete",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "7.00:00:00",
@@ -8924,34 +8932,19 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource"
-							},
-							"sink": {
-								"type": "AzureSqlSink"
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "Account_SQL",
+							"dataset": {
+								"referenceName": "FileShare4",
 								"type": "DatasetReference",
 								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Account_SQL",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
+							},
+							"enableLogging": false
+						}
 					}
 				],
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Account_SQL')]"
+				"[concat(variables('factoryId'), '/datasets/FileShare4')]"
 			]
 		},
 		{
@@ -12488,6 +12481,38 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/SharedFolder3')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FileShare4')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileShare",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "FileShare",
+				"typeProperties": {
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"rowDelimiter": "",
+						"treatEmptyAsNull": true,
+						"skipLineCount": 0,
+						"firstRowAsHeader": false
+					},
+					"fileName": "[parameters('FileShare4_properties_typeProperties_fileName')]",
+					"folderPath": "[parameters('FileShare4_properties_typeProperties_folderPath')]",
+					"modifiedDatetimeEnd": {
+						"value": "@adddays(pipeline().triggerTime, -30)",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/FileShare')]"
 			]
 		},
 		{
