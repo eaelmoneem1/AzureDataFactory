@@ -1,0 +1,105 @@
+{
+	"name": "EXMSCORE_Gender_Dest",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Location",
+				"type": "varchar"
+			},
+			{
+				"name": "Responses",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Detractors_Percentage",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Passives_Percentage",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Promoters_Percentage",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Score",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Avg_Response",
+				"type": "decimal",
+				"precision": 16,
+				"scale": 2
+			},
+			{
+				"name": "Response_Distribution_0",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Response_Distribution_1",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Response_Distribution_2",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Response_Distribution_3",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Response_Distribution_4",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Response_Distribution_5",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Response_Distribution_6",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Response_Distribution_7",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Response_Distribution_8",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Response_Distribution_9",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Response_Distribution_10",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"tableName": "[STG].[V_HR_Maclean_EXM_Gender]"
+		}
+	}
+}
