@@ -2161,7 +2161,7 @@
 						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "FactEXMSCORE_Age_Group",
+								"activity": "FACTEXMSCORE",
 								"dependencyConditions": [
 									"Completed"
 								]
@@ -2234,6 +2234,27 @@
 						"typeProperties": {
 							"pipeline": {
 								"referenceName": "FactEXMSCORE_Age_Group",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "FACTEXMSCORE",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FactEXMSCORE_Age_Group",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactEXMSCORE",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,

@@ -9228,7 +9228,7 @@
 						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "FactEXMSCORE_Age_Group",
+								"activity": "FACTEXMSCORE",
 								"dependencyConditions": [
 									"Completed"
 								]
@@ -9306,6 +9306,27 @@
 							"waitOnCompletion": true,
 							"parameters": {}
 						}
+					},
+					{
+						"name": "FACTEXMSCORE",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FactEXMSCORE_Age_Group",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactEXMSCORE",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
 					}
 				],
 				"folder": {
@@ -9323,7 +9344,8 @@
 				"[concat(variables('factoryId'), '/pipelines/FactEmployee_Requisitions')]",
 				"[concat(variables('factoryId'), '/pipelines/DimEmployee_Terminations')]",
 				"[concat(variables('factoryId'), '/pipelines/FactEXMSCORE_Gender')]",
-				"[concat(variables('factoryId'), '/pipelines/FactEXMSCORE_Age_Group')]"
+				"[concat(variables('factoryId'), '/pipelines/FactEXMSCORE_Age_Group')]",
+				"[concat(variables('factoryId'), '/pipelines/FactEXMSCORE')]"
 			]
 		},
 		{
