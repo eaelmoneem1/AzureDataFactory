@@ -656,12 +656,6 @@
 					},
 					"AzureDataLakeStoreFile1_properties_typeProperties_folderPath": {
 						"value": "[parameters('AzureDataLakeStoreFile1_properties_typeProperties_folderPath')]"
-					},
-					"AzureDataLakeStoreFile2_properties_typeProperties_fileName": {
-						"value": "[parameters('AzureDataLakeStoreFile2_properties_typeProperties_fileName')]"
-					},
-					"AzureDataLakeStoreFile2_properties_typeProperties_folderPath": {
-						"value": "[parameters('AzureDataLakeStoreFile2_properties_typeProperties_folderPath')]"
 					}
 				}
 			},
@@ -680,6 +674,12 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"AzureDataLakeStoreFile2_properties_typeProperties_fileName": {
+						"value": "[parameters('AzureDataLakeStoreFile2_properties_typeProperties_fileName')]"
+					},
+					"AzureDataLakeStoreFile2_properties_typeProperties_folderPath": {
+						"value": "[parameters('AzureDataLakeStoreFile2_properties_typeProperties_folderPath')]"
 					},
 					"AzureDataLakeStoreFile3_properties_typeProperties_fileName": {
 						"value": "[parameters('AzureDataLakeStoreFile3_properties_typeProperties_fileName')]"
@@ -902,12 +902,6 @@
 					},
 					"HR_WORKDAY_HC_Source_properties_typeProperties_folderPath": {
 						"value": "[parameters('HR_WORKDAY_HC_Source_properties_typeProperties_folderPath')]"
-					},
-					"HR_WORKDAY_HC_Source1_properties_typeProperties_fileName": {
-						"value": "[parameters('HR_WORKDAY_HC_Source1_properties_typeProperties_fileName')]"
-					},
-					"HR_WORKDAY_HC_Source1_properties_typeProperties_folderPath": {
-						"value": "[parameters('HR_WORKDAY_HC_Source1_properties_typeProperties_folderPath')]"
 					}
 				}
 			},
@@ -928,6 +922,12 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"HR_WORKDAY_HC_Source1_properties_typeProperties_fileName": {
+						"value": "[parameters('HR_WORKDAY_HC_Source1_properties_typeProperties_fileName')]"
+					},
+					"HR_WORKDAY_HC_Source1_properties_typeProperties_folderPath": {
+						"value": "[parameters('HR_WORKDAY_HC_Source1_properties_typeProperties_folderPath')]"
 					},
 					"HR_WORKDAY_REQ_Archive_Destination_properties_typeProperties_fileName": {
 						"value": "[parameters('HR_WORKDAY_REQ_Archive_Destination_properties_typeProperties_fileName')]"
@@ -996,12 +996,6 @@
 					},
 					"SFDC_Archive_Opportunity_properties_typeProperties_folderPath": {
 						"value": "[parameters('SFDC_Archive_Opportunity_properties_typeProperties_folderPath')]"
-					},
-					"Sales_FF_Forecast_Archive_Destination_properties_typeProperties_fileName": {
-						"value": "[parameters('Sales_FF_Forecast_Archive_Destination_properties_typeProperties_fileName')]"
-					},
-					"Sales_FF_Forecast_Archive_Destination_properties_typeProperties_folderPath": {
-						"value": "[parameters('Sales_FF_Forecast_Archive_Destination_properties_typeProperties_folderPath')]"
 					}
 				}
 			},
@@ -1022,6 +1016,12 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"Sales_FF_Forecast_Archive_Destination_properties_typeProperties_fileName": {
+						"value": "[parameters('Sales_FF_Forecast_Archive_Destination_properties_typeProperties_fileName')]"
+					},
+					"Sales_FF_Forecast_Archive_Destination_properties_typeProperties_folderPath": {
+						"value": "[parameters('Sales_FF_Forecast_Archive_Destination_properties_typeProperties_folderPath')]"
 					},
 					"Sales_FF_Forecast_source_properties_typeProperties_fileName": {
 						"value": "[parameters('Sales_FF_Forecast_source_properties_typeProperties_fileName')]"
