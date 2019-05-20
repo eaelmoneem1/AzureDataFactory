@@ -158,6 +158,10 @@
 					}
 				],
 				"typeProperties": {
+					"pipeline": {
+						"referenceName": "FactEXMSCORE_Gender",
+						"type": "PipelineReference"
+					},
 					"waitOnCompletion": true
 				}
 			},
@@ -173,6 +177,10 @@
 					}
 				],
 				"typeProperties": {
+					"pipeline": {
+						"referenceName": "FactEXMSCORE_Age_Group",
+						"type": "PipelineReference"
+					},
 					"waitOnCompletion": true
 				}
 			}
