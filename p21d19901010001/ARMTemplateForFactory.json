@@ -9189,7 +9189,7 @@
 						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "FactEXMSCORE_Region",
+								"activity": "FactEXMSCORE_Age_Group",
 								"dependencyConditions": [
 									"Completed"
 								]
@@ -9225,6 +9225,48 @@
 							"waitOnCompletion": true,
 							"parameters": {}
 						}
+					},
+					{
+						"name": "FactEXMSCORE_Gender",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FactEXMSCORE_Region",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactEXMSCORE_Gender",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "FactEXMSCORE_Age_Group",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FactEXMSCORE_Gender",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactEXMSCORE_Age_Group",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
 					}
 				],
 				"folder": {
@@ -9240,7 +9282,9 @@
 				"[concat(variables('factoryId'), '/pipelines/DimEmployee')]",
 				"[concat(variables('factoryId'), '/pipelines/FactOpportunity_All Job')]",
 				"[concat(variables('factoryId'), '/pipelines/FactEmployee_Requisitions')]",
-				"[concat(variables('factoryId'), '/pipelines/DimEmployee_Terminations')]"
+				"[concat(variables('factoryId'), '/pipelines/DimEmployee_Terminations')]",
+				"[concat(variables('factoryId'), '/pipelines/FactEXMSCORE_Gender')]",
+				"[concat(variables('factoryId'), '/pipelines/FactEXMSCORE_Age_Group')]"
 			]
 		},
 		{

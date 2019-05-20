@@ -1963,7 +1963,7 @@
 						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "FactEXMSCORE_Region",
+								"activity": "FactEXMSCORE_Age_Group",
 								"dependencyConditions": [
 									"Completed"
 								]
@@ -1994,6 +1994,48 @@
 						"typeProperties": {
 							"pipeline": {
 								"referenceName": "DimEmployee_Terminations",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "FactEXMSCORE_Gender",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FactEXMSCORE_Region",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactEXMSCORE_Gender",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "FactEXMSCORE_Age_Group",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FactEXMSCORE_Gender",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactEXMSCORE_Age_Group",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,

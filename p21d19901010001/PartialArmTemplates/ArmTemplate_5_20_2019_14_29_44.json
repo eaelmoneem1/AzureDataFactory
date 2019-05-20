@@ -1,0 +1,210 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory Name",
+			"defaultValue": "p21d19901010001"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/Weekly Job')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "FactSALES_MSCRM_Bookings",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FactOpportunity_All",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactSALES_MSCRM_Bookings",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true
+						}
+					},
+					{
+						"name": "FactSALES_MSCRM_Orderbook",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FactSALES_MSCRM_Bookings",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactSALES_MSCRM_Orderbook",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true
+						}
+					},
+					{
+						"name": "FactEXMSCORE_Location",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FactSALES_MSCRM_Orderbook",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactEXMSCORE_Location",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true
+						}
+					},
+					{
+						"name": "FactEXMSCORE_Region",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FactEXMSCORE_Location",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactEXMSCORE_Region",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true
+						}
+					},
+					{
+						"name": "DimEmployee",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "DimEmployee_Termination",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "DimEmployee",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true
+						}
+					},
+					{
+						"name": "FactOpportunity_All",
+						"type": "ExecutePipeline",
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactOpportunity_All Job",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true
+						}
+					},
+					{
+						"name": "FactEmployee_Requisitions",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FactEXMSCORE_Age_Group",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactEmployee_Requisitions",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true
+						}
+					},
+					{
+						"name": "DimEmployee_Termination",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FactEmployee_Requisitions",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "DimEmployee_Terminations",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true
+						}
+					},
+					{
+						"name": "FactEXMSCORE_Gender",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FactEXMSCORE_Region",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactEXMSCORE_Gender",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true
+						}
+					},
+					{
+						"name": "FactEXMSCORE_Age_Group",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FactEXMSCORE_Gender",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactEXMSCORE_Age_Group",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true
+						}
+					}
+				],
+				"folder": {
+					"name": "ETL Jobs"
+				}
+			}
+		}
+	]
+}
