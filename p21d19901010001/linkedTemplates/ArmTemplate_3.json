@@ -86,28 +86,173 @@
 		"Finace_RevenueCost_Destination_properties_typeProperties_folderPath": {
 			"type": "string",
 			"defaultValue": "LandingArchive/CEOCFO/Finance/dbo"
-		},
-		"HR_Maclean_EXM_Location_Directory_Source_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "DimGeographical_Location.csv"
-		},
-		"HR_Maclean_EXM_Location_Directory_Source_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "HR"
-		},
-		"HR_Maclean_EXM_Location_Source_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "@concat ('EXM_Location_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
-		},
-		"HR_Maclean_EXM_Location_Source_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "CEOCFO/HR"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/EXMSCORE_Gender_Dest')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Location",
+						"type": "varchar"
+					},
+					{
+						"name": "Responses",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Detractors_Percentage",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Passives_Percentage",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Promoters_Percentage",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Score",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Avg_Response",
+						"type": "decimal",
+						"precision": 16,
+						"scale": 2
+					},
+					{
+						"name": "Response_Distribution_0",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_1",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_2",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_3",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_4",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_5",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_6",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_7",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_8",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_9",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_10",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[V_HR_Maclean_EXM_Gender]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/EXMSCORE_Gender_Source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileShare",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"fileName": {
+							"value": "@concat ('Gender_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+							"type": "Expression"
+						},
+						"folderPath": "CEOCFO/HR"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FF_Cash_Source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileShare",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/FX_Conversion_Archive')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -715,184 +860,6 @@
 				"type": "AzureSqlTable",
 				"typeProperties": {
 					"tableName": "[[STG].[V_HR_Maclean_EXM_Location_Directory]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HR_Maclean_EXM_Location_Directory_Destination')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"structure": [
-					{
-						"name": "Location",
-						"type": "String"
-					},
-					{
-						"name": "Country",
-						"type": "String"
-					},
-					{
-						"name": "Region",
-						"type": "String"
-					}
-				],
-				"typeProperties": {
-					"tableName": "[[STG].[HR_Maclean_EXM_Location_Directory]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HR_Maclean_EXM_Location_Directory_Source')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileShare",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "FileShare",
-				"structure": [
-					{
-						"name": "Location",
-						"type": "String"
-					},
-					{
-						"name": "Country",
-						"type": "String"
-					},
-					{
-						"name": "Region",
-						"type": "String"
-					}
-				],
-				"typeProperties": {
-					"format": {
-						"type": "TextFormat",
-						"columnDelimiter": ",",
-						"rowDelimiter": "",
-						"quoteChar": "\"",
-						"nullValue": "",
-						"treatEmptyAsNull": true,
-						"skipLineCount": 0,
-						"firstRowAsHeader": true
-					},
-					"fileName": "[parameters('HR_Maclean_EXM_Location_Directory_Source_properties_typeProperties_fileName')]",
-					"folderPath": "[parameters('HR_Maclean_EXM_Location_Directory_Source_properties_typeProperties_folderPath')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HR_Maclean_EXM_Location_Source')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileShare",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "FileShare",
-				"structure": [
-					{
-						"name": "Location",
-						"type": "String"
-					},
-					{
-						"name": "Responses",
-						"type": "String"
-					},
-					{
-						"name": "Detractors",
-						"type": "String"
-					},
-					{
-						"name": "Passives",
-						"type": "String"
-					},
-					{
-						"name": "Promoters",
-						"type": "String"
-					},
-					{
-						"name": "Score",
-						"type": "String"
-					},
-					{
-						"name": "Avg. Response",
-						"type": "String"
-					},
-					{
-						"name": "0",
-						"type": "String"
-					},
-					{
-						"name": "1",
-						"type": "String"
-					},
-					{
-						"name": "2",
-						"type": "String"
-					},
-					{
-						"name": "3",
-						"type": "String"
-					},
-					{
-						"name": "4",
-						"type": "String"
-					},
-					{
-						"name": "5",
-						"type": "String"
-					},
-					{
-						"name": "6",
-						"type": "String"
-					},
-					{
-						"name": "7",
-						"type": "String"
-					},
-					{
-						"name": "8",
-						"type": "String"
-					},
-					{
-						"name": "9",
-						"type": "String"
-					},
-					{
-						"name": "10",
-						"type": "String"
-					}
-				],
-				"typeProperties": {
-					"format": {
-						"type": "TextFormat",
-						"columnDelimiter": ",",
-						"rowDelimiter": "",
-						"quoteChar": "\"",
-						"nullValue": "",
-						"treatEmptyAsNull": true,
-						"skipLineCount": 0,
-						"firstRowAsHeader": true
-					},
-					"fileName": {
-						"value": "[parameters('HR_Maclean_EXM_Location_Source_properties_typeProperties_fileName')]",
-						"type": "Expression"
-					},
-					"folderPath": "[parameters('HR_Maclean_EXM_Location_Source_properties_typeProperties_folderPath')]"
 				}
 			},
 			"dependsOn": []

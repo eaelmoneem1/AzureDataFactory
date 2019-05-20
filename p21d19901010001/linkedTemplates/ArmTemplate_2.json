@@ -1817,6 +1817,174 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/EXMSCORE_Age_Group_Arch')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStore",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureDataLakeStoreLocation",
+						"fileName": {
+							"value": "@concat ('EXM_Age_Group_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+							"type": "Expression"
+						},
+						"folderPath": "LandingArchive/CEOCFO/HR"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/EXMSCORE_Age_Group_Dest')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Age_Group",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Responses",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Detractors_Percentage",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Passives_Percentage",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Promoters_Percentage",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Score",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Avg_Response",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Response_Distribution_0",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Response_Distribution_1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Response_Distribution_2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Response_Distribution_3",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Response_Distribution_4",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Response_Distribution_5",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Response_Distribution_6",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Response_Distribution_7",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Response_Distribution_8",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Response_Distribution_9",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Response_Distribution_10",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Rec_CRE_TMS",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[HR_Maclean_EXM_Age_Group]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/EXMSCORE_Age_Group_Source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileShare",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"fileName": {
+							"value": "@concat ('EXM_Age_Group_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+							"type": "Expression"
+						},
+						"folderPath": "CEOCFO/HR"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Location",
+						"type": "String"
+					},
+					{
+						"name": "Country",
+						"type": "String"
+					},
+					{
+						"name": "Region",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/EXMSCORE_Gender')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1915,167 +2083,6 @@
 						"type": "String"
 					}
 				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/EXMSCORE_Gender_Dest')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "Location",
-						"type": "varchar"
-					},
-					{
-						"name": "Responses",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Detractors_Percentage",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Passives_Percentage",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Promoters_Percentage",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Score",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Avg_Response",
-						"type": "decimal",
-						"precision": 16,
-						"scale": 2
-					},
-					{
-						"name": "Response_Distribution_0",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Response_Distribution_1",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Response_Distribution_2",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Response_Distribution_3",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Response_Distribution_4",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Response_Distribution_5",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Response_Distribution_6",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Response_Distribution_7",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Response_Distribution_8",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Response_Distribution_9",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Response_Distribution_10",
-						"type": "int",
-						"precision": 10
-					}
-				],
-				"typeProperties": {
-					"tableName": "[[STG].[V_HR_Maclean_EXM_Gender]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/EXMSCORE_Gender_Source')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileShare",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "FileServerLocation",
-						"fileName": {
-							"value": "@concat ('Gender_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
-							"type": "Expression"
-						},
-						"folderPath": "CEOCFO/HR"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/FF_Cash_Source')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileShare",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "FileServerLocation"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"quoteChar": "\""
-				},
-				"schema": []
 			},
 			"dependsOn": []
 		}

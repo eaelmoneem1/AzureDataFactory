@@ -7,6 +7,22 @@
 			"metadata": "Data Factory Name",
 			"defaultValue": "p21d19901010001"
 		},
+		"TimeDimensionDate_Archive_Destination_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "@concat ('TimeDimensionDate_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"TimeDimensionDate_Archive_Destination_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "LandingArchive/CEOCFO/Dimentions/Time"
+		},
+		"TimeDimensionDate_Source_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "TimeDimensionDate.csv"
+		},
+		"TimeDimensionDate_Source_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "CEOCFO/Dimentions/Time"
+		},
 		"TimeDimension_Archive_Destination_properties_typeProperties_fileName": {
 			"type": "string",
 			"defaultValue": "@concat ('TimeDimension_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
@@ -52,6 +68,728 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/SharedFolder3_Dest')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SharedFolder3",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"fileName": {
+							"value": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+							"type": "Expression"
+						},
+						"folderPath": "Storage"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SharedFoler2_Dest')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SharedFolder2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"fileName": {
+							"value": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+							"type": "Expression"
+						},
+						"folderPath": "Storage"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TimeDimensionDate_Archive_Destination')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStore",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureDataLakeStoreFile",
+				"typeProperties": {
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"rowDelimiter": "",
+						"quoteChar": "\"",
+						"nullValue": "",
+						"treatEmptyAsNull": true,
+						"skipLineCount": 0,
+						"firstRowAsHeader": true
+					},
+					"fileName": {
+						"value": "[parameters('TimeDimensionDate_Archive_Destination_properties_typeProperties_fileName')]",
+						"type": "Expression"
+					},
+					"folderPath": "[parameters('TimeDimensionDate_Archive_Destination_properties_typeProperties_folderPath')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TimeDimensionDate_Destination')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"structure": [
+					{
+						"name": "DATE_SKEY",
+						"type": "String"
+					},
+					{
+						"name": "DATE_CREAT_DT",
+						"type": "String"
+					},
+					{
+						"name": "DATE_LAST_UPD_DT",
+						"type": "String"
+					},
+					{
+						"name": "DATE_BKEY",
+						"type": "String"
+					},
+					{
+						"name": "DATE_CAPTION",
+						"type": "String"
+					},
+					{
+						"name": "DATE_CODE",
+						"type": "String"
+					},
+					{
+						"name": "DATE_DT",
+						"type": "String"
+					},
+					{
+						"name": "DATE_DAY_NAME",
+						"type": "String"
+					},
+					{
+						"name": "DATE_SERIES",
+						"type": "String"
+					},
+					{
+						"name": "DATE_DAY_OF_WEEK",
+						"type": "String"
+					},
+					{
+						"name": "CAL_MONTH_BKEY",
+						"type": "String"
+					},
+					{
+						"name": "CAL_MONTH_CAPTION",
+						"type": "String"
+					},
+					{
+						"name": "CAL_MONTH_CODE",
+						"type": "String"
+					},
+					{
+						"name": "CAL_MONTH_NAME",
+						"type": "String"
+					},
+					{
+						"name": "CAL_MONTH_SERIES",
+						"type": "String"
+					},
+					{
+						"name": "CAL_MONTH_BEG_DT",
+						"type": "String"
+					},
+					{
+						"name": "CAL_MONTH_END_DT",
+						"type": "String"
+					},
+					{
+						"name": "CAL_QTR_BKEY",
+						"type": "String"
+					},
+					{
+						"name": "CAL_QTR_CAPTION",
+						"type": "String"
+					},
+					{
+						"name": "CAL_QTR_CODE",
+						"type": "String"
+					},
+					{
+						"name": "CAL_QTR_NAME",
+						"type": "String"
+					},
+					{
+						"name": "CAL_QTR_SERIES",
+						"type": "String"
+					},
+					{
+						"name": "CAL_QTR_BEG_DT",
+						"type": "String"
+					},
+					{
+						"name": "CAL_QTR_END_DT",
+						"type": "String"
+					},
+					{
+						"name": "CAL_HALF_YEAR_BKEY",
+						"type": "String"
+					},
+					{
+						"name": "CAL_HALF_YEAR_CAPTION",
+						"type": "String"
+					},
+					{
+						"name": "CAL_HALF_YEAR_CODE",
+						"type": "String"
+					},
+					{
+						"name": "CAL_HALF_YEAR_NAME",
+						"type": "String"
+					},
+					{
+						"name": "CAL_HALF_YEAR_SERIES",
+						"type": "String"
+					},
+					{
+						"name": "CAL_HALF_YEAR_BEG_DT",
+						"type": "String"
+					},
+					{
+						"name": "CAL_HALF_YEAR_END_DT",
+						"type": "String"
+					},
+					{
+						"name": "CAL_YEAR_BKEY",
+						"type": "String"
+					},
+					{
+						"name": "CAL_YEAR_CAPTION",
+						"type": "String"
+					},
+					{
+						"name": "CAL_YEAR_CODE",
+						"type": "String"
+					},
+					{
+						"name": "CAL_YEAR_SERIES",
+						"type": "String"
+					},
+					{
+						"name": "CAL_YEAR_BEG_DT",
+						"type": "String"
+					},
+					{
+						"name": "CAL_YEAR_END_DT",
+						"type": "String"
+					},
+					{
+						"name": "FISC_PERIOD_BKEY",
+						"type": "String"
+					},
+					{
+						"name": "FISC_PERIOD_CAPTION",
+						"type": "String"
+					},
+					{
+						"name": "FISC_PERIOD_CODE",
+						"type": "String"
+					},
+					{
+						"name": "FISC_PERIOD_NAME",
+						"type": "String"
+					},
+					{
+						"name": "FISC_PERIOD_SERIES",
+						"type": "String"
+					},
+					{
+						"name": "FISC_PERIOD_BEG_DT",
+						"type": "String"
+					},
+					{
+						"name": "FISC_PERIOD_END_DT",
+						"type": "String"
+					},
+					{
+						"name": "FISC_QTR_BKEY",
+						"type": "String"
+					},
+					{
+						"name": "FISC_QTR_CAPTION",
+						"type": "String"
+					},
+					{
+						"name": "FISC_QTR_CODE",
+						"type": "String"
+					},
+					{
+						"name": "FISC_QTR_NAME",
+						"type": "String"
+					},
+					{
+						"name": "FISC_QTR_SERIES",
+						"type": "String"
+					},
+					{
+						"name": "FISC_QTR_BEG_DT",
+						"type": "String"
+					},
+					{
+						"name": "FISC_QTR_END_DT",
+						"type": "String"
+					},
+					{
+						"name": "FISC_HALF_YEAR_BKEY",
+						"type": "String"
+					},
+					{
+						"name": "FISC_HALF_YEAR_CAPTION",
+						"type": "String"
+					},
+					{
+						"name": "FISC_HALF_YEAR_CODE",
+						"type": "String"
+					},
+					{
+						"name": "FISC_HALF_YEAR_NAME",
+						"type": "String"
+					},
+					{
+						"name": "FISC_HALF_YEAR_SERIES",
+						"type": "String"
+					},
+					{
+						"name": "FISC_HALF_YEAR_BEG_DT",
+						"type": "String"
+					},
+					{
+						"name": "FISC_HALF_YEAR_END_DT",
+						"type": "String"
+					},
+					{
+						"name": "FISC_YEAR_BKEY",
+						"type": "String"
+					},
+					{
+						"name": "FISC_YEAR_CAPTION",
+						"type": "String"
+					},
+					{
+						"name": "FISC_YEAR_CODE",
+						"type": "String"
+					},
+					{
+						"name": "FISC_YEAR_SERIES",
+						"type": "String"
+					},
+					{
+						"name": "FISC_YEAR_BEG_DT",
+						"type": "String"
+					},
+					{
+						"name": "FISC_YEAR_END_DT",
+						"type": "String"
+					},
+					{
+						"name": "FISC_YEAR_NAME",
+						"type": "String"
+					},
+					{
+						"name": "FISC_WEEK_BKEY",
+						"type": "String"
+					},
+					{
+						"name": "FISC_WEEK_CAPTION",
+						"type": "String"
+					},
+					{
+						"name": "FISC_WEEK_CODE",
+						"type": "String"
+					},
+					{
+						"name": "FISC_WEEK_NAME",
+						"type": "String"
+					},
+					{
+						"name": "FISC_WEEK_SERIES",
+						"type": "String"
+					},
+					{
+						"name": "FISC_WEEK_BEG_DT",
+						"type": "String"
+					},
+					{
+						"name": "FISC_WEEK_END_DT",
+						"type": "String"
+					},
+					{
+						"name": "SOURCE_SYSTEM",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[TimeDimensionDate]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TimeDimensionDate_Source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileShare",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "FileShare",
+				"structure": [
+					{
+						"name": "DATE_SKEY",
+						"type": "String"
+					},
+					{
+						"name": "DATE_CREAT_DT",
+						"type": "String"
+					},
+					{
+						"name": "DATE_LAST_UPD_DT",
+						"type": "String"
+					},
+					{
+						"name": "DATE_BKEY",
+						"type": "String"
+					},
+					{
+						"name": "DATE_CAPTION",
+						"type": "String"
+					},
+					{
+						"name": "DATE_CODE",
+						"type": "String"
+					},
+					{
+						"name": "DATE_DT",
+						"type": "String"
+					},
+					{
+						"name": "DATE_DAY_NAME",
+						"type": "String"
+					},
+					{
+						"name": "DATE_SERIES",
+						"type": "String"
+					},
+					{
+						"name": "DATE_DAY_OF_WEEK",
+						"type": "String"
+					},
+					{
+						"name": "CAL_MONTH_BKEY",
+						"type": "String"
+					},
+					{
+						"name": "CAL_MONTH_CAPTION",
+						"type": "String"
+					},
+					{
+						"name": "CAL_MONTH_CODE",
+						"type": "String"
+					},
+					{
+						"name": "CAL_MONTH_NAME",
+						"type": "String"
+					},
+					{
+						"name": "CAL_MONTH_SERIES",
+						"type": "String"
+					},
+					{
+						"name": "CAL_MONTH_BEG_DT",
+						"type": "String"
+					},
+					{
+						"name": "CAL_MONTH_END_DT",
+						"type": "String"
+					},
+					{
+						"name": "CAL_QTR_BKEY",
+						"type": "String"
+					},
+					{
+						"name": "CAL_QTR_CAPTION",
+						"type": "String"
+					},
+					{
+						"name": "CAL_QTR_CODE",
+						"type": "String"
+					},
+					{
+						"name": "CAL_QTR_NAME",
+						"type": "String"
+					},
+					{
+						"name": "CAL_QTR_SERIES",
+						"type": "String"
+					},
+					{
+						"name": "CAL_QTR_BEG_DT",
+						"type": "String"
+					},
+					{
+						"name": "CAL_QTR_END_DT",
+						"type": "String"
+					},
+					{
+						"name": "CAL_HALF_YEAR_BKEY",
+						"type": "String"
+					},
+					{
+						"name": "CAL_HALF_YEAR_CAPTION",
+						"type": "String"
+					},
+					{
+						"name": "CAL_HALF_YEAR_CODE",
+						"type": "String"
+					},
+					{
+						"name": "CAL_HALF_YEAR_NAME",
+						"type": "String"
+					},
+					{
+						"name": "CAL_HALF_YEAR_SERIES",
+						"type": "String"
+					},
+					{
+						"name": "CAL_HALF_YEAR_BEG_DT",
+						"type": "String"
+					},
+					{
+						"name": "CAL_HALF_YEAR_END_DT",
+						"type": "String"
+					},
+					{
+						"name": "CAL_YEAR_BKEY",
+						"type": "String"
+					},
+					{
+						"name": "CAL_YEAR_CAPTION",
+						"type": "String"
+					},
+					{
+						"name": "CAL_YEAR_CODE",
+						"type": "String"
+					},
+					{
+						"name": "CAL_YEAR_SERIES",
+						"type": "String"
+					},
+					{
+						"name": "CAL_YEAR_BEG_DT",
+						"type": "String"
+					},
+					{
+						"name": "CAL_YEAR_END_DT",
+						"type": "String"
+					},
+					{
+						"name": "FISC_PERIOD_BKEY",
+						"type": "String"
+					},
+					{
+						"name": "FISC_PERIOD_CAPTION",
+						"type": "String"
+					},
+					{
+						"name": "FISC_PERIOD_CODE",
+						"type": "String"
+					},
+					{
+						"name": "FISC_PERIOD_NAME",
+						"type": "String"
+					},
+					{
+						"name": "FISC_PERIOD_SERIES",
+						"type": "String"
+					},
+					{
+						"name": "FISC_PERIOD_BEG_DT",
+						"type": "String"
+					},
+					{
+						"name": "FISC_PERIOD_END_DT",
+						"type": "String"
+					},
+					{
+						"name": "FISC_QTR_BKEY",
+						"type": "String"
+					},
+					{
+						"name": "FISC_QTR_CAPTION",
+						"type": "String"
+					},
+					{
+						"name": "FISC_QTR_CODE",
+						"type": "String"
+					},
+					{
+						"name": "FISC_QTR_NAME",
+						"type": "String"
+					},
+					{
+						"name": "FISC_QTR_SERIES",
+						"type": "String"
+					},
+					{
+						"name": "FISC_QTR_BEG_DT",
+						"type": "String"
+					},
+					{
+						"name": "FISC_QTR_END_DT",
+						"type": "String"
+					},
+					{
+						"name": "FISC_HALF_YEAR_BKEY",
+						"type": "String"
+					},
+					{
+						"name": "FISC_HALF_YEAR_CAPTION",
+						"type": "String"
+					},
+					{
+						"name": "FISC_HALF_YEAR_CODE",
+						"type": "String"
+					},
+					{
+						"name": "FISC_HALF_YEAR_NAME",
+						"type": "String"
+					},
+					{
+						"name": "FISC_HALF_YEAR_SERIES",
+						"type": "String"
+					},
+					{
+						"name": "FISC_HALF_YEAR_BEG_DT",
+						"type": "String"
+					},
+					{
+						"name": "FISC_HALF_YEAR_END_DT",
+						"type": "String"
+					},
+					{
+						"name": "FISC_YEAR_BKEY",
+						"type": "String"
+					},
+					{
+						"name": "FISC_YEAR_CAPTION",
+						"type": "String"
+					},
+					{
+						"name": "FISC_YEAR_CODE",
+						"type": "String"
+					},
+					{
+						"name": "FISC_YEAR_SERIES",
+						"type": "String"
+					},
+					{
+						"name": "FISC_YEAR_BEG_DT",
+						"type": "String"
+					},
+					{
+						"name": "FISC_YEAR_END_DT",
+						"type": "String"
+					},
+					{
+						"name": "FISC_YEAR_NAME",
+						"type": "String"
+					},
+					{
+						"name": "FISC_WEEK_BKEY",
+						"type": "String"
+					},
+					{
+						"name": "FISC_WEEK_CAPTION",
+						"type": "String"
+					},
+					{
+						"name": "FISC_WEEK_CODE",
+						"type": "String"
+					},
+					{
+						"name": "FISC_WEEK_NAME",
+						"type": "String"
+					},
+					{
+						"name": "FISC_WEEK_SERIES",
+						"type": "String"
+					},
+					{
+						"name": "FISC_WEEK_BEG_DT",
+						"type": "String"
+					},
+					{
+						"name": "FISC_WEEK_END_DT",
+						"type": "String"
+					},
+					{
+						"name": "SOURCE_SYSTEM",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"rowDelimiter": "",
+						"quoteChar": "\"",
+						"nullValue": "",
+						"treatEmptyAsNull": true,
+						"skipLineCount": 0,
+						"firstRowAsHeader": true
+					},
+					"fileName": "[parameters('TimeDimensionDate_Source_properties_typeProperties_fileName')]",
+					"folderPath": "[parameters('TimeDimensionDate_Source_properties_typeProperties_folderPath')]"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/TimeDimension_Archive_Destination')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -1076,7 +1814,11 @@
 				},
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/TimeDimensionDate_Source')]",
+				"[concat(variables('factoryId'), '/datasets/TimeDimensionDate_Destination')]",
+				"[concat(variables('factoryId'), '/datasets/TimeDimensionDate_Archive_Destination')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/DimEmployee')]",
@@ -2508,1116 +3250,6 @@
 							"referenceName": "AzureSqlDatabase_finastra",
 							"type": "LinkedServiceReference"
 						}
-					}
-				],
-				"folder": {
-					"name": "Marketing"
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DimMarketing_SFDC_Lead_Incremental')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Landing",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "Get Last Modified Record",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							},
-							{
-								"activity": "Get Last Created Record",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "SalesforceSource",
-								"query": {
-									"value": "SELECT \nLead_18chr_Id__c,\nMQL_Datestamp__c,\nMTL_Datestamp__c,\nSQL_Datestamp__c,\nStatus,\nCompany,\nLead_Country__c,\nTitle,\nFirstName,\nLastName,\nEmail,\nMQL_Program__c,\nQualified_Out_Reason__c,\nStatus_Reason__c,\nSales_Region__c,\nSub_Region__c,\nConvertedAccountId,\nConvertedContactId,\nCreatedDate,\nOwnerID,\nConvertedOpportunityId,\nLastModifiedDate\n\nFROM Lead\nwhere \nMQL_Datestamp__c!= null or\nMTL_Datestamp__c!= null\n\nwhere CreatedDate >@{activity('Get Last Created Record').output.firstRow.Created}Z OR  LastModifiedDate >@{activity('Get Last Modified Record').output.firstRow.Modified}Z\n\n",
-									"type": "Expression"
-								},
-								"readBehavior": "query"
-							},
-							"sink": {
-								"type": "SqlSink",
-								"writeBatchSize": 10000
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"columnMappings": {
-									"Lead_18chr_Id__c": "Lead_18chr_Id",
-									"MQL_Datestamp__c": "MQL_Datestamp",
-									"MTL_Datestamp__c": "MTL_Datestamp",
-									"SQL_Datestamp__c": "SQL_Datestamp",
-									"Status": "Status",
-									"Company": "Company",
-									"Lead_Country__c": "Lead_Country",
-									"Title": "Title",
-									"FirstName": "FirstName",
-									"LastName": "LastName",
-									"Email": "Email",
-									"MQL_Program__c": "MQL_Program",
-									"Qualified_Out_Reason__c": "Qualified_Out_Reason",
-									"Status_Reason__c": "Status_Reason",
-									"Sales_Region__c": "Sales_Region",
-									"Sub_Region__c": "Sub_Region",
-									"ConvertedAccountId": "ConvertedAccountId",
-									"ConvertedContactId": "ConvertedContactId",
-									"ConvertedOpportunityId": "ConvertedOpportunityId",
-									"CreatedDate": "CreatedDate",
-									"OwnerId": "Owner_ID",
-									"LastModifiedDate": "LastModifiedDate"
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "SFDC_Lead",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Lead_SQL",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "Get Last Modified Record",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": "select max(cast (Lastmodifieddate AS datetime)) AS Modified\n  FROM [STG].[Marketing_SFDC_Lead]\n"
-							},
-							"dataset": {
-								"referenceName": "Marketing_Lead_Source",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						}
-					},
-					{
-						"name": "Get Last Created Record",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": "select max(cast (createddate AS datetime))  AS Created\n  FROM [STG].[Marketing_SFDC_Lead]\n"
-							},
-							"dataset": {
-								"referenceName": "Marketing_Lead_Source",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						}
-					},
-					{
-						"name": "Archiving",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "Loading dbo table",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource"
-							},
-							"sink": {
-								"type": "AzureDataLakeStoreSink"
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "AzureSqlTable12",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "AzureDataLakeStoreFile3",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "Loading dbo table",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Hash Generate",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_ApplyDimMarketing_SFDC_Lead]"
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabase_finastra",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Hash Generate",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Loading Int tables",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
-							"storedProcedureParameters": {
-								"TableName": {
-									"value": "DimMarketing_SFDC_Lead",
-									"type": "String"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabase_finastra",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Loading Int tables",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Landing",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_DimMarketing_SFDC_Lead]"
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabase_finastra",
-							"type": "LinkedServiceReference"
-						}
-					}
-				],
-				"folder": {
-					"name": "Marketing"
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DimMarketing_SFDC_Lead_Initial')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Landing",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "SalesforceSource",
-								"query": {
-									"value": "SELECT \nLead_18chr_Id__c,\nMQL_Datestamp__c,\nMTL_Datestamp__c,\nSQL_Datestamp__c,\nStatus,\nCompany,\nLead_Country__c,\nTitle,\nFirstName,\nLastName,\nEmail,\nMQL_Program__c,\nQualified_Out_Reason__c,\nStatus_Reason__c,\nSales_Region__c,\nSub_Region__c,\nConvertedAccountId,\nConvertedContactId,\nCreatedDate,\nOwnerID,\nConvertedOpportunityId,\nLastModifiedDate\n\nFROM Lead\nwhere \nMQL_Datestamp__c!= null or\nMTL_Datestamp__c!= null\n\n",
-									"type": "Expression"
-								},
-								"readBehavior": "query"
-							},
-							"sink": {
-								"type": "SqlSink",
-								"writeBatchSize": 10000
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"columnMappings": {
-									"Lead_18chr_Id__c": "Lead_18chr_Id",
-									"MQL_Datestamp__c": "MQL_Datestamp",
-									"MTL_Datestamp__c": "MTL_Datestamp",
-									"SQL_Datestamp__c": "SQL_Datestamp",
-									"Status": "Status",
-									"Company": "Company",
-									"Lead_Country__c": "Lead_Country",
-									"Title": "Title",
-									"FirstName": "FirstName",
-									"LastName": "LastName",
-									"Email": "Email",
-									"MQL_Program__c": "MQL_Program",
-									"Qualified_Out_Reason__c": "Qualified_Out_Reason",
-									"Status_Reason__c": "Status_Reason",
-									"Sales_Region__c": "Sales_Region",
-									"Sub_Region__c": "Sub_Region",
-									"ConvertedAccountId": "ConvertedAccountId",
-									"ConvertedContactId": "ConvertedContactId",
-									"ConvertedOpportunityId": "ConvertedOpportunityId",
-									"CreatedDate": "CreatedDate",
-									"OwnerId": "Owner_ID",
-									"LastModifiedDate": "LastModifiedDate"
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "SFDC_Lead",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Lead_SQL",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "Loading dbo table",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Hash Generate",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_ApplyDimMarketing_SFDC_Lead]"
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabase_finastra",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Hash Generate",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Loading Int tables",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
-							"storedProcedureParameters": {
-								"TableName": {
-									"value": "DimMarketing_SFDC_Lead",
-									"type": "String"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabase_finastra",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Loading Int tables",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Landing",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_DimMarketing_SFDC_Lead]"
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabase_finastra",
-							"type": "LinkedServiceReference"
-						}
-					}
-				],
-				"folder": {
-					"name": "Marketing"
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DimMarketing_SFDC_Opportunity_Incremental')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Landing",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "Get Last Modified Record",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							},
-							{
-								"activity": "Get Last Created Record",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "SalesforceSource",
-								"query": {
-									"value": "SELECT\nOpportunity_18chr_Id__c,\nName,\nOpportunity_Number__c,\nAccountId,\nSales_Region_FY07__c,\nStatus__c,\nStageName,\nProbability,\nDate_opportunity_moved_to_SS2__c,\nDate_opportunity_moved_to_SS4__c,\nILF_CommValue_CSH__c,\nACV_ACV_Equiv_CSH__c,\nIST_Rep,\nCreatedDate,\nLastModifiedDate\nFROM Opportunity\n\nwhere CreatedDate >@{activity('Get Last Created Record').output.firstRow.Created}Z OR  LastModifiedDate >@{activity('Get Last Modified Record').output.firstRow.Modified}Z\n\n\n",
-									"type": "Expression"
-								},
-								"readBehavior": "query"
-							},
-							"sink": {
-								"type": "SqlSink",
-								"writeBatchSize": 10000
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"columnMappings": {
-									"Opportunity_18chr_Id__c": "Opportunity_18chr_Id",
-									"Name": "Name",
-									"Opportunity_Number__c": "Opportunity_Number",
-									"AccountId": "AccountId",
-									"Sales_Region_FY07__c": "Sales_Region_FY07",
-									"Status__c": "Status",
-									"StageName": "StageName",
-									"Probability": "Probability",
-									"Date_opportunity_moved_to_SS2__c": "Date_opportunity_moved_to_SS2",
-									"Date_opportunity_moved_to_SS4__c": "Date_opportunity_moved_to_SS4",
-									"ILF_CommValue_CSH__c": "ILF_CommValue_CSH",
-									"ACV_ACV_Equiv_CSH__c": "ACV_ACV_Equiv_CSH",
-									"IST_Rep": "IST_Rep",
-									"CreatedDate": "CreatedDate",
-									"LastModifiedDate": "LastModifiedDate"
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "Salesforce_Marketing",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Marketing_Stg",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "Get Last Modified Record",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": "select max(cast (Lastmodifieddate AS datetime)) AS Modified\n  FROM [STG].[Marketing_SFDC_Opportunity]"
-							},
-							"dataset": {
-								"referenceName": "Marketing_Opportunity_Source",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						}
-					},
-					{
-						"name": "Get Last Created Record",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": "select max(cast (createddate AS datetime))  AS Created\n  FROM [STG].[Marketing_SFDC_Opportunity]"
-							},
-							"dataset": {
-								"referenceName": "Marketing_Opportunity_Source",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						}
-					},
-					{
-						"name": "Archiving",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "Loading dbo table",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource"
-							},
-							"sink": {
-								"type": "AzureDataLakeStoreSink"
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "AzureSqlTable11",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "AzureDataLakeStoreFile2",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "Loading dbo table",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Hash Generate",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_ApplyDimMarketing_SFDC_Opportunity]"
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabase_finastra",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Hash Generate",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Loading Int tables",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
-							"storedProcedureParameters": {
-								"TableName": {
-									"value": "DimMarketing_SFDC_Opportunity",
-									"type": "String"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabase_finastra",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Loading Int tables",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Landing",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_DimMarketing_SFDC_Opportunity]"
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabase_finastra",
-							"type": "LinkedServiceReference"
-						}
-					}
-				],
-				"folder": {
-					"name": "Marketing"
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DimMarketing_SFDC_Opportunity_Initial')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Landing",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "SalesforceSource",
-								"query": {
-									"value": "SELECT\nOpportunity_18chr_Id__c,\nName,\nOpportunity_Number__c,\nAccountId,\nSales_Region_FY07__c,\nStatus__c,\nStageName,\nProbability,\nDate_opportunity_moved_to_SS2__c,\nDate_opportunity_moved_to_SS4__c,\nILF_CommValue_CSH__c,\nACV_ACV_Equiv_CSH__c,\nIST_Rep,\nCreatedDate,\nLastModifiedDate\nFROM Opportunity\n\n",
-									"type": "Expression"
-								},
-								"readBehavior": "query"
-							},
-							"sink": {
-								"type": "SqlSink",
-								"writeBatchSize": 10000
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"columnMappings": {
-									"Opportunity_18chr_Id__c": "Opportunity_18chr_Id",
-									"Name": "Name",
-									"Opportunity_Number__c": "Opportunity_Number",
-									"AccountId": "AccountId",
-									"Sales_Region_FY07__c": "Sales_Region_FY07",
-									"Status__c": "Status",
-									"StageName": "StageName",
-									"Probability": "Probability",
-									"Date_opportunity_moved_to_SS2__c": "Date_opportunity_moved_to_SS2",
-									"Date_opportunity_moved_to_SS4__c": "Date_opportunity_moved_to_SS4",
-									"ILF_CommValue_CSH__c": "ILF_CommValue_CSH",
-									"ACV_ACV_Equiv_CSH__c": "ACV_ACV_Equiv_CSH",
-									"IST_Rep": "IST_Rep",
-									"CreatedDate": "CreatedDate",
-									"LastModifiedDate": "LastModifiedDate"
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "Salesforce_Marketing",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Marketing_Stg",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "Loading dbo table",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Hash Generate",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_ApplyDimMarketing_SFDC_Opportunity]"
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabase_finastra",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Hash Generate",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Loading Int tables",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
-							"storedProcedureParameters": {
-								"TableName": {
-									"value": "DimMarketing_SFDC_Opportunity",
-									"type": "String"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabase_finastra",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Loading Int tables",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Landing",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_DimMarketing_SFDC_Opportunity]"
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabase_finastra",
-							"type": "LinkedServiceReference"
-						}
-					}
-				],
-				"folder": {
-					"name": "Marketing"
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DimMarketing_Targets')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Loading Int tables",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Landing",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_DimMarketing_Targets]"
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabase_finastra",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Hash Generate",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Loading Int tables",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
-							"storedProcedureParameters": {
-								"TableName": {
-									"value": "DimMarketing_Targets",
-									"type": "String"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabase_finastra",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Loading dbo table",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Hash Generate",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_ApplyDimMarketing_Targets]"
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabase_finastra",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Landing",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "FileServerReadSetting"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSetting"
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"writeBatchSize": 10000
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "FiscalYear",
-											"type": "String"
-										},
-										"sink": {
-											"name": "FiscalYear",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Category",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Category",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Target",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Target",
-											"type": "String"
-										}
-									}
-								]
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "Marketing_Targets_Source",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Marketing_Targets_Dest",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "Archiving",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "Loading dbo table",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "FileServerReadSetting"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSetting"
-								}
-							},
-							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureDataLakeStoreWriteSetting"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSetting",
-									"quoteAllText": true,
-									"fileExtension": ".txt"
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "Marketing_Targets_Source",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DelimitedText2",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
 					}
 				],
 				"folder": {
