@@ -113,7 +113,7 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "FactEXMSCORE_Region",
+						"activity": "FactEXMSCORE_Age_Group",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -143,6 +143,36 @@
 						"referenceName": "DimEmployee_Terminations",
 						"type": "PipelineReference"
 					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "FactEXMSCORE_Gender",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "FactEXMSCORE_Region",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"typeProperties": {
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "FactEXMSCORE_Age_Group",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "FactEXMSCORE_Gender",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"typeProperties": {
 					"waitOnCompletion": true
 				}
 			}
