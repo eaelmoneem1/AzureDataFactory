@@ -1,0 +1,87 @@
+{
+	"name": "HR_WORKDAY_HC_Destination3",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"structure": [
+			{
+				"name": "Employee_ID",
+				"type": "String"
+			},
+			{
+				"name": "On_Leave",
+				"type": "String"
+			},
+			{
+				"name": "Hire_Date",
+				"type": "Date"
+			},
+			{
+				"name": "Number_of_Direct_Reports",
+				"type": "String"
+			},
+			{
+				"name": "Worker_Type",
+				"type": "String"
+			},
+			{
+				"name": "Location",
+				"type": "String"
+			},
+			{
+				"name": "Country",
+				"type": "String"
+			},
+			{
+				"name": "Org_Layer",
+				"type": "String"
+			},
+			{
+				"name": "Product",
+				"type": "String"
+			},
+			{
+				"name": "Product_Family",
+				"type": "String"
+			},
+			{
+				"name": "Product_Line",
+				"type": "String"
+			},
+			{
+				"name": "Cost_Center_ID",
+				"type": "String"
+			},
+			{
+				"name": "Cost_Center_Name",
+				"type": "String"
+			},
+			{
+				"name": "Cost_Centre_Hierarchy_Finastra",
+				"type": "String"
+			},
+			{
+				"name": "Function_Finastra",
+				"type": "String"
+			},
+			{
+				"name": "Cost_Centre_Legacy_DH_Mapping_to_Finastra",
+				"type": "String"
+			},
+			{
+				"name": "Reporting_Region",
+				"type": "String"
+			},
+			{
+				"name": "High_Low_Cost",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"tableName": "[STG].[HR_WORKDAY_HC]"
+		}
+	}
+}

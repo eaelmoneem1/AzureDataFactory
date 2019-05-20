@@ -85,7 +85,7 @@
 					{
 						"activity": "DimEmployee_Termination",
 						"dependencyConditions": [
-							"Succeeded"
+							"Completed"
 						]
 					}
 				],
