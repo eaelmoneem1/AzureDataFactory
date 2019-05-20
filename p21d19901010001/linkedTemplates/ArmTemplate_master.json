@@ -499,6 +499,22 @@
 			"type": "string",
 			"defaultValue": "p21d19901015001"
 		},
+		"HR_WORKDAY_HC_Source1_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"HR_WORKDAY_HC_Source1_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "CEOCFO/HR"
+		},
+		"HR_WORKDAY_HC_Archive_Destination1_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"HR_WORKDAY_HC_Archive_Destination1_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "LandingArchive/CEOCFO/HR"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -1032,6 +1048,18 @@
 					},
 					"test_properties_typeProperties_folderPath": {
 						"value": "[parameters('test_properties_typeProperties_folderPath')]"
+					},
+					"HR_WORKDAY_HC_Source1_properties_typeProperties_fileName": {
+						"value": "[parameters('HR_WORKDAY_HC_Source1_properties_typeProperties_fileName')]"
+					},
+					"HR_WORKDAY_HC_Source1_properties_typeProperties_folderPath": {
+						"value": "[parameters('HR_WORKDAY_HC_Source1_properties_typeProperties_folderPath')]"
+					},
+					"HR_WORKDAY_HC_Archive_Destination1_properties_typeProperties_fileName": {
+						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination1_properties_typeProperties_fileName')]"
+					},
+					"HR_WORKDAY_HC_Archive_Destination1_properties_typeProperties_folderPath": {
+						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination1_properties_typeProperties_folderPath')]"
 					}
 				}
 			},
@@ -1077,6 +1105,26 @@
 			},
 			"dependsOn": [
 				"[resourceId('Microsoft.Resources/deployments', 'ArmTemplate_8')]"
+			]
+		},
+		{
+			"name": "ArmTemplate_10",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_10.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'ArmTemplate_9')]"
 			]
 		}
 	]

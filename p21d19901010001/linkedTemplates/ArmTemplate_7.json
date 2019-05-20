@@ -62,6 +62,22 @@
 		"test_properties_typeProperties_folderPath": {
 			"type": "string",
 			"defaultValue": "Time"
+		},
+		"HR_WORKDAY_HC_Source1_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"HR_WORKDAY_HC_Source1_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "CEOCFO/HR"
+		},
+		"HR_WORKDAY_HC_Archive_Destination1_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"HR_WORKDAY_HC_Archive_Destination1_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "LandingArchive/CEOCFO/HR"
 		}
 	},
 	"variables": {
@@ -1662,1040 +1678,335 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Delete old Landing Files')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_HC_Source1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"description": "Delete files more than 30 days",
-				"activities": [
+				"linkedServiceName": {
+					"referenceName": "FileShare",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "FileShare",
+				"structure": [
 					{
-						"name": "Delete HR",
-						"type": "Delete",
-						"dependsOn": [
-							{
-								"activity": "Delete Forecast Plan",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataset": {
-								"referenceName": "FileShareDelete",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"enableLogging": false
-						}
+						"name": "Employee ID",
+						"type": "String"
 					},
 					{
-						"name": "Delete Customer Support",
-						"type": "Delete",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataset": {
-								"referenceName": "FileShareDelete2",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"enableLogging": false
-						}
+						"name": "On Leave",
+						"type": "String"
 					},
 					{
-						"name": "Delete Finance",
-						"type": "Delete",
-						"dependsOn": [
-							{
-								"activity": "Delete HR",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataset": {
-								"referenceName": "FileShareDelete3",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"enableLogging": false
-						}
+						"name": "Hire Date",
+						"type": "String"
 					},
 					{
-						"name": "Delete Marketing",
-						"type": "Delete",
-						"dependsOn": [
-							{
-								"activity": "Delete Finance",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataset": {
-								"referenceName": "FileShareDelete4",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"enableLogging": false
-						}
+						"name": "Number of Direct Reports",
+						"type": "String"
 					},
 					{
-						"name": "Delete Sales",
-						"type": "Delete",
-						"dependsOn": [
-							{
-								"activity": "Delete Marketing",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataset": {
-								"referenceName": "FileShareDelete5",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"enableLogging": false
-						}
+						"name": "Worker Type",
+						"type": "String"
 					},
 					{
-						"name": "Delete Forecast Plan",
-						"type": "Delete",
-						"dependsOn": [
-							{
-								"activity": "Delete Customer Support",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataset": {
-								"referenceName": "FileShareDelete6",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"enableLogging": false
-						}
+						"name": "Location",
+						"type": "String"
+					},
+					{
+						"name": "Country",
+						"type": "String"
+					},
+					{
+						"name": "Org Layer",
+						"type": "String"
+					},
+					{
+						"name": "Product",
+						"type": "String"
+					},
+					{
+						"name": "Product Family",
+						"type": "String"
+					},
+					{
+						"name": "Product Line",
+						"type": "String"
+					},
+					{
+						"name": "Cost Center - ID",
+						"type": "String"
+					},
+					{
+						"name": "Cost Center",
+						"type": "String"
+					},
+					{
+						"name": "Cost Center Hierarchy",
+						"type": "String"
+					},
+					{
+						"name": "Function",
+						"type": "String"
+					},
+					{
+						"name": "Cost Centre - Legacy DH Mapping to Finastra",
+						"type": "String"
+					},
+					{
+						"name": "Reporting Region",
+						"type": "String"
+					},
+					{
+						"name": "High / Low Cost",
+						"type": "String"
 					}
 				],
-				"folder": {
-					"name": "ETL Jobs"
-				},
-				"annotations": []
+				"typeProperties": {
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"rowDelimiter": "",
+						"quoteChar": "\"",
+						"nullValue": "",
+						"treatEmptyAsNull": true,
+						"skipLineCount": 0,
+						"firstRowAsHeader": true
+					},
+					"fileName": {
+						"value": "[parameters('HR_WORKDAY_HC_Source1_properties_typeProperties_fileName')]",
+						"type": "Expression"
+					},
+					"folderPath": "[parameters('HR_WORKDAY_HC_Source1_properties_typeProperties_folderPath')]"
+				}
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DimDate')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_HC_Destination1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"structure": [
 					{
-						"name": "STG",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "FileSystemSource",
-								"recursive": true
-							},
-							"sink": {
-								"type": "SqlSink",
-								"writeBatchSize": 10000
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"columnMappings": {
-									"DATE_SKEY": "DATE_SKEY",
-									"DATE_CREAT_DT": "DATE_CREAT_DT",
-									"DATE_LAST_UPD_DT": "DATE_LAST_UPD_DT",
-									"DATE_BKEY": "DATE_BKEY",
-									"DATE_CAPTION": "DATE_CAPTION",
-									"DATE_CODE": "DATE_CODE",
-									"DATE_DT": "DATE_DT",
-									"DATE_DAY_NAME": "DATE_DAY_NAME",
-									"DATE_SERIES": "DATE_SERIES",
-									"DATE_DAY_OF_WEEK": "DATE_DAY_OF_WEEK",
-									"CAL_MONTH_BKEY": "CAL_MONTH_BKEY",
-									"CAL_MONTH_CAPTION": "CAL_MONTH_CAPTION",
-									"CAL_MONTH_CODE": "CAL_MONTH_CODE",
-									"CAL_MONTH_NAME": "CAL_MONTH_NAME",
-									"CAL_MONTH_SERIES": "CAL_MONTH_SERIES",
-									"CAL_MONTH_BEG_DT": "CAL_MONTH_BEG_DT",
-									"CAL_MONTH_END_DT": "CAL_MONTH_END_DT",
-									"CAL_QTR_BKEY": "CAL_QTR_BKEY",
-									"CAL_QTR_CAPTION": "CAL_QTR_CAPTION",
-									"CAL_QTR_CODE": "CAL_QTR_CODE",
-									"CAL_QTR_NAME": "CAL_QTR_NAME",
-									"CAL_QTR_SERIES": "CAL_QTR_SERIES",
-									"CAL_QTR_BEG_DT": "CAL_QTR_BEG_DT",
-									"CAL_QTR_END_DT": "CAL_QTR_END_DT",
-									"CAL_HALF_YEAR_BKEY": "CAL_HALF_YEAR_BKEY",
-									"CAL_HALF_YEAR_CAPTION": "CAL_HALF_YEAR_CAPTION",
-									"CAL_HALF_YEAR_CODE": "CAL_HALF_YEAR_CODE",
-									"CAL_HALF_YEAR_NAME": "CAL_HALF_YEAR_NAME",
-									"CAL_HALF_YEAR_SERIES": "CAL_HALF_YEAR_SERIES",
-									"CAL_HALF_YEAR_BEG_DT": "CAL_HALF_YEAR_BEG_DT",
-									"CAL_HALF_YEAR_END_DT": "CAL_HALF_YEAR_END_DT",
-									"CAL_YEAR_BKEY": "CAL_YEAR_BKEY",
-									"CAL_YEAR_CAPTION": "CAL_YEAR_CAPTION",
-									"CAL_YEAR_CODE": "CAL_YEAR_CODE",
-									"CAL_YEAR_SERIES": "CAL_YEAR_SERIES",
-									"CAL_YEAR_BEG_DT": "CAL_YEAR_BEG_DT",
-									"CAL_YEAR_END_DT": "CAL_YEAR_END_DT",
-									"FISC_PERIOD_BKEY": "FISC_PERIOD_BKEY",
-									"FISC_PERIOD_CAPTION": "FISC_PERIOD_CAPTION",
-									"FISC_PERIOD_CODE": "FISC_PERIOD_CODE",
-									"FISC_PERIOD_NAME": "FISC_PERIOD_NAME",
-									"FISC_PERIOD_SERIES": "FISC_PERIOD_SERIES",
-									"FISC_PERIOD_BEG_DT": "FISC_PERIOD_BEG_DT",
-									"FISC_PERIOD_END_DT": "FISC_PERIOD_END_DT",
-									"FISC_QTR_BKEY": "FISC_QTR_BKEY",
-									"FISC_QTR_CAPTION": "FISC_QTR_CAPTION",
-									"FISC_QTR_CODE": "FISC_QTR_CODE",
-									"FISC_QTR_NAME": "FISC_QTR_NAME",
-									"FISC_QTR_SERIES": "FISC_QTR_SERIES",
-									"FISC_QTR_BEG_DT": "FISC_QTR_BEG_DT",
-									"FISC_QTR_END_DT": "FISC_QTR_END_DT",
-									"FISC_HALF_YEAR_BKEY": "FISC_HALF_YEAR_BKEY",
-									"FISC_HALF_YEAR_CAPTION": "FISC_HALF_YEAR_CAPTION",
-									"FISC_HALF_YEAR_CODE": "FISC_HALF_YEAR_CODE",
-									"FISC_HALF_YEAR_NAME": "FISC_HALF_YEAR_NAME",
-									"FISC_HALF_YEAR_SERIES": "FISC_HALF_YEAR_SERIES",
-									"FISC_HALF_YEAR_BEG_DT": "FISC_HALF_YEAR_BEG_DT",
-									"FISC_HALF_YEAR_END_DT": "FISC_HALF_YEAR_END_DT",
-									"FISC_YEAR_BKEY": "FISC_YEAR_BKEY",
-									"FISC_YEAR_CAPTION": "FISC_YEAR_CAPTION",
-									"FISC_YEAR_CODE": "FISC_YEAR_CODE",
-									"FISC_YEAR_SERIES": "FISC_YEAR_SERIES",
-									"FISC_YEAR_BEG_DT": "FISC_YEAR_BEG_DT",
-									"FISC_YEAR_END_DT": "FISC_YEAR_END_DT",
-									"FISC_YEAR_NAME": "FISC_YEAR_NAME",
-									"FISC_WEEK_BKEY": "FISC_WEEK_BKEY",
-									"FISC_WEEK_CAPTION": "FISC_WEEK_CAPTION",
-									"FISC_WEEK_CODE": "FISC_WEEK_CODE",
-									"FISC_WEEK_NAME": "FISC_WEEK_NAME",
-									"FISC_WEEK_SERIES": "FISC_WEEK_SERIES",
-									"FISC_WEEK_BEG_DT": "FISC_WEEK_BEG_DT",
-									"FISC_WEEK_END_DT": "FISC_WEEK_END_DT",
-									"SOURCE_SYSTEM": "SOURCE_SYSTEM"
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "TimeDimensionDate_Source",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "TimeDimensionDate_Destination",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
+						"name": "Employee_ID",
+						"type": "String"
 					},
 					{
-						"name": "Loading dbo table",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "STG",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_ApplyDimDate]"
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabase_finastra",
-							"type": "LinkedServiceReference"
-						}
+						"name": "On_Leave",
+						"type": "String"
 					},
 					{
-						"name": "Archiving data in DL",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "Loading dbo table",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "FileSystemSource",
-								"recursive": true
-							},
-							"sink": {
-								"type": "AzureDataLakeStoreSink"
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "TimeDimensionDate_Source",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "TimeDimensionDate_Archive_Destination",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
+						"name": "Hire_Date",
+						"type": "Date"
+					},
+					{
+						"name": "Number_of_Direct_Reports",
+						"type": "String"
+					},
+					{
+						"name": "Worker_Type",
+						"type": "String"
+					},
+					{
+						"name": "Location",
+						"type": "String"
+					},
+					{
+						"name": "Country",
+						"type": "String"
+					},
+					{
+						"name": "Org_Layer",
+						"type": "String"
+					},
+					{
+						"name": "Product",
+						"type": "String"
+					},
+					{
+						"name": "Product_Family",
+						"type": "String"
+					},
+					{
+						"name": "Product_Line",
+						"type": "String"
+					},
+					{
+						"name": "Cost_Center_ID",
+						"type": "String"
+					},
+					{
+						"name": "Cost_Center_Name",
+						"type": "String"
+					},
+					{
+						"name": "Cost_Centre_Hierarchy_Finastra",
+						"type": "String"
+					},
+					{
+						"name": "Function_Finastra",
+						"type": "String"
+					},
+					{
+						"name": "Cost_Centre_Legacy_DH_Mapping_to_Finastra",
+						"type": "String"
+					},
+					{
+						"name": "Reporting_Region",
+						"type": "String"
+					},
+					{
+						"name": "High_Low_Cost",
+						"type": "String"
 					}
 				],
-				"folder": {
-					"name": "Time"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/TimeDimensionDate_Source')]",
-				"[concat(variables('factoryId'), '/datasets/TimeDimensionDate_Destination')]",
-				"[concat(variables('factoryId'), '/datasets/TimeDimensionDate_Archive_Destination')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DimEmployee')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Loading Int tables",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Loading STG tables",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 3,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_DimEmployee]"
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabase_finastra",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Hash Generate",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Loading Int tables",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 3,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
-							"storedProcedureParameters": {
-								"TableName": {
-									"value": "DimEmployee"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabase_finastra",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Loading dbo table",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Hash Generate",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 3,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_ApplyDimEmployee]"
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabase_finastra",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Loading STG tables",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "FileSystemSource",
-								"recursive": true
-							},
-							"sink": {
-								"type": "SqlSink",
-								"writeBatchSize": 10000
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"columnMappings": {
-									"Employee ID": "Employee_ID",
-									"On Leave": "On_Leave",
-									"Hire Date": "Hire_Date",
-									"Number of Direct Reports": "Number_of_Direct_Reports",
-									"Worker Type": "Worker_Type",
-									"Location": "Location",
-									"Country": "Country",
-									"Org Layer": "Org_Layer",
-									"Product": "Product",
-									"Product Family": "Product_Family",
-									"Product Line": "Product_Line",
-									"Cost Center - ID": "Cost_Center_ID",
-									"Cost Center": "Cost_Center_Name",
-									"Cost Center Hierarchy": "Cost_Centre_Hierarchy_Finastra",
-									"Function": "Function_Finastra",
-									"Cost Centre - Legacy DH Mapping to Finastra": "Cost_Centre_Legacy_DH_Mapping_to_Finastra",
-									"Reporting Region": "Reporting_Region",
-									"High / Low Cost": "High_Low_Cost"
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "HR_WORKDAY_HC_Source",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "HR_WORKDAY_HC_Destination",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "Archiving data in DL",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "Loading dbo table",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "FileSystemSource",
-								"recursive": true
-							},
-							"sink": {
-								"type": "AzureDataLakeStoreSink"
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "HR_WORKDAY_HC_Source",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "HR_WORKDAY_HC_Archive_Destination",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"folder": {
-					"name": "HR"
-				},
-				"annotations": []
+				"typeProperties": {
+					"tableName": "[[STG].[HR_WORKDAY_HC]"
+				}
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DimGeographical_Location')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_HC_Archive_Destination1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
-					{
-						"name": "Loading STG tables",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "FileSystemSource",
-								"recursive": true
-							},
-							"sink": {
-								"type": "SqlSink",
-								"writeBatchSize": 10000
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"columnMappings": {
-									"Location": "Location",
-									"Country": "Country",
-									"Region": "Region"
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "HR_Maclean_EXM_Location_Directory_Source",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "HR_Maclean_EXM_Location_Directory_Destination",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "Archiving data in DL",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "Loading dbo table",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "FileSystemSource",
-								"recursive": true
-							},
-							"sink": {
-								"type": "AzureDataLakeStoreSink"
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "HR_Maclean_EXM_Location_Directory_Source",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "V_HR_Maclean_EXM_Location_Directory_Archive_Destination",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "Loading Int tables",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Loading STG tables",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_DimGeographical_Location]"
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabase_finastra",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Loading dbo table",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Hash Generate",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_ApplyDimGeographical_Location]"
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabase_finastra",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Hash Generate",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Loading Int tables",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
-							"storedProcedureParameters": {
-								"TableName": {
-									"value": "DimGeographical_Location",
-									"type": "String"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabase_finastra",
-							"type": "LinkedServiceReference"
-						}
-					}
-				],
-				"folder": {
-					"name": "HR"
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStore",
+					"type": "LinkedServiceReference"
 				},
-				"annotations": []
+				"annotations": [],
+				"type": "AzureDataLakeStoreFile",
+				"typeProperties": {
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"rowDelimiter": "",
+						"quoteChar": "\"",
+						"nullValue": "",
+						"treatEmptyAsNull": true,
+						"skipLineCount": 0,
+						"firstRowAsHeader": true
+					},
+					"fileName": {
+						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination1_properties_typeProperties_fileName')]",
+						"type": "Expression"
+					},
+					"folderPath": "[parameters('HR_WORKDAY_HC_Archive_Destination1_properties_typeProperties_folderPath')]"
+				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/V_HR_Maclean_EXM_Location_Directory_Archive_Destination')]"
-			]
+			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DimMarketing_SFDC_Account_Incremental')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/HR_Termination_source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
+				"linkedServiceName": {
+					"referenceName": "FileShare",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"fileName": {
+							"value": "@concat ('Terminations_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+							"type": "Expression"
+						},
+						"folderPath": "CEOCFO/HR"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/HR_Termination_Dest')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
 					{
-						"name": "Landing",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "Get Last Modified Record",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							},
-							{
-								"activity": "Get Last Created Record",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "SalesforceSource",
-								"query": {
-									"value": "SELECT \nAccount_18chr_Id__c,\nAccount_Number__c,\nName,\nOwnerId,\nCountry__c,\nCreatedDate,\nLastModifiedDate\nFROM Account\n\nwhere CreatedDate >@{activity('Get Last Created Record').output.firstRow.Created}Z OR  LastModifiedDate >@{activity('Get Last Modified Record').output.firstRow.Modified}Z",
-									"type": "Expression"
-								},
-								"readBehavior": "query"
-							},
-							"sink": {
-								"type": "SqlSink",
-								"writeBatchSize": 10000
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"columnMappings": {
-									"Account_18chr_Id__c": "Account_18chr_Id",
-									"Account_Number__c": "Account_Number",
-									"Name": "Name",
-									"OwnerId": "Owner_ID",
-									"Country__c": "Country",
-									"CreatedDate": "CreatedDate",
-									"LastModifiedDate": "LastModifiedDate"
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "SFDC_Account",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Account_SQL",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
+						"name": "Employee_ID",
+						"type": "nvarchar"
 					},
 					{
-						"name": "Get Last Modified Record",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": "select max(cast (Lastmodifieddate AS datetime)) AS Modified\n  FROM [STG].[Marketing_SFDC_Account]\n\n"
-							},
-							"dataset": {
-								"referenceName": "Marketing_Account_Source",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						}
+						"name": "Worker_Type",
+						"type": "nvarchar"
 					},
 					{
-						"name": "Get Last Created Record",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": "select max(cast (createddate AS datetime))  AS Created\n  FROM [STG].[Marketing_SFDC_Account]\n"
-							},
-							"dataset": {
-								"referenceName": "Marketing_Account_Source",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						}
+						"name": "Termination_Date",
+						"type": "nvarchar"
 					},
 					{
-						"name": "Archiving",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "Loading dbo table",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource"
-							},
-							"sink": {
-								"type": "AzureDataLakeStoreSink"
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "AzureSqlTable14",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "AzureDataLakeStoreFile5",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
+						"name": "ELT",
+						"type": "nvarchar"
 					},
 					{
-						"name": "Loading Int tables",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Landing",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_DimMarketing_SFDC_Account]"
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabase_finastra",
-							"type": "LinkedServiceReference"
-						}
+						"name": "ELT_1",
+						"type": "nvarchar"
 					},
 					{
-						"name": "Hash Generate",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Loading Int tables",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
-							"storedProcedureParameters": {
-								"TableName": {
-									"value": "DimMarketing_SFDC_Account",
-									"type": "String"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabase_finastra",
-							"type": "LinkedServiceReference"
-						}
+						"name": "ELT_2",
+						"type": "nvarchar"
 					},
 					{
-						"name": "Loading dbo table",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Hash Generate",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_ApplyDimMarketing_SFDC_Account]"
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabase_finastra",
-							"type": "LinkedServiceReference"
-						}
+						"name": "Cost_Centre_ID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Function",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Finastra_Product",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Finastra_FAM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Finastra_LINE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Country",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Location",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Rec_CRE_TMS",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
 				],
-				"folder": {
-					"name": "Marketing"
-				},
-				"annotations": []
+				"typeProperties": {
+					"tableName": "[[STG].[HR_WORKDAY_Terminations]"
+				}
 			},
 			"dependsOn": []
 		}
