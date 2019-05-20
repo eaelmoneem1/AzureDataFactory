@@ -214,6 +214,10 @@
 			{
 				"name": "FiscalPeriod__c",
 				"type": "String"
+			},
+			{
+				"name": "Total_PS_Amount__c",
+				"type": "String"
 			}
 		],
 		"typeProperties": {
