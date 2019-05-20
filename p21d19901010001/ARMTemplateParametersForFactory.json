@@ -200,10 +200,22 @@
 		"HR_WORKDAY_HC_Archive_Destination_properties_typeProperties_folderPath": {
 			"value": "LandingArchive/CEOCFO/HR"
 		},
+		"HR_WORKDAY_HC_Archive_Destination1_properties_typeProperties_fileName": {
+			"value": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"HR_WORKDAY_HC_Archive_Destination1_properties_typeProperties_folderPath": {
+			"value": "LandingArchive/CEOCFO/HR"
+		},
 		"HR_WORKDAY_HC_Source_properties_typeProperties_fileName": {
 			"value": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
 		},
 		"HR_WORKDAY_HC_Source_properties_typeProperties_folderPath": {
+			"value": "CEOCFO/HR"
+		},
+		"HR_WORKDAY_HC_Source1_properties_typeProperties_fileName": {
+			"value": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"HR_WORKDAY_HC_Source1_properties_typeProperties_folderPath": {
 			"value": "CEOCFO/HR"
 		},
 		"HR_WORKDAY_REQ_Archive_Destination_properties_typeProperties_fileName": {
@@ -373,18 +385,6 @@
 		},
 		"SharedFolder3_properties_typeProperties_userId": {
 			"value": "p21d19901015001"
-		},
-		"HR_WORKDAY_HC_Source1_properties_typeProperties_fileName": {
-			"value": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
-		},
-		"HR_WORKDAY_HC_Source1_properties_typeProperties_folderPath": {
-			"value": "CEOCFO/HR"
-		},
-		"HR_WORKDAY_HC_Archive_Destination1_properties_typeProperties_fileName": {
-			"value": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
-		},
-		"HR_WORKDAY_HC_Archive_Destination1_properties_typeProperties_folderPath": {
-			"value": "LandingArchive/CEOCFO/HR"
 		}
 	}
 }

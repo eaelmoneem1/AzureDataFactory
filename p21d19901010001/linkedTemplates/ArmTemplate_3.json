@@ -118,14 +118,6 @@
 		"HR_Maclean_EXM_Region_Source_properties_typeProperties_folderPath": {
 			"type": "string",
 			"defaultValue": "CEOCFO/HR"
-		},
-		"HR_WORKDAY_HC_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "HR_Workday_HeadCount.csv"
-		},
-		"HR_WORKDAY_HC_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "Landing"
 		}
 	},
 	"variables": {
@@ -933,7 +925,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_HC')]",
+			"name": "[concat(parameters('factoryName'), '/HR_Termination_Archive_Dest')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -942,21 +934,21 @@
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
-				"type": "AzureDataLakeStoreFile",
+				"type": "DelimitedText",
 				"typeProperties": {
-					"format": {
-						"type": "TextFormat",
-						"columnDelimiter": ",",
-						"rowDelimiter": "",
-						"quoteChar": "\"",
-						"nullValue": "",
-						"treatEmptyAsNull": true,
-						"skipLineCount": 0,
-						"firstRowAsHeader": true
+					"location": {
+						"type": "AzureDataLakeStoreLocation",
+						"fileName": {
+							"value": "@concat ('Terminations_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+							"type": "Expression"
+						},
+						"folderPath": "LandingArchive/CEOCFO/HR"
 					},
-					"fileName": "[parameters('HR_WORKDAY_HC_properties_typeProperties_fileName')]",
-					"folderPath": "[parameters('HR_WORKDAY_HC_properties_typeProperties_folderPath')]"
-				}
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": []
 			},
 			"dependsOn": []
 		}
