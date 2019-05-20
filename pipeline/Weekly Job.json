@@ -83,9 +83,9 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "FactEXMSCORE_Region",
+						"activity": "DimEmployee_Termination",
 						"dependencyConditions": [
-							"Completed"
+							"Succeeded"
 						]
 					}
 				],
@@ -113,15 +113,34 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "DimEmployee",
+						"activity": "FactEXMSCORE_Region",
 						"dependencyConditions": [
-							"Succeeded"
+							"Completed"
 						]
 					}
 				],
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "FactEmployee_Requisitions",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "DimEmployee_Termination",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "FactEmployee_Requisitions",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "DimEmployee_Terminations",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
