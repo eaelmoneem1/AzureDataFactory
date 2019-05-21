@@ -12535,12 +12535,14 @@
 					"location": {
 						"type": "AzureDataLakeStoreLocation",
 						"fileName": {
-							"value": "@concat ('Marketing_Targets_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+							"value": "@concat ('Marketing_Targets_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
 							"type": "Expression"
 						},
 						"folderPath": "LandingArchive/ELT/Marketing"
 					},
 					"columnDelimiter": ",",
+					"compressionCodec": "gzip",
+					"compressionLevel": "Optimal",
 					"escapeChar": "\\",
 					"firstRowAsHeader": true,
 					"quoteChar": "\""
@@ -12566,12 +12568,14 @@
 					"location": {
 						"type": "AzureDataLakeStoreLocation",
 						"fileName": {
-							"value": "@concat ('Marketing_lkp_TAMlist_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+							"value": "@concat ('Marketing_lkp_TAMlist_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
 							"type": "Expression"
 						},
 						"folderPath": "LandingArchive/ELT/Marketing"
 					},
 					"columnDelimiter": ",",
+					"compressionCodec": "gzip",
+					"compressionLevel": "Optimal",
 					"escapeChar": "\\",
 					"firstRowAsHeader": true,
 					"quoteChar": "\""
@@ -16637,10 +16641,15 @@
 				"typeProperties": {
 					"location": {
 						"type": "FileServerLocation",
-						"fileName": "Marketing_lkp_Country.csv",
+						"fileName": {
+							"value": "@concat ('Marketing_lkp_Country_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
+							"type": "Expression"
+						},
 						"folderPath": "ELT/Marketing"
 					},
 					"columnDelimiter": ",",
+					"compressionCodec": "gzip",
+					"compressionLevel": "Optimal",
 					"escapeChar": "/",
 					"firstRowAsHeader": true,
 					"quoteChar": "\""
