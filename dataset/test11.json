@@ -9,8 +9,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureDataLakeStoreLocation",
-				"fileName": "test.csv",
-				"folderPath": "LandingArchive/CEOCFO/Sales/CM_Bookings"
+				"folderPath": "LandingArchive/CEOCFO/Sales/CM_OrderBook"
 			},
 			"columnDelimiter": ",",
 			"compressionCodec": "gzip",
