@@ -1482,7 +1482,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "FileServerLocation",
-						"fileName": "CM_Bookings_20190510.csv",
+						"fileName": "CM_OrderBook_20190510.csv",
 						"folderPath": "CEOCFO/Sales"
 					},
 					"columnDelimiter": ",",
@@ -1549,8 +1549,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureDataLakeStoreLocation",
-						"fileName": "test.csv",
-						"folderPath": "LandingArchive/CEOCFO/Sales/CM_Bookings"
+						"folderPath": "LandingArchive/CEOCFO/Sales/CM_OrderBook"
 					},
 					"columnDelimiter": ",",
 					"compressionCodec": "gzip",
