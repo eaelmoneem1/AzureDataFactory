@@ -25,7 +25,7 @@
 		},
 		"Revenue_cost_source_properties_typeProperties_fileName": {
 			"type": "string",
-			"defaultValue": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+			"defaultValue": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
 		},
 		"Revenue_cost_source_properties_typeProperties_folderPath": {
 			"type": "string",
@@ -3706,6 +3706,10 @@
 						"treatEmptyAsNull": true,
 						"skipLineCount": 0,
 						"firstRowAsHeader": true
+					},
+					"compression": {
+						"type": "GZip",
+						"level": "Optimal"
 					},
 					"fileName": {
 						"value": "[parameters('Revenue_cost_source_properties_typeProperties_fileName')]",

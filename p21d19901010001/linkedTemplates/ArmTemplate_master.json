@@ -125,7 +125,7 @@
 		},
 		"CS_FF_NPS_Destination_Archive_properties_typeProperties_fileName": {
 			"type": "string",
-			"defaultValue": "@concat ('NPS_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+			"defaultValue": "@concat ('NPS_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
 		},
 		"CS_FF_NPS_Destination_Archive_properties_typeProperties_folderPath": {
 			"type": "string",
@@ -341,7 +341,7 @@
 		},
 		"Revenue_cost_source_properties_typeProperties_fileName": {
 			"type": "string",
-			"defaultValue": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+			"defaultValue": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
 		},
 		"Revenue_cost_source_properties_typeProperties_folderPath": {
 			"type": "string",
@@ -373,7 +373,7 @@
 		},
 		"Sales_FF_Forecast_Archive_Destination_properties_typeProperties_fileName": {
 			"type": "string",
-			"defaultValue": "@concat ('ForecastPlan_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+			"defaultValue": "@concat ('ForecastPlan_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
 		},
 		"Sales_FF_Forecast_Archive_Destination_properties_typeProperties_folderPath": {
 			"type": "string",

@@ -25,7 +25,7 @@
 		},
 		"CS_FF_NPS_Destination_Archive_properties_typeProperties_fileName": {
 			"type": "string",
-			"defaultValue": "@concat ('NPS_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+			"defaultValue": "@concat ('NPS_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
 		},
 		"CS_FF_NPS_Destination_Archive_properties_typeProperties_folderPath": {
 			"type": "string",
@@ -830,6 +830,10 @@
 						"treatEmptyAsNull": true,
 						"skipLineCount": 0,
 						"firstRowAsHeader": true
+					},
+					"compression": {
+						"type": "GZip",
+						"level": "Optimal"
 					},
 					"fileName": {
 						"value": "[parameters('CS_FF_NPS_Destination_Archive_properties_typeProperties_fileName')]",
