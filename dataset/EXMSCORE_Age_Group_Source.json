@@ -10,12 +10,14 @@
 			"location": {
 				"type": "FileServerLocation",
 				"fileName": {
-					"value": "@concat ('EXM_Age_Group_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+					"value": "@concat ('EXM_Age_Group_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
 					"type": "Expression"
 				},
 				"folderPath": "CEOCFO/HR"
 			},
 			"columnDelimiter": ",",
+			"compressionCodec": "gzip",
+			"compressionLevel": "Optimal",
 			"escapeChar": "\\",
 			"firstRowAsHeader": true,
 			"quoteChar": "\""

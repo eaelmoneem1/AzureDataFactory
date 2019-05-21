@@ -17,8 +17,12 @@
 				"skipLineCount": 0,
 				"firstRowAsHeader": true
 			},
+			"compression": {
+				"type": "GZip",
+				"level": "Optimal"
+			},
 			"fileName": {
-				"value": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+				"value": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
 				"type": "Expression"
 			},
 			"folderPath": "LandingArchive/CEOCFO/HR"
