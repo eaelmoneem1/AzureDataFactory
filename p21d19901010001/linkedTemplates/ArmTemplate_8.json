@@ -9,7 +9,7 @@
 		},
 		"TimeDimensionDate_Archive_Destination_properties_typeProperties_fileName": {
 			"type": "string",
-			"defaultValue": "@concat ('TimeDimensionDate_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+			"defaultValue": "@concat ('TimeDimensionDate_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
 		},
 		"TimeDimensionDate_Archive_Destination_properties_typeProperties_folderPath": {
 			"type": "string",
@@ -25,7 +25,7 @@
 		},
 		"TimeDimension_Archive_Destination_properties_typeProperties_fileName": {
 			"type": "string",
-			"defaultValue": "@concat ('TimeDimension_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+			"defaultValue": "@concat ('TimeDimension_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
 		},
 		"TimeDimension_Archive_Destination_properties_typeProperties_folderPath": {
 			"type": "string",
@@ -176,6 +176,10 @@
 						"treatEmptyAsNull": true,
 						"skipLineCount": 0,
 						"firstRowAsHeader": true
+					},
+					"compression": {
+						"type": "GZip",
+						"level": "Optimal"
 					},
 					"fileName": {
 						"value": "[parameters('TimeDimensionDate_Archive_Destination_properties_typeProperties_fileName')]",
@@ -840,6 +844,10 @@
 						"treatEmptyAsNull": true,
 						"skipLineCount": 0,
 						"firstRowAsHeader": true
+					},
+					"compression": {
+						"type": "GZip",
+						"level": "Optimal"
 					},
 					"fileName": {
 						"value": "[parameters('TimeDimension_Archive_Destination_properties_typeProperties_fileName')]",

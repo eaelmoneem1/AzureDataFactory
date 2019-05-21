@@ -291,13 +291,13 @@
 			"value": "CEOCFO/Dimentions/Forecast Plan"
 		},
 		"Sales_MSCRM_Booking_Archive_DL_properties_typeProperties_fileName": {
-			"value": "@concat ('CM_Bookings_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+			"value": "@concat ('CM_Bookings_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
 		},
 		"Sales_MSCRM_Booking_Archive_DL_properties_typeProperties_folderPath": {
 			"value": "LandingArchive/CEOCFO/Sales/CM_Bookings"
 		},
 		"Sales_MSCRM_OrderBook_Archive_properties_typeProperties_fileName": {
-			"value": "@concat ('CM_OrderBook_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+			"value": "@concat ('CM_OrderBook_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
 		},
 		"Sales_MSCRM_OrderBook_Archive_properties_typeProperties_folderPath": {
 			"value": "LandingArchive/CEOCFO/Sales/CM_OrderBook"
@@ -309,7 +309,7 @@
 			"value": "CEOCFO/Sales"
 		},
 		"TimeDimensionDate_Archive_Destination_properties_typeProperties_fileName": {
-			"value": "@concat ('TimeDimensionDate_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+			"value": "@concat ('TimeDimensionDate_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
 		},
 		"TimeDimensionDate_Archive_Destination_properties_typeProperties_folderPath": {
 			"value": "LandingArchive/CEOCFO/Dimentions/Time"
@@ -321,7 +321,7 @@
 			"value": "CEOCFO/Dimentions/Time"
 		},
 		"TimeDimension_Archive_Destination_properties_typeProperties_fileName": {
-			"value": "@concat ('TimeDimension_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+			"value": "@concat ('TimeDimension_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
 		},
 		"TimeDimension_Archive_Destination_properties_typeProperties_folderPath": {
 			"value": "LandingArchive/CEOCFO/Dimentions/Time"

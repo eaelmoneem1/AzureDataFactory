@@ -389,7 +389,7 @@
 		},
 		"Sales_MSCRM_Booking_Archive_DL_properties_typeProperties_fileName": {
 			"type": "string",
-			"defaultValue": "@concat ('CM_Bookings_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+			"defaultValue": "@concat ('CM_Bookings_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
 		},
 		"Sales_MSCRM_Booking_Archive_DL_properties_typeProperties_folderPath": {
 			"type": "string",
@@ -397,7 +397,7 @@
 		},
 		"Sales_MSCRM_OrderBook_Archive_properties_typeProperties_fileName": {
 			"type": "string",
-			"defaultValue": "@concat ('CM_OrderBook_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+			"defaultValue": "@concat ('CM_OrderBook_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
 		},
 		"Sales_MSCRM_OrderBook_Archive_properties_typeProperties_folderPath": {
 			"type": "string",
@@ -413,7 +413,7 @@
 		},
 		"TimeDimensionDate_Archive_Destination_properties_typeProperties_fileName": {
 			"type": "string",
-			"defaultValue": "@concat ('TimeDimensionDate_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+			"defaultValue": "@concat ('TimeDimensionDate_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
 		},
 		"TimeDimensionDate_Archive_Destination_properties_typeProperties_folderPath": {
 			"type": "string",
@@ -429,7 +429,7 @@
 		},
 		"TimeDimension_Archive_Destination_properties_typeProperties_fileName": {
 			"type": "string",
-			"defaultValue": "@concat ('TimeDimension_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+			"defaultValue": "@concat ('TimeDimension_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
 		},
 		"TimeDimension_Archive_Destination_properties_typeProperties_folderPath": {
 			"type": "string",
@@ -21116,6 +21116,10 @@
 						"skipLineCount": 0,
 						"firstRowAsHeader": true
 					},
+					"compression": {
+						"type": "GZip",
+						"level": "Optimal"
+					},
 					"fileName": {
 						"value": "[parameters('Sales_MSCRM_Booking_Archive_DL_properties_typeProperties_fileName')]",
 						"type": "Expression"
@@ -21209,6 +21213,10 @@
 						"treatEmptyAsNull": true,
 						"skipLineCount": 0,
 						"firstRowAsHeader": true
+					},
+					"compression": {
+						"type": "GZip",
+						"level": "Optimal"
 					},
 					"fileName": {
 						"value": "[parameters('Sales_MSCRM_OrderBook_Archive_properties_typeProperties_fileName')]",
@@ -22257,6 +22265,10 @@
 						"skipLineCount": 0,
 						"firstRowAsHeader": true
 					},
+					"compression": {
+						"type": "GZip",
+						"level": "Optimal"
+					},
 					"fileName": {
 						"value": "[parameters('TimeDimensionDate_Archive_Destination_properties_typeProperties_fileName')]",
 						"type": "Expression"
@@ -22926,6 +22938,10 @@
 						"treatEmptyAsNull": true,
 						"skipLineCount": 0,
 						"firstRowAsHeader": true
+					},
+					"compression": {
+						"type": "GZip",
+						"level": "Optimal"
 					},
 					"fileName": {
 						"value": "[parameters('TimeDimension_Archive_Destination_properties_typeProperties_fileName')]",
