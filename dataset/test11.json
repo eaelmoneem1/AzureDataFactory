@@ -9,6 +9,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureDataLakeStoreLocation",
+				"fileName": "Financial_Actuals",
 				"folderPath": "LandingArchive/CEOCFO/Sales/CM_OrderBook"
 			},
 			"columnDelimiter": ",",
