@@ -1482,8 +1482,8 @@
 				"typeProperties": {
 					"location": {
 						"type": "FileServerLocation",
-						"fileName": "CM_OrderBook_20190510.csv",
-						"folderPath": "CEOCFO/Sales"
+						"fileName": "FinanceActuals_20190430.csv",
+						"folderPath": "CEOCFO/Finance"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
@@ -1549,6 +1549,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureDataLakeStoreLocation",
+						"fileName": "Financial_Actuals",
 						"folderPath": "LandingArchive/CEOCFO/Sales/CM_OrderBook"
 					},
 					"columnDelimiter": ",",
