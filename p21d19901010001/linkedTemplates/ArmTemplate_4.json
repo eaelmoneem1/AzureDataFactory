@@ -25,7 +25,7 @@
 		},
 		"HR_Maclean_EXM_Region_Archive_Destination_properties_typeProperties_fileName": {
 			"type": "string",
-			"defaultValue": "@concat ('EXM_Region_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+			"defaultValue": "@concat ('EXM_Region_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
 		},
 		"HR_Maclean_EXM_Region_Archive_Destination_properties_typeProperties_folderPath": {
 			"type": "string",
@@ -49,7 +49,7 @@
 		},
 		"HR_WORKDAY_HC_Archive_Destination_properties_typeProperties_fileName": {
 			"type": "string",
-			"defaultValue": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+			"defaultValue": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
 		},
 		"HR_WORKDAY_HC_Archive_Destination_properties_typeProperties_folderPath": {
 			"type": "string",
@@ -309,6 +309,10 @@
 						"skipLineCount": 0,
 						"firstRowAsHeader": true
 					},
+					"compression": {
+						"type": "GZip",
+						"level": "Optimal"
+					},
 					"fileName": {
 						"value": "[parameters('HR_Maclean_EXM_Region_Archive_Destination_properties_typeProperties_fileName')]",
 						"type": "Expression"
@@ -438,12 +442,14 @@
 					"location": {
 						"type": "AzureDataLakeStoreLocation",
 						"fileName": {
-							"value": "@concat ('Terminations_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+							"value": "@concat ('Terminations_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
 							"type": "Expression"
 						},
 						"folderPath": "LandingArchive/CEOCFO/HR"
 					},
 					"columnDelimiter": ",",
+					"compressionCodec": "gzip",
+					"compressionLevel": "Optimal",
 					"escapeChar": "\\",
 					"quoteChar": "\""
 				},
@@ -606,6 +612,10 @@
 						"treatEmptyAsNull": true,
 						"skipLineCount": 0,
 						"firstRowAsHeader": true
+					},
+					"compression": {
+						"type": "GZip",
+						"level": "Optimal"
 					},
 					"fileName": {
 						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination_properties_typeProperties_fileName')]",

@@ -41,7 +41,7 @@
 		},
 		"V_HR_Maclean_EXM_Location_Archive_Destination_properties_typeProperties_fileName": {
 			"type": "string",
-			"defaultValue": "@concat ('EXM_Location_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+			"defaultValue": "@concat ('EXM_Location_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
 		},
 		"V_HR_Maclean_EXM_Location_Archive_Destination_properties_typeProperties_folderPath": {
 			"type": "string",
@@ -49,7 +49,7 @@
 		},
 		"V_HR_Maclean_EXM_Location_Directory_Archive_Destination_properties_typeProperties_fileName": {
 			"type": "string",
-			"defaultValue": "@concat ('HR_Maclean_EXM_Location_Directory_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+			"defaultValue": "@concat ('HR_Maclean_EXM_Location_Directory_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
 		},
 		"V_HR_Maclean_EXM_Location_Directory_Archive_Destination_properties_typeProperties_folderPath": {
 			"type": "string",
@@ -1401,6 +1401,10 @@
 						"skipLineCount": 0,
 						"firstRowAsHeader": true
 					},
+					"compression": {
+						"type": "GZip",
+						"level": "Optimal"
+					},
 					"fileName": {
 						"value": "[parameters('V_HR_Maclean_EXM_Location_Archive_Destination_properties_typeProperties_fileName')]",
 						"type": "Expression"
@@ -1431,6 +1435,10 @@
 						"treatEmptyAsNull": true,
 						"skipLineCount": 0,
 						"firstRowAsHeader": true
+					},
+					"compression": {
+						"type": "GZip",
+						"level": "Optimal"
 					},
 					"fileName": {
 						"value": "[parameters('V_HR_Maclean_EXM_Location_Directory_Archive_Destination_properties_typeProperties_fileName')]",

@@ -177,7 +177,7 @@
 			"value": "CEOCFO/HR"
 		},
 		"HR_Maclean_EXM_Region_Archive_Destination_properties_typeProperties_fileName": {
-			"value": "@concat ('EXM_Region_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+			"value": "@concat ('EXM_Region_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
 		},
 		"HR_Maclean_EXM_Region_Archive_Destination_properties_typeProperties_folderPath": {
 			"value": "LandingArchive/CEOCFO/HR"
@@ -195,7 +195,7 @@
 			"value": "Landing"
 		},
 		"HR_WORKDAY_HC_Archive_Destination_properties_typeProperties_fileName": {
-			"value": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+			"value": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
 		},
 		"HR_WORKDAY_HC_Archive_Destination_properties_typeProperties_folderPath": {
 			"value": "LandingArchive/CEOCFO/HR"
@@ -231,7 +231,7 @@
 			"value": "CEOCFO/HR"
 		},
 		"HR_WORKDAY_REQ_Archive_Destination_properties_typeProperties_fileName": {
-			"value": "@concat ('HR_WORKDAY_REQ_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+			"value": "@concat ('HR_WORKDAY_REQ_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
 		},
 		"HR_WORKDAY_REQ_Archive_Destination_properties_typeProperties_folderPath": {
 			"value": "LandingArchive/HR"
@@ -333,13 +333,13 @@
 			"value": "CEOCFO/Dimentions/Time"
 		},
 		"V_HR_Maclean_EXM_Location_Archive_Destination_properties_typeProperties_fileName": {
-			"value": "@concat ('EXM_Location_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+			"value": "@concat ('EXM_Location_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
 		},
 		"V_HR_Maclean_EXM_Location_Archive_Destination_properties_typeProperties_folderPath": {
 			"value": "LandingArchive/CEOCFO/HR"
 		},
 		"V_HR_Maclean_EXM_Location_Directory_Archive_Destination_properties_typeProperties_fileName": {
-			"value": "@concat ('HR_Maclean_EXM_Location_Directory_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+			"value": "@concat ('HR_Maclean_EXM_Location_Directory_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
 		},
 		"V_HR_Maclean_EXM_Location_Directory_Archive_Destination_properties_typeProperties_folderPath": {
 			"value": "LandingArchive/HR"
