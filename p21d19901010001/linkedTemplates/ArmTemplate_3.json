@@ -440,16 +440,38 @@
 					"location": {
 						"type": "FileServerLocation",
 						"fileName": {
-							"value": "@concat ('FinanceCash_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
+							"value": "@concat ('FinanceCash_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
 							"type": "Expression"
 						},
 						"folderPath": "CEOCFO/Finance"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
+					"firstRowAsHeader": true,
 					"quoteChar": "\""
 				},
-				"schema": []
+				"schema": [
+					{
+						"name": "Date",
+						"type": "String"
+					},
+					{
+						"name": "Cash Balance",
+						"type": "String"
+					},
+					{
+						"name": "RCF drawn",
+						"type": "String"
+					},
+					{
+						"name": "Trapped Cash",
+						"type": "String"
+					},
+					{
+						"name": "Cash Net of RCF",
+						"type": "String"
+					}
+				]
 			},
 			"dependsOn": []
 		},
