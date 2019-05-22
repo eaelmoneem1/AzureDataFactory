@@ -9,10 +9,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "FileServerLocation",
-				"fileName": {
-					"value": "@concat ('EXM_AgeGroup_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
-					"type": "Expression"
-				},
+				"fileName": "EXM_AgeGroup_20190522.csv",
 				"folderPath": "CEOCFO/HR"
 			},
 			"columnDelimiter": ",",
@@ -22,15 +19,75 @@
 		},
 		"schema": [
 			{
-				"name": "Location",
+				"name": "Age Group",
 				"type": "String"
 			},
 			{
-				"name": "Country",
+				"name": "Responses",
 				"type": "String"
 			},
 			{
-				"name": "Region",
+				"name": "Detractors",
+				"type": "String"
+			},
+			{
+				"name": "Passives",
+				"type": "String"
+			},
+			{
+				"name": "Promoters",
+				"type": "String"
+			},
+			{
+				"name": "Score",
+				"type": "String"
+			},
+			{
+				"name": "Avg. Response",
+				"type": "String"
+			},
+			{
+				"name": "Response Distribution 0",
+				"type": "String"
+			},
+			{
+				"name": "Response Distribution 1",
+				"type": "String"
+			},
+			{
+				"name": "Response Distribution 2",
+				"type": "String"
+			},
+			{
+				"name": "Response Distribution 3",
+				"type": "String"
+			},
+			{
+				"name": "Response Distribution 4",
+				"type": "String"
+			},
+			{
+				"name": "Response Distribution 5",
+				"type": "String"
+			},
+			{
+				"name": "Response Distribution 6",
+				"type": "String"
+			},
+			{
+				"name": "Response Distribution 7",
+				"type": "String"
+			},
+			{
+				"name": "Response Distribution 8",
+				"type": "String"
+			},
+			{
+				"name": "Response Distribution 9",
+				"type": "String"
+			},
+			{
+				"name": "Response Distribution 10",
 				"type": "String"
 			}
 		]
