@@ -5778,7 +5778,7 @@
 								"type": "DelimitedTextSource",
 								"storeSettings": {
 									"type": "FileServerReadSetting",
-									"recursive": false,
+									"recursive": true,
 									"wildcardFileName": "*.*",
 									"enablePartitionDiscovery": false
 								},
@@ -12849,10 +12849,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "FileServerLocation",
-						"fileName": {
-							"value": "@concat ('EXM_AgeGroup_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
-							"type": "Expression"
-						},
+						"fileName": "EXM_AgeGroup_20190522.csv",
 						"folderPath": "CEOCFO/HR"
 					},
 					"columnDelimiter": ",",
