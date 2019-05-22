@@ -159,7 +159,7 @@
 			"value": "CEOCFO/Dimentions/Forecast Plan"
 		},
 		"Finace_RevenueCost_Destination_properties_typeProperties_fileName": {
-			"value": "@concat ('dbo_FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+			"value": "@concat ('dbo_FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
 		},
 		"Finace_RevenueCost_Destination_properties_typeProperties_folderPath": {
 			"value": "LandingArchive/CEOCFO/Finance/dbo"
@@ -249,13 +249,13 @@
 			"value": "LandingArchive/CEOCFO/Sales/Opportunity"
 		},
 		"Revenue_Archive_Destination_properties_typeProperties_fileName": {
-			"value": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+			"value": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
 		},
 		"Revenue_Archive_Destination_properties_typeProperties_folderPath": {
 			"value": "LandingArchive/CEOCFO/Finance"
 		},
 		"Revenue_cost_source_properties_typeProperties_fileName": {
-			"value": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
+			"value": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
 		},
 		"Revenue_cost_source_properties_typeProperties_folderPath": {
 			"value": "CEOCFO/Finance"
