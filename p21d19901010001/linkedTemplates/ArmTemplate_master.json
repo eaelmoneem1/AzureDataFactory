@@ -896,12 +896,6 @@
 					},
 					"HR_WORKDAY_HC_Archive_Destination3_properties_typeProperties_folderPath": {
 						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination3_properties_typeProperties_folderPath')]"
-					},
-					"HR_WORKDAY_HC_Source_properties_typeProperties_fileName": {
-						"value": "[parameters('HR_WORKDAY_HC_Source_properties_typeProperties_fileName')]"
-					},
-					"HR_WORKDAY_HC_Source_properties_typeProperties_folderPath": {
-						"value": "[parameters('HR_WORKDAY_HC_Source_properties_typeProperties_folderPath')]"
 					}
 				}
 			},
@@ -922,6 +916,12 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"HR_WORKDAY_HC_Source_properties_typeProperties_fileName": {
+						"value": "[parameters('HR_WORKDAY_HC_Source_properties_typeProperties_fileName')]"
+					},
+					"HR_WORKDAY_HC_Source_properties_typeProperties_folderPath": {
+						"value": "[parameters('HR_WORKDAY_HC_Source_properties_typeProperties_folderPath')]"
 					},
 					"HR_WORKDAY_HC_Source1_properties_typeProperties_fileName": {
 						"value": "[parameters('HR_WORKDAY_HC_Source1_properties_typeProperties_fileName')]"

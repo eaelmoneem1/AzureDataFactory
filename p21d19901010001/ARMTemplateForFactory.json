@@ -5073,6 +5073,63 @@
 							"referenceName": "AzureSqlDatabase_finastra",
 							"type": "LinkedServiceReference"
 						}
+					},
+					{
+						"name": "Archiving Data",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "SqlServerStoredProcedure3",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureDataLakeStoreWriteSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSetting",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "FF_Cash_Source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "FF_Cash_Dest_DL",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
 					}
 				],
 				"folder": {
@@ -5083,7 +5140,8 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/FF_Cash_Source')]",
 				"[concat(variables('factoryId'), '/datasets/Cash_Destination')]",
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase_finastra')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase_finastra')]",
+				"[concat(variables('factoryId'), '/datasets/FF_Cash_Dest_DL')]"
 			]
 		},
 		{
@@ -13068,6 +13126,38 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/FF_Cash_Dest_DL')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStore",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureDataLakeStoreLocation",
+						"fileName": {
+							"value": "@concat ('FinanceCash_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
+							"type": "Expression"
+						},
+						"folderPath": "LandingArchive/CEOCFO/Finance"
+					},
+					"columnDelimiter": ",",
+					"compressionCodec": "gzip",
+					"compressionLevel": "Optimal",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStore')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/FF_Cash_Source')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -13080,7 +13170,12 @@
 				"type": "DelimitedText",
 				"typeProperties": {
 					"location": {
-						"type": "FileServerLocation"
+						"type": "FileServerLocation",
+						"fileName": {
+							"value": "@concat ('FinanceCash_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
+							"type": "Expression"
+						},
+						"folderPath": "CEOCFO/Finance"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
