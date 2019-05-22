@@ -10,14 +10,12 @@
 			"location": {
 				"type": "FileServerLocation",
 				"fileName": {
-					"value": "@concat ('Marketing_lkp_Country_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
+					"value": "@concat ('Marketing_lkp_Country_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
 					"type": "Expression"
 				},
 				"folderPath": "ELT/Marketing"
 			},
 			"columnDelimiter": ",",
-			"compressionCodec": "gzip",
-			"compressionLevel": "Optimal",
 			"escapeChar": "/",
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
