@@ -3323,106 +3323,11 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "Staging",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "Finance/OD April 17th v2.1.csv"
-							},
-							{
-								"name": "Destination",
-								"value": "[[STG].[Finace_FF_Revenue&Cost]"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "FileServerReadSetting",
-									"recursive": true,
-									"wildcardFileName": "*.*",
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSetting"
-								}
-							},
-							"sink": {
-								"type": "SqlSink",
-								"writeBatchSize": 10000
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {},
-										"sink": {
-											"name": "date",
-											"type": "String"
-										}
-									},
-									{
-										"source": {},
-										"sink": {
-											"name": "Cash_Balance",
-											"type": "String"
-										}
-									},
-									{
-										"source": {},
-										"sink": {
-											"name": "RCF_Drawn",
-											"type": "String"
-										}
-									},
-									{
-										"source": {},
-										"sink": {
-											"name": "Trapped_Cash",
-											"type": "String"
-										}
-									},
-									{
-										"source": {},
-										"sink": {
-											"name": "Cash_Net_of_RCF",
-											"type": "String"
-										}
-									}
-								]
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "FF_Cash_Source",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Cash_Destination",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
 						"name": "SqlServerStoredProcedure1",
 						"type": "SqlServerStoredProcedure",
 						"dependsOn": [
 							{
-								"activity": "Staging",
+								"activity": "Loading STG tables",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -3556,6 +3461,103 @@
 						"outputs": [
 							{
 								"referenceName": "FF_Cash_Dest_DL",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Loading STG tables",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Date",
+											"type": "String"
+										},
+										"sink": {
+											"name": "date",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Cash Balance",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Cash_Balance",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "RCF drawn",
+											"type": "String"
+										},
+										"sink": {
+											"name": "RCF_Drawn",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Trapped Cash",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Trapped_Cash",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Cash Net of RCF",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Cash_Net_of_RCF",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "FF_Cash_Source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Cash_Destination",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
