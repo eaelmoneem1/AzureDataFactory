@@ -100,7 +100,7 @@
 						"type": "DelimitedTextSource",
 						"storeSettings": {
 							"type": "FileServerReadSetting",
-							"recursive": false,
+							"recursive": true,
 							"wildcardFileName": "*.*",
 							"enablePartitionDiscovery": false
 						},
