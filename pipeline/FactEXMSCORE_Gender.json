@@ -5,14 +5,6 @@
 			{
 				"name": "Loading Int tables",
 				"type": "SqlServerStoredProcedure",
-				"dependsOn": [
-					{
-						"activity": "Loading STG tables",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 3,
@@ -86,46 +78,6 @@
 				}
 			},
 			{
-				"name": "Loading STG tables",
-				"type": "Copy",
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"typeProperties": {
-					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "FileServerReadSetting",
-							"wildcardFileName": "*.*"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSetting"
-						}
-					},
-					"sink": {
-						"type": "SqlSink",
-						"writeBatchSize": 10000
-					},
-					"enableStaging": false
-				},
-				"inputs": [
-					{
-						"referenceName": "EXMSCORE_Gender_Source",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "EXMSCORE_Gender_Dest",
-						"type": "DatasetReference"
-					}
-				]
-			},
-			{
 				"name": "Archiving data in DL",
 				"type": "Copy",
 				"dependsOn": [
@@ -175,6 +127,44 @@
 				"outputs": [
 					{
 						"referenceName": "EXMSCORE_Gender",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Loading STG tables",
+				"type": "Copy",
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "FileServerReadSetting"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSetting"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink"
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "EXMSCORE_Gender_Source",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "EXMSCORE_Age_Group_Dest",
 						"type": "DatasetReference"
 					}
 				]
