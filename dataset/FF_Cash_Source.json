@@ -8,7 +8,12 @@
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
-				"type": "FileServerLocation"
+				"type": "FileServerLocation",
+				"fileName": {
+					"value": "@concat ('FinanceCash_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
+					"type": "Expression"
+				},
+				"folderPath": "CEOCFO/Finance"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
