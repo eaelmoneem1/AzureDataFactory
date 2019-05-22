@@ -3959,7 +3959,7 @@
 						"type": "SqlServerStoredProcedure",
 						"dependsOn": [
 							{
-								"activity": "Copy Data1",
+								"activity": "Loading STG tables",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -4098,7 +4098,7 @@
 						]
 					},
 					{
-						"name": "Copy Data1",
+						"name": "Loading STG tables",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -4122,7 +4122,192 @@
 							"sink": {
 								"type": "AzureSqlSink"
 							},
-							"enableStaging": false
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Age Group",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Age_Group",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Responses",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Responses",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Detractors",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Detractors_Percentage",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Passives",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Passives_Percentage",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Promoters",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Promoters_Percentage",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Score",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Score",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Avg. Response",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Avg_Response",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 0",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_0",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 1",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_1",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 2",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_2",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 3",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_3",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 4",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_4",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 5",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_5",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 6",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_6",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 7",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_7",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 8",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_8",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 9",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_9",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 10",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_10",
+											"type": "String"
+										}
+									}
+								]
+							}
 						},
 						"inputs": [
 							{
@@ -4156,14 +4341,7 @@
 					{
 						"name": "Loading Int tables",
 						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Loading STG tables",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
+						"dependsOn": [],
 						"policy": {
 							"timeout": "7.00:00:00",
 							"retry": 3,
@@ -4240,50 +4418,6 @@
 						}
 					},
 					{
-						"name": "Loading STG tables",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "FileServerReadSetting",
-									"wildcardFileName": "*.*"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSetting"
-								}
-							},
-							"sink": {
-								"type": "SqlSink",
-								"writeBatchSize": 10000
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "EXMSCORE_Gender_Source",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "EXMSCORE_Gender_Dest",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
 						"name": "Archiving data in DL",
 						"type": "Copy",
 						"dependsOn": [
@@ -4335,6 +4469,48 @@
 						"outputs": [
 							{
 								"referenceName": "EXMSCORE_Gender",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Loading STG tables",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink"
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "EXMSCORE_Gender_Source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "EXMSCORE_Age_Group_Dest",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
