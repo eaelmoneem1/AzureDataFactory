@@ -5197,14 +5197,7 @@
 					{
 						"name": "Loading STG tables",
 						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "Delete File",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
+						"dependsOn": [],
 						"policy": {
 							"timeout": "7.00:00:00",
 							"retry": 0,
@@ -5521,85 +5514,6 @@
 							"referenceName": "AzureSqlDatabase_finastra",
 							"type": "LinkedServiceReference"
 						}
-					},
-					{
-						"name": "SharedFolder1",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "FileServerReadSetting"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSetting"
-								}
-							},
-							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "FileServerWriteSetting"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSetting",
-									"quoteAllText": true,
-									"fileExtension": ".txt"
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "SharedFolder1",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "SharedFolder1_Dest",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "Delete File",
-						"type": "Delete",
-						"dependsOn": [
-							{
-								"activity": "SharedFolder1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataset": {
-								"referenceName": "FileShare1",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"recursive": true,
-							"enableLogging": false
-						}
 					}
 				],
 				"folder": {
@@ -5611,10 +5525,7 @@
 				"[concat(variables('factoryId'), '/datasets/CS_FF_NPS_Source')]",
 				"[concat(variables('factoryId'), '/datasets/CS_FF_NPS_Destination')]",
 				"[concat(variables('factoryId'), '/datasets/CS_FF_NPS_Destination_Archive')]",
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase_finastra')]",
-				"[concat(variables('factoryId'), '/datasets/SharedFolder1')]",
-				"[concat(variables('factoryId'), '/datasets/SharedFolder1_Dest')]",
-				"[concat(variables('factoryId'), '/datasets/FileShare1')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase_finastra')]"
 			]
 		},
 		{
@@ -13073,12 +12984,14 @@
 					"location": {
 						"type": "AzureDataLakeStoreLocation",
 						"fileName": {
-							"value": "@concat ('Marketing_lkp_Country_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+							"value": "@concat ('Marketing_lkp_Country_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
 							"type": "Expression"
 						},
 						"folderPath": "LandingArchive/ELT/Marketing"
 					},
 					"columnDelimiter": ",",
+					"compressionCodec": "gzip",
+					"compressionLevel": "Optimal",
 					"escapeChar": "\\",
 					"firstRowAsHeader": true,
 					"quoteChar": "\""
@@ -17298,14 +17211,12 @@
 					"location": {
 						"type": "FileServerLocation",
 						"fileName": {
-							"value": "@concat ('Marketing_lkp_Country_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
+							"value": "@concat ('Marketing_lkp_Country_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
 							"type": "Expression"
 						},
 						"folderPath": "ELT/Marketing"
 					},
 					"columnDelimiter": ",",
-					"compressionCodec": "gzip",
-					"compressionLevel": "Optimal",
 					"escapeChar": "/",
 					"firstRowAsHeader": true,
 					"quoteChar": "\""
