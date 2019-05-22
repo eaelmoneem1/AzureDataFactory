@@ -27,7 +27,9 @@
 						"type": "DelimitedTextSource",
 						"storeSettings": {
 							"type": "FileServerReadSetting",
-							"wildcardFileName": "*.*"
+							"recursive": true,
+							"wildcardFileName": "*.*",
+							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
 							"type": "DelimitedTextReadSetting"
@@ -37,62 +39,7 @@
 						"type": "SqlSink",
 						"writeBatchSize": 10000
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"mappings": [
-							{
-								"source": {
-									"name": "Date",
-									"type": "String"
-								},
-								"sink": {
-									"name": "date",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "Cash Balance",
-									"type": "String"
-								},
-								"sink": {
-									"name": "Cash_Balance",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "RCF drawn",
-									"type": "String"
-								},
-								"sink": {
-									"name": "RCF_Drawn",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "Trapped Cash",
-									"type": "String"
-								},
-								"sink": {
-									"name": "Trapped_Cash",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "Cash Net of RCF",
-									"type": "String"
-								},
-								"sink": {
-									"name": "Cash_Net_of_RCF",
-									"type": "String"
-								}
-							}
-						]
-					}
+					"enableStaging": false
 				},
 				"inputs": [
 					{
