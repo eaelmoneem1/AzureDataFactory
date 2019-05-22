@@ -8,98 +8,86 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "Location",
-				"type": "varchar"
+				"name": "Gender",
+				"type": "nvarchar"
 			},
 			{
 				"name": "Responses",
-				"type": "int",
-				"precision": 10
+				"type": "nvarchar"
 			},
 			{
 				"name": "Detractors_Percentage",
-				"type": "int",
-				"precision": 10
+				"type": "nvarchar"
 			},
 			{
 				"name": "Passives_Percentage",
-				"type": "int",
-				"precision": 10
+				"type": "nvarchar"
 			},
 			{
 				"name": "Promoters_Percentage",
-				"type": "int",
-				"precision": 10
+				"type": "nvarchar"
 			},
 			{
 				"name": "Score",
-				"type": "int",
-				"precision": 10
+				"type": "nvarchar"
 			},
 			{
 				"name": "Avg_Response",
-				"type": "decimal",
-				"precision": 16,
-				"scale": 2
+				"type": "nvarchar"
 			},
 			{
 				"name": "Response_Distribution_0",
-				"type": "int",
-				"precision": 10
+				"type": "nvarchar"
 			},
 			{
 				"name": "Response_Distribution_1",
-				"type": "int",
-				"precision": 10
+				"type": "nvarchar"
 			},
 			{
 				"name": "Response_Distribution_2",
-				"type": "int",
-				"precision": 10
+				"type": "nvarchar"
 			},
 			{
 				"name": "Response_Distribution_3",
-				"type": "int",
-				"precision": 10
+				"type": "nvarchar"
 			},
 			{
 				"name": "Response_Distribution_4",
-				"type": "int",
-				"precision": 10
+				"type": "nvarchar"
 			},
 			{
 				"name": "Response_Distribution_5",
-				"type": "int",
-				"precision": 10
+				"type": "nvarchar"
 			},
 			{
 				"name": "Response_Distribution_6",
-				"type": "int",
-				"precision": 10
+				"type": "nvarchar"
 			},
 			{
 				"name": "Response_Distribution_7",
-				"type": "int",
-				"precision": 10
+				"type": "nvarchar"
 			},
 			{
 				"name": "Response_Distribution_8",
-				"type": "int",
-				"precision": 10
+				"type": "nvarchar"
 			},
 			{
 				"name": "Response_Distribution_9",
-				"type": "int",
-				"precision": 10
+				"type": "nvarchar"
 			},
 			{
 				"name": "Response_Distribution_10",
-				"type": "int",
-				"precision": 10
+				"type": "nvarchar"
+			},
+			{
+				"name": "Rec_CRE_TMS",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
 			}
 		],
 		"typeProperties": {
-			"tableName": "[STG].[V_HR_Maclean_EXM_Gender]"
+			"tableName": "[STG].[HR_Maclean_EXM_Gender]"
 		}
 	}
 }
