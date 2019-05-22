@@ -209,98 +209,86 @@
 				"type": "AzureSqlTable",
 				"schema": [
 					{
-						"name": "Location",
-						"type": "varchar"
+						"name": "Gender",
+						"type": "nvarchar"
 					},
 					{
 						"name": "Responses",
-						"type": "int",
-						"precision": 10
+						"type": "nvarchar"
 					},
 					{
 						"name": "Detractors_Percentage",
-						"type": "int",
-						"precision": 10
+						"type": "nvarchar"
 					},
 					{
 						"name": "Passives_Percentage",
-						"type": "int",
-						"precision": 10
+						"type": "nvarchar"
 					},
 					{
 						"name": "Promoters_Percentage",
-						"type": "int",
-						"precision": 10
+						"type": "nvarchar"
 					},
 					{
 						"name": "Score",
-						"type": "int",
-						"precision": 10
+						"type": "nvarchar"
 					},
 					{
 						"name": "Avg_Response",
-						"type": "decimal",
-						"precision": 16,
-						"scale": 2
+						"type": "nvarchar"
 					},
 					{
 						"name": "Response_Distribution_0",
-						"type": "int",
-						"precision": 10
+						"type": "nvarchar"
 					},
 					{
 						"name": "Response_Distribution_1",
-						"type": "int",
-						"precision": 10
+						"type": "nvarchar"
 					},
 					{
 						"name": "Response_Distribution_2",
-						"type": "int",
-						"precision": 10
+						"type": "nvarchar"
 					},
 					{
 						"name": "Response_Distribution_3",
-						"type": "int",
-						"precision": 10
+						"type": "nvarchar"
 					},
 					{
 						"name": "Response_Distribution_4",
-						"type": "int",
-						"precision": 10
+						"type": "nvarchar"
 					},
 					{
 						"name": "Response_Distribution_5",
-						"type": "int",
-						"precision": 10
+						"type": "nvarchar"
 					},
 					{
 						"name": "Response_Distribution_6",
-						"type": "int",
-						"precision": 10
+						"type": "nvarchar"
 					},
 					{
 						"name": "Response_Distribution_7",
-						"type": "int",
-						"precision": 10
+						"type": "nvarchar"
 					},
 					{
 						"name": "Response_Distribution_8",
-						"type": "int",
-						"precision": 10
+						"type": "nvarchar"
 					},
 					{
 						"name": "Response_Distribution_9",
-						"type": "int",
-						"precision": 10
+						"type": "nvarchar"
 					},
 					{
 						"name": "Response_Distribution_10",
-						"type": "int",
-						"precision": 10
+						"type": "nvarchar"
+					},
+					{
+						"name": "Rec_CRE_TMS",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
 				],
 				"typeProperties": {
-					"tableName": "[[STG].[V_HR_Maclean_EXM_Gender]"
+					"tableName": "[[STG].[HR_Maclean_EXM_Gender]"
 				}
 			},
 			"dependsOn": []
@@ -330,7 +318,80 @@
 					"firstRowAsHeader": true,
 					"quoteChar": "\""
 				},
-				"schema": []
+				"schema": [
+					{
+						"name": "Gender",
+						"type": "String"
+					},
+					{
+						"name": "Responses",
+						"type": "String"
+					},
+					{
+						"name": "Detractors",
+						"type": "String"
+					},
+					{
+						"name": "Passives",
+						"type": "String"
+					},
+					{
+						"name": "Promoters",
+						"type": "String"
+					},
+					{
+						"name": "Score",
+						"type": "String"
+					},
+					{
+						"name": "Avg. Response",
+						"type": "String"
+					},
+					{
+						"name": "Response Distribution 0",
+						"type": "String"
+					},
+					{
+						"name": "Response Distribution 1",
+						"type": "String"
+					},
+					{
+						"name": "Response Distribution 2",
+						"type": "String"
+					},
+					{
+						"name": "Response Distribution 3",
+						"type": "String"
+					},
+					{
+						"name": "Response Distribution 4",
+						"type": "String"
+					},
+					{
+						"name": "Response Distribution 5",
+						"type": "String"
+					},
+					{
+						"name": "Response Distribution 6",
+						"type": "String"
+					},
+					{
+						"name": "Response Distribution 7",
+						"type": "String"
+					},
+					{
+						"name": "Response Distribution 8",
+						"type": "String"
+					},
+					{
+						"name": "Response Distribution 9",
+						"type": "String"
+					},
+					{
+						"name": "Response Distribution 10",
+						"type": "String"
+					}
+				]
 			},
 			"dependsOn": []
 		},
