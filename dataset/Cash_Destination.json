@@ -20,6 +20,10 @@
 				"type": "nvarchar"
 			},
 			{
+				"name": "Trapped_Cash",
+				"type": "nvarchar"
+			},
+			{
 				"name": "Cash_Net_of_RCF",
 				"type": "nvarchar"
 			},
