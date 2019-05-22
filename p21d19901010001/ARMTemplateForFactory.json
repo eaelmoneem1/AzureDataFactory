@@ -12716,12 +12716,14 @@
 					"location": {
 						"type": "AzureDataLakeStoreLocation",
 						"fileName": {
-							"value": "@concat ('EXM_AgeGroup_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+							"value": "@concat ('EXM_AgeGroup_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
 							"type": "Expression"
 						},
 						"folderPath": "LandingArchive/CEOCFO/HR"
 					},
 					"columnDelimiter": ",",
+					"compressionCodec": "gzip",
+					"compressionLevel": "Optimal",
 					"escapeChar": "\\",
 					"firstRowAsHeader": true,
 					"quoteChar": "\""
@@ -12846,14 +12848,12 @@
 					"location": {
 						"type": "FileServerLocation",
 						"fileName": {
-							"value": "@concat ('EXM_AgeGroup_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
+							"value": "@concat ('EXM_AgeGroup_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
 							"type": "Expression"
 						},
 						"folderPath": "CEOCFO/HR"
 					},
 					"columnDelimiter": ",",
-					"compressionCodec": "gzip",
-					"compressionLevel": "Optimal",
 					"escapeChar": "\\",
 					"firstRowAsHeader": true,
 					"quoteChar": "\""
