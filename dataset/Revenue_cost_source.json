@@ -107,12 +107,8 @@
 				"skipLineCount": 0,
 				"firstRowAsHeader": true
 			},
-			"compression": {
-				"type": "GZip",
-				"level": "Optimal"
-			},
 			"fileName": {
-				"value": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
+				"value": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
 				"type": "Expression"
 			},
 			"folderPath": "CEOCFO/Finance"
