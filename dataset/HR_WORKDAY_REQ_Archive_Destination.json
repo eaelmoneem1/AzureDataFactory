@@ -22,7 +22,7 @@
 				"level": "Optimal"
 			},
 			"fileName": {
-				"value": "@concat ('HR_WORKDAY_REQ_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
+				"value": "@concat ('Requisitions_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
 				"type": "Expression"
 			},
 			"folderPath": "LandingArchive/HR"

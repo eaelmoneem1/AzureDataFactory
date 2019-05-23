@@ -68,7 +68,7 @@
 				"firstRowAsHeader": true
 			},
 			"fileName": {
-				"value": "@concat ('Requisations_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+				"value": "@concat ('Requisitions_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
 				"type": "Expression"
 			},
 			"folderPath": "CEOCFO/HR"
