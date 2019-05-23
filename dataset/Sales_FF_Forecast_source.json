@@ -108,7 +108,7 @@
 				"firstRowAsHeader": true
 			},
 			"fileName": {
-				"value": "@concat ('ForecastPlan_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+				"value": "@concat ('FinancialPlan_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
 				"type": "Expression"
 			},
 			"folderPath": "CEOCFO/Dimentions/Forecast Plan"

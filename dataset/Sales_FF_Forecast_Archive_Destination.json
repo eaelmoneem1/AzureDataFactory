@@ -22,7 +22,7 @@
 				"level": "Optimal"
 			},
 			"fileName": {
-				"value": "@concat ('ForecastPlan_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
+				"value": "@concat ('FinancialPlan_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
 				"type": "Expression"
 			},
 			"folderPath": "LandingArchive/CEOCFO/Dimentions/Forcecast Plan"
