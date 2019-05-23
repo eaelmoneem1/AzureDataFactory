@@ -279,13 +279,13 @@
 			"value": "LandingArchive/CEOCFO/Sales/Opportunity"
 		},
 		"Sales_FF_Forecast_Archive_Destination_properties_typeProperties_fileName": {
-			"value": "@concat ('ForecastPlan_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
+			"value": "@concat ('FinancialPlan_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
 		},
 		"Sales_FF_Forecast_Archive_Destination_properties_typeProperties_folderPath": {
 			"value": "LandingArchive/CEOCFO/Dimentions/Forcecast Plan"
 		},
 		"Sales_FF_Forecast_source_properties_typeProperties_fileName": {
-			"value": "@concat ('ForecastPlan_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+			"value": "@concat ('FinancialPlan_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
 		},
 		"Sales_FF_Forecast_source_properties_typeProperties_folderPath": {
 			"value": "CEOCFO/Dimentions/Forecast Plan"

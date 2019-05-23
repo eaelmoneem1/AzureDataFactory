@@ -9,7 +9,7 @@
 		},
 		"Sales_FF_Forecast_Archive_Destination_properties_typeProperties_fileName": {
 			"type": "string",
-			"defaultValue": "@concat ('ForecastPlan_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
+			"defaultValue": "@concat ('FinancialPlan_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
 		},
 		"Sales_FF_Forecast_Archive_Destination_properties_typeProperties_folderPath": {
 			"type": "string",
@@ -17,7 +17,7 @@
 		},
 		"Sales_FF_Forecast_source_properties_typeProperties_fileName": {
 			"type": "string",
-			"defaultValue": "@concat ('ForecastPlan_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+			"defaultValue": "@concat ('FinancialPlan_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
 		},
 		"Sales_FF_Forecast_source_properties_typeProperties_folderPath": {
 			"type": "string",
