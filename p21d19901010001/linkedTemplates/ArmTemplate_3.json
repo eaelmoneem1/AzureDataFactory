@@ -93,207 +93,6 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/EXMSCORE_Gender')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStore",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureDataLakeStoreLocation",
-						"fileName": {
-							"value": "@concat ('EXM_Gender_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
-							"type": "Expression"
-						},
-						"folderPath": "LandingArchive/CEOCFO/HR"
-					},
-					"columnDelimiter": ",",
-					"compressionCodec": "gzip",
-					"compressionLevel": "Optimal",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "Prop_0",
-						"type": "String"
-					},
-					{
-						"name": "Prop_1",
-						"type": "String"
-					},
-					{
-						"name": "Prop_2",
-						"type": "String"
-					},
-					{
-						"name": "Prop_3",
-						"type": "String"
-					},
-					{
-						"name": "Prop_4",
-						"type": "String"
-					},
-					{
-						"name": "Prop_5",
-						"type": "String"
-					},
-					{
-						"name": "Prop_6",
-						"type": "String"
-					},
-					{
-						"name": "Prop_7",
-						"type": "String"
-					},
-					{
-						"name": "Prop_8",
-						"type": "String"
-					},
-					{
-						"name": "Prop_9",
-						"type": "String"
-					},
-					{
-						"name": "Prop_10",
-						"type": "String"
-					},
-					{
-						"name": "Prop_11",
-						"type": "String"
-					},
-					{
-						"name": "Prop_12",
-						"type": "String"
-					},
-					{
-						"name": "Prop_13",
-						"type": "String"
-					},
-					{
-						"name": "Prop_14",
-						"type": "String"
-					},
-					{
-						"name": "Prop_15",
-						"type": "String"
-					},
-					{
-						"name": "Prop_16",
-						"type": "String"
-					},
-					{
-						"name": "Prop_17",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/EXMSCORE_Gender_Dest')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "Gender",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Responses",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Detractors_Percentage",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Passives_Percentage",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Promoters_Percentage",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Score",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Avg_Response",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Response_Distribution_0",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Response_Distribution_1",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Response_Distribution_2",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Response_Distribution_3",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Response_Distribution_4",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Response_Distribution_5",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Response_Distribution_6",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Response_Distribution_7",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Response_Distribution_8",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Response_Distribution_9",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Response_Distribution_10",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Rec_CRE_TMS",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"tableName": "[[STG].[HR_Maclean_EXM_Gender]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/EXMSCORE_Gender_Source')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -978,6 +777,114 @@
 				"type": "AzureSqlTable",
 				"typeProperties": {
 					"tableName": "[[STG].[V_HR_Maclean_EXM_Location]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/HR_Maclean_EXM_Location_Destination')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"structure": [
+					{
+						"name": "Location",
+						"type": "String"
+					},
+					{
+						"name": "Responses",
+						"type": "String"
+					},
+					{
+						"name": "Detractors_Percentage",
+						"type": "String"
+					},
+					{
+						"name": "Passives_Percentage",
+						"type": "String"
+					},
+					{
+						"name": "Promoters_Percentage",
+						"type": "String"
+					},
+					{
+						"name": "Score",
+						"type": "String"
+					},
+					{
+						"name": "Avg_Response",
+						"type": "String"
+					},
+					{
+						"name": "Response_Distribution_0",
+						"type": "String"
+					},
+					{
+						"name": "Response_Distribution_1",
+						"type": "String"
+					},
+					{
+						"name": "Response_Distribution_2",
+						"type": "String"
+					},
+					{
+						"name": "Response_Distribution_3",
+						"type": "String"
+					},
+					{
+						"name": "Response_Distribution_4",
+						"type": "String"
+					},
+					{
+						"name": "Response_Distribution_5",
+						"type": "String"
+					},
+					{
+						"name": "Response_Distribution_6",
+						"type": "String"
+					},
+					{
+						"name": "Response_Distribution_7",
+						"type": "String"
+					},
+					{
+						"name": "Response_Distribution_8",
+						"type": "String"
+					},
+					{
+						"name": "Response_Distribution_9",
+						"type": "String"
+					},
+					{
+						"name": "Response_Distribution_10",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[HR_Maclean_EXM_Location]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/HR_Maclean_EXM_Location_Directory_Archive_Source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"typeProperties": {
+					"tableName": "[[STG].[V_HR_Maclean_EXM_Location_Directory]"
 				}
 			},
 			"dependsOn": []
