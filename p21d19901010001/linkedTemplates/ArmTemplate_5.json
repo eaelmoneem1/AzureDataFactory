@@ -25,7 +25,7 @@
 		},
 		"HR_WORKDAY_REQ_Archive_Destination_properties_typeProperties_fileName": {
 			"type": "string",
-			"defaultValue": "@concat ('HR_WORKDAY_REQ_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
+			"defaultValue": "@concat ('Requisitions_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
 		},
 		"HR_WORKDAY_REQ_Archive_Destination_properties_typeProperties_folderPath": {
 			"type": "string",
@@ -33,7 +33,7 @@
 		},
 		"HR_WORKDAY_REQ_Source_properties_typeProperties_fileName": {
 			"type": "string",
-			"defaultValue": "@concat ('Requisations_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+			"defaultValue": "@concat ('Requisitions_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
 		},
 		"HR_WORKDAY_REQ_Source_properties_typeProperties_folderPath": {
 			"type": "string",

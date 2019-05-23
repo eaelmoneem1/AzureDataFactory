@@ -231,13 +231,13 @@
 			"value": "CEOCFO/HR"
 		},
 		"HR_WORKDAY_REQ_Archive_Destination_properties_typeProperties_fileName": {
-			"value": "@concat ('HR_WORKDAY_REQ_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
+			"value": "@concat ('Requisitions_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
 		},
 		"HR_WORKDAY_REQ_Archive_Destination_properties_typeProperties_folderPath": {
 			"value": "LandingArchive/HR"
 		},
 		"HR_WORKDAY_REQ_Source_properties_typeProperties_fileName": {
-			"value": "@concat ('Requisations_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+			"value": "@concat ('Requisitions_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
 		},
 		"HR_WORKDAY_REQ_Source_properties_typeProperties_folderPath": {
 			"value": "CEOCFO/HR"
