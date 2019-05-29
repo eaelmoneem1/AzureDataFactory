@@ -875,7 +875,7 @@
 						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "DimEmployee_Termination",
+								"activity": "DimEmployee_Future_Termination",
 								"dependencyConditions": [
 									"Completed"
 								]
@@ -1004,6 +1004,69 @@
 						"typeProperties": {
 							"pipeline": {
 								"referenceName": "FactEXMSCORE",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "DimEmployee_Future-hires",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "DimEmployee_Termination",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "DimEmployee_Future_Hires",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "DimEmployee_Future_Termination",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "DimEmployee_Future-hires",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "DimEmployee_Future_Termiantions",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "FactHC_Diversity",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "DimEmployee",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactHC_Diversity",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,

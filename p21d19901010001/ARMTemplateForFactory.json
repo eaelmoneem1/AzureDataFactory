@@ -10209,7 +10209,7 @@
 						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "DimEmployee_Termination",
+								"activity": "DimEmployee_Future_Termination",
 								"dependencyConditions": [
 									"Completed"
 								]
@@ -10343,6 +10343,69 @@
 							"waitOnCompletion": true,
 							"parameters": {}
 						}
+					},
+					{
+						"name": "DimEmployee_Future-hires",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "DimEmployee_Termination",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "DimEmployee_Future_Hires",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "DimEmployee_Future_Termination",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "DimEmployee_Future-hires",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "DimEmployee_Future_Termiantions",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "FactHC_Diversity",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "DimEmployee",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactHC_Diversity",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
 					}
 				],
 				"folder": {
@@ -10361,7 +10424,10 @@
 				"[concat(variables('factoryId'), '/pipelines/DimEmployee_Terminations')]",
 				"[concat(variables('factoryId'), '/pipelines/FactEXMSCORE_Gender')]",
 				"[concat(variables('factoryId'), '/pipelines/FactEXMSCORE_Age_Group')]",
-				"[concat(variables('factoryId'), '/pipelines/FactEXMSCORE')]"
+				"[concat(variables('factoryId'), '/pipelines/FactEXMSCORE')]",
+				"[concat(variables('factoryId'), '/pipelines/DimEmployee_Future_Hires')]",
+				"[concat(variables('factoryId'), '/pipelines/DimEmployee_Future_Termiantions')]",
+				"[concat(variables('factoryId'), '/pipelines/FactHC_Diversity')]"
 			]
 		},
 		{
