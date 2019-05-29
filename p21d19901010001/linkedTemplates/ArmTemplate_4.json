@@ -62,30 +62,6 @@
 		"HR_WORKDAY_HC_Archive_Destination1_properties_typeProperties_folderPath": {
 			"type": "string",
 			"defaultValue": "LandingArchive/CEOCFO/HR"
-		},
-		"HR_WORKDAY_HC_Archive_Destination2_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
-		},
-		"HR_WORKDAY_HC_Archive_Destination2_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "LandingArchive/CEOCFO/HR"
-		},
-		"HR_WORKDAY_HC_Archive_Destination3_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
-		},
-		"HR_WORKDAY_HC_Archive_Destination3_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "LandingArchive/CEOCFO/HR"
-		},
-		"HR_WORKDAY_HC_Archive_Destination4_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
-		},
-		"HR_WORKDAY_HC_Archive_Destination4_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "LandingArchive/CEOCFO/HR"
 		}
 	},
 	"variables": {
@@ -672,6 +648,157 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_DIVERSITY')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileShare",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"fileName": {
+							"value": "@concat ('Diversity_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+							"type": "Expression"
+						},
+						"folderPath": "CEOCFO/HR"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_DIVERSITY_ARCH_DEST')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStore",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureDataLakeStoreLocation",
+						"fileName": {
+							"value": "@concat ('Diversity_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
+							"type": "Expression"
+						},
+						"folderPath": "LandingArchive/CEOCFO/HR"
+					},
+					"columnDelimiter": ",",
+					"compressionCodec": "gzip",
+					"compressionLevel": "Optimal",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Location",
+						"type": "String"
+					},
+					{
+						"name": "Responses",
+						"type": "String"
+					},
+					{
+						"name": "Detractors_Percentage",
+						"type": "String"
+					},
+					{
+						"name": "Passives_Percentage",
+						"type": "String"
+					},
+					{
+						"name": "Promoters_Percentage",
+						"type": "String"
+					},
+					{
+						"name": "Score",
+						"type": "String"
+					},
+					{
+						"name": "Avg_Response",
+						"type": "String"
+					},
+					{
+						"name": "Response_Distribution_0",
+						"type": "String"
+					},
+					{
+						"name": "Response_Distribution_1",
+						"type": "String"
+					},
+					{
+						"name": "Response_Distribution_2",
+						"type": "String"
+					},
+					{
+						"name": "Response_Distribution_3",
+						"type": "String"
+					},
+					{
+						"name": "Response_Distribution_4",
+						"type": "String"
+					},
+					{
+						"name": "Response_Distribution_5",
+						"type": "String"
+					},
+					{
+						"name": "Response_Distribution_6",
+						"type": "String"
+					},
+					{
+						"name": "Response_Distribution_7",
+						"type": "String"
+					},
+					{
+						"name": "Response_Distribution_8",
+						"type": "String"
+					},
+					{
+						"name": "Response_Distribution_9",
+						"type": "String"
+					},
+					{
+						"name": "Response_Distribution_10",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_DIVERSITY_DEST')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"tableName": "[[INT].[DimEmployeeReject]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_FUTURE_HIRES_DEST')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -869,99 +996,6 @@
 						"type": "Expression"
 					},
 					"folderPath": "[parameters('HR_WORKDAY_HC_Archive_Destination1_properties_typeProperties_folderPath')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_HC_Archive_Destination2')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStore",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureDataLakeStoreFile",
-				"typeProperties": {
-					"format": {
-						"type": "TextFormat",
-						"columnDelimiter": ",",
-						"rowDelimiter": "",
-						"quoteChar": "\"",
-						"nullValue": "",
-						"treatEmptyAsNull": true,
-						"skipLineCount": 0,
-						"firstRowAsHeader": true
-					},
-					"fileName": {
-						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination2_properties_typeProperties_fileName')]",
-						"type": "Expression"
-					},
-					"folderPath": "[parameters('HR_WORKDAY_HC_Archive_Destination2_properties_typeProperties_folderPath')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_HC_Archive_Destination3')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStore",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureDataLakeStoreFile",
-				"typeProperties": {
-					"format": {
-						"type": "TextFormat",
-						"columnDelimiter": ",",
-						"rowDelimiter": "",
-						"quoteChar": "\"",
-						"nullValue": "",
-						"treatEmptyAsNull": true,
-						"skipLineCount": 0,
-						"firstRowAsHeader": true
-					},
-					"fileName": {
-						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination3_properties_typeProperties_fileName')]",
-						"type": "Expression"
-					},
-					"folderPath": "[parameters('HR_WORKDAY_HC_Archive_Destination3_properties_typeProperties_folderPath')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_HC_Archive_Destination4')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStore",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureDataLakeStoreFile",
-				"typeProperties": {
-					"format": {
-						"type": "TextFormat",
-						"columnDelimiter": ",",
-						"rowDelimiter": "",
-						"quoteChar": "\"",
-						"nullValue": "",
-						"treatEmptyAsNull": true,
-						"skipLineCount": 0,
-						"firstRowAsHeader": true
-					},
-					"fileName": {
-						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination4_properties_typeProperties_fileName')]",
-						"type": "Expression"
-					},
-					"folderPath": "[parameters('HR_WORKDAY_HC_Archive_Destination4_properties_typeProperties_folderPath')]"
 				}
 			},
 			"dependsOn": []
