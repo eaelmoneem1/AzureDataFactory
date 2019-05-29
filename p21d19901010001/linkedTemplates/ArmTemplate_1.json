@@ -7,14 +7,6 @@
 			"metadata": "Data Factory Name",
 			"defaultValue": "p21d19901010001"
 		},
-		"AzureDataLakeStoreFile5_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "@concat ('Marketing_SFDC_Account_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')"
-		},
-		"AzureDataLakeStoreFile5_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "LandingArchive/ELT/Marketing"
-		},
 		"Booking_Actuals_properties_typeProperties_fileName": {
 			"type": "string",
 			"defaultValue": "@concat ('CM_Bookings_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
@@ -30,88 +22,28 @@
 		"Booking_Current_Actuals_properties_typeProperties_folderPath": {
 			"type": "string",
 			"defaultValue": "Sales"
+		},
+		"CS_FF_NPS_Destination_Archive_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "@concat ('NPS_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
+		},
+		"CS_FF_NPS_Destination_Archive_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "LandingArchive/CEOCFO/CustomerSupport"
+		},
+		"CS_FF_NPS_Source_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "@concat ('NPS_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"CS_FF_NPS_Source_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "CEOCFO/CustomerSupport"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStoreFile5')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStore",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureDataLakeStoreFile",
-				"typeProperties": {
-					"format": {
-						"type": "OrcFormat"
-					},
-					"fileName": {
-						"value": "[parameters('AzureDataLakeStoreFile5_properties_typeProperties_fileName')]",
-						"type": "Expression"
-					},
-					"folderPath": "[parameters('AzureDataLakeStoreFile5_properties_typeProperties_folderPath')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"structure": [
-					{
-						"name": "id",
-						"type": "String"
-					},
-					{
-						"name": "Name",
-						"type": "String"
-					},
-					{
-						"name": "CreatedDate",
-						"type": "String"
-					},
-					{
-						"name": "LastModifiedDate",
-						"type": "String"
-					}
-				],
-				"typeProperties": {
-					"tableName": "[[STG].[Sales_SFDC_Campaign]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlTable10')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"typeProperties": {
-					"tableName": "[[dbo].[test]"
-				}
-			},
-			"dependsOn": []
-		},
 		{
 			"name": "[concat(parameters('factoryName'), '/AzureSqlTable11')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -1403,6 +1335,1269 @@
 					},
 					"fileName": "[parameters('Booking_Current_Actuals_properties_typeProperties_fileName')]",
 					"folderPath": "[parameters('Booking_Current_Actuals_properties_typeProperties_folderPath')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CS_FF_NPS_Destination')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"structure": [
+					{
+						"name": "Start_Date",
+						"type": "String"
+					},
+					{
+						"name": "End_Date",
+						"type": "String"
+					},
+					{
+						"name": "Survey_Details",
+						"type": "String"
+					},
+					{
+						"name": "Contact_Name",
+						"type": "String"
+					},
+					{
+						"name": "Contact_Email",
+						"type": "String"
+					},
+					{
+						"name": "Contact_Record_ID",
+						"type": "String"
+					},
+					{
+						"name": "Company_ID",
+						"type": "String"
+					},
+					{
+						"name": "Company",
+						"type": "String"
+					},
+					{
+						"name": "Company_Country_Code",
+						"type": "String"
+					},
+					{
+						"name": "Company_Country",
+						"type": "String"
+					},
+					{
+						"name": "Company_Email",
+						"type": "String"
+					},
+					{
+						"name": "Region_Code",
+						"type": "String"
+					},
+					{
+						"name": "Region",
+						"type": "String"
+					},
+					{
+						"name": "Survey_Name",
+						"type": "String"
+					},
+					{
+						"name": "Invitation_Date",
+						"type": "String"
+					},
+					{
+						"name": "Survey_Language",
+						"type": "String"
+					},
+					{
+						"name": "Survey_Medium",
+						"type": "String"
+					},
+					{
+						"name": "Reminder1_Date",
+						"type": "String"
+					},
+					{
+						"name": "Reminder2_Date",
+						"type": "String"
+					},
+					{
+						"name": "Reminder3_Date",
+						"type": "String"
+					},
+					{
+						"name": "Response_Received_Date",
+						"type": "String"
+					},
+					{
+						"name": "Response_Collected_Date",
+						"type": "String"
+					},
+					{
+						"name": "Address_Line_1",
+						"type": "String"
+					},
+					{
+						"name": "Address_Line_2",
+						"type": "String"
+					},
+					{
+						"name": "Address_Line_3",
+						"type": "String"
+					},
+					{
+						"name": "Primary_Addr_Postal_code",
+						"type": "String"
+					},
+					{
+						"name": "Person_ID",
+						"type": "String"
+					},
+					{
+						"name": "Salutation",
+						"type": "String"
+					},
+					{
+						"name": "First_Name",
+						"type": "String"
+					},
+					{
+						"name": "Person_Middle_Name",
+						"type": "String"
+					},
+					{
+						"name": "Last_Name",
+						"type": "String"
+					},
+					{
+						"name": "Person_Gender_Code",
+						"type": "String"
+					},
+					{
+						"name": "Person_Age",
+						"type": "String"
+					},
+					{
+						"name": "Person_Age_Group_Code",
+						"type": "String"
+					},
+					{
+						"name": "Primary_Address_Text",
+						"type": "String"
+					},
+					{
+						"name": "Primary_addr_city_name",
+						"type": "String"
+					},
+					{
+						"name": "Primary_addr_state_code",
+						"type": "String"
+					},
+					{
+						"name": "Primary_addr_state_name",
+						"type": "String"
+					},
+					{
+						"name": "Primary_Addr_Country_Code",
+						"type": "String"
+					},
+					{
+						"name": "Primary_Addr_Country_Name",
+						"type": "String"
+					},
+					{
+						"name": "Purchase_Influence_Level",
+						"type": "String"
+					},
+					{
+						"name": "Primary_Job_Role_Name",
+						"type": "String"
+					},
+					{
+						"name": "Primary_Job_Role_Title",
+						"type": "String"
+					},
+					{
+						"name": "Primary_Job_Department_Name",
+						"type": "String"
+					},
+					{
+						"name": "Primary_Phone_Number",
+						"type": "String"
+					},
+					{
+						"name": "Assignee",
+						"type": "String"
+					},
+					{
+						"name": "Last_Follow-up_Date",
+						"type": "String"
+					},
+					{
+						"name": "Last_Follow-Up_Comment",
+						"type": "String"
+					},
+					{
+						"name": "Follow-up_Status",
+						"type": "String"
+					},
+					{
+						"name": "Assignee_Email",
+						"type": "String"
+					},
+					{
+						"name": "Assignee_Title",
+						"type": "String"
+					},
+					{
+						"name": "Person_Identifier",
+						"type": "String"
+					},
+					{
+						"name": "Survey_ID",
+						"type": "String"
+					},
+					{
+						"name": "Initiating_Event_TimeStamp",
+						"type": "String"
+					},
+					{
+						"name": "Person_Identifier_Type_Code",
+						"type": "String"
+					},
+					{
+						"name": "Followup_Contact_Party_ID",
+						"type": "String"
+					},
+					{
+						"name": "Initiating_Event_Description",
+						"type": "String"
+					},
+					{
+						"name": "Company_Duns_Number",
+						"type": "String"
+					},
+					{
+						"name": "Person_Birth_Date",
+						"type": "String"
+					},
+					{
+						"name": "Person_Name_Suffix",
+						"type": "String"
+					},
+					{
+						"name": "Person_Income_Amount",
+						"type": "String"
+					},
+					{
+						"name": "Person_Income_Group_Code",
+						"type": "String"
+					},
+					{
+						"name": "Primary_Fax_Number",
+						"type": "String"
+					},
+					{
+						"name": "Primary_Mobile_Phone_Number",
+						"type": "String"
+					},
+					{
+						"name": "Primary_Phone_Extension_Number",
+						"type": "String"
+					},
+					{
+						"name": "Prefer_Text_Only_Email_Y/N?",
+						"type": "String"
+					},
+					{
+						"name": "Survey_Locale_Select_Enabled_Y/N?",
+						"type": "String"
+					},
+					{
+						"name": "Response_Rate_Notification_Recipient",
+						"type": "String"
+					},
+					{
+						"name": "Response_Rate_Notification_CC_1",
+						"type": "String"
+					},
+					{
+						"name": "Response_Rate_Notification_CC_2",
+						"type": "String"
+					},
+					{
+						"name": "Follow-up_Escalation_ID",
+						"type": "String"
+					},
+					{
+						"name": "Integration_Reference_Id",
+						"type": "String"
+					},
+					{
+						"name": "How_satisfied_are_you_for_Adoption-Value",
+						"type": "String"
+					},
+					{
+						"name": "How_satisfied_are_you_for_Delivery-Value",
+						"type": "String"
+					},
+					{
+						"name": "How_satisfied_are_you_for_Onboarding-Value",
+						"type": "String"
+					},
+					{
+						"name": "How_satisfied_are_you_for_Product-Value",
+						"type": "String"
+					},
+					{
+						"name": "How_satisfied_are_you_for_Responsiveness_to_new_business_demands-Value",
+						"type": "String"
+					},
+					{
+						"name": "How_satisfied_are_you_for_Support-Value",
+						"type": "String"
+					},
+					{
+						"name": "How_satisfied_are_you_for_Your_purchase_process-Value",
+						"type": "String"
+					},
+					{
+						"name": "How_satisfied_are_you_for_Your_renewal_process-Value",
+						"type": "String"
+					},
+					{
+						"name": "How_satisfied_are_you_with_Brand-Value",
+						"type": "String"
+					},
+					{
+						"name": "How_satisfied_are_you_with_Product-Value",
+						"type": "String"
+					},
+					{
+						"name": "How_satisfied_are_you_with_Service-Value",
+						"type": "String"
+					},
+					{
+						"name": "How_satisfied_are_you_with_Value_for_Money-Value",
+						"type": "String"
+					},
+					{
+						"name": "Improvement_Comment",
+						"type": "String"
+					},
+					{
+						"name": "LTR-Value",
+						"type": "String"
+					},
+					{
+						"name": "Next_action_you_are_most_likely_to_take",
+						"type": "String"
+					},
+					{
+						"name": "Product_List",
+						"type": "String"
+					},
+					{
+						"name": "Relationship_with_Finastra",
+						"type": "String"
+					},
+					{
+						"name": "Satisfaction_Comment",
+						"type": "String"
+					},
+					{
+						"name": "Satisfaction_for_supported_by_a_Finastra_partner-Value",
+						"type": "String"
+					},
+					{
+						"name": "Supported_by_a_Finastra_partner",
+						"type": "String"
+					},
+					{
+						"name": "What_is_the_problem_for_Adopting_your_solution_to_get_business_value",
+						"type": "String"
+					},
+					{
+						"name": "What_is_the_problem_for_Delivery",
+						"type": "String"
+					},
+					{
+						"name": "What_is_the_problem_for_Onboarding_your_solution_to_get_business_value",
+						"type": "String"
+					},
+					{
+						"name": "What_is_the_problem_for_Product",
+						"type": "String"
+					},
+					{
+						"name": "What_is_the_problem_for_Responsiveness_to_new_business_demands",
+						"type": "String"
+					},
+					{
+						"name": "What_is_the_problem_for_Support",
+						"type": "String"
+					},
+					{
+						"name": "What_is_the_problem_for_Your_purchase_process",
+						"type": "String"
+					},
+					{
+						"name": "What_is_the_problem_for_Your_renewal_process",
+						"type": "String"
+					},
+					{
+						"name": "NewBusiness",
+						"type": "String"
+					},
+					{
+						"name": "Go_To_Market",
+						"type": "String"
+					},
+					{
+						"name": "Closed_Loop_Alert",
+						"type": "String"
+					},
+					{
+						"name": "Modified_On",
+						"type": "String"
+					},
+					{
+						"name": "Created_On",
+						"type": "String"
+					},
+					{
+						"name": "Title",
+						"type": "String"
+					},
+					{
+						"name": "C-Level",
+						"type": "String"
+					},
+					{
+						"name": "Do_not_allow_Emails",
+						"type": "String"
+					},
+					{
+						"name": "Do_not_allow_Bulk_Emails",
+						"type": "String"
+					},
+					{
+						"name": "Case_Management_User",
+						"type": "String"
+					},
+					{
+						"name": "Customer_Center_Admin",
+						"type": "String"
+					},
+					{
+						"name": "Softrax_ID",
+						"type": "String"
+					},
+					{
+						"name": "Account_Name",
+						"type": "String"
+					},
+					{
+						"name": "websiteurl",
+						"type": "String"
+					},
+					{
+						"name": "Asset",
+						"type": "String"
+					},
+					{
+						"name": "Core_Risk_Level",
+						"type": "String"
+					},
+					{
+						"name": "Core_Segment",
+						"type": "String"
+					},
+					{
+						"name": "Lending_Risk_Level",
+						"type": "String"
+					},
+					{
+						"name": "Lending_Segment",
+						"type": "String"
+					},
+					{
+						"name": "Active_Product_Family_Owned_for_Support",
+						"type": "String"
+					},
+					{
+						"name": "No._of_Employees",
+						"type": "String"
+					},
+					{
+						"name": "NPS_Survey",
+						"type": "String"
+					},
+					{
+						"name": "Last_NPS_Survey_Sent",
+						"type": "String"
+					},
+					{
+						"name": "Selected_for_Survey?",
+						"type": "String"
+					},
+					{
+						"name": "Asset_Tier",
+						"type": "String"
+					},
+					{
+						"name": "Account_Type",
+						"type": "String"
+					},
+					{
+						"name": "Region_1",
+						"type": "String"
+					},
+					{
+						"name": "Lending_Account_Exec",
+						"type": "String"
+					},
+					{
+						"name": "Core_RM",
+						"type": "String"
+					},
+					{
+						"name": "Trailing_12_Rev_Rank",
+						"type": "String"
+					},
+					{
+						"name": "Prior_Year_Revenue",
+						"type": "String"
+					},
+					{
+						"name": "Prior_Year_Lending_Rev",
+						"type": "String"
+					},
+					{
+						"name": "Prior_Year_Mortgage_Rev",
+						"type": "String"
+					},
+					{
+						"name": "Prior_Year_Retail_Rev",
+						"type": "String"
+					},
+					{
+						"name": "3_Yr_Revenue_Rank",
+						"type": "String"
+					},
+					{
+						"name": "3_Year_Avg_Rev",
+						"type": "String"
+					},
+					{
+						"name": "Count_of_Won_Opportunities",
+						"type": "String"
+					},
+					{
+						"name": "Count_of_Lost_Opportunities",
+						"type": "String"
+					},
+					{
+						"name": "Parent_account",
+						"type": "String"
+					},
+					{
+						"name": "Account_Governance_profile",
+						"type": "String"
+					},
+					{
+						"name": "Account_18chr_Id",
+						"type": "String"
+					},
+					{
+						"name": "GTM_Target",
+						"type": "String"
+					},
+					{
+						"name": "Full_Name",
+						"type": "String"
+					},
+					{
+						"name": "Mobile",
+						"type": "String"
+					},
+					{
+						"name": "GTM_Persona",
+						"type": "String"
+					},
+					{
+						"name": "Max_of_Annual_Revenue",
+						"type": "String"
+					},
+					{
+						"name": "Map_Name",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[CS_FF_NPS]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CS_FF_NPS_Destination_Archive')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStore",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureDataLakeStoreFile",
+				"typeProperties": {
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"rowDelimiter": "",
+						"quoteChar": "\"",
+						"nullValue": "",
+						"treatEmptyAsNull": true,
+						"skipLineCount": 0,
+						"firstRowAsHeader": true
+					},
+					"compression": {
+						"type": "GZip",
+						"level": "Optimal"
+					},
+					"fileName": {
+						"value": "[parameters('CS_FF_NPS_Destination_Archive_properties_typeProperties_fileName')]",
+						"type": "Expression"
+					},
+					"folderPath": "[parameters('CS_FF_NPS_Destination_Archive_properties_typeProperties_folderPath')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CS_FF_NPS_Source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileShare",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "FileShare",
+				"structure": [
+					{
+						"name": "Start Date",
+						"type": "String"
+					},
+					{
+						"name": "End Date",
+						"type": "String"
+					},
+					{
+						"name": "Survey Details",
+						"type": "String"
+					},
+					{
+						"name": "Contact Name",
+						"type": "String"
+					},
+					{
+						"name": "Contact Email",
+						"type": "String"
+					},
+					{
+						"name": "Contact Record ID",
+						"type": "String"
+					},
+					{
+						"name": "Company ID",
+						"type": "String"
+					},
+					{
+						"name": "Company",
+						"type": "String"
+					},
+					{
+						"name": "Company Country Code",
+						"type": "String"
+					},
+					{
+						"name": "Company Country",
+						"type": "String"
+					},
+					{
+						"name": "Company Email",
+						"type": "String"
+					},
+					{
+						"name": "Region Code",
+						"type": "String"
+					},
+					{
+						"name": "Region",
+						"type": "String"
+					},
+					{
+						"name": "Survey Name",
+						"type": "String"
+					},
+					{
+						"name": "Invitation Date",
+						"type": "String"
+					},
+					{
+						"name": "Survey Language",
+						"type": "String"
+					},
+					{
+						"name": "Survey Medium",
+						"type": "String"
+					},
+					{
+						"name": "Reminder1 Date",
+						"type": "String"
+					},
+					{
+						"name": "Reminder2 Date",
+						"type": "String"
+					},
+					{
+						"name": "Reminder3 Date",
+						"type": "String"
+					},
+					{
+						"name": "Response Received Date",
+						"type": "String"
+					},
+					{
+						"name": "Response Collected Date",
+						"type": "String"
+					},
+					{
+						"name": "Address Line 1",
+						"type": "String"
+					},
+					{
+						"name": "Address Line 2",
+						"type": "String"
+					},
+					{
+						"name": "Address Line 3",
+						"type": "String"
+					},
+					{
+						"name": "Primary Addr Postal code",
+						"type": "String"
+					},
+					{
+						"name": "Person ID",
+						"type": "String"
+					},
+					{
+						"name": "Salutation",
+						"type": "String"
+					},
+					{
+						"name": "First Name",
+						"type": "String"
+					},
+					{
+						"name": "Person Middle Name",
+						"type": "String"
+					},
+					{
+						"name": "Last Name",
+						"type": "String"
+					},
+					{
+						"name": "Person Gender Code",
+						"type": "String"
+					},
+					{
+						"name": "Person Age",
+						"type": "String"
+					},
+					{
+						"name": "Person Age Group Code",
+						"type": "String"
+					},
+					{
+						"name": "Primary Address Text",
+						"type": "String"
+					},
+					{
+						"name": "Primary addr city name",
+						"type": "String"
+					},
+					{
+						"name": "Primary addr state code",
+						"type": "String"
+					},
+					{
+						"name": "Primary addr state name",
+						"type": "String"
+					},
+					{
+						"name": "Primary Addr Country Code",
+						"type": "String"
+					},
+					{
+						"name": "Primary Addr Country Name",
+						"type": "String"
+					},
+					{
+						"name": "Purchase Influence Level",
+						"type": "String"
+					},
+					{
+						"name": "Primary Job Role Name",
+						"type": "String"
+					},
+					{
+						"name": "Primary Job Role Title",
+						"type": "String"
+					},
+					{
+						"name": "Primary Job Department Name",
+						"type": "String"
+					},
+					{
+						"name": "Primary Phone Number",
+						"type": "String"
+					},
+					{
+						"name": "Assignee",
+						"type": "String"
+					},
+					{
+						"name": "Last Follow-up Date",
+						"type": "String"
+					},
+					{
+						"name": "Last Follow-Up Comment",
+						"type": "String"
+					},
+					{
+						"name": "Follow-up Status",
+						"type": "String"
+					},
+					{
+						"name": "Assignee Email",
+						"type": "String"
+					},
+					{
+						"name": "Assignee Title",
+						"type": "String"
+					},
+					{
+						"name": "Person Identifier",
+						"type": "String"
+					},
+					{
+						"name": "Survey ID",
+						"type": "String"
+					},
+					{
+						"name": "Initiating Event TimeStamp",
+						"type": "String"
+					},
+					{
+						"name": "Person Identifier Type Code",
+						"type": "String"
+					},
+					{
+						"name": "Followup Contact Party ID",
+						"type": "String"
+					},
+					{
+						"name": "Initiating Event Description",
+						"type": "String"
+					},
+					{
+						"name": "Company Duns Number",
+						"type": "String"
+					},
+					{
+						"name": "Person Birth Date",
+						"type": "String"
+					},
+					{
+						"name": "Person Name Suffix",
+						"type": "String"
+					},
+					{
+						"name": "Person Income Amount",
+						"type": "String"
+					},
+					{
+						"name": "Person Income Group Code",
+						"type": "String"
+					},
+					{
+						"name": "Primary Fax Number",
+						"type": "String"
+					},
+					{
+						"name": "Primary Mobile Phone Number",
+						"type": "String"
+					},
+					{
+						"name": "Primary Phone Extension Number",
+						"type": "String"
+					},
+					{
+						"name": "Prefer Text Only Email Y/N?",
+						"type": "String"
+					},
+					{
+						"name": "Survey Locale Select Enabled Y/N?",
+						"type": "String"
+					},
+					{
+						"name": "Response Rate Notification Recipient",
+						"type": "String"
+					},
+					{
+						"name": "Response Rate Notification CC 1",
+						"type": "String"
+					},
+					{
+						"name": "Response Rate Notification CC 2",
+						"type": "String"
+					},
+					{
+						"name": "Follow-up Escalation ID",
+						"type": "String"
+					},
+					{
+						"name": "Integration Reference Id",
+						"type": "String"
+					},
+					{
+						"name": "How satisfied are you for Adoption-Value",
+						"type": "String"
+					},
+					{
+						"name": "How satisfied are you for Delivery-Value",
+						"type": "String"
+					},
+					{
+						"name": "How satisfied are you for Onboarding-Value",
+						"type": "String"
+					},
+					{
+						"name": "How satisfied are you for Product-Value",
+						"type": "String"
+					},
+					{
+						"name": "How satisfied are you for Responsiveness to new business demands-Value",
+						"type": "String"
+					},
+					{
+						"name": "How satisfied are you for Support-Value",
+						"type": "String"
+					},
+					{
+						"name": "How satisfied are you for Your purchase process-Value",
+						"type": "String"
+					},
+					{
+						"name": "How satisfied are you for Your renewal process-Value",
+						"type": "String"
+					},
+					{
+						"name": "How satisfied are you with Brand-Value",
+						"type": "String"
+					},
+					{
+						"name": "How satisfied are you with Product-Value",
+						"type": "String"
+					},
+					{
+						"name": "How satisfied are you with Service-Value",
+						"type": "String"
+					},
+					{
+						"name": "How satisfied are you with Value for Money-Value",
+						"type": "String"
+					},
+					{
+						"name": "Improvement Comment",
+						"type": "String"
+					},
+					{
+						"name": "LTR-Value",
+						"type": "String"
+					},
+					{
+						"name": "Next action you are most likely to take",
+						"type": "String"
+					},
+					{
+						"name": "Product List",
+						"type": "String"
+					},
+					{
+						"name": "Relationship with Finastra",
+						"type": "String"
+					},
+					{
+						"name": "Satisfaction Comment",
+						"type": "String"
+					},
+					{
+						"name": "Satisfaction for supported by a Finastra partner-Value",
+						"type": "String"
+					},
+					{
+						"name": "Supported by a Finastra partner",
+						"type": "String"
+					},
+					{
+						"name": "What is the problem for Adopting your solution to get business value",
+						"type": "String"
+					},
+					{
+						"name": "What is the problem for Delivery",
+						"type": "String"
+					},
+					{
+						"name": "What is the problem for Onboarding your solution to get business value",
+						"type": "String"
+					},
+					{
+						"name": "What is the problem for Product",
+						"type": "String"
+					},
+					{
+						"name": "What is the problem for Responsiveness to new business demands",
+						"type": "String"
+					},
+					{
+						"name": "What is the problem for Support",
+						"type": "String"
+					},
+					{
+						"name": "What is the problem for Your purchase process",
+						"type": "String"
+					},
+					{
+						"name": "What is the problem for Your renewal process",
+						"type": "String"
+					},
+					{
+						"name": "NewBusiness",
+						"type": "String"
+					},
+					{
+						"name": "Go To Market",
+						"type": "String"
+					},
+					{
+						"name": "Closed Loop Alert",
+						"type": "String"
+					},
+					{
+						"name": "Modified On",
+						"type": "String"
+					},
+					{
+						"name": "Created On",
+						"type": "String"
+					},
+					{
+						"name": "Title",
+						"type": "String"
+					},
+					{
+						"name": "C-Level",
+						"type": "String"
+					},
+					{
+						"name": "Do not allow Emails",
+						"type": "String"
+					},
+					{
+						"name": "Do not allow Bulk Emails",
+						"type": "String"
+					},
+					{
+						"name": "Case Management User",
+						"type": "String"
+					},
+					{
+						"name": "Customer Center Admin",
+						"type": "String"
+					},
+					{
+						"name": "Softrax ID",
+						"type": "String"
+					},
+					{
+						"name": "Account Name",
+						"type": "String"
+					},
+					{
+						"name": "websiteurl",
+						"type": "String"
+					},
+					{
+						"name": "Asset",
+						"type": "String"
+					},
+					{
+						"name": "Core Risk Level",
+						"type": "String"
+					},
+					{
+						"name": "Core Segment",
+						"type": "String"
+					},
+					{
+						"name": "Lending Risk Level",
+						"type": "String"
+					},
+					{
+						"name": "Lending Segment",
+						"type": "String"
+					},
+					{
+						"name": "Active Product Family Owned for Support",
+						"type": "String"
+					},
+					{
+						"name": "No. of Employees",
+						"type": "String"
+					},
+					{
+						"name": "NPS Survey",
+						"type": "String"
+					},
+					{
+						"name": "Last NPS Survey Sent",
+						"type": "String"
+					},
+					{
+						"name": "Selected for Survey?",
+						"type": "String"
+					},
+					{
+						"name": "Asset Tier",
+						"type": "String"
+					},
+					{
+						"name": "Account Type",
+						"type": "String"
+					},
+					{
+						"name": "Region_1",
+						"type": "String"
+					},
+					{
+						"name": "Lending Account Exec",
+						"type": "String"
+					},
+					{
+						"name": "Core RM",
+						"type": "String"
+					},
+					{
+						"name": "Trailing 12 Rev Rank",
+						"type": "String"
+					},
+					{
+						"name": "Prior Year Revenue",
+						"type": "String"
+					},
+					{
+						"name": "Prior Year Lending Rev",
+						"type": "String"
+					},
+					{
+						"name": "Prior Year Mortgage Rev",
+						"type": "String"
+					},
+					{
+						"name": "Prior Year Retail Rev",
+						"type": "String"
+					},
+					{
+						"name": "3 Yr Revenue Rank",
+						"type": "String"
+					},
+					{
+						"name": "3 Year Avg Rev",
+						"type": "String"
+					},
+					{
+						"name": "Count of Won Opportunities",
+						"type": "String"
+					},
+					{
+						"name": "Count of Lost Opportunities",
+						"type": "String"
+					},
+					{
+						"name": "Parent account",
+						"type": "String"
+					},
+					{
+						"name": "Account Governance profile",
+						"type": "String"
+					},
+					{
+						"name": "Account 18chr Id",
+						"type": "String"
+					},
+					{
+						"name": "GTM Target",
+						"type": "String"
+					},
+					{
+						"name": "Full Name",
+						"type": "String"
+					},
+					{
+						"name": "Mobile",
+						"type": "String"
+					},
+					{
+						"name": "GTM Persona",
+						"type": "String"
+					},
+					{
+						"name": "Max of Annual Revenue",
+						"type": "String"
+					},
+					{
+						"name": "Map Name",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"rowDelimiter": "",
+						"quoteChar": "\"",
+						"nullValue": "",
+						"treatEmptyAsNull": true,
+						"skipLineCount": 0,
+						"firstRowAsHeader": true
+					},
+					"fileName": {
+						"value": "[parameters('CS_FF_NPS_Source_properties_typeProperties_fileName')]",
+						"type": "Expression"
+					},
+					"folderPath": "[parameters('CS_FF_NPS_Source_properties_typeProperties_folderPath')]"
 				}
 			},
 			"dependsOn": []

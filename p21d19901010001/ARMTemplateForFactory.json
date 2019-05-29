@@ -23,18 +23,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'securityToken' of 'Salesforce1'"
 		},
-		"SharedFolder1_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'SharedFolder1'"
-		},
-		"SharedFolder2_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'SharedFolder2'"
-		},
-		"SharedFolder3_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'SharedFolder3'"
-		},
 		"blob_storage_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'blob_storage'"
@@ -506,18 +494,6 @@
 		"Salesforce1_properties_typeProperties_username": {
 			"type": "string",
 			"defaultValue": "eltdashboard@finastra.com"
-		},
-		"SharedFolder1_properties_typeProperties_userId": {
-			"type": "string",
-			"defaultValue": "p21d19901015001"
-		},
-		"SharedFolder2_properties_typeProperties_userId": {
-			"type": "string",
-			"defaultValue": "p21d19901015001"
-		},
-		"SharedFolder3_properties_typeProperties_userId": {
-			"type": "string",
-			"defaultValue": "p21d19901015001"
 		}
 	},
 	"variables": {
@@ -15413,7 +15389,7 @@
 				"type": "AzureSqlTable",
 				"schema": [],
 				"typeProperties": {
-					"tableName": "[[INT].[DimEmployeeReject]"
+					"tableName": "[[STG].[V_HR_WORKDAY_Diversity]"
 				}
 			},
 			"dependsOn": [
@@ -15527,7 +15503,7 @@
 				"type": "AzureSqlTable",
 				"schema": [],
 				"typeProperties": {
-					"tableName": "[[INT].[DimEmployeeReject]"
+					"tableName": "[[STG].[HR_WORKDAY_FUTURE_Termiantions]"
 				}
 			},
 			"dependsOn": [
@@ -25338,60 +25314,6 @@
 					"securityToken": {
 						"type": "SecureString",
 						"value": "[parameters('Salesforce1_securityToken')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SharedFolder1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "FileServer",
-				"typeProperties": {
-					"host": "\\\\p21d19901015001.file.core.windows.net\\sharedfolder1",
-					"userId": "[parameters('SharedFolder1_properties_typeProperties_userId')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('SharedFolder1_password')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SharedFolder2')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "FileServer",
-				"typeProperties": {
-					"host": "\\\\p21d19901015001.file.core.windows.net\\sharedfolder2",
-					"userId": "[parameters('SharedFolder2_properties_typeProperties_userId')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('SharedFolder2_password')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SharedFolder3')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "FileServer",
-				"typeProperties": {
-					"host": "\\\\p21d19901015001.file.core.windows.net\\sharedfolder3",
-					"userId": "[parameters('SharedFolder3_properties_typeProperties_userId')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('SharedFolder3_password')]"
 					}
 				}
 			},
