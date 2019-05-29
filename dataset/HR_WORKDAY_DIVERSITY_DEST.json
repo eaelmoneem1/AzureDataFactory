@@ -1,0 +1,14 @@
+{
+	"name": "HR_WORKDAY_DIVERSITY_DEST",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"tableName": "[INT].[DimEmployeeReject]"
+		}
+	}
+}
