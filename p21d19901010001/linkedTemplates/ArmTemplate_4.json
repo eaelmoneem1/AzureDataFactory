@@ -62,120 +62,28 @@
 		"HR_WORKDAY_HC_Archive_Destination1_properties_typeProperties_folderPath": {
 			"type": "string",
 			"defaultValue": "LandingArchive/CEOCFO/HR"
+		},
+		"HR_WORKDAY_HC_Archive_Destination2_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"HR_WORKDAY_HC_Archive_Destination2_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "LandingArchive/CEOCFO/HR"
+		},
+		"HR_WORKDAY_HC_Archive_Destination3_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"HR_WORKDAY_HC_Archive_Destination3_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "LandingArchive/CEOCFO/HR"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
-		{
-			"name": "[concat(parameters('factoryName'), '/HR_Maclean_EXM_Location_Archive_Source')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"typeProperties": {
-					"tableName": "[[STG].[V_HR_Maclean_EXM_Location]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HR_Maclean_EXM_Location_Destination')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"structure": [
-					{
-						"name": "Location",
-						"type": "String"
-					},
-					{
-						"name": "Responses",
-						"type": "String"
-					},
-					{
-						"name": "Detractors_Percentage",
-						"type": "String"
-					},
-					{
-						"name": "Passives_Percentage",
-						"type": "String"
-					},
-					{
-						"name": "Promoters_Percentage",
-						"type": "String"
-					},
-					{
-						"name": "Score",
-						"type": "String"
-					},
-					{
-						"name": "Avg_Response",
-						"type": "String"
-					},
-					{
-						"name": "Response_Distribution_0",
-						"type": "String"
-					},
-					{
-						"name": "Response_Distribution_1",
-						"type": "String"
-					},
-					{
-						"name": "Response_Distribution_2",
-						"type": "String"
-					},
-					{
-						"name": "Response_Distribution_3",
-						"type": "String"
-					},
-					{
-						"name": "Response_Distribution_4",
-						"type": "String"
-					},
-					{
-						"name": "Response_Distribution_5",
-						"type": "String"
-					},
-					{
-						"name": "Response_Distribution_6",
-						"type": "String"
-					},
-					{
-						"name": "Response_Distribution_7",
-						"type": "String"
-					},
-					{
-						"name": "Response_Distribution_8",
-						"type": "String"
-					},
-					{
-						"name": "Response_Distribution_9",
-						"type": "String"
-					},
-					{
-						"name": "Response_Distribution_10",
-						"type": "String"
-					}
-				],
-				"typeProperties": {
-					"tableName": "[[STG].[HR_Maclean_EXM_Location]"
-				}
-			},
-			"dependsOn": []
-		},
 		{
 			"name": "[concat(parameters('factoryName'), '/HR_Maclean_EXM_Location_Directory_Archive_Source')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -996,6 +904,68 @@
 						"type": "Expression"
 					},
 					"folderPath": "[parameters('HR_WORKDAY_HC_Archive_Destination1_properties_typeProperties_folderPath')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_HC_Archive_Destination2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStore",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureDataLakeStoreFile",
+				"typeProperties": {
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"rowDelimiter": "",
+						"quoteChar": "\"",
+						"nullValue": "",
+						"treatEmptyAsNull": true,
+						"skipLineCount": 0,
+						"firstRowAsHeader": true
+					},
+					"fileName": {
+						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination2_properties_typeProperties_fileName')]",
+						"type": "Expression"
+					},
+					"folderPath": "[parameters('HR_WORKDAY_HC_Archive_Destination2_properties_typeProperties_folderPath')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_HC_Archive_Destination3')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStore",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureDataLakeStoreFile",
+				"typeProperties": {
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"rowDelimiter": "",
+						"quoteChar": "\"",
+						"nullValue": "",
+						"treatEmptyAsNull": true,
+						"skipLineCount": 0,
+						"firstRowAsHeader": true
+					},
+					"fileName": {
+						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination3_properties_typeProperties_fileName')]",
+						"type": "Expression"
+					},
+					"folderPath": "[parameters('HR_WORKDAY_HC_Archive_Destination3_properties_typeProperties_folderPath')]"
 				}
 			},
 			"dependsOn": []

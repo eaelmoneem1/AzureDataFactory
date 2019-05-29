@@ -17,9 +17,6 @@
 		"RestService1_password": {
 			"value": ""
 		},
-		"RestService2_password": {
-			"value": ""
-		},
 		"Salesforce1_password": {
 			"value": ""
 		},
@@ -103,12 +100,6 @@
 		},
 		"CS_FF_NPS_Source_properties_typeProperties_folderPath": {
 			"value": "CEOCFO/CustomerSupport"
-		},
-		"FileShare1_properties_typeProperties_fileName": {
-			"value": "@concat ('NPS_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
-		},
-		"FileShare1_properties_typeProperties_folderPath": {
-			"value": "Storage"
 		},
 		"FileShare2_properties_typeProperties_fileName": {
 			"value": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
@@ -414,12 +405,6 @@
 			"value": "https://3431250-sb1.restlets.api.netsuite.com/app/site/hosting/restlet.nl?script=660&deploy=1&searchId=6336&startIndex=0&endIndex=1000 "
 		},
 		"RestService1_properties_typeProperties_userName": {
-			"value": "azureuser@test.com"
-		},
-		"RestService2_properties_typeProperties_url": {
-			"value": "https://3431250-sb1.restlets.api.netsuite.com/app/site/hosting/restlet.nl?script=660&deploy=1&searchId=6336&startIndex=0&endIndex=1000"
-		},
-		"RestService2_properties_typeProperties_userName": {
 			"value": "azureuser@test.com"
 		},
 		"Salesforce1_properties_typeProperties_username": {

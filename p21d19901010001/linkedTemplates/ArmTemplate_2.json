@@ -45,21 +45,6 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlTable9')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"typeProperties": {}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/Booking_Actuals')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -2170,6 +2155,108 @@
 				"typeProperties": {
 					"tableName": "[[STG].[HR_Maclean_EXM_Gender]"
 				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/EXMSCORE_Gender_Source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileShare",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"fileName": {
+							"value": "@concat ('EXM_Gender_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+							"type": "Expression"
+						},
+						"folderPath": "CEOCFO/HR"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Gender",
+						"type": "String"
+					},
+					{
+						"name": "Responses",
+						"type": "String"
+					},
+					{
+						"name": "Detractors",
+						"type": "String"
+					},
+					{
+						"name": "Passives",
+						"type": "String"
+					},
+					{
+						"name": "Promoters",
+						"type": "String"
+					},
+					{
+						"name": "Score",
+						"type": "String"
+					},
+					{
+						"name": "Avg. Response",
+						"type": "String"
+					},
+					{
+						"name": "Response Distribution 0",
+						"type": "String"
+					},
+					{
+						"name": "Response Distribution 1",
+						"type": "String"
+					},
+					{
+						"name": "Response Distribution 2",
+						"type": "String"
+					},
+					{
+						"name": "Response Distribution 3",
+						"type": "String"
+					},
+					{
+						"name": "Response Distribution 4",
+						"type": "String"
+					},
+					{
+						"name": "Response Distribution 5",
+						"type": "String"
+					},
+					{
+						"name": "Response Distribution 6",
+						"type": "String"
+					},
+					{
+						"name": "Response Distribution 7",
+						"type": "String"
+					},
+					{
+						"name": "Response Distribution 8",
+						"type": "String"
+					},
+					{
+						"name": "Response Distribution 9",
+						"type": "String"
+					},
+					{
+						"name": "Response Distribution 10",
+						"type": "String"
+					}
+				]
 			},
 			"dependsOn": []
 		}

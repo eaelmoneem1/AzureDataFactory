@@ -7,14 +7,6 @@
 			"metadata": "Data Factory Name",
 			"defaultValue": "p21d19901010001"
 		},
-		"Revenue_Archive_Destination_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
-		},
-		"Revenue_Archive_Destination_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "LandingArchive/CEOCFO/Finance"
-		},
 		"Revenue_cost_source_properties_typeProperties_fileName": {
 			"type": "string",
 			"defaultValue": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
@@ -62,121 +54,28 @@
 		"Sales_FF_Forecast_source_properties_typeProperties_folderPath": {
 			"type": "string",
 			"defaultValue": "CEOCFO/Dimentions/Forecast Plan"
+		},
+		"Sales_MSCRM_Booking_Archive_DL_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "@concat ('CM_Bookings_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
+		},
+		"Sales_MSCRM_Booking_Archive_DL_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "LandingArchive/CEOCFO/Sales/CM_Bookings"
+		},
+		"Sales_MSCRM_OrderBook_Archive_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "@concat ('CM_OrderBook_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
+		},
+		"Sales_MSCRM_OrderBook_Archive_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "LandingArchive/CEOCFO/Sales/CM_OrderBook"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
-		{
-			"name": "[concat(parameters('factoryName'), '/Opportunity_Last_Load_Created')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"typeProperties": {
-					"tableName": "[[STG].[Sales_SFDC_Booking]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Opportunity_Last_Load_Modified')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"typeProperties": {
-					"tableName": "[[STG].[V_Sales_SFDC_Booking]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/RestResource1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "RestService1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "RestResource",
-				"typeProperties": {
-					"relativeUrl": "",
-					"requestMethod": "GET",
-					"additionalHeaders": {
-						"Authorization": "NLAuth nlauth_account=3431250_SB1, nlauth_email=azureuser@test.com, nlauth_signature=Fin@straAzure2019, nlauth_role=1099",
-						"Content-Type": "application/json",
-						"Accept": "application/json"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/RestResource2')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "RestService1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "RestResource",
-				"typeProperties": {
-					"requestMethod": "GET"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Revenue_Archive_Destination')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStore",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureDataLakeStoreFile",
-				"typeProperties": {
-					"format": {
-						"type": "TextFormat",
-						"columnDelimiter": ",",
-						"rowDelimiter": "",
-						"quoteChar": "\"",
-						"nullValue": "",
-						"treatEmptyAsNull": true,
-						"skipLineCount": 0,
-						"firstRowAsHeader": true
-					},
-					"compression": {
-						"type": "GZip",
-						"level": "Optimal"
-					},
-					"fileName": {
-						"value": "[parameters('Revenue_Archive_Destination_properties_typeProperties_fileName')]",
-						"type": "Expression"
-					},
-					"folderPath": "[parameters('Revenue_Archive_Destination_properties_typeProperties_folderPath')]"
-				}
-			},
-			"dependsOn": []
-		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Revenue_cost_Destination')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -1043,6 +942,211 @@
 						"type": "Expression"
 					},
 					"folderPath": "[parameters('Sales_FF_Forecast_source_properties_typeProperties_folderPath')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Sales_MSCRM_Booking_Actual')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"structure": [
+					{
+						"name": "GL_Period",
+						"type": "String"
+					},
+					{
+						"name": "TransID",
+						"type": "String"
+					},
+					{
+						"name": "Region",
+						"type": "String"
+					},
+					{
+						"name": "Softrax",
+						"type": "String"
+					},
+					{
+						"name": "Name",
+						"type": "String"
+					},
+					{
+						"name": "Sales_Rep",
+						"type": "String"
+					},
+					{
+						"name": "LOB",
+						"type": "String"
+					},
+					{
+						"name": "Product",
+						"type": "String"
+					},
+					{
+						"name": "Booking_ACV",
+						"type": "String"
+					},
+					{
+						"name": "Renewal_ACV",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[SALES_MSCRM_Bookings]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Sales_MSCRM_Booking_Archive')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"typeProperties": {
+					"tableName": "[[STG].[V_SALES_MSCRM_Bookings]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Sales_MSCRM_Booking_Archive_DL')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStore",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureDataLakeStoreFile",
+				"typeProperties": {
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"rowDelimiter": "",
+						"quoteChar": "\"",
+						"nullValue": "",
+						"treatEmptyAsNull": true,
+						"skipLineCount": 0,
+						"firstRowAsHeader": true
+					},
+					"compression": {
+						"type": "GZip",
+						"level": "Optimal"
+					},
+					"fileName": {
+						"value": "[parameters('Sales_MSCRM_Booking_Archive_DL_properties_typeProperties_fileName')]",
+						"type": "Expression"
+					},
+					"folderPath": "[parameters('Sales_MSCRM_Booking_Archive_DL_properties_typeProperties_folderPath')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Sales_MSCRM_Booking_Current_Actual')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"structure": [
+					{
+						"name": "GL_Period",
+						"type": "String"
+					},
+					{
+						"name": "TransID",
+						"type": "String"
+					},
+					{
+						"name": "Region",
+						"type": "String"
+					},
+					{
+						"name": "Softrax",
+						"type": "String"
+					},
+					{
+						"name": "Name",
+						"type": "String"
+					},
+					{
+						"name": "Sales_Rep",
+						"type": "String"
+					},
+					{
+						"name": "LOB",
+						"type": "String"
+					},
+					{
+						"name": "Product",
+						"type": "String"
+					},
+					{
+						"name": "Booking_ACV",
+						"type": "String"
+					},
+					{
+						"name": "Renewal_ACV",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[SALES_MSCRM_Bookings]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Sales_MSCRM_OrderBook_Archive')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStore",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureDataLakeStoreFile",
+				"typeProperties": {
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"rowDelimiter": "",
+						"quoteChar": "\"",
+						"nullValue": "",
+						"treatEmptyAsNull": true,
+						"skipLineCount": 0,
+						"firstRowAsHeader": true
+					},
+					"compression": {
+						"type": "GZip",
+						"level": "Optimal"
+					},
+					"fileName": {
+						"value": "[parameters('Sales_MSCRM_OrderBook_Archive_properties_typeProperties_fileName')]",
+						"type": "Expression"
+					},
+					"folderPath": "[parameters('Sales_MSCRM_OrderBook_Archive_properties_typeProperties_folderPath')]"
 				}
 			},
 			"dependsOn": []

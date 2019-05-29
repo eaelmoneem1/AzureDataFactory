@@ -23,10 +23,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'RestService1'"
 		},
-		"RestService2_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'RestService2'"
-		},
 		"Salesforce1_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'Salesforce1'"
@@ -138,14 +134,6 @@
 		"CS_FF_NPS_Source_properties_typeProperties_folderPath": {
 			"type": "string",
 			"defaultValue": "CEOCFO/CustomerSupport"
-		},
-		"FileShare1_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "@concat ('NPS_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
-		},
-		"FileShare1_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "Storage"
 		},
 		"FileShare2_properties_typeProperties_fileName": {
 			"type": "string",
@@ -555,14 +543,6 @@
 			"type": "string",
 			"defaultValue": "azureuser@test.com"
 		},
-		"RestService2_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://3431250-sb1.restlets.api.netsuite.com/app/site/hosting/restlet.nl?script=660&deploy=1&searchId=6336&startIndex=0&endIndex=1000"
-		},
-		"RestService2_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "azureuser@test.com"
-		},
 		"Salesforce1_properties_typeProperties_username": {
 			"type": "string",
 			"defaultValue": "eltdashboard@finastra.com"
@@ -618,9 +598,6 @@
 					"RestService1_password": {
 						"value": "[parameters('RestService1_password')]"
 					},
-					"RestService2_password": {
-						"value": "[parameters('RestService2_password')]"
-					},
 					"Salesforce1_password": {
 						"value": "[parameters('Salesforce1_password')]"
 					},
@@ -669,12 +646,6 @@
 					"RestService1_properties_typeProperties_userName": {
 						"value": "[parameters('RestService1_properties_typeProperties_userName')]"
 					},
-					"RestService2_properties_typeProperties_url": {
-						"value": "[parameters('RestService2_properties_typeProperties_url')]"
-					},
-					"RestService2_properties_typeProperties_userName": {
-						"value": "[parameters('RestService2_properties_typeProperties_userName')]"
-					},
 					"Salesforce1_properties_typeProperties_username": {
 						"value": "[parameters('Salesforce1_properties_typeProperties_username')]"
 					},
@@ -704,6 +675,12 @@
 					},
 					"AzureDataLakeStoreFile1_properties_typeProperties_folderPath": {
 						"value": "[parameters('AzureDataLakeStoreFile1_properties_typeProperties_folderPath')]"
+					},
+					"AzureDataLakeStoreFile2_properties_typeProperties_fileName": {
+						"value": "[parameters('AzureDataLakeStoreFile2_properties_typeProperties_fileName')]"
+					},
+					"AzureDataLakeStoreFile2_properties_typeProperties_folderPath": {
+						"value": "[parameters('AzureDataLakeStoreFile2_properties_typeProperties_folderPath')]"
 					}
 				}
 			},
@@ -722,12 +699,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"AzureDataLakeStoreFile2_properties_typeProperties_fileName": {
-						"value": "[parameters('AzureDataLakeStoreFile2_properties_typeProperties_fileName')]"
-					},
-					"AzureDataLakeStoreFile2_properties_typeProperties_folderPath": {
-						"value": "[parameters('AzureDataLakeStoreFile2_properties_typeProperties_folderPath')]"
 					},
 					"AzureDataLakeStoreFile3_properties_typeProperties_fileName": {
 						"value": "[parameters('AzureDataLakeStoreFile3_properties_typeProperties_fileName')]"
@@ -810,12 +781,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"FileShare1_properties_typeProperties_fileName": {
-						"value": "[parameters('FileShare1_properties_typeProperties_fileName')]"
-					},
-					"FileShare1_properties_typeProperties_folderPath": {
-						"value": "[parameters('FileShare1_properties_typeProperties_folderPath')]"
 					},
 					"FileShare2_properties_typeProperties_fileName": {
 						"value": "[parameters('FileShare2_properties_typeProperties_fileName')]"
@@ -932,6 +897,18 @@
 					},
 					"HR_WORKDAY_HC_Archive_Destination1_properties_typeProperties_folderPath": {
 						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination1_properties_typeProperties_folderPath')]"
+					},
+					"HR_WORKDAY_HC_Archive_Destination2_properties_typeProperties_fileName": {
+						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination2_properties_typeProperties_fileName')]"
+					},
+					"HR_WORKDAY_HC_Archive_Destination2_properties_typeProperties_folderPath": {
+						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination2_properties_typeProperties_folderPath')]"
+					},
+					"HR_WORKDAY_HC_Archive_Destination3_properties_typeProperties_fileName": {
+						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination3_properties_typeProperties_fileName')]"
+					},
+					"HR_WORKDAY_HC_Archive_Destination3_properties_typeProperties_folderPath": {
+						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination3_properties_typeProperties_folderPath')]"
 					}
 				}
 			},
@@ -952,18 +929,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"HR_WORKDAY_HC_Archive_Destination2_properties_typeProperties_fileName": {
-						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination2_properties_typeProperties_fileName')]"
-					},
-					"HR_WORKDAY_HC_Archive_Destination2_properties_typeProperties_folderPath": {
-						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination2_properties_typeProperties_folderPath')]"
-					},
-					"HR_WORKDAY_HC_Archive_Destination3_properties_typeProperties_fileName": {
-						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination3_properties_typeProperties_fileName')]"
-					},
-					"HR_WORKDAY_HC_Archive_Destination3_properties_typeProperties_folderPath": {
-						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination3_properties_typeProperties_folderPath')]"
 					},
 					"HR_WORKDAY_HC_Archive_Destination4_properties_typeProperties_fileName": {
 						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination4_properties_typeProperties_fileName')]"
@@ -1018,6 +983,12 @@
 					},
 					"HR_WORKDAY_REQ_Archive_Destination_properties_typeProperties_folderPath": {
 						"value": "[parameters('HR_WORKDAY_REQ_Archive_Destination_properties_typeProperties_folderPath')]"
+					},
+					"HR_WORKDAY_REQ_Source_properties_typeProperties_fileName": {
+						"value": "[parameters('HR_WORKDAY_REQ_Source_properties_typeProperties_fileName')]"
+					},
+					"HR_WORKDAY_REQ_Source_properties_typeProperties_folderPath": {
+						"value": "[parameters('HR_WORKDAY_REQ_Source_properties_typeProperties_folderPath')]"
 					}
 				}
 			},
@@ -1039,17 +1010,17 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"HR_WORKDAY_REQ_Source_properties_typeProperties_fileName": {
-						"value": "[parameters('HR_WORKDAY_REQ_Source_properties_typeProperties_fileName')]"
-					},
-					"HR_WORKDAY_REQ_Source_properties_typeProperties_folderPath": {
-						"value": "[parameters('HR_WORKDAY_REQ_Source_properties_typeProperties_folderPath')]"
-					},
 					"Opportunity_Incremintal_Archiving_properties_typeProperties_fileName": {
 						"value": "[parameters('Opportunity_Incremintal_Archiving_properties_typeProperties_fileName')]"
 					},
 					"Opportunity_Incremintal_Archiving_properties_typeProperties_folderPath": {
 						"value": "[parameters('Opportunity_Incremintal_Archiving_properties_typeProperties_folderPath')]"
+					},
+					"Revenue_Archive_Destination_properties_typeProperties_fileName": {
+						"value": "[parameters('Revenue_Archive_Destination_properties_typeProperties_fileName')]"
+					},
+					"Revenue_Archive_Destination_properties_typeProperties_folderPath": {
+						"value": "[parameters('Revenue_Archive_Destination_properties_typeProperties_folderPath')]"
 					}
 				}
 			},
@@ -1070,12 +1041,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"Revenue_Archive_Destination_properties_typeProperties_fileName": {
-						"value": "[parameters('Revenue_Archive_Destination_properties_typeProperties_fileName')]"
-					},
-					"Revenue_Archive_Destination_properties_typeProperties_folderPath": {
-						"value": "[parameters('Revenue_Archive_Destination_properties_typeProperties_folderPath')]"
 					},
 					"Revenue_cost_source_properties_typeProperties_fileName": {
 						"value": "[parameters('Revenue_cost_source_properties_typeProperties_fileName')]"
@@ -1112,6 +1077,18 @@
 					},
 					"Sales_FF_Forecast_source_properties_typeProperties_folderPath": {
 						"value": "[parameters('Sales_FF_Forecast_source_properties_typeProperties_folderPath')]"
+					},
+					"Sales_MSCRM_Booking_Archive_DL_properties_typeProperties_fileName": {
+						"value": "[parameters('Sales_MSCRM_Booking_Archive_DL_properties_typeProperties_fileName')]"
+					},
+					"Sales_MSCRM_Booking_Archive_DL_properties_typeProperties_folderPath": {
+						"value": "[parameters('Sales_MSCRM_Booking_Archive_DL_properties_typeProperties_folderPath')]"
+					},
+					"Sales_MSCRM_OrderBook_Archive_properties_typeProperties_fileName": {
+						"value": "[parameters('Sales_MSCRM_OrderBook_Archive_properties_typeProperties_fileName')]"
+					},
+					"Sales_MSCRM_OrderBook_Archive_properties_typeProperties_folderPath": {
+						"value": "[parameters('Sales_MSCRM_OrderBook_Archive_properties_typeProperties_folderPath')]"
 					}
 				}
 			},
@@ -1132,18 +1109,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"Sales_MSCRM_Booking_Archive_DL_properties_typeProperties_fileName": {
-						"value": "[parameters('Sales_MSCRM_Booking_Archive_DL_properties_typeProperties_fileName')]"
-					},
-					"Sales_MSCRM_Booking_Archive_DL_properties_typeProperties_folderPath": {
-						"value": "[parameters('Sales_MSCRM_Booking_Archive_DL_properties_typeProperties_folderPath')]"
-					},
-					"Sales_MSCRM_OrderBook_Archive_properties_typeProperties_fileName": {
-						"value": "[parameters('Sales_MSCRM_OrderBook_Archive_properties_typeProperties_fileName')]"
-					},
-					"Sales_MSCRM_OrderBook_Archive_properties_typeProperties_folderPath": {
-						"value": "[parameters('Sales_MSCRM_OrderBook_Archive_properties_typeProperties_folderPath')]"
 					},
 					"Sales_MSCRM_OrderBook_source_properties_typeProperties_fileName": {
 						"value": "[parameters('Sales_MSCRM_OrderBook_source_properties_typeProperties_fileName')]"
@@ -1180,6 +1145,18 @@
 					},
 					"V_HR_Maclean_EXM_Location_Archive_Destination_properties_typeProperties_folderPath": {
 						"value": "[parameters('V_HR_Maclean_EXM_Location_Archive_Destination_properties_typeProperties_folderPath')]"
+					},
+					"V_HR_Maclean_EXM_Location_Directory_Archive_Destination_properties_typeProperties_fileName": {
+						"value": "[parameters('V_HR_Maclean_EXM_Location_Directory_Archive_Destination_properties_typeProperties_fileName')]"
+					},
+					"V_HR_Maclean_EXM_Location_Directory_Archive_Destination_properties_typeProperties_folderPath": {
+						"value": "[parameters('V_HR_Maclean_EXM_Location_Directory_Archive_Destination_properties_typeProperties_folderPath')]"
+					},
+					"test_properties_typeProperties_fileName": {
+						"value": "[parameters('test_properties_typeProperties_fileName')]"
+					},
+					"test_properties_typeProperties_folderPath": {
+						"value": "[parameters('test_properties_typeProperties_folderPath')]"
 					}
 				}
 			},
@@ -1200,18 +1177,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"V_HR_Maclean_EXM_Location_Directory_Archive_Destination_properties_typeProperties_fileName": {
-						"value": "[parameters('V_HR_Maclean_EXM_Location_Directory_Archive_Destination_properties_typeProperties_fileName')]"
-					},
-					"V_HR_Maclean_EXM_Location_Directory_Archive_Destination_properties_typeProperties_folderPath": {
-						"value": "[parameters('V_HR_Maclean_EXM_Location_Directory_Archive_Destination_properties_typeProperties_folderPath')]"
-					},
-					"test_properties_typeProperties_fileName": {
-						"value": "[parameters('test_properties_typeProperties_fileName')]"
-					},
-					"test_properties_typeProperties_folderPath": {
-						"value": "[parameters('test_properties_typeProperties_folderPath')]"
 					}
 				}
 			},

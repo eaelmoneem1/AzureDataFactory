@@ -23,10 +23,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'RestService1'"
 		},
-		"RestService2_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'RestService2'"
-		},
 		"Salesforce1_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'Salesforce1'"
@@ -91,14 +87,6 @@
 			"type": "string",
 			"defaultValue": "azureuser@test.com"
 		},
-		"RestService2_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://3431250-sb1.restlets.api.netsuite.com/app/site/hosting/restlet.nl?script=660&deploy=1&searchId=6336&startIndex=0&endIndex=1000"
-		},
-		"RestService2_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "azureuser@test.com"
-		},
 		"Salesforce1_properties_typeProperties_username": {
 			"type": "string",
 			"defaultValue": "eltdashboard@finastra.com"
@@ -138,6 +126,14 @@
 		"AzureDataLakeStoreFile1_properties_typeProperties_folderPath": {
 			"type": "string",
 			"defaultValue": "HR"
+		},
+		"AzureDataLakeStoreFile2_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "@concat ('Marketing_SFDC_Opportunity_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')"
+		},
+		"AzureDataLakeStoreFile2_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "LandingArchive/ELT/Marketing"
 		}
 	},
 	"variables": {
@@ -239,26 +235,6 @@
 					"password": {
 						"type": "SecureString",
 						"value": "[parameters('RestService1_password')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/RestService2')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "RestService",
-				"typeProperties": {
-					"url": "[parameters('RestService2_properties_typeProperties_url')]",
-					"enableServerCertificateValidation": true,
-					"authenticationType": "Basic",
-					"userName": "[parameters('RestService2_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('RestService2_password')]"
 					}
 				}
 			},
@@ -787,6 +763,32 @@
 						"type": "Expression"
 					},
 					"folderPath": "[parameters('AzureDataLakeStoreFile1_properties_typeProperties_folderPath')]"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStore')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStoreFile2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStore",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureDataLakeStoreFile",
+				"typeProperties": {
+					"format": {
+						"type": "OrcFormat"
+					},
+					"fileName": {
+						"value": "[parameters('AzureDataLakeStoreFile2_properties_typeProperties_fileName')]",
+						"type": "Expression"
+					},
+					"folderPath": "[parameters('AzureDataLakeStoreFile2_properties_typeProperties_folderPath')]"
 				}
 			},
 			"dependsOn": [
