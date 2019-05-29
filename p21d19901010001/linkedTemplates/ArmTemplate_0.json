@@ -15,14 +15,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'FileShare'"
 		},
-		"HttpServer1_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'HttpServer1'"
-		},
-		"RestService1_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'RestService1'"
-		},
 		"Salesforce1_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'Salesforce1'"
@@ -71,22 +63,6 @@
 			"type": "string",
 			"defaultValue": "p21d19901015001"
 		},
-		"HttpServer1_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://3431250-sb1.restlets.api.netsuite.com/app/site/hosting/restlet.nl?script=660&deploy=1&searchId=6336&startIndex=0&endIndex=1000"
-		},
-		"HttpServer1_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "azureuser@test.com"
-		},
-		"RestService1_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://3431250-sb1.restlets.api.netsuite.com/app/site/hosting/restlet.nl?script=660&deploy=1&searchId=6336&startIndex=0&endIndex=1000 "
-		},
-		"RestService1_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "azureuser@test.com"
-		},
 		"Salesforce1_properties_typeProperties_username": {
 			"type": "string",
 			"defaultValue": "eltdashboard@finastra.com"
@@ -132,6 +108,22 @@
 			"defaultValue": "@concat ('Marketing_SFDC_Opportunity_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')"
 		},
 		"AzureDataLakeStoreFile2_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "LandingArchive/ELT/Marketing"
+		},
+		"AzureDataLakeStoreFile3_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "@concat ('Marketing_SFDC_LEAD_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')"
+		},
+		"AzureDataLakeStoreFile3_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "LandingArchive/ELT/Marketing"
+		},
+		"AzureDataLakeStoreFile4_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "@concat ('Marketing_SFDC_Contact_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')"
+		},
+		"AzureDataLakeStoreFile4_properties_typeProperties_folderPath": {
 			"type": "string",
 			"defaultValue": "LandingArchive/ELT/Marketing"
 		}
@@ -195,46 +187,6 @@
 					"password": {
 						"type": "SecureString",
 						"value": "[parameters('FileShare_password')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HttpServer1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "HttpServer",
-				"typeProperties": {
-					"url": "[parameters('HttpServer1_properties_typeProperties_url')]",
-					"enableServerCertificateValidation": true,
-					"authenticationType": "Basic",
-					"userName": "[parameters('HttpServer1_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('HttpServer1_password')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/RestService1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "RestService",
-				"typeProperties": {
-					"url": "[parameters('RestService1_properties_typeProperties_url')]",
-					"enableServerCertificateValidation": false,
-					"authenticationType": "Basic",
-					"userName": "[parameters('RestService1_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('RestService1_password')]"
 					}
 				}
 			},
@@ -789,6 +741,58 @@
 						"type": "Expression"
 					},
 					"folderPath": "[parameters('AzureDataLakeStoreFile2_properties_typeProperties_folderPath')]"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStore')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStoreFile3')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStore",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureDataLakeStoreFile",
+				"typeProperties": {
+					"format": {
+						"type": "OrcFormat"
+					},
+					"fileName": {
+						"value": "[parameters('AzureDataLakeStoreFile3_properties_typeProperties_fileName')]",
+						"type": "Expression"
+					},
+					"folderPath": "[parameters('AzureDataLakeStoreFile3_properties_typeProperties_folderPath')]"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStore')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStoreFile4')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStore",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureDataLakeStoreFile",
+				"typeProperties": {
+					"format": {
+						"type": "OrcFormat"
+					},
+					"fileName": {
+						"value": "[parameters('AzureDataLakeStoreFile4_properties_typeProperties_fileName')]",
+						"type": "Expression"
+					},
+					"folderPath": "[parameters('AzureDataLakeStoreFile4_properties_typeProperties_folderPath')]"
 				}
 			},
 			"dependsOn": [

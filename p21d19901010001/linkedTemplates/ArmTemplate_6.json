@@ -22,808 +22,20 @@
 		"Revenue_Archive_Destination_properties_typeProperties_folderPath": {
 			"type": "string",
 			"defaultValue": "LandingArchive/CEOCFO/Finance"
+		},
+		"Revenue_cost_source_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"Revenue_cost_source_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "CEOCFO/Finance"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
-		{
-			"name": "[concat(parameters('factoryName'), '/LND_SFDC_1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"structure": [
-					{
-						"name": "id",
-						"type": "String"
-					},
-					{
-						"name": "Name",
-						"type": "String"
-					},
-					{
-						"name": "Ownerid",
-						"type": "String"
-					},
-					{
-						"name": "owner_name",
-						"type": "String"
-					},
-					{
-						"name": "Owner_Sub_Region_c",
-						"type": "String"
-					},
-					{
-						"name": "CloseDate",
-						"type": "String"
-					},
-					{
-						"name": "StageName",
-						"type": "String"
-					},
-					{
-						"name": "Deal_Type_c",
-						"type": "String"
-					},
-					{
-						"name": "MainProduct_c",
-						"type": "String"
-					},
-					{
-						"name": "OpportunityHEALTH_c",
-						"type": "String"
-					},
-					{
-						"name": "RLF_percent_c",
-						"type": "String"
-					},
-					{
-						"name": "Regional_Sales_Manager_Comments_c",
-						"type": "String"
-					},
-					{
-						"name": "Accountid",
-						"type": "String"
-					},
-					{
-						"name": "Account_Name",
-						"type": "String"
-					},
-					{
-						"name": "Opportunity_18chr_Id_c",
-						"type": "String"
-					},
-					{
-						"name": "Amount",
-						"type": "String"
-					},
-					{
-						"name": "Order_Number_c",
-						"type": "String"
-					},
-					{
-						"name": "Sales_Region_FY07_c",
-						"type": "String"
-					},
-					{
-						"name": "Pricing_Country_c",
-						"type": "String"
-					},
-					{
-						"name": "Misys_Forecast_c",
-						"type": "String"
-					},
-					{
-						"name": "Term_Estimate_Months_c",
-						"type": "String"
-					},
-					{
-						"name": "Commercial_Prop_c",
-						"type": "String"
-					},
-					{
-						"name": "ILF_Amount_c",
-						"type": "String"
-					},
-					{
-						"name": "Total_ILF_In_Qtr_c",
-						"type": "String"
-					},
-					{
-						"name": "Accretive_RLF_c",
-						"type": "String"
-					},
-					{
-						"name": "RLF_Amount_c",
-						"type": "String"
-					},
-					{
-						"name": "PS_Amount_c",
-						"type": "String"
-					},
-					{
-						"name": "ASP_Amount_c",
-						"type": "String"
-					},
-					{
-						"name": "TCV_CSH_c",
-						"type": "String"
-					},
-					{
-						"name": "ACV_ACV_Equiv_CSH_c",
-						"type": "String"
-					},
-					{
-						"name": "Strength_of_Sale_c",
-						"type": "String"
-					},
-					{
-						"name": "Global_Account_Manager_Comments_c",
-						"type": "String"
-					},
-					{
-						"name": "Executive_Sponsor_alignment_c",
-						"type": "String"
-					},
-					{
-						"name": "Next_Step_Due_Date_c",
-						"type": "String"
-					},
-					{
-						"name": "NextStep",
-						"type": "String"
-					},
-					{
-						"name": "Approval_Status_c",
-						"type": "String"
-					},
-					{
-						"name": "sbaa_ApprovalStatus_c",
-						"type": "String"
-					},
-					{
-						"name": "Term_CSH_c",
-						"type": "String"
-					},
-					{
-						"name": "Deal_Category_c",
-						"type": "String"
-					},
-					{
-						"name": "Service_Type_c",
-						"type": "String"
-					},
-					{
-						"name": "Service_Sub_Type_c",
-						"type": "String"
-					},
-					{
-						"name": "Campaignid",
-						"type": "String"
-					},
-					{
-						"name": "Opportunity_Partner_c",
-						"type": "String"
-					},
-					{
-						"name": "Original_Opportunity_c",
-						"type": "String"
-					},
-					{
-						"name": "RecordTypeid",
-						"type": "String"
-					},
-					{
-						"name": "RecordType_Name",
-						"type": "String"
-					},
-					{
-						"name": "LastModifiedDate",
-						"type": "String"
-					},
-					{
-						"name": "CreatedDate",
-						"type": "String"
-					},
-					{
-						"name": "Existing_RLF_Currency_c",
-						"type": "String"
-					},
-					{
-						"name": "CurrencyIsoCode",
-						"type": "String"
-					},
-					{
-						"name": "SBU_Strategic_Business_Unit_c",
-						"type": "String"
-					},
-					{
-						"name": "FiscalPeriod_c",
-						"type": "String"
-					},
-					{
-						"name": "Total_PS_Amount__c",
-						"type": "String"
-					}
-				],
-				"typeProperties": {
-					"tableName": "[[STG].[Sales_SFDC_Booking]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/LND_SFDC_2')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"structure": [
-					{
-						"name": "id",
-						"type": "String"
-					},
-					{
-						"name": "Name",
-						"type": "String"
-					},
-					{
-						"name": "Ownerid",
-						"type": "String"
-					},
-					{
-						"name": "owner_name",
-						"type": "String"
-					},
-					{
-						"name": "Owner_Sub_Region_c",
-						"type": "String"
-					},
-					{
-						"name": "CloseDate",
-						"type": "String"
-					},
-					{
-						"name": "StageName",
-						"type": "String"
-					},
-					{
-						"name": "Deal_Type_c",
-						"type": "String"
-					},
-					{
-						"name": "MainProduct_c",
-						"type": "String"
-					},
-					{
-						"name": "OpportunityHEALTH_c",
-						"type": "String"
-					},
-					{
-						"name": "RLF_percent_c",
-						"type": "String"
-					},
-					{
-						"name": "Regional_Sales_Manager_Comments_c",
-						"type": "String"
-					},
-					{
-						"name": "Accountid",
-						"type": "String"
-					},
-					{
-						"name": "Account_Name",
-						"type": "String"
-					},
-					{
-						"name": "Opportunity_18chr_Id_c",
-						"type": "String"
-					},
-					{
-						"name": "Amount",
-						"type": "String"
-					},
-					{
-						"name": "Order_Number_c",
-						"type": "String"
-					},
-					{
-						"name": "Sales_Region_FY07_c",
-						"type": "String"
-					},
-					{
-						"name": "Pricing_Country_c",
-						"type": "String"
-					},
-					{
-						"name": "Misys_Forecast_c",
-						"type": "String"
-					},
-					{
-						"name": "Term_Estimate_Months_c",
-						"type": "String"
-					},
-					{
-						"name": "Commercial_Prop_c",
-						"type": "String"
-					},
-					{
-						"name": "ILF_Amount_c",
-						"type": "String"
-					},
-					{
-						"name": "Total_ILF_In_Qtr_c",
-						"type": "String"
-					},
-					{
-						"name": "Accretive_RLF_c",
-						"type": "String"
-					},
-					{
-						"name": "RLF_Amount_c",
-						"type": "String"
-					},
-					{
-						"name": "PS_Amount_c",
-						"type": "String"
-					},
-					{
-						"name": "ASP_Amount_c",
-						"type": "String"
-					},
-					{
-						"name": "TCV_CSH_c",
-						"type": "String"
-					},
-					{
-						"name": "ACV_ACV_Equiv_CSH_c",
-						"type": "String"
-					},
-					{
-						"name": "Strength_of_Sale_c",
-						"type": "String"
-					},
-					{
-						"name": "Global_Account_Manager_Comments_c",
-						"type": "String"
-					},
-					{
-						"name": "Executive_Sponsor_alignment_c",
-						"type": "String"
-					},
-					{
-						"name": "Next_Step_Due_Date_c",
-						"type": "String"
-					},
-					{
-						"name": "NextStep",
-						"type": "String"
-					},
-					{
-						"name": "Approval_Status_c",
-						"type": "String"
-					},
-					{
-						"name": "sbaa_ApprovalStatus_c",
-						"type": "String"
-					},
-					{
-						"name": "Term_CSH_c",
-						"type": "String"
-					},
-					{
-						"name": "Deal_Category_c",
-						"type": "String"
-					},
-					{
-						"name": "Service_Type_c",
-						"type": "String"
-					},
-					{
-						"name": "Service_Sub_Type_c",
-						"type": "String"
-					},
-					{
-						"name": "Campaignid",
-						"type": "String"
-					},
-					{
-						"name": "Opportunity_Partner_c",
-						"type": "String"
-					},
-					{
-						"name": "Original_Opportunity_c",
-						"type": "String"
-					},
-					{
-						"name": "RecordTypeid",
-						"type": "String"
-					},
-					{
-						"name": "RecordType_Name",
-						"type": "String"
-					},
-					{
-						"name": "LastModifiedDate",
-						"type": "String"
-					},
-					{
-						"name": "CreatedDate",
-						"type": "String"
-					},
-					{
-						"name": "Existing_RLF_Currency_c",
-						"type": "String"
-					},
-					{
-						"name": "CurrencyIsoCode",
-						"type": "String"
-					},
-					{
-						"name": "SBU_Strategic_Business_Unit_c",
-						"type": "String"
-					},
-					{
-						"name": "FiscalPeriod_c",
-						"type": "String"
-					}
-				],
-				"typeProperties": {
-					"tableName": "[[STG].[Sales_SFDC_Booking]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/LND_SFDC_3')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"structure": [
-					{
-						"name": "id",
-						"type": "String"
-					},
-					{
-						"name": "Name",
-						"type": "String"
-					},
-					{
-						"name": "Ownerid",
-						"type": "String"
-					},
-					{
-						"name": "owner_name",
-						"type": "String"
-					},
-					{
-						"name": "Owner_Sub_Region_c",
-						"type": "String"
-					},
-					{
-						"name": "CloseDate",
-						"type": "String"
-					},
-					{
-						"name": "StageName",
-						"type": "String"
-					},
-					{
-						"name": "Deal_Type_c",
-						"type": "String"
-					},
-					{
-						"name": "MainProduct_c",
-						"type": "String"
-					},
-					{
-						"name": "OpportunityHEALTH_c",
-						"type": "String"
-					},
-					{
-						"name": "RLF_percent_c",
-						"type": "String"
-					},
-					{
-						"name": "Regional_Sales_Manager_Comments_c",
-						"type": "String"
-					},
-					{
-						"name": "Accountid",
-						"type": "String"
-					},
-					{
-						"name": "Account_Name",
-						"type": "String"
-					},
-					{
-						"name": "Opportunity_18chr_Id_c",
-						"type": "String"
-					},
-					{
-						"name": "Amount",
-						"type": "String"
-					},
-					{
-						"name": "Order_Number_c",
-						"type": "String"
-					},
-					{
-						"name": "Sales_Region_FY07_c",
-						"type": "String"
-					},
-					{
-						"name": "Pricing_Country_c",
-						"type": "String"
-					},
-					{
-						"name": "Misys_Forecast_c",
-						"type": "String"
-					},
-					{
-						"name": "Term_Estimate_Months_c",
-						"type": "String"
-					},
-					{
-						"name": "Commercial_Prop_c",
-						"type": "String"
-					},
-					{
-						"name": "ILF_Amount_c",
-						"type": "String"
-					},
-					{
-						"name": "Total_ILF_In_Qtr_c",
-						"type": "String"
-					},
-					{
-						"name": "Accretive_RLF_c",
-						"type": "String"
-					},
-					{
-						"name": "RLF_Amount_c",
-						"type": "String"
-					},
-					{
-						"name": "PS_Amount_c",
-						"type": "String"
-					},
-					{
-						"name": "ASP_Amount_c",
-						"type": "String"
-					},
-					{
-						"name": "TCV_CSH_c",
-						"type": "String"
-					},
-					{
-						"name": "ACV_ACV_Equiv_CSH_c",
-						"type": "String"
-					},
-					{
-						"name": "Strength_of_Sale_c",
-						"type": "String"
-					},
-					{
-						"name": "Global_Account_Manager_Comments_c",
-						"type": "String"
-					},
-					{
-						"name": "Executive_Sponsor_alignment_c",
-						"type": "String"
-					},
-					{
-						"name": "Next_Step_Due_Date_c",
-						"type": "String"
-					},
-					{
-						"name": "NextStep",
-						"type": "String"
-					},
-					{
-						"name": "Approval_Status_c",
-						"type": "String"
-					},
-					{
-						"name": "sbaa_ApprovalStatus_c",
-						"type": "String"
-					},
-					{
-						"name": "Term_CSH_c",
-						"type": "String"
-					},
-					{
-						"name": "Deal_Category_c",
-						"type": "String"
-					},
-					{
-						"name": "Service_Type_c",
-						"type": "String"
-					},
-					{
-						"name": "Service_Sub_Type_c",
-						"type": "String"
-					},
-					{
-						"name": "Campaignid",
-						"type": "String"
-					},
-					{
-						"name": "Opportunity_Partner_c",
-						"type": "String"
-					},
-					{
-						"name": "Original_Opportunity_c",
-						"type": "String"
-					},
-					{
-						"name": "RecordTypeid",
-						"type": "String"
-					},
-					{
-						"name": "RecordType_Name",
-						"type": "String"
-					},
-					{
-						"name": "LastModifiedDate",
-						"type": "String"
-					},
-					{
-						"name": "CreatedDate",
-						"type": "String"
-					},
-					{
-						"name": "Existing_RLF_Currency_c",
-						"type": "String"
-					},
-					{
-						"name": "CurrencyIsoCode",
-						"type": "String"
-					},
-					{
-						"name": "SBU_Strategic_Business_Unit_c",
-						"type": "String"
-					},
-					{
-						"name": "FiscalPeriod_c",
-						"type": "String"
-					},
-					{
-						"name": "Total_PS_Amount__c",
-						"type": "String"
-					}
-				],
-				"typeProperties": {
-					"tableName": "[[STG].[Sales_SFDC_Booking]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Lead_SQL')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"structure": [
-					{
-						"name": "Lead_18chr_Id",
-						"type": "String"
-					},
-					{
-						"name": "MQL_Datestamp",
-						"type": "String"
-					},
-					{
-						"name": "MTL_Datestamp",
-						"type": "String"
-					},
-					{
-						"name": "SQL_Datestamp",
-						"type": "String"
-					},
-					{
-						"name": "Status",
-						"type": "String"
-					},
-					{
-						"name": "Company",
-						"type": "String"
-					},
-					{
-						"name": "Lead_Country",
-						"type": "String"
-					},
-					{
-						"name": "Title",
-						"type": "String"
-					},
-					{
-						"name": "FirstName",
-						"type": "String"
-					},
-					{
-						"name": "LastName",
-						"type": "String"
-					},
-					{
-						"name": "Email",
-						"type": "String"
-					},
-					{
-						"name": "MQL_Program",
-						"type": "String"
-					},
-					{
-						"name": "Qualified_Out_Reason",
-						"type": "String"
-					},
-					{
-						"name": "Status_Reason",
-						"type": "String"
-					},
-					{
-						"name": "Sales_Region",
-						"type": "String"
-					},
-					{
-						"name": "Sub_Region",
-						"type": "String"
-					},
-					{
-						"name": "ConvertedAccountId",
-						"type": "String"
-					},
-					{
-						"name": "ConvertedContactId",
-						"type": "String"
-					},
-					{
-						"name": "ConvertedOpportunityId",
-						"type": "String"
-					},
-					{
-						"name": "CreatedDate",
-						"type": "String"
-					},
-					{
-						"name": "Owner_ID",
-						"type": "String"
-					},
-					{
-						"name": "LastModifiedDate",
-						"type": "String"
-					}
-				],
-				"typeProperties": {
-					"tableName": "[[STG].[Marketing_SFDC_Lead]"
-				}
-			},
-			"dependsOn": []
-		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Marketing_Account_Source')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -4766,6 +3978,298 @@
 						"type": "Expression"
 					},
 					"folderPath": "[parameters('Revenue_Archive_Destination_properties_typeProperties_folderPath')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Revenue_cost_Destination')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"structure": [
+					{
+						"name": "Account",
+						"type": "String"
+					},
+					{
+						"name": "Account_Type",
+						"type": "String"
+					},
+					{
+						"name": "Cost_Centre",
+						"type": "String"
+					},
+					{
+						"name": "CC_Code",
+						"type": "String"
+					},
+					{
+						"name": "Function",
+						"type": "String"
+					},
+					{
+						"name": "Product_Family",
+						"type": "String"
+					},
+					{
+						"name": "Product_line",
+						"type": "String"
+					},
+					{
+						"name": "Sub_Region",
+						"type": "String"
+					},
+					{
+						"name": "Region",
+						"type": "String"
+					},
+					{
+						"name": "Source_System",
+						"type": "String"
+					},
+					{
+						"name": "Jun",
+						"type": "String"
+					},
+					{
+						"name": "Jul",
+						"type": "String"
+					},
+					{
+						"name": "Aug",
+						"type": "String"
+					},
+					{
+						"name": "Sep",
+						"type": "String"
+					},
+					{
+						"name": "Oct",
+						"type": "String"
+					},
+					{
+						"name": "Nov",
+						"type": "String"
+					},
+					{
+						"name": "Dec",
+						"type": "String"
+					},
+					{
+						"name": "Jan",
+						"type": "String"
+					},
+					{
+						"name": "Feb",
+						"type": "String"
+					},
+					{
+						"name": "Mar",
+						"type": "String"
+					},
+					{
+						"name": "Apr",
+						"type": "String"
+					},
+					{
+						"name": "May",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[Finance_FF_Revenue&Cost]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Revenue_cost_source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileShare",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "FileShare",
+				"structure": [
+					{
+						"name": "Account",
+						"type": "String"
+					},
+					{
+						"name": "Account Type",
+						"type": "String"
+					},
+					{
+						"name": "Cost Centre",
+						"type": "String"
+					},
+					{
+						"name": "CC code",
+						"type": "String"
+					},
+					{
+						"name": "Function",
+						"type": "String"
+					},
+					{
+						"name": "Product Family",
+						"type": "String"
+					},
+					{
+						"name": "Product Line",
+						"type": "String"
+					},
+					{
+						"name": "Sub Region",
+						"type": "String"
+					},
+					{
+						"name": "Region",
+						"type": "String"
+					},
+					{
+						"name": "Source System",
+						"type": "String"
+					},
+					{
+						"name": "Jun",
+						"type": "String"
+					},
+					{
+						"name": "Jul",
+						"type": "String"
+					},
+					{
+						"name": "Aug",
+						"type": "String"
+					},
+					{
+						"name": "Sep",
+						"type": "String"
+					},
+					{
+						"name": "Oct",
+						"type": "String"
+					},
+					{
+						"name": "Nov",
+						"type": "String"
+					},
+					{
+						"name": "Dec",
+						"type": "String"
+					},
+					{
+						"name": "Jan",
+						"type": "String"
+					},
+					{
+						"name": "Feb",
+						"type": "String"
+					},
+					{
+						"name": "Mar",
+						"type": "String"
+					},
+					{
+						"name": "Apr",
+						"type": "String"
+					},
+					{
+						"name": "May",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"rowDelimiter": "",
+						"quoteChar": "\"",
+						"nullValue": "",
+						"treatEmptyAsNull": true,
+						"skipLineCount": 0,
+						"firstRowAsHeader": true
+					},
+					"fileName": {
+						"value": "[parameters('Revenue_cost_source_properties_typeProperties_fileName')]",
+						"type": "Expression"
+					},
+					"folderPath": "[parameters('Revenue_cost_source_properties_typeProperties_folderPath')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SFDC_Account')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Salesforce1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SalesforceObject",
+				"structure": [
+					{
+						"name": "Account_18chr_Id__c",
+						"type": "String"
+					},
+					{
+						"name": "Account_Number__c",
+						"type": "String"
+					},
+					{
+						"name": "Name",
+						"type": "String"
+					},
+					{
+						"name": "OwnerId",
+						"type": "String"
+					},
+					{
+						"name": "Country__c",
+						"type": "String"
+					},
+					{
+						"name": "CreatedDate",
+						"type": "DateTime"
+					},
+					{
+						"name": "LastModifiedDate",
+						"type": "DateTime"
+					}
+				],
+				"typeProperties": {
+					"objectApiName": "Account"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SFDC_Archive')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"typeProperties": {
+					"tableName": "[[STG].[V_Sales_SFDC_Booking]"
 				}
 			},
 			"dependsOn": []
