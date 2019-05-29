@@ -8,7 +8,7 @@
 		"type": "AzureSqlTable",
 		"schema": [],
 		"typeProperties": {
-			"tableName": "[INT].[DimEmployeeReject]"
+			"tableName": "[STG].[HR_WORKDAY_FUTURE_Termiantions]"
 		}
 	}
 }

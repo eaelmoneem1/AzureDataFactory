@@ -8,7 +8,7 @@
 		"type": "AzureSqlTable",
 		"schema": [],
 		"typeProperties": {
-			"tableName": "[INT].[DimEmployeeReject]"
+			"tableName": "[STG].[V_HR_WORKDAY_Diversity]"
 		}
 	}
 }
