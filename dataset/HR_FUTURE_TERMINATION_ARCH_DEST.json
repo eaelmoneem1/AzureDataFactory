@@ -1,0 +1,27 @@
+{
+	"name": "HR_FUTURE_TERMINATION_ARCH_DEST",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStore",
+			"type": "LinkedServiceReference"
+		},
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureDataLakeStoreLocation",
+				"fileName": {
+					"value": "@concat ('FutureTerminations_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
+					"type": "Expression"
+				},
+				"folderPath": "LandingArchive/CEOCFO/HR"
+			},
+			"columnDelimiter": ",",
+			"compressionCodec": "gzip",
+			"compressionLevel": "Optimal",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}

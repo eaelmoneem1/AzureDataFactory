@@ -1,0 +1,11 @@
+{
+	"name": "HR_WORKDAY_FUTURE_TERMINATION",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"schema": []
+	}
+}
