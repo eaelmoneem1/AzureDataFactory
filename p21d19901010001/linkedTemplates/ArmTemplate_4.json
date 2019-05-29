@@ -79,27 +79,36 @@
 			"type": "string",
 			"defaultValue": "LandingArchive/CEOCFO/HR"
 		},
-		"HR_WORKDAY_HC_Source_properties_typeProperties_fileName": {
+		"HR_WORKDAY_HC_Archive_Destination4_properties_typeProperties_fileName": {
 			"type": "string",
 			"defaultValue": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
 		},
-		"HR_WORKDAY_HC_Source_properties_typeProperties_folderPath": {
+		"HR_WORKDAY_HC_Archive_Destination4_properties_typeProperties_folderPath": {
 			"type": "string",
-			"defaultValue": "CEOCFO/HR"
-		},
-		"HR_WORKDAY_HC_Source1_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
-		},
-		"HR_WORKDAY_HC_Source1_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "CEOCFO/HR"
+			"defaultValue": "LandingArchive/CEOCFO/HR"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/HR_Maclean_EXM_Location_Directory_Archive_Source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"typeProperties": {
+					"tableName": "[[STG].[V_HR_Maclean_EXM_Location_Directory]"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/HR_Maclean_EXM_Location_Directory_Destination')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -555,6 +564,96 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_FUTURE_HIRES_DEST')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Employee_ID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Worker_Type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Hire_Date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Function",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Location",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Country",
+						"type": "nvarchar"
+					},
+					{
+						"name": "High/Low_Cost",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Cost_Centre",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Product",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Rec_CRE_TMS",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[HR_WORKDAY_FUTURE_HIRES]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_FUTURE_HIRES_SOURCE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileShare",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"fileName": {
+							"value": "@concat ('FutureHires_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+							"type": "Expression"
+						},
+						"folderPath": "CEOCFO/HR"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_HC')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -706,6 +805,37 @@
 						"type": "Expression"
 					},
 					"folderPath": "[parameters('HR_WORKDAY_HC_Archive_Destination3_properties_typeProperties_folderPath')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_HC_Archive_Destination4')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStore",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureDataLakeStoreFile",
+				"typeProperties": {
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"rowDelimiter": "",
+						"quoteChar": "\"",
+						"nullValue": "",
+						"treatEmptyAsNull": true,
+						"skipLineCount": 0,
+						"firstRowAsHeader": true
+					},
+					"fileName": {
+						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination4_properties_typeProperties_fileName')]",
+						"type": "Expression"
+					},
+					"folderPath": "[parameters('HR_WORKDAY_HC_Archive_Destination4_properties_typeProperties_folderPath')]"
 				}
 			},
 			"dependsOn": []
@@ -905,398 +1035,6 @@
 				],
 				"typeProperties": {
 					"tableName": "[[STG].[HR_WORKDAY_HC]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_HC_Destination2')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"structure": [
-					{
-						"name": "Employee_ID",
-						"type": "String"
-					},
-					{
-						"name": "On_Leave",
-						"type": "String"
-					},
-					{
-						"name": "Hire_Date",
-						"type": "Date"
-					},
-					{
-						"name": "Number_of_Direct_Reports",
-						"type": "String"
-					},
-					{
-						"name": "Worker_Type",
-						"type": "String"
-					},
-					{
-						"name": "Location",
-						"type": "String"
-					},
-					{
-						"name": "Country",
-						"type": "String"
-					},
-					{
-						"name": "Org_Layer",
-						"type": "String"
-					},
-					{
-						"name": "Product",
-						"type": "String"
-					},
-					{
-						"name": "Product_Family",
-						"type": "String"
-					},
-					{
-						"name": "Product_Line",
-						"type": "String"
-					},
-					{
-						"name": "Cost_Center_ID",
-						"type": "String"
-					},
-					{
-						"name": "Cost_Center_Name",
-						"type": "String"
-					},
-					{
-						"name": "Cost_Centre_Hierarchy_Finastra",
-						"type": "String"
-					},
-					{
-						"name": "Function_Finastra",
-						"type": "String"
-					},
-					{
-						"name": "Cost_Centre_Legacy_DH_Mapping_to_Finastra",
-						"type": "String"
-					},
-					{
-						"name": "Reporting_Region",
-						"type": "String"
-					},
-					{
-						"name": "High_Low_Cost",
-						"type": "String"
-					}
-				],
-				"typeProperties": {
-					"tableName": "[[STG].[HR_WORKDAY_HC]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_HC_Destination3')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"structure": [
-					{
-						"name": "Employee_ID",
-						"type": "String"
-					},
-					{
-						"name": "On_Leave",
-						"type": "String"
-					},
-					{
-						"name": "Hire_Date",
-						"type": "Date"
-					},
-					{
-						"name": "Number_of_Direct_Reports",
-						"type": "String"
-					},
-					{
-						"name": "Worker_Type",
-						"type": "String"
-					},
-					{
-						"name": "Location",
-						"type": "String"
-					},
-					{
-						"name": "Country",
-						"type": "String"
-					},
-					{
-						"name": "Org_Layer",
-						"type": "String"
-					},
-					{
-						"name": "Product",
-						"type": "String"
-					},
-					{
-						"name": "Product_Family",
-						"type": "String"
-					},
-					{
-						"name": "Product_Line",
-						"type": "String"
-					},
-					{
-						"name": "Cost_Center_ID",
-						"type": "String"
-					},
-					{
-						"name": "Cost_Center_Name",
-						"type": "String"
-					},
-					{
-						"name": "Cost_Centre_Hierarchy_Finastra",
-						"type": "String"
-					},
-					{
-						"name": "Function_Finastra",
-						"type": "String"
-					},
-					{
-						"name": "Cost_Centre_Legacy_DH_Mapping_to_Finastra",
-						"type": "String"
-					},
-					{
-						"name": "Reporting_Region",
-						"type": "String"
-					},
-					{
-						"name": "High_Low_Cost",
-						"type": "String"
-					}
-				],
-				"typeProperties": {
-					"tableName": "[[STG].[HR_WORKDAY_HC]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_HC_Source')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileShare",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "FileShare",
-				"structure": [
-					{
-						"name": "Employee ID",
-						"type": "String"
-					},
-					{
-						"name": "On Leave",
-						"type": "String"
-					},
-					{
-						"name": "Hire Date",
-						"type": "String"
-					},
-					{
-						"name": "Number of Direct Reports",
-						"type": "String"
-					},
-					{
-						"name": "Worker Type",
-						"type": "String"
-					},
-					{
-						"name": "Location",
-						"type": "String"
-					},
-					{
-						"name": "Country",
-						"type": "String"
-					},
-					{
-						"name": "Org Layer",
-						"type": "String"
-					},
-					{
-						"name": "Product",
-						"type": "String"
-					},
-					{
-						"name": "Product Family",
-						"type": "String"
-					},
-					{
-						"name": "Product Line",
-						"type": "String"
-					},
-					{
-						"name": "Cost Center - ID",
-						"type": "String"
-					},
-					{
-						"name": "Cost Center",
-						"type": "String"
-					},
-					{
-						"name": "Cost Center Hierarchy",
-						"type": "String"
-					},
-					{
-						"name": "Function",
-						"type": "String"
-					},
-					{
-						"name": "Cost Centre - Legacy DH Mapping to Finastra",
-						"type": "String"
-					},
-					{
-						"name": "Reporting Region",
-						"type": "String"
-					},
-					{
-						"name": "High / Low Cost",
-						"type": "String"
-					}
-				],
-				"typeProperties": {
-					"format": {
-						"type": "TextFormat",
-						"columnDelimiter": ",",
-						"rowDelimiter": "",
-						"quoteChar": "\"",
-						"nullValue": "",
-						"treatEmptyAsNull": true,
-						"skipLineCount": 0,
-						"firstRowAsHeader": true
-					},
-					"fileName": {
-						"value": "[parameters('HR_WORKDAY_HC_Source_properties_typeProperties_fileName')]",
-						"type": "Expression"
-					},
-					"folderPath": "[parameters('HR_WORKDAY_HC_Source_properties_typeProperties_folderPath')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_HC_Source1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileShare",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "FileShare",
-				"structure": [
-					{
-						"name": "Employee ID",
-						"type": "String"
-					},
-					{
-						"name": "On Leave",
-						"type": "String"
-					},
-					{
-						"name": "Hire Date",
-						"type": "String"
-					},
-					{
-						"name": "Number of Direct Reports",
-						"type": "String"
-					},
-					{
-						"name": "Worker Type",
-						"type": "String"
-					},
-					{
-						"name": "Location",
-						"type": "String"
-					},
-					{
-						"name": "Country",
-						"type": "String"
-					},
-					{
-						"name": "Org Layer",
-						"type": "String"
-					},
-					{
-						"name": "Product",
-						"type": "String"
-					},
-					{
-						"name": "Product Family",
-						"type": "String"
-					},
-					{
-						"name": "Product Line",
-						"type": "String"
-					},
-					{
-						"name": "Cost Center - ID",
-						"type": "String"
-					},
-					{
-						"name": "Cost Center",
-						"type": "String"
-					},
-					{
-						"name": "Cost Center Hierarchy",
-						"type": "String"
-					},
-					{
-						"name": "Function",
-						"type": "String"
-					},
-					{
-						"name": "Cost Centre - Legacy DH Mapping to Finastra",
-						"type": "String"
-					},
-					{
-						"name": "Reporting Region",
-						"type": "String"
-					},
-					{
-						"name": "High / Low Cost",
-						"type": "String"
-					}
-				],
-				"typeProperties": {
-					"format": {
-						"type": "TextFormat",
-						"columnDelimiter": ",",
-						"rowDelimiter": "",
-						"quoteChar": "\"",
-						"nullValue": "",
-						"treatEmptyAsNull": true,
-						"skipLineCount": 0,
-						"firstRowAsHeader": true
-					},
-					"fileName": {
-						"value": "[parameters('HR_WORKDAY_HC_Source1_properties_typeProperties_fileName')]",
-						"type": "Expression"
-					},
-					"folderPath": "[parameters('HR_WORKDAY_HC_Source1_properties_typeProperties_folderPath')]"
 				}
 			},
 			"dependsOn": []
