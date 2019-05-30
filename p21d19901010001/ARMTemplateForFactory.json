@@ -10107,7 +10107,7 @@
 						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "FACTEXMSCORE",
+								"activity": "DimEmployee_Termination",
 								"dependencyConditions": [
 									"Completed"
 								]
@@ -10128,7 +10128,7 @@
 						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "FactEmployee_Requisitions",
+								"activity": "FactHC_Diversity",
 								"dependencyConditions": [
 									"Completed"
 								]
@@ -10212,7 +10212,7 @@
 						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "DimEmployee_Termination",
+								"activity": "FACTEXMSCORE",
 								"dependencyConditions": [
 									"Completed"
 								]
