@@ -121,7 +121,7 @@
 				],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "FactEmployee_Requisitions",
+						"referenceName": "DimEmployee_Requisitions",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
