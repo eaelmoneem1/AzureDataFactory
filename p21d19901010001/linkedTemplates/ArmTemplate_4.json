@@ -197,7 +197,7 @@
 					"location": {
 						"type": "FileServerLocation",
 						"fileName": {
-							"value": "@concat ('Diversity_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+							"value": "@concat ('PersonalData_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
 							"type": "Expression"
 						},
 						"folderPath": "CEOCFO/HR"
@@ -226,7 +226,7 @@
 					"location": {
 						"type": "AzureDataLakeStoreLocation",
 						"fileName": {
-							"value": "@concat ('Diversity_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
+							"value": "@concat ('PersonalData_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
 							"type": "Expression"
 						},
 						"folderPath": "LandingArchive/CEOCFO/HR"
