@@ -456,7 +456,7 @@
 					}
 				],
 				"typeProperties": {
-					"tableName": "[[STG].[V_HR_WORKDAY_Diversity]"
+					"tableName": "[[STG].[HR_WORKDAY_Diversity]"
 				}
 			},
 			"dependsOn": []
