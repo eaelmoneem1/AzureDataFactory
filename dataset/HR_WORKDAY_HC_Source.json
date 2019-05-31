@@ -20,6 +20,14 @@
 				"type": "String"
 			},
 			{
+				"name": "Service Length (Years)",
+				"type": "String"
+			},
+			{
+				"name": "Age Group",
+				"type": "String"
+			},
+			{
 				"name": "Number of Direct Reports",
 				"type": "String"
 			},
@@ -33,6 +41,10 @@
 			},
 			{
 				"name": "Country",
+				"type": "String"
+			},
+			{
+				"name": "High/Low Cost",
 				"type": "String"
 			},
 			{
@@ -74,10 +86,6 @@
 			{
 				"name": "Reporting Region",
 				"type": "String"
-			},
-			{
-				"name": "High / Low Cost",
-				"type": "String"
 			}
 		],
 		"typeProperties": {
@@ -91,10 +99,7 @@
 				"skipLineCount": 0,
 				"firstRowAsHeader": true
 			},
-			"fileName": {
-				"value": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
-				"type": "Expression"
-			},
+			"fileName": "Headcount_20190531.csv",
 			"folderPath": "CEOCFO/HR"
 		}
 	},
