@@ -2712,7 +2712,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_DimEmployee_Future_Termiantions]"
+							"storedProcedureName": "[[dbo].[sp_INT_DimEmployee_Future_Terminations]"
 						},
 						"linkedServiceName": {
 							"referenceName": "AzureSqlDatabase_finastra",
@@ -2742,7 +2742,7 @@
 							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
 							"storedProcedureParameters": {
 								"TableName": {
-									"value": "DimEmployee_Future_Termiantions"
+									"value": "DimEmployee_Future_Terminations"
 								}
 							}
 						},
@@ -2771,7 +2771,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_ApplyDimEmployee_Future_Termiantions]"
+							"storedProcedureName": "[[dbo].[sp_INT_ApplyDimEmployee_Future_Terminations]"
 						},
 						"linkedServiceName": {
 							"referenceName": "AzureSqlDatabase_finastra",

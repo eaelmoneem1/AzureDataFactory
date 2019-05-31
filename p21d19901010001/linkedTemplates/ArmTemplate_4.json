@@ -209,6 +209,10 @@
 				"typeProperties": {
 					"location": {
 						"type": "FileServerLocation",
+						"fileName": {
+							"value": "@concat ('Terminations_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+							"type": "Expression"
+						},
 						"folderPath": "CEOCFO/HR"
 					},
 					"columnDelimiter": ",",
@@ -718,7 +722,7 @@
 					}
 				],
 				"typeProperties": {
-					"tableName": "[[STG].[HR_WORKDAY_FUTURE_Termiantions]"
+					"tableName": "[[STG].[HR_WORKDAY_FUTURE_Terminations]"
 				}
 			},
 			"dependsOn": []
