@@ -1208,7 +1208,9 @@
 								"type": "DelimitedTextSource",
 								"storeSettings": {
 									"type": "FileServerReadSetting",
-									"wildcardFileName": "*.*"
+									"recursive": false,
+									"wildcardFileName": "*.*",
+									"enablePartitionDiscovery": false
 								},
 								"formatSettings": {
 									"type": "DelimitedTextReadSetting"
