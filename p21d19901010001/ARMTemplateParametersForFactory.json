@@ -237,7 +237,7 @@
 			"value": "LandingArchive/HR"
 		},
 		"HR_WORKDAY_REQ_Source_properties_typeProperties_fileName": {
-			"value": ""
+			"value": "@concat ('Requisitions_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
 		},
 		"HR_WORKDAY_REQ_Source_properties_typeProperties_folderPath": {
 			"value": "CEOCFO/HR"
