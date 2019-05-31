@@ -119,7 +119,15 @@
 				"type": "AzureSqlTable",
 				"schema": [
 					{
-						"name": "Employee_ID",
+						"name": "Termination_Date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Termination_Category",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Number_of_Direct_Reports",
 						"type": "nvarchar"
 					},
 					{
@@ -127,39 +135,7 @@
 						"type": "nvarchar"
 					},
 					{
-						"name": "Termination_Date",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ELT",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ELT_1",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ELT_2",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Cost_Centre_ID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Function",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Finastra_Product",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Finastra_FAM",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Finastra_LINE",
+						"name": "Location",
 						"type": "nvarchar"
 					},
 					{
@@ -167,7 +143,43 @@
 						"type": "nvarchar"
 					},
 					{
-						"name": "Location",
+						"name": "High_Low_Cost",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Org_Layer",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Product",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Product_Family",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Product_Line",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Cost_Centre_ID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Cost_Center_Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Cost_Center_Hierarchy_Finastra",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Function",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Reporting_Region",
 						"type": "nvarchar"
 					},
 					{
@@ -197,10 +209,6 @@
 				"typeProperties": {
 					"location": {
 						"type": "FileServerLocation",
-						"fileName": {
-							"value": "@concat ('Terminations_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
-							"type": "Expression"
-						},
 						"folderPath": "CEOCFO/HR"
 					},
 					"columnDelimiter": ",",
@@ -208,7 +216,72 @@
 					"firstRowAsHeader": true,
 					"quoteChar": "\""
 				},
-				"schema": []
+				"schema": [
+					{
+						"name": "Termination Date",
+						"type": "String"
+					},
+					{
+						"name": "Termination Category",
+						"type": "String"
+					},
+					{
+						"name": "Number of Direct Reports",
+						"type": "String"
+					},
+					{
+						"name": "Worker Type",
+						"type": "String"
+					},
+					{
+						"name": "Location",
+						"type": "String"
+					},
+					{
+						"name": "Country",
+						"type": "String"
+					},
+					{
+						"name": "High/Low Cost",
+						"type": "String"
+					},
+					{
+						"name": "Org Layer",
+						"type": "String"
+					},
+					{
+						"name": "Product",
+						"type": "String"
+					},
+					{
+						"name": "Product Family",
+						"type": "String"
+					},
+					{
+						"name": "Product Line",
+						"type": "String"
+					},
+					{
+						"name": "Cost Centre ID",
+						"type": "String"
+					},
+					{
+						"name": "Cost Center Name",
+						"type": "String"
+					},
+					{
+						"name": "Cost Center Hierarchy Finastra",
+						"type": "String"
+					},
+					{
+						"name": "Function",
+						"type": "String"
+					},
+					{
+						"name": "Reporting Region",
+						"type": "String"
+					}
+				]
 			},
 			"dependsOn": []
 		},
