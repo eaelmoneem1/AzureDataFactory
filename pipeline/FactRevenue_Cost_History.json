@@ -3,50 +3,6 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Loading STG tables",
-				"type": "Copy",
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [
-					{
-						"name": "Source",
-						"value": "Finance/OD April 17th v2.1.csv"
-					},
-					{
-						"name": "Destination",
-						"value": "[STG].[Finace_FF_Revenue&Cost]"
-					}
-				],
-				"typeProperties": {
-					"source": {
-						"type": "FileSystemSource",
-						"recursive": true
-					},
-					"sink": {
-						"type": "SqlSink",
-						"writeBatchSize": 10000
-					},
-					"enableStaging": false
-				},
-				"inputs": [
-					{
-						"referenceName": "Revenue_cost_source",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "Revenue_cost_Destination",
-						"type": "DatasetReference"
-					}
-				]
-			},
-			{
 				"name": "Loading Int tables",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
@@ -65,7 +21,7 @@
 					"secureInput": false
 				},
 				"typeProperties": {
-					"storedProcedureName": "[dbo].[sp_INT_FactFinance_Cash]"
+					"storedProcedureName": "[dbo].[sp_INT_FactFinanceRevenue_Cost_History]"
 				},
 				"linkedServiceName": {
 					"referenceName": "AzureSqlDatabase_finastra",
@@ -207,6 +163,247 @@
 				"outputs": [
 					{
 						"referenceName": "Finace_RevenueCost_Destination",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Loading STG tables",
+				"type": "Copy",
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "FileServerReadSetting"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSetting"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Account",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Account"
+								}
+							},
+							{
+								"source": {
+									"name": "Account Type",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Account_Type"
+								}
+							},
+							{
+								"source": {
+									"name": "Cost Centre",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Cost_Centre"
+								}
+							},
+							{
+								"source": {
+									"name": "CC code",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CC_Code"
+								}
+							},
+							{
+								"source": {
+									"name": "Function",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Function"
+								}
+							},
+							{
+								"source": {
+									"name": "Product Family",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Product_Family"
+								}
+							},
+							{
+								"source": {
+									"name": "Product Line",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Product_line"
+								}
+							},
+							{
+								"source": {
+									"name": "Sub Region",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Sub_Region"
+								}
+							},
+							{
+								"source": {
+									"name": "Region",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Region"
+								}
+							},
+							{
+								"source": {
+									"name": "Source System",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Source_System"
+								}
+							},
+							{
+								"source": {
+									"name": "Jun",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Jun"
+								}
+							},
+							{
+								"source": {
+									"name": "Jul",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Jul"
+								}
+							},
+							{
+								"source": {
+									"name": "Aug",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Aug"
+								}
+							},
+							{
+								"source": {
+									"name": "Sep",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Sep"
+								}
+							},
+							{
+								"source": {
+									"name": "Oct",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Oct"
+								}
+							},
+							{
+								"source": {
+									"name": "Nov",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Nov"
+								}
+							},
+							{
+								"source": {
+									"name": "Dec",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Dec"
+								}
+							},
+							{
+								"source": {
+									"name": "Jan",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Jan"
+								}
+							},
+							{
+								"source": {
+									"name": "Feb",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Feb"
+								}
+							},
+							{
+								"source": {
+									"name": "Mar",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Mar"
+								}
+							},
+							{
+								"source": {
+									"name": "Apr",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Apr"
+								}
+							},
+							{
+								"source": {
+									"name": "May",
+									"type": "String"
+								},
+								"sink": {
+									"name": "May"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Revenue_cost_source_historical",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Revenue_cost_Destination",
 						"type": "DatasetReference"
 					}
 				]

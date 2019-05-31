@@ -1,0 +1,111 @@
+{
+	"name": "Revenue_cost_source_historical",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "FileShare",
+			"type": "LinkedServiceReference"
+		},
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "FileServerLocation",
+				"fileName": "FinanceActuals_Historical_20190531.csv",
+				"folderPath": "CEOCFO/Finance"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Account",
+				"type": "String"
+			},
+			{
+				"name": "Account Type",
+				"type": "String"
+			},
+			{
+				"name": "Cost Centre",
+				"type": "String"
+			},
+			{
+				"name": "CC code",
+				"type": "String"
+			},
+			{
+				"name": "Function",
+				"type": "String"
+			},
+			{
+				"name": "Product Family",
+				"type": "String"
+			},
+			{
+				"name": "Product Line",
+				"type": "String"
+			},
+			{
+				"name": "Sub Region",
+				"type": "String"
+			},
+			{
+				"name": "Region",
+				"type": "String"
+			},
+			{
+				"name": "Source System",
+				"type": "String"
+			},
+			{
+				"name": "Jun",
+				"type": "String"
+			},
+			{
+				"name": "Jul",
+				"type": "String"
+			},
+			{
+				"name": "Aug",
+				"type": "String"
+			},
+			{
+				"name": "Sep",
+				"type": "String"
+			},
+			{
+				"name": "Oct",
+				"type": "String"
+			},
+			{
+				"name": "Nov",
+				"type": "String"
+			},
+			{
+				"name": "Dec",
+				"type": "String"
+			},
+			{
+				"name": "Jan",
+				"type": "String"
+			},
+			{
+				"name": "Feb",
+				"type": "String"
+			},
+			{
+				"name": "Mar",
+				"type": "String"
+			},
+			{
+				"name": "Apr",
+				"type": "String"
+			},
+			{
+				"name": "May",
+				"type": "String"
+			}
+		]
+	}
+}
