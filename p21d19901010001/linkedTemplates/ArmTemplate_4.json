@@ -498,7 +498,54 @@
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
-				"schema": [],
+				"schema": [
+					{
+						"name": "Worker_Type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Termination_Date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Location",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Country",
+						"type": "nvarchar"
+					},
+					{
+						"name": "High/Low_Cost",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Product",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Product_Family",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Product_Line",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Cost_Centre",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Function",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Rec_CRE_TMS",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
 				"typeProperties": {
 					"tableName": "[[STG].[HR_WORKDAY_FUTURE_Termiantions]"
 				}

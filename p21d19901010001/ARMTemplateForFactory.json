@@ -14752,10 +14752,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "FileServerLocation",
-						"fileName": {
-							"value": "@concat ('FutureTerminations_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
-							"type": "Expression"
-						},
+						"fileName": "FutureTerminations_20190531.csv",
 						"folderPath": "CEOCFO/HR"
 					},
 					"columnDelimiter": ",",
@@ -14763,7 +14760,48 @@
 					"firstRowAsHeader": true,
 					"quoteChar": "\""
 				},
-				"schema": []
+				"schema": [
+					{
+						"name": "Worker Type",
+						"type": "String"
+					},
+					{
+						"name": "Termination Date",
+						"type": "String"
+					},
+					{
+						"name": "Location",
+						"type": "String"
+					},
+					{
+						"name": "Country",
+						"type": "String"
+					},
+					{
+						"name": "High/Low Cost",
+						"type": "String"
+					},
+					{
+						"name": "Product",
+						"type": "String"
+					},
+					{
+						"name": "Product Family",
+						"type": "String"
+					},
+					{
+						"name": "Product Line",
+						"type": "String"
+					},
+					{
+						"name": "Cost Centre",
+						"type": "String"
+					},
+					{
+						"name": "Function",
+						"type": "String"
+					}
+				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/FileShare')]"
@@ -15699,7 +15737,54 @@
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
-				"schema": [],
+				"schema": [
+					{
+						"name": "Worker_Type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Termination_Date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Location",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Country",
+						"type": "nvarchar"
+					},
+					{
+						"name": "High/Low_Cost",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Product",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Product_Family",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Product_Line",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Cost_Centre",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Function",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Rec_CRE_TMS",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
 				"typeProperties": {
 					"tableName": "[[STG].[HR_WORKDAY_FUTURE_Termiantions]"
 				}
