@@ -1,0 +1,59 @@
+{
+	"name": "HR_FUTURE_HIRES_SOURCE",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "FileShare",
+			"type": "LinkedServiceReference"
+		},
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "FileServerLocation",
+				"fileName": "FutureHires_20190531.csv",
+				"folderPath": "CEOCFO/HR"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Employee ID",
+				"type": "String"
+			},
+			{
+				"name": "Worker Type",
+				"type": "String"
+			},
+			{
+				"name": "Hire Date",
+				"type": "String"
+			},
+			{
+				"name": "Function",
+				"type": "String"
+			},
+			{
+				"name": "Location",
+				"type": "String"
+			},
+			{
+				"name": "Country",
+				"type": "String"
+			},
+			{
+				"name": "High/Low Cost",
+				"type": "String"
+			},
+			{
+				"name": "Cost Centre",
+				"type": "String"
+			},
+			{
+				"name": "Product",
+				"type": "String"
+			}
+		]
+	}
+}
