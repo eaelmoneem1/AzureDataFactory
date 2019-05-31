@@ -317,7 +317,7 @@
 		},
 		"HR_WORKDAY_REQ_Source_properties_typeProperties_fileName": {
 			"type": "string",
-			"defaultValue": "@concat ('Requisitions_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+			"defaultValue": ""
 		},
 		"HR_WORKDAY_REQ_Source_properties_typeProperties_folderPath": {
 			"type": "string",
@@ -1830,17 +1830,14 @@
 								"type": "TabularTranslator",
 								"columnMappings": {
 									"Job Req. ID": "Job_Req_ID",
-									"Job Requisition Status": "New_Position",
-									"Primary Location": "Job_Requisition_Status",
-									"Cost Centre ID": "Primary_Location",
+									"Job Requisition Status": "Job_Requisition_Status",
+									"Primary Location": "Primary_Location",
 									"Country": "Country",
-									"Worker Type": "Cost_Centre_ID",
+									"High/Low Cost Country": "High_Low_Cost",
+									"Cost Centre ID": "Cost_Centre_ID",
+									"Product": "Product",
 									"Function": "Function",
-									"Count of Active Candidates": "Worker_Type",
-									"In Offer": "Count_of_Active_Candidates",
-									"Number of Openings Not in Offer": "In_Offer",
-									"Candidate Stage": "Candidate_Stage",
-									"Internal Candidate?": "Internal_Candidate"
+									"Worker Type": "Worker_Type"
 								}
 							}
 						},
@@ -17589,10 +17586,6 @@
 						"type": "String"
 					},
 					{
-						"name": "New_Position",
-						"type": "String"
-					},
-					{
 						"name": "Job_Requisition_Status",
 						"type": "String"
 					},
@@ -17605,7 +17598,15 @@
 						"type": "String"
 					},
 					{
+						"name": "High_Low_Cost",
+						"type": "String"
+					},
+					{
 						"name": "Cost_Centre_ID",
+						"type": "String"
+					},
+					{
+						"name": "Product",
 						"type": "String"
 					},
 					{
@@ -17614,22 +17615,6 @@
 					},
 					{
 						"name": "Worker_Type",
-						"type": "String"
-					},
-					{
-						"name": "Count_of_Active_Candidates",
-						"type": "String"
-					},
-					{
-						"name": "In_Offer",
-						"type": "String"
-					},
-					{
-						"name": "Candidate_Stage",
-						"type": "String"
-					},
-					{
-						"name": "Internal_Candidate",
 						"type": "String"
 					}
 				],
@@ -17670,7 +17655,15 @@
 						"type": "String"
 					},
 					{
+						"name": "High/Low Cost Country",
+						"type": "String"
+					},
+					{
 						"name": "Cost Centre ID",
+						"type": "String"
+					},
+					{
+						"name": "Product",
 						"type": "String"
 					},
 					{
@@ -17679,26 +17672,6 @@
 					},
 					{
 						"name": "Worker Type",
-						"type": "String"
-					},
-					{
-						"name": "Count of Active Candidates",
-						"type": "String"
-					},
-					{
-						"name": "In Offer",
-						"type": "String"
-					},
-					{
-						"name": "Number of Openings Not in Offer",
-						"type": "String"
-					},
-					{
-						"name": "Candidate Stage",
-						"type": "String"
-					},
-					{
-						"name": "Internal Candidate?",
 						"type": "String"
 					}
 				],
@@ -17713,10 +17686,7 @@
 						"skipLineCount": 0,
 						"firstRowAsHeader": true
 					},
-					"fileName": {
-						"value": "[parameters('HR_WORKDAY_REQ_Source_properties_typeProperties_fileName')]",
-						"type": "Expression"
-					},
+					"fileName": "[parameters('HR_WORKDAY_REQ_Source_properties_typeProperties_fileName')]",
 					"folderPath": "[parameters('HR_WORKDAY_REQ_Source_properties_typeProperties_folderPath')]"
 				}
 			},

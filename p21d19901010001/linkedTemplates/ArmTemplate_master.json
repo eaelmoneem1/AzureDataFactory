@@ -317,7 +317,7 @@
 		},
 		"HR_WORKDAY_REQ_Source_properties_typeProperties_fileName": {
 			"type": "string",
-			"defaultValue": "@concat ('Requisitions_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+			"defaultValue": ""
 		},
 		"HR_WORKDAY_REQ_Source_properties_typeProperties_folderPath": {
 			"type": "string",
