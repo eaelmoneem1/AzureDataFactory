@@ -313,7 +313,7 @@
 		},
 		"HR_WORKDAY_REQ_Archive_Destination_properties_typeProperties_folderPath": {
 			"type": "string",
-			"defaultValue": "LandingArchive/HR"
+			"defaultValue": "LandingArchive/CEOCFO/HR"
 		},
 		"HR_WORKDAY_REQ_Source_properties_typeProperties_fileName": {
 			"type": "string",
