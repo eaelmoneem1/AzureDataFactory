@@ -55,7 +55,10 @@
 				"skipLineCount": 0,
 				"firstRowAsHeader": true
 			},
-			"fileName": "Requisitions_20190531.csv",
+			"fileName": {
+				"value": "@concat ('Requisitions_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+				"type": "Expression"
+			},
 			"folderPath": "CEOCFO/HR"
 		}
 	},
