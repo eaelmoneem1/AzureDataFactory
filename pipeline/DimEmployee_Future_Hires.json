@@ -86,48 +86,6 @@
 				}
 			},
 			{
-				"name": "Loading STG tables",
-				"type": "Copy",
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"typeProperties": {
-					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "FileServerReadSetting",
-							"recursive": false,
-							"wildcardFileName": "*.*",
-							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSetting"
-						}
-					},
-					"sink": {
-						"type": "SqlSink",
-						"writeBatchSize": 10000
-					},
-					"enableStaging": false
-				},
-				"inputs": [
-					{
-						"referenceName": "HR_WORKDAY_FUTURE_HIRES_SOURCE",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "HR_WORKDAY_FUTURE_HIRES_DEST",
-						"type": "DatasetReference"
-					}
-				]
-			},
-			{
 				"name": "Archiving data in DL",
 				"type": "Copy",
 				"dependsOn": [
@@ -177,6 +135,46 @@
 				"outputs": [
 					{
 						"referenceName": "HR_FUTURE_HIRES_ARCH_DEST",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Loading STG tables",
+				"type": "Copy",
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "FileServerReadSetting",
+							"recursive": false,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSetting"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink"
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "HR_FUTURE_HIRES_SOURCE",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "HR_WORKDAY_FUTURE_HIRES_DEST",
 						"type": "DatasetReference"
 					}
 				]
