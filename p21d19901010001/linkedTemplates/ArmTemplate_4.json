@@ -941,6 +941,14 @@
 						"type": "Date"
 					},
 					{
+						"name": "Length_of_Service",
+						"type": "String"
+					},
+					{
+						"name": "Age_Group",
+						"type": "String"
+					},
+					{
 						"name": "Number_of_Direct_Reports",
 						"type": "String"
 					},
@@ -954,6 +962,10 @@
 					},
 					{
 						"name": "Country",
+						"type": "String"
+					},
+					{
+						"name": "High_Low_Cost",
 						"type": "String"
 					},
 					{
@@ -994,10 +1006,6 @@
 					},
 					{
 						"name": "Reporting_Region",
-						"type": "String"
-					},
-					{
-						"name": "High_Low_Cost",
 						"type": "String"
 					}
 				],

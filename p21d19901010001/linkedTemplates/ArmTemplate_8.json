@@ -2303,10 +2303,13 @@
 									"Employee ID": "Employee_ID",
 									"On Leave": "On_Leave",
 									"Hire Date": "Hire_Date",
+									"Service Length (Years)": "Length_of_Service",
+									"Age Group": "Age_Group",
 									"Number of Direct Reports": "Number_of_Direct_Reports",
 									"Worker Type": "Worker_Type",
 									"Location": "Location",
 									"Country": "Country",
+									"High/Low Cost": "High_Low_Cost",
 									"Org Layer": "Org_Layer",
 									"Product": "Product",
 									"Product Family": "Product_Family",
@@ -2316,8 +2319,7 @@
 									"Cost Center Hierarchy": "Cost_Centre_Hierarchy_Finastra",
 									"Function": "Function_Finastra",
 									"Cost Centre - Legacy DH Mapping to Finastra": "Cost_Centre_Legacy_DH_Mapping_to_Finastra",
-									"Reporting Region": "Reporting_Region",
-									"High / Low Cost": "High_Low_Cost"
+									"Reporting Region": "Reporting_Region"
 								}
 							}
 						},

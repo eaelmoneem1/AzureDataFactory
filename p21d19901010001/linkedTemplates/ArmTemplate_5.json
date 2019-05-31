@@ -457,6 +457,14 @@
 						"type": "String"
 					},
 					{
+						"name": "Service Length (Years)",
+						"type": "String"
+					},
+					{
+						"name": "Age Group",
+						"type": "String"
+					},
+					{
 						"name": "Number of Direct Reports",
 						"type": "String"
 					},
@@ -470,6 +478,10 @@
 					},
 					{
 						"name": "Country",
+						"type": "String"
+					},
+					{
+						"name": "High/Low Cost",
 						"type": "String"
 					},
 					{
@@ -510,10 +522,6 @@
 					},
 					{
 						"name": "Reporting Region",
-						"type": "String"
-					},
-					{
-						"name": "High / Low Cost",
 						"type": "String"
 					}
 				],
