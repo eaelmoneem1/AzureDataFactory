@@ -69,6 +69,97 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_HC_Destination2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"structure": [
+					{
+						"name": "Employee_ID",
+						"type": "String"
+					},
+					{
+						"name": "On_Leave",
+						"type": "String"
+					},
+					{
+						"name": "Hire_Date",
+						"type": "Date"
+					},
+					{
+						"name": "Number_of_Direct_Reports",
+						"type": "String"
+					},
+					{
+						"name": "Worker_Type",
+						"type": "String"
+					},
+					{
+						"name": "Location",
+						"type": "String"
+					},
+					{
+						"name": "Country",
+						"type": "String"
+					},
+					{
+						"name": "Org_Layer",
+						"type": "String"
+					},
+					{
+						"name": "Product",
+						"type": "String"
+					},
+					{
+						"name": "Product_Family",
+						"type": "String"
+					},
+					{
+						"name": "Product_Line",
+						"type": "String"
+					},
+					{
+						"name": "Cost_Center_ID",
+						"type": "String"
+					},
+					{
+						"name": "Cost_Center_Name",
+						"type": "String"
+					},
+					{
+						"name": "Cost_Centre_Hierarchy_Finastra",
+						"type": "String"
+					},
+					{
+						"name": "Function_Finastra",
+						"type": "String"
+					},
+					{
+						"name": "Cost_Centre_Legacy_DH_Mapping_to_Finastra",
+						"type": "String"
+					},
+					{
+						"name": "Reporting_Region",
+						"type": "String"
+					},
+					{
+						"name": "High_Low_Cost",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[HR_WORKDAY_HC]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_HC_Destination3')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -2063,119 +2154,6 @@
 				],
 				"typeProperties": {
 					"tableName": "[[STG].[Marketing_SFDC_Contact]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Marketing_Lead_Source')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "Lead_18chr_Id",
-						"type": "nvarchar"
-					},
-					{
-						"name": "MQL_Datestamp",
-						"type": "nvarchar"
-					},
-					{
-						"name": "MTL_Datestamp",
-						"type": "nvarchar"
-					},
-					{
-						"name": "SQL_Datestamp",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Status",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Company",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Lead_Country",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Title",
-						"type": "nvarchar"
-					},
-					{
-						"name": "FirstName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "LastName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Email",
-						"type": "nvarchar"
-					},
-					{
-						"name": "MQL_Program",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Qualified_Out_Reason",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Status_Reason",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Sales_Region",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Sub_Region",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ConvertedAccountId",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ConvertedContactId",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ConvertedOpportunityId",
-						"type": "nvarchar"
-					},
-					{
-						"name": "CreatedDate",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Owner_ID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "LastModifiedDate",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Rec_CRE_TMS",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"tableName": "[[STG].[Marketing_SFDC_Lead]"
 				}
 			},
 			"dependsOn": []

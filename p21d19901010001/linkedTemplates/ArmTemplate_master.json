@@ -927,12 +927,6 @@
 					},
 					"SFDC_Archive_FX_Rate_properties_typeProperties_folderPath": {
 						"value": "[parameters('SFDC_Archive_FX_Rate_properties_typeProperties_folderPath')]"
-					},
-					"SFDC_Archive_Opportunity_properties_typeProperties_fileName": {
-						"value": "[parameters('SFDC_Archive_Opportunity_properties_typeProperties_fileName')]"
-					},
-					"SFDC_Archive_Opportunity_properties_typeProperties_folderPath": {
-						"value": "[parameters('SFDC_Archive_Opportunity_properties_typeProperties_folderPath')]"
 					}
 				}
 			},
@@ -953,6 +947,12 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"SFDC_Archive_Opportunity_properties_typeProperties_fileName": {
+						"value": "[parameters('SFDC_Archive_Opportunity_properties_typeProperties_fileName')]"
+					},
+					"SFDC_Archive_Opportunity_properties_typeProperties_folderPath": {
+						"value": "[parameters('SFDC_Archive_Opportunity_properties_typeProperties_folderPath')]"
 					},
 					"Sales_FF_Forecast_Archive_Destination_properties_typeProperties_fileName": {
 						"value": "[parameters('Sales_FF_Forecast_Archive_Destination_properties_typeProperties_fileName')]"
