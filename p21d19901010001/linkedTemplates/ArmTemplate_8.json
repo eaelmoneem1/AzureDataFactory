@@ -2737,7 +2737,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_DimEmployee_Requsitions]"
+							"storedProcedureName": "[[dbo].[sp_INT_DimEmployee_Requisitions]"
 						},
 						"linkedServiceName": {
 							"referenceName": "AzureSqlDatabase_finastra",
@@ -2767,7 +2767,7 @@
 							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
 							"storedProcedureParameters": {
 								"TableName": {
-									"value": "DimEmployee_Requsitions"
+									"value": "DimEmployee_Requisitions"
 								}
 							}
 						},
@@ -2796,7 +2796,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_ApplyDimEmployee_Requsitions]"
+							"storedProcedureName": "[[dbo].[sp_INT_ApplyDimEmployee_Requisitions]"
 						},
 						"linkedServiceName": {
 							"referenceName": "AzureSqlDatabase_finastra",
