@@ -50,7 +50,7 @@
 					"storedProcedureName": "[dbo].[sp_INT_GenerateHashes]",
 					"storedProcedureParameters": {
 						"TableName": {
-							"value": "DimEmployee_Future_Hires"
+							"value": "DimEmployee_Future_Termiantions"
 						}
 					}
 				},
@@ -78,7 +78,7 @@
 					"secureInput": false
 				},
 				"typeProperties": {
-					"storedProcedureName": "[dbo].[sp_INT_ApplyDimEmployee_Future_Hires]"
+					"storedProcedureName": "[dbo].[sp_INT_ApplyDimEmployee_Future_Termiantions]"
 				},
 				"linkedServiceName": {
 					"referenceName": "AzureSqlDatabase_finastra",
