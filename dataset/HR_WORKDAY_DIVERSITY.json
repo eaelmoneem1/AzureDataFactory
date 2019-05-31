@@ -9,10 +9,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "FileServerLocation",
-				"fileName": {
-					"value": "@concat ('PersonalData_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
-					"type": "Expression"
-				},
+				"fileName": "PersonalData_20190531.csv",
 				"folderPath": "CEOCFO/HR"
 			},
 			"columnDelimiter": ",",
@@ -20,6 +17,55 @@
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
-		"schema": []
+		"schema": [
+			{
+				"name": "Gender",
+				"type": "String"
+			},
+			{
+				"name": "Service Length (Years)",
+				"type": "String"
+			},
+			{
+				"name": "Location",
+				"type": "String"
+			},
+			{
+				"name": "Country",
+				"type": "String"
+			},
+			{
+				"name": "High/Low Cost",
+				"type": "String"
+			},
+			{
+				"name": "Org Layer",
+				"type": "String"
+			},
+			{
+				"name": "Product",
+				"type": "String"
+			},
+			{
+				"name": "Product Family",
+				"type": "String"
+			},
+			{
+				"name": "Product Line",
+				"type": "String"
+			},
+			{
+				"name": "Cost Center Hierarchy",
+				"type": "String"
+			},
+			{
+				"name": "Function",
+				"type": "String"
+			},
+			{
+				"name": "Reporting Region",
+				"type": "String"
+			}
+		]
 	}
 }

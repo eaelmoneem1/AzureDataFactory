@@ -86,45 +86,6 @@
 				}
 			},
 			{
-				"name": "Loading STG tables",
-				"type": "Copy",
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"typeProperties": {
-					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "FileServerReadSetting",
-							"wildcardFileName": "*.*"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSetting"
-						}
-					},
-					"sink": {
-						"type": "AzureSqlSink"
-					},
-					"enableStaging": false
-				},
-				"inputs": [
-					{
-						"referenceName": "HR_WORKDAY_DIVERSITY",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "HR_WORKDAY_DIVERSITY_DEST",
-						"type": "DatasetReference"
-					}
-				]
-			},
-			{
 				"name": "Archiving data in DL",
 				"type": "Copy",
 				"dependsOn": [
@@ -174,6 +135,169 @@
 				"outputs": [
 					{
 						"referenceName": "HR_WORKDAY_DIVERSITY_ARCH_DEST",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Loading STG tables",
+				"type": "Copy",
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "FileServerReadSetting"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSetting"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Gender",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Gender",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Service Length (Years)",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Service_Length",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Location",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Location",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Country",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Country",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "High/Low Cost",
+									"type": "String"
+								},
+								"sink": {
+									"name": "High/Low_Cost",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Org Layer",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Org_Layer",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Product",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Product",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Product Family",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Product_Family",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Product Line",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Product_Line",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Cost Center Hierarchy",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Cost_Center_Hierarchy",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Function",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Function",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Reporting Region",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Reporting_Region",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "HR_WORKDAY_DIVERSITY",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "HR_WORKDAY_DIVERSITY_DEST",
 						"type": "DatasetReference"
 					}
 				]

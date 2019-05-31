@@ -6,7 +6,56 @@
 			"type": "LinkedServiceReference"
 		},
 		"type": "AzureSqlTable",
-		"schema": [],
+		"schema": [
+			{
+				"name": "Gender",
+				"type": "varchar"
+			},
+			{
+				"name": "Service_Length",
+				"type": "varchar"
+			},
+			{
+				"name": "Location",
+				"type": "varchar"
+			},
+			{
+				"name": "Country",
+				"type": "varchar"
+			},
+			{
+				"name": "High/Low_Cost",
+				"type": "varchar"
+			},
+			{
+				"name": "Org_Layer",
+				"type": "varchar"
+			},
+			{
+				"name": "Product",
+				"type": "varchar"
+			},
+			{
+				"name": "Product_Family",
+				"type": "varchar"
+			},
+			{
+				"name": "Product_Line",
+				"type": "varchar"
+			},
+			{
+				"name": "Cost_Center_Hierarchy",
+				"type": "varchar"
+			},
+			{
+				"name": "Function",
+				"type": "varchar"
+			},
+			{
+				"name": "Reporting_Region",
+				"type": "varchar"
+			}
+		],
 		"typeProperties": {
 			"tableName": "[STG].[V_HR_WORKDAY_Diversity]"
 		}
