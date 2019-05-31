@@ -1220,7 +1220,88 @@
 								"type": "SqlSink",
 								"writeBatchSize": 10000
 							},
-							"enableStaging": false
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {},
+										"sink": {
+											"name": "Employee_ID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {},
+										"sink": {
+											"name": "Worker_Type",
+											"type": "String"
+										}
+									},
+									{
+										"source": {},
+										"sink": {
+											"name": "Hire_Date",
+											"type": "String"
+										}
+									},
+									{
+										"source": {},
+										"sink": {
+											"name": "Function",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Location",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Location",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Country",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Country",
+											"type": "String"
+										}
+									},
+									{
+										"source": {},
+										"sink": {
+											"name": "High/Low_Cost",
+											"type": "String"
+										}
+									},
+									{
+										"source": {},
+										"sink": {
+											"name": "Cost_Centre",
+											"type": "String"
+										}
+									},
+									{
+										"source": {},
+										"sink": {
+											"name": "Product",
+											"type": "String"
+										}
+									},
+									{
+										"source": {},
+										"sink": {
+											"name": "Rec_CRE_TMS",
+											"type": "DateTime"
+										}
+									}
+								]
+							}
 						},
 						"inputs": [
 							{
@@ -15483,7 +15564,44 @@
 					"firstRowAsHeader": true,
 					"quoteChar": "\""
 				},
-				"schema": []
+				"schema": [
+					{
+						"name": "Employee ID",
+						"type": "String"
+					},
+					{
+						"name": "Worker Type",
+						"type": "String"
+					},
+					{
+						"name": "Hire Date",
+						"type": "String"
+					},
+					{
+						"name": "Function",
+						"type": "String"
+					},
+					{
+						"name": "Location",
+						"type": "String"
+					},
+					{
+						"name": "Country",
+						"type": "String"
+					},
+					{
+						"name": "High/Low Cost",
+						"type": "String"
+					},
+					{
+						"name": "Cost Centre",
+						"type": "String"
+					},
+					{
+						"name": "Product",
+						"type": "String"
+					}
+				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/FileShare')]"

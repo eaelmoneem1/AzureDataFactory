@@ -2430,7 +2430,88 @@
 								"type": "SqlSink",
 								"writeBatchSize": 10000
 							},
-							"enableStaging": false
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {},
+										"sink": {
+											"name": "Employee_ID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {},
+										"sink": {
+											"name": "Worker_Type",
+											"type": "String"
+										}
+									},
+									{
+										"source": {},
+										"sink": {
+											"name": "Hire_Date",
+											"type": "String"
+										}
+									},
+									{
+										"source": {},
+										"sink": {
+											"name": "Function",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Location",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Location",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Country",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Country",
+											"type": "String"
+										}
+									},
+									{
+										"source": {},
+										"sink": {
+											"name": "High/Low_Cost",
+											"type": "String"
+										}
+									},
+									{
+										"source": {},
+										"sink": {
+											"name": "Cost_Centre",
+											"type": "String"
+										}
+									},
+									{
+										"source": {},
+										"sink": {
+											"name": "Product",
+											"type": "String"
+										}
+									},
+									{
+										"source": {},
+										"sink": {
+											"name": "Rec_CRE_TMS",
+											"type": "DateTime"
+										}
+									}
+								]
+							}
 						},
 						"inputs": [
 							{
