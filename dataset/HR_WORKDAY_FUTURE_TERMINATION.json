@@ -55,7 +55,7 @@
 			}
 		],
 		"typeProperties": {
-			"tableName": "[STG].[HR_WORKDAY_FUTURE_Termiantions]"
+			"tableName": "[STG].[HR_WORKDAY_FUTURE_Terminations]"
 		}
 	}
 }
