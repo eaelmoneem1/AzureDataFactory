@@ -109,17 +109,14 @@
 						"type": "TabularTranslator",
 						"columnMappings": {
 							"Job Req. ID": "Job_Req_ID",
-							"Job Requisition Status": "New_Position",
-							"Primary Location": "Job_Requisition_Status",
-							"Cost Centre ID": "Primary_Location",
+							"Job Requisition Status": "Job_Requisition_Status",
+							"Primary Location": "Primary_Location",
 							"Country": "Country",
-							"Worker Type": "Cost_Centre_ID",
+							"High/Low Cost Country": "High_Low_Cost",
+							"Cost Centre ID": "Cost_Centre_ID",
+							"Product": "Product",
 							"Function": "Function",
-							"Count of Active Candidates": "Worker_Type",
-							"In Offer": "Count_of_Active_Candidates",
-							"Number of Openings Not in Offer": "In_Offer",
-							"Candidate Stage": "Candidate_Stage",
-							"Internal Candidate?": "Internal_Candidate"
+							"Worker Type": "Worker_Type"
 						}
 					}
 				},

@@ -12,10 +12,6 @@
 				"type": "String"
 			},
 			{
-				"name": "New_Position",
-				"type": "String"
-			},
-			{
 				"name": "Job_Requisition_Status",
 				"type": "String"
 			},
@@ -28,7 +24,15 @@
 				"type": "String"
 			},
 			{
+				"name": "High_Low_Cost",
+				"type": "String"
+			},
+			{
 				"name": "Cost_Centre_ID",
+				"type": "String"
+			},
+			{
+				"name": "Product",
 				"type": "String"
 			},
 			{
@@ -37,22 +41,6 @@
 			},
 			{
 				"name": "Worker_Type",
-				"type": "String"
-			},
-			{
-				"name": "Count_of_Active_Candidates",
-				"type": "String"
-			},
-			{
-				"name": "In_Offer",
-				"type": "String"
-			},
-			{
-				"name": "Candidate_Stage",
-				"type": "String"
-			},
-			{
-				"name": "Internal_Candidate",
 				"type": "String"
 			}
 		],

@@ -24,7 +24,15 @@
 				"type": "String"
 			},
 			{
+				"name": "High/Low Cost Country",
+				"type": "String"
+			},
+			{
 				"name": "Cost Centre ID",
+				"type": "String"
+			},
+			{
+				"name": "Product",
 				"type": "String"
 			},
 			{
@@ -33,26 +41,6 @@
 			},
 			{
 				"name": "Worker Type",
-				"type": "String"
-			},
-			{
-				"name": "Count of Active Candidates",
-				"type": "String"
-			},
-			{
-				"name": "In Offer",
-				"type": "String"
-			},
-			{
-				"name": "Number of Openings Not in Offer",
-				"type": "String"
-			},
-			{
-				"name": "Candidate Stage",
-				"type": "String"
-			},
-			{
-				"name": "Internal Candidate?",
 				"type": "String"
 			}
 		],
@@ -67,10 +55,7 @@
 				"skipLineCount": 0,
 				"firstRowAsHeader": true
 			},
-			"fileName": {
-				"value": "@concat ('Requisitions_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
-				"type": "Expression"
-			},
+			"fileName": "Requisitions_20190531.csv",
 			"folderPath": "CEOCFO/HR"
 		}
 	},
