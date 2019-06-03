@@ -1102,6 +1102,335 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DimEmployee_Diversity')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Loading Int tables",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading STG tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_DimEmployee_Diversity]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Hash Generate",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading Int tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
+							"storedProcedureParameters": {
+								"TableName": {
+									"value": "DimEmployee_Diversity"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Loading dbo table",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Hash Generate",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_ApplyDimEmployee_Diversity]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Archiving data in DL",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Loading dbo table",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureDataLakeStoreWriteSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSetting",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "HR_WORKDAY_DIVERSITY",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "HR_WORKDAY_DIVERSITY_ARCH_DEST",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Loading STG tables",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Gender",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Gender",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Service Length (Years)",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Service_Length",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Location",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Location",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Country",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Country",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "High/Low Cost",
+											"type": "String"
+										},
+										"sink": {
+											"name": "High/Low_Cost",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Org Layer",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Org_Layer",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Product",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Product",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Product Family",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Product_Family",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Product Line",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Product_Line",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Cost Center Hierarchy",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Cost_Center_Hierarchy",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Function",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Function",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Reporting Region",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Reporting_Region",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "HR_WORKDAY_DIVERSITY",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "HR_WORKDAY_DIVERSITY_DEST",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "HR"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase_finastra')]",
+				"[concat(variables('factoryId'), '/datasets/HR_WORKDAY_DIVERSITY')]",
+				"[concat(variables('factoryId'), '/datasets/HR_WORKDAY_DIVERSITY_ARCH_DEST')]",
+				"[concat(variables('factoryId'), '/datasets/HR_WORKDAY_DIVERSITY_DEST')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DimEmployee_Future_Hires')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -7981,335 +8310,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/FactHC_Diversity')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Loading Int tables",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Loading STG tables",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 3,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_FactHC_Diversity]"
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabase_finastra",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Hash Generate",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Loading Int tables",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 3,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
-							"storedProcedureParameters": {
-								"TableName": {
-									"value": "FactHC_Diversity"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabase_finastra",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Loading dbo table",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Hash Generate",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 3,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_ApplyFactHC_Diversity]"
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabase_finastra",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Archiving data in DL",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "Loading dbo table",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "FileServerReadSetting"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSetting"
-								}
-							},
-							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureDataLakeStoreWriteSetting"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSetting",
-									"quoteAllText": true,
-									"fileExtension": ".txt"
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "HR_WORKDAY_DIVERSITY",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "HR_WORKDAY_DIVERSITY_ARCH_DEST",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "Loading STG tables",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "FileServerReadSetting"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSetting"
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink"
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "Gender",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Gender",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Service Length (Years)",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Service_Length",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Location",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Location",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Country",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Country",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "High/Low Cost",
-											"type": "String"
-										},
-										"sink": {
-											"name": "High/Low_Cost",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Org Layer",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Org_Layer",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Product",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Product",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Product Family",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Product_Family",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Product Line",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Product_Line",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Cost Center Hierarchy",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Cost_Center_Hierarchy",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Function",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Function",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Reporting Region",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Reporting_Region",
-											"type": "String"
-										}
-									}
-								]
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "HR_WORKDAY_DIVERSITY",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "HR_WORKDAY_DIVERSITY_DEST",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"folder": {
-					"name": "HR"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase_finastra')]",
-				"[concat(variables('factoryId'), '/datasets/HR_WORKDAY_DIVERSITY')]",
-				"[concat(variables('factoryId'), '/datasets/HR_WORKDAY_DIVERSITY_ARCH_DEST')]",
-				"[concat(variables('factoryId'), '/datasets/HR_WORKDAY_DIVERSITY_DEST')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/FactMarketing_MQL')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -10881,7 +10881,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
-								"referenceName": "FactHC_Diversity",
+								"referenceName": "DimEmployee_Diversity",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
@@ -10908,7 +10908,7 @@
 				"[concat(variables('factoryId'), '/pipelines/FactEXMSCORE')]",
 				"[concat(variables('factoryId'), '/pipelines/DimEmployee_Future_Hires')]",
 				"[concat(variables('factoryId'), '/pipelines/DimEmployee_Future_Termiantions')]",
-				"[concat(variables('factoryId'), '/pipelines/FactHC_Diversity')]"
+				"[concat(variables('factoryId'), '/pipelines/DimEmployee_Diversity')]"
 			]
 		},
 		{

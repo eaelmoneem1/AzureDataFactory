@@ -1,0 +1,601 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory Name",
+			"defaultValue": "p21d19901010001"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/DimEmployee_Diversity')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Loading Int tables",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading STG tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_DimEmployee_Diversity]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Hash Generate",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading Int tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
+							"storedProcedureParameters": {
+								"TableName": {
+									"value": "DimEmployee_Diversity"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Loading dbo table",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Hash Generate",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_ApplyDimEmployee_Diversity]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Archiving data in DL",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Loading dbo table",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureDataLakeStoreWriteSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSetting",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "HR_WORKDAY_DIVERSITY",
+								"type": "DatasetReference"
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "HR_WORKDAY_DIVERSITY_ARCH_DEST",
+								"type": "DatasetReference"
+							}
+						]
+					},
+					{
+						"name": "Loading STG tables",
+						"type": "Copy",
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Gender",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Gender",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Service Length (Years)",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Service_Length",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Location",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Location",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Country",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Country",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "High/Low Cost",
+											"type": "String"
+										},
+										"sink": {
+											"name": "High/Low_Cost",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Org Layer",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Org_Layer",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Product",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Product",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Product Family",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Product_Family",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Product Line",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Product_Line",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Cost Center Hierarchy",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Cost_Center_Hierarchy",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Function",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Function",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Reporting Region",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Reporting_Region",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "HR_WORKDAY_DIVERSITY",
+								"type": "DatasetReference"
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "HR_WORKDAY_DIVERSITY_DEST",
+								"type": "DatasetReference"
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "HR"
+				}
+			}
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Weekly Job')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "FactSALES_MSCRM_Bookings",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FactOpportunity_All",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactSALES_MSCRM_Bookings",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true
+						}
+					},
+					{
+						"name": "FactSALES_MSCRM_Orderbook",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FactSALES_MSCRM_Bookings",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactSALES_MSCRM_Orderbook",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true
+						}
+					},
+					{
+						"name": "FactEXMSCORE_Location",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FactSALES_MSCRM_Orderbook",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactEXMSCORE_Location",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true
+						}
+					},
+					{
+						"name": "FactEXMSCORE_Region",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FactEXMSCORE_Location",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactEXMSCORE_Region",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true
+						}
+					},
+					{
+						"name": "DimEmployee",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "DimEmployee_Future_Termination",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "DimEmployee",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true
+						}
+					},
+					{
+						"name": "FactOpportunity_All",
+						"type": "ExecutePipeline",
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactOpportunity_All Job",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true
+						}
+					},
+					{
+						"name": "DimEmployee_Requisitions",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "DimEmployee_Termination",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "DimEmployee_Requisitions",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true
+						}
+					},
+					{
+						"name": "DimEmployee_Termination",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FactHC_Diversity",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "DimEmployee_Terminations",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true
+						}
+					},
+					{
+						"name": "FactEXMSCORE_Gender",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FactEXMSCORE_Region",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactEXMSCORE_Gender",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true
+						}
+					},
+					{
+						"name": "FactEXMSCORE_Age_Group",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FactEXMSCORE_Gender",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactEXMSCORE_Age_Group",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true
+						}
+					},
+					{
+						"name": "FACTEXMSCORE",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FactEXMSCORE_Age_Group",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactEXMSCORE",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true
+						}
+					},
+					{
+						"name": "DimEmployee_Future-hires",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FACTEXMSCORE",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "DimEmployee_Future_Hires",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true
+						}
+					},
+					{
+						"name": "DimEmployee_Future_Termination",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "DimEmployee_Future-hires",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "DimEmployee_Future_Termiantions",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true
+						}
+					},
+					{
+						"name": "FactHC_Diversity",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "DimEmployee",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "DimEmployee_Diversity",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true
+						}
+					}
+				],
+				"folder": {
+					"name": "ETL Jobs"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/DimEmployee_Diversity')]"
+			]
+		}
+	]
+}
