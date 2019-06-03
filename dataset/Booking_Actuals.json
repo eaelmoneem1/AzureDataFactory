@@ -46,6 +46,10 @@
 			{
 				"name": "Renewal ACV",
 				"type": "String"
+			},
+			{
+				"name": "Term",
+				"type": "String"
 			}
 		],
 		"typeProperties": {

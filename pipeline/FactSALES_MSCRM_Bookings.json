@@ -117,7 +117,8 @@
 							"LOB": "LOB",
 							"Product": "Product",
 							"Booking ACV": "Booking_ACV",
-							"Renewal ACV": "Renewal_ACV"
+							"Renewal ACV": "Renewal_ACV",
+							"Term": "Term"
 						}
 					}
 				},
