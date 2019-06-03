@@ -29,7 +29,7 @@
 				}
 			},
 			{
-				"name": "Hash Generate",
+				"name": "Loading dbo table",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
@@ -47,39 +47,7 @@
 					"secureInput": false
 				},
 				"typeProperties": {
-					"storedProcedureName": "[dbo].[sp_INT_GenerateHashes]",
-					"storedProcedureParameters": {
-						"TableName": {
-							"value": "FactFinanceRevenue_Cost",
-							"type": "String"
-						}
-					}
-				},
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				}
-			},
-			{
-				"name": "Loading dbo table",
-				"type": "SqlServerStoredProcedure",
-				"dependsOn": [
-					{
-						"activity": "Hash Generate",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"typeProperties": {
-					"storedProcedureName": "[dbo].[sp_INT_ApplyFactFinanceRevenue_Cost]"
+					"storedProcedureName": "[dbo].[sp_INT_ApplyFactFinanceRevenue_Cost_History]"
 				},
 				"linkedServiceName": {
 					"referenceName": "AzureSqlDatabase_finastra",
@@ -106,63 +74,36 @@
 				},
 				"typeProperties": {
 					"source": {
-						"type": "FileSystemSource",
-						"recursive": true
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "FileServerReadSetting"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSetting"
+						}
 					},
 					"sink": {
-						"type": "AzureDataLakeStoreSink"
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureDataLakeStoreWriteSetting"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSetting",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
 					},
 					"enableStaging": false
 				},
 				"inputs": [
 					{
-						"referenceName": "Revenue_cost_source",
+						"referenceName": "Revenue_cost_source_historical",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "Revenue_Archive_Destination",
-						"type": "DatasetReference"
-					}
-				]
-			},
-			{
-				"name": "dbo data backup",
-				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "Loading dbo table",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"typeProperties": {
-					"source": {
-						"type": "SqlSource"
-					},
-					"sink": {
-						"type": "AzureDataLakeStoreSink"
-					},
-					"enableStaging": false
-				},
-				"inputs": [
-					{
-						"referenceName": "Finace_RevenueCost_Source",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "Finace_RevenueCost_Destination",
+						"referenceName": "Revenue_Historical_Arch_dest",
 						"type": "DatasetReference"
 					}
 				]

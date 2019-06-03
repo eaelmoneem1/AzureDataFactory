@@ -9,7 +9,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "FileServerLocation",
-				"fileName": "FinanceActuals_Historical_20190531.csv",
+				"fileName": {
+					"value": "@concat ('FinanceActuals_History_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+					"type": "Expression"
+				},
 				"folderPath": "CEOCFO/Finance"
 			},
 			"columnDelimiter": ",",
