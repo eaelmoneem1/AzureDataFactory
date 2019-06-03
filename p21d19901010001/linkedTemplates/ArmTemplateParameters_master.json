@@ -129,10 +129,10 @@
 			"value": "LandingArchive/CEOCFO/Finance/dbo"
 		},
 		"HR_Maclean_EXM_Location_Directory_Source_properties_typeProperties_fileName": {
-			"value": "DimGeographical_Location.csv"
+			"value": "@concat ('EXM_Geographical_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
 		},
 		"HR_Maclean_EXM_Location_Directory_Source_properties_typeProperties_folderPath": {
-			"value": "HR"
+			"value": "CEOCFO/HR"
 		},
 		"HR_Maclean_EXM_Location_Source_properties_typeProperties_fileName": {
 			"value": "@concat ('EXM_Location_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"

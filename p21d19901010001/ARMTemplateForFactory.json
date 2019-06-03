@@ -173,11 +173,11 @@
 		},
 		"HR_Maclean_EXM_Location_Directory_Source_properties_typeProperties_fileName": {
 			"type": "string",
-			"defaultValue": "DimGeographical_Location.csv"
+			"defaultValue": "@concat ('EXM_Geographical_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
 		},
 		"HR_Maclean_EXM_Location_Directory_Source_properties_typeProperties_folderPath": {
 			"type": "string",
-			"defaultValue": "HR"
+			"defaultValue": "CEOCFO/HR"
 		},
 		"HR_Maclean_EXM_Location_Source_properties_typeProperties_fileName": {
 			"type": "string",
@@ -15565,7 +15565,10 @@
 						"skipLineCount": 0,
 						"firstRowAsHeader": true
 					},
-					"fileName": "[parameters('HR_Maclean_EXM_Location_Directory_Source_properties_typeProperties_fileName')]",
+					"fileName": {
+						"value": "[parameters('HR_Maclean_EXM_Location_Directory_Source_properties_typeProperties_fileName')]",
+						"type": "Expression"
+					},
 					"folderPath": "[parameters('HR_Maclean_EXM_Location_Directory_Source_properties_typeProperties_folderPath')]"
 				}
 			},
