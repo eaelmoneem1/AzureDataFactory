@@ -705,6 +705,10 @@
 					{
 						"name": "Renewal_ACV",
 						"type": "String"
+					},
+					{
+						"name": "Term",
+						"type": "String"
 					}
 				],
 				"typeProperties": {
