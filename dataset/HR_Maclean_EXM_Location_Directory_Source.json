@@ -31,8 +31,11 @@
 				"skipLineCount": 0,
 				"firstRowAsHeader": true
 			},
-			"fileName": "DimGeographical_Location.csv",
-			"folderPath": "HR"
+			"fileName": {
+				"value": "@concat ('EXM_Geographical_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+				"type": "Expression"
+			},
+			"folderPath": "CEOCFO/HR"
 		}
 	},
 	"type": "Microsoft.DataFactory/factories/datasets"
