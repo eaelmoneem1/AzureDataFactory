@@ -1,5 +1,5 @@
 {
-	"name": "FactHC_Diversity",
+	"name": "DimEmployee_Diversity",
 	"properties": {
 		"activities": [
 			{
@@ -21,7 +21,7 @@
 					"secureInput": false
 				},
 				"typeProperties": {
-					"storedProcedureName": "[dbo].[sp_INT_FactHC_Diversity]"
+					"storedProcedureName": "[dbo].[sp_INT_DimEmployee_Diversity]"
 				},
 				"linkedServiceName": {
 					"referenceName": "AzureSqlDatabase_finastra",
@@ -50,7 +50,7 @@
 					"storedProcedureName": "[dbo].[sp_INT_GenerateHashes]",
 					"storedProcedureParameters": {
 						"TableName": {
-							"value": "FactHC_Diversity"
+							"value": "DimEmployee_Diversity"
 						}
 					}
 				},
@@ -78,7 +78,7 @@
 					"secureInput": false
 				},
 				"typeProperties": {
-					"storedProcedureName": "[dbo].[sp_INT_ApplyFactHC_Diversity]"
+					"storedProcedureName": "[dbo].[sp_INT_ApplyDimEmployee_Diversity]"
 				},
 				"linkedServiceName": {
 					"referenceName": "AzureSqlDatabase_finastra",

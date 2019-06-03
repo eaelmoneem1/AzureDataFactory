@@ -254,7 +254,7 @@
 				],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "FactHC_Diversity",
+						"referenceName": "DimEmployee_Diversity",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
