@@ -13,6 +13,774 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/FactEXMSCORE_Age_Group')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Loading Int tables",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading STG tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_FactEXMSCORE_Age_Group]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Hash Generate",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading Int tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
+							"storedProcedureParameters": {
+								"TableName": {
+									"value": "FactEXMSCORE_Age_Group"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Loading dbo table",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Hash Generate",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_ApplyFactEXMSCORE_Age_Group]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Archiving data in DL",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Loading dbo table",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureDataLakeStoreWriteSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSetting",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "EXMSCORE_Age_Group_Source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "EXMSCORE_Age_Group_Arch",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Loading STG tables",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Age Group",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Age_Group",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Responses",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Responses",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Detractors",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Detractors_Percentage",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Passives",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Passives_Percentage",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Promoters",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Promoters_Percentage",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Score",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Score",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Avg. Response",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Avg_Response",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 0",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_0",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 1",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_1",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 2",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_2",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 3",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_3",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 4",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_4",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 5",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_5",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 6",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_6",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 7",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_7",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 8",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_8",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 9",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_9",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 10",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_10",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "EXMSCORE_Age_Group_Source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "EXMSCORE_Age_Group_Dest",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "HR"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FactEXMSCORE_Gender')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Loading Int tables",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading STG tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_FactEXMSCORE_Gender]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Hash Generate",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading Int tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
+							"storedProcedureParameters": {
+								"TableName": {
+									"value": "FactEXMSCORE_Gender"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Loading dbo table",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Hash Generate",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_ApplyFactEXMSCORE_Gender]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Archiving data in DL",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Loading dbo table",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureDataLakeStoreWriteSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSetting",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "EXMSCORE_Gender_Source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "EXMSCORE_Gender",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Loading STG tables",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Gender",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Gender",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Responses",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Responses",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Detractors",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Detractors_Percentage",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Passives",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Passives_Percentage",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Promoters",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Promoters_Percentage",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Score",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Score",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Avg. Response",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Avg_Response",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 0",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_0",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 1",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_1",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 2",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_2",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 3",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_3",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 4",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_4",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 5",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_5",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 6",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_6",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 7",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_7",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 8",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_8",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 9",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_9",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 10",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_10",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "EXMSCORE_Gender_Source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "EXMSCORE_Gender_Dest",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "HR"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/FactEXMSCORE_Location')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -1753,53 +2521,6 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "Loading STG tables",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "Finance/OD April 17th v2.1.csv"
-							},
-							{
-								"name": "Destination",
-								"value": "[[STG].[Finace_FF_Revenue&Cost]"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "FileSystemSource",
-								"recursive": true
-							},
-							"sink": {
-								"type": "SqlSink",
-								"writeBatchSize": 10000
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "Revenue_cost_source",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Revenue_cost_Destination",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
 						"name": "Loading Int tables",
 						"type": "SqlServerStoredProcedure",
 						"dependsOn": [
@@ -1819,7 +2540,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_FactFinance_Cash]"
+							"storedProcedureName": "[[dbo].[sp_INT_FactFinanceRevenue_Cost_History]"
 						},
 						"linkedServiceName": {
 							"referenceName": "AzureSqlDatabase_finastra",
@@ -1827,7 +2548,7 @@
 						}
 					},
 					{
-						"name": "Hash Generate",
+						"name": "Loading dbo table",
 						"type": "SqlServerStoredProcedure",
 						"dependsOn": [
 							{
@@ -1846,40 +2567,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
-							"storedProcedureParameters": {
-								"TableName": {
-									"value": "FactFinanceRevenue_Cost",
-									"type": "String"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureSqlDatabase_finastra",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Loading dbo table",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Hash Generate",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_ApplyFactFinanceRevenue_Cost]"
+							"storedProcedureName": "[[dbo].[sp_INT_ApplyFactFinanceRevenue_Cost_History]"
 						},
 						"linkedServiceName": {
 							"referenceName": "AzureSqlDatabase_finastra",
@@ -1907,40 +2595,46 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "FileSystemSource",
-								"recursive": true
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
 							},
 							"sink": {
-								"type": "AzureDataLakeStoreSink"
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureDataLakeStoreWriteSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSetting",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
 							},
 							"enableStaging": false
 						},
 						"inputs": [
 							{
-								"referenceName": "Revenue_cost_source",
+								"referenceName": "Revenue_cost_source_historical",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "Revenue_Archive_Destination",
+								"referenceName": "Revenue_Historical_Arch_dest",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						]
 					},
 					{
-						"name": "dbo data backup",
+						"name": "Loading STG tables",
 						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "Loading dbo table",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
+						"dependsOn": [],
 						"policy": {
 							"timeout": "7.00:00:00",
 							"retry": 0,
@@ -1951,23 +2645,232 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "SqlSource"
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
 							},
 							"sink": {
-								"type": "AzureDataLakeStoreSink"
+								"type": "AzureSqlSink"
 							},
-							"enableStaging": false
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Account",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Account"
+										}
+									},
+									{
+										"source": {
+											"name": "Account Type",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Account_Type"
+										}
+									},
+									{
+										"source": {
+											"name": "Cost Centre",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Cost_Centre"
+										}
+									},
+									{
+										"source": {
+											"name": "CC code",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CC_Code"
+										}
+									},
+									{
+										"source": {
+											"name": "Function",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Function"
+										}
+									},
+									{
+										"source": {
+											"name": "Product Family",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Product_Family"
+										}
+									},
+									{
+										"source": {
+											"name": "Product Line",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Product_line"
+										}
+									},
+									{
+										"source": {
+											"name": "Sub Region",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Sub_Region"
+										}
+									},
+									{
+										"source": {
+											"name": "Region",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Region"
+										}
+									},
+									{
+										"source": {
+											"name": "Source System",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Source_System"
+										}
+									},
+									{
+										"source": {
+											"name": "Jun",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Jun"
+										}
+									},
+									{
+										"source": {
+											"name": "Jul",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Jul"
+										}
+									},
+									{
+										"source": {
+											"name": "Aug",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Aug"
+										}
+									},
+									{
+										"source": {
+											"name": "Sep",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Sep"
+										}
+									},
+									{
+										"source": {
+											"name": "Oct",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Oct"
+										}
+									},
+									{
+										"source": {
+											"name": "Nov",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Nov"
+										}
+									},
+									{
+										"source": {
+											"name": "Dec",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Dec"
+										}
+									},
+									{
+										"source": {
+											"name": "Jan",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Jan"
+										}
+									},
+									{
+										"source": {
+											"name": "Feb",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Feb"
+										}
+									},
+									{
+										"source": {
+											"name": "Mar",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Mar"
+										}
+									},
+									{
+										"source": {
+											"name": "Apr",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Apr"
+										}
+									},
+									{
+										"source": {
+											"name": "May",
+											"type": "String"
+										},
+										"sink": {
+											"name": "May"
+										}
+									}
+								]
+							}
 						},
 						"inputs": [
 							{
-								"referenceName": "Finace_RevenueCost_Source",
+								"referenceName": "Revenue_cost_source_historical",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "Finace_RevenueCost_Destination",
+								"referenceName": "Revenue_cost_Destination",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -3204,6 +4107,8 @@
 				"[concat(variables('factoryId'), '/pipelines/FactEXMSCORE_Location')]",
 				"[concat(variables('factoryId'), '/pipelines/FactEXMSCORE_Region')]",
 				"[concat(variables('factoryId'), '/pipelines/FactOpportunity_All Job')]",
+				"[concat(variables('factoryId'), '/pipelines/FactEXMSCORE_Gender')]",
+				"[concat(variables('factoryId'), '/pipelines/FactEXMSCORE_Age_Group')]",
 				"[concat(variables('factoryId'), '/pipelines/FactHC_Diversity')]"
 			]
 		},

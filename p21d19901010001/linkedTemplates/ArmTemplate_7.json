@@ -7,6 +7,14 @@
 			"metadata": "Data Factory Name",
 			"defaultValue": "p21d19901010001"
 		},
+		"SFDC_Archive_FX_Rate_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "@concat ('FXRate_Conversion_Initial_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')"
+		},
+		"SFDC_Archive_FX_Rate_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "LandingArchive/CEOCFO/Sales/FXRate_Conversion"
+		},
 		"SFDC_Archive_Opportunity_properties_typeProperties_fileName": {
 			"type": "string",
 			"defaultValue": "@concat ('Opportunity_Initial_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')"
@@ -60,6 +68,37 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/SFDC_Archive_FX_Rate')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStore",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureDataLakeStoreFile",
+				"typeProperties": {
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"rowDelimiter": "",
+						"quoteChar": "\"",
+						"nullValue": "",
+						"treatEmptyAsNull": true,
+						"skipLineCount": 0,
+						"firstRowAsHeader": true
+					},
+					"fileName": {
+						"value": "[parameters('SFDC_Archive_FX_Rate_properties_typeProperties_fileName')]",
+						"type": "Expression"
+					},
+					"folderPath": "[parameters('SFDC_Archive_FX_Rate_properties_typeProperties_folderPath')]"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/SFDC_Archive_Opportunity')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -1136,41 +1175,6 @@
 				},
 				"annotations": [],
 				"type": "SalesforceObject",
-				"typeProperties": {
-					"objectApiName": "Campaign"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Salesforce_Campaign')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Salesforce1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SalesforceObject",
-				"structure": [
-					{
-						"name": "Id",
-						"type": "String"
-					},
-					{
-						"name": "Name",
-						"type": "String"
-					},
-					{
-						"name": "CreatedDate",
-						"type": "DateTime"
-					},
-					{
-						"name": "LastModifiedDate",
-						"type": "DateTime"
-					}
-				],
 				"typeProperties": {
 					"objectApiName": "Campaign"
 				}
