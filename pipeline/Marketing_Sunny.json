@@ -14,12 +14,8 @@
 				},
 				"typeProperties": {
 					"source": {
-						"type": "SalesforceSource",
-						"query": {
-							"value": "SELECT\nOpportunity_18chr_Id__c,\nName,\nOpportunity_Number__c,\nAccountId,\nSales_Region_FY07__c,\nStatus__c,\nStageName,\nProbability,\nDate_opportunity_moved_to_SS2__c,\nDate_opportunity_moved_to_SS4__c,\nILF_CommValue_CSH__c,\nACV_ACV_Equiv_CSH__c,\nCreatedDate,\nLastModifiedDate\nFROM Opportunity\n\n\n\n\n",
-							"type": "Expression"
-						},
-						"readBehavior": "query"
+						"type": "FileSystemSource",
+						"recursive": true
 					},
 					"sink": {
 						"type": "SqlSink",
@@ -29,33 +25,29 @@
 					"translator": {
 						"type": "TabularTranslator",
 						"columnMappings": {
-							"Opportunity_18chr_Id__c": "Opportunity_18chr_Id",
+							"GL Period": "GL_Period",
+							"TransID": "TransID",
+							"Region": "Region",
+							"Softrax": "Softrax",
 							"Name": "Name",
-							"Opportunity_Number__c": "Opportunity_Number",
-							"AccountId": "AccountId",
-							"Sales_Region_FY07__c": "Sales_Region_FY07",
-							"Status__c": "Status",
-							"StageName": "StageName",
-							"Probability": "Probability",
-							"Date_opportunity_moved_to_SS2__c": "Date_opportunity_moved_to_SS2",
-							"Date_opportunity_moved_to_SS4__c": "Date_opportunity_moved_to_SS4",
-							"ILF_CommValue_CSH__c": "ILF_CommValue_CSH",
-							"ACV_ACV_Equiv_CSH__c": "ACV_ACV_Equiv_CSH",
-							"IST_Rep": "IST_Rep",
-							"CreatedDate": "CreatedDate",
-							"LastModifiedDate": "LastModifiedDate"
+							"Sales Rep": "Sales_Rep",
+							"LOB": "LOB",
+							"Product": "Product",
+							"Booking ACV": "Booking_ACV",
+							"Renewal ACV": "Renewal_ACV",
+							"Term": "Term"
 						}
 					}
 				},
 				"inputs": [
 					{
-						"referenceName": "Salesforce_Marketing",
+						"referenceName": "Booking_Actuals",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "Marketing_Stg",
+						"referenceName": "Sales_MSCRM_Booking_Actual",
 						"type": "DatasetReference"
 					}
 				]
