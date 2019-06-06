@@ -42,7 +42,9 @@
 							"Passives": "Passives_Percentage",
 							"Promoters": "Promoters_Percentage",
 							"Score": "Score",
-							"Avg. Response": "Avg_Response"
+							"Avg. Response": "Avg_Response",
+							"Year": "Year",
+							"Calendar_Week_Number": "Calendar_Week_Number"
 						}
 					}
 				},
