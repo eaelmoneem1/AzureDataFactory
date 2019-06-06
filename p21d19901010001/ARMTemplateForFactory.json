@@ -8035,7 +8035,9 @@
 									"Passives": "Passives_Percentage",
 									"Promoters": "Promoters_Percentage",
 									"Score": "Score",
-									"Avg. Response": "Avg_Response"
+									"Avg. Response": "Avg_Response",
+									"Year": "Year",
+									"Calendar_Week_Number": "Calendar_Week_Number"
 								}
 							}
 						},
@@ -16026,6 +16028,14 @@
 					{
 						"name": "Response_Distribution_10",
 						"type": "String"
+					},
+					{
+						"name": "Year",
+						"type": "String"
+					},
+					{
+						"name": "Calendar_Week_Number",
+						"type": "String"
 					}
 				],
 				"typeProperties": {
@@ -16217,6 +16227,14 @@
 					},
 					{
 						"name": "10",
+						"type": "String"
+					},
+					{
+						"name": "Year",
+						"type": "String"
+					},
+					{
+						"name": "Calendar_Week_Number",
 						"type": "String"
 					}
 				],
