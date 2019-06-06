@@ -44,7 +44,7 @@
 							"Score": "Score",
 							"Avg. Response": "Avg_Response",
 							"Year": "Year",
-							"Calendar_Week_Number": "Calendar_Week_Number"
+							"Week": "Calendar_Week_Number"
 						}
 					}
 				},

@@ -84,7 +84,7 @@
 				"type": "String"
 			},
 			{
-				"name": "Calendar_Week_Number",
+				"name": "Week",
 				"type": "String"
 			}
 		],
