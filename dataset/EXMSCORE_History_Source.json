@@ -10,7 +10,7 @@
 			"location": {
 				"type": "FileServerLocation",
 				"fileName": {
-					"value": "@concat ('EXM_History_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
+					"value": "@concat ('EXM_History_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
 					"type": "Expression"
 				},
 				"folderPath": "CEOCFO/HR"
