@@ -80,6 +80,14 @@
 				"type": "nvarchar"
 			},
 			{
+				"name": "Year",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Calendar_Week_Number",
+				"type": "nvarchar"
+			},
+			{
 				"name": "Rec_CRE_TMS",
 				"type": "datetime",
 				"precision": 23,

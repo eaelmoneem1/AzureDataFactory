@@ -228,7 +228,7 @@
 							},
 							{
 								"source": {
-									"name": "Avg. Response",
+									"name": "Responses",
 									"type": "String"
 								},
 								"sink": {
@@ -343,6 +343,26 @@
 								},
 								"sink": {
 									"name": "Response_Distribution_10",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Year",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Year",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Calendar_Week_Number",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Calendar_Week_Number",
 									"type": "String"
 								}
 							}
