@@ -1001,7 +1001,10 @@
 				"typeProperties": {
 					"location": {
 						"type": "FileServerLocation",
-						"fileName": "EXM_History_20190606.csv",
+						"fileName": {
+							"value": "@concat ('EXM_History_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
+							"type": "Expression"
+						},
 						"folderPath": "CEOCFO/HR"
 					},
 					"columnDelimiter": ",",
