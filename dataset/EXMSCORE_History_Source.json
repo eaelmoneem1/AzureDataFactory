@@ -1,0 +1,59 @@
+{
+	"name": "EXMSCORE_History_Source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "FileShare",
+			"type": "LinkedServiceReference"
+		},
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "FileServerLocation",
+				"fileName": "EXM_History_20190606.csv",
+				"folderPath": "CEOCFO/HR"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "EXM_Score_Type",
+				"type": "String"
+			},
+			{
+				"name": "EXM_Score_Type_Details",
+				"type": "String"
+			},
+			{
+				"name": "Detractors",
+				"type": "String"
+			},
+			{
+				"name": "Passives",
+				"type": "String"
+			},
+			{
+				"name": "Promoters",
+				"type": "String"
+			},
+			{
+				"name": "Year",
+				"type": "String"
+			},
+			{
+				"name": "Week",
+				"type": "String"
+			},
+			{
+				"name": "Sum",
+				"type": "String"
+			},
+			{
+				"name": "EXM Score",
+				"type": "String"
+			}
+		]
+	}
+}

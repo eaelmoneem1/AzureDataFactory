@@ -1,0 +1,101 @@
+{
+	"name": "HR_WORKDAY_HC_Source5",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "FileShare",
+			"type": "LinkedServiceReference"
+		},
+		"type": "FileShare",
+		"structure": [
+			{
+				"name": "Employee ID",
+				"type": "String"
+			},
+			{
+				"name": "On Leave",
+				"type": "String"
+			},
+			{
+				"name": "Hire Date",
+				"type": "String"
+			},
+			{
+				"name": "Number of Direct Reports",
+				"type": "String"
+			},
+			{
+				"name": "Worker Type",
+				"type": "String"
+			},
+			{
+				"name": "Location",
+				"type": "String"
+			},
+			{
+				"name": "Country",
+				"type": "String"
+			},
+			{
+				"name": "Org Layer",
+				"type": "String"
+			},
+			{
+				"name": "Product",
+				"type": "String"
+			},
+			{
+				"name": "Product Family",
+				"type": "String"
+			},
+			{
+				"name": "Product Line",
+				"type": "String"
+			},
+			{
+				"name": "Cost Center - ID",
+				"type": "String"
+			},
+			{
+				"name": "Cost Center",
+				"type": "String"
+			},
+			{
+				"name": "Cost Center Hierarchy",
+				"type": "String"
+			},
+			{
+				"name": "Function",
+				"type": "String"
+			},
+			{
+				"name": "Cost Centre - Legacy DH Mapping to Finastra",
+				"type": "String"
+			},
+			{
+				"name": "Reporting Region",
+				"type": "String"
+			},
+			{
+				"name": "High / Low Cost",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": ",",
+				"rowDelimiter": "",
+				"quoteChar": "\"",
+				"nullValue": "",
+				"treatEmptyAsNull": true,
+				"skipLineCount": 0,
+				"firstRowAsHeader": true
+			},
+			"fileName": {
+				"value": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+				"type": "Expression"
+			},
+			"folderPath": "CEOCFO/HR"
+		}
+	}
+}

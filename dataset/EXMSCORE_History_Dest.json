@@ -1,0 +1,57 @@
+{
+	"name": "EXMSCORE_History_Dest",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "EXM_Score_Type",
+				"type": "nvarchar"
+			},
+			{
+				"name": "EXM_Score_Type_Details",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Detractors",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Passives",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Promoters",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Year",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Calendar_Week_Number",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Sum",
+				"type": "nvarchar"
+			},
+			{
+				"name": "EXM_Score",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Rec_CRE_TMS",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"tableName": "[STG].[HR_Maclean_EXM_History]"
+		}
+	}
+}
