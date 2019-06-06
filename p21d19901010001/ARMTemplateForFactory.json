@@ -8246,7 +8246,9 @@
 									"Response_Distribution_7": "Response_Distribution_7",
 									"Response_Distribution_8": "Response_Distribution_8",
 									"Response_Distribution_9": "Response_Distribution_9",
-									"Response_Distribution_10": "Response_Distribution_10"
+									"Response_Distribution_10": "Response_Distribution_10",
+									"Year": "Year",
+									"Calendar_Week_Number": "Calendar_Week_Number"
 								}
 							}
 						},
@@ -15404,6 +15406,14 @@
 					{
 						"name": "Response_Distribution_10",
 						"type": "String"
+					},
+					{
+						"name": "Year",
+						"type": "String"
+					},
+					{
+						"name": "Calendar_Week_Number",
+						"type": "String"
 					}
 				],
 				"typeProperties": {
@@ -16351,6 +16361,14 @@
 					},
 					{
 						"name": "Response_Distribution_10",
+						"type": "String"
+					},
+					{
+						"name": "Year",
+						"type": "String"
+					},
+					{
+						"name": "Calendar_Week_Number",
 						"type": "String"
 					}
 				],
