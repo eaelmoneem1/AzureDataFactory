@@ -7754,7 +7754,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_DimEmployee]"
+							"storedProcedureName": "[[dbo].[sp_INT_FactEXMSCORE_History]"
 						},
 						"linkedServiceName": {
 							"referenceName": "AzureSqlDatabase_finastra",
@@ -7784,7 +7784,7 @@
 							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
 							"storedProcedureParameters": {
 								"TableName": {
-									"value": "DimEmployee"
+									"value": "FactEXMSCORE_History"
 								}
 							}
 						},
@@ -7813,7 +7813,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_ApplyDimEmployee]"
+							"storedProcedureName": "[[dbo].[sp_INT_ApplyFactEXMSCORE_History]"
 						},
 						"linkedServiceName": {
 							"referenceName": "AzureSqlDatabase_finastra",
