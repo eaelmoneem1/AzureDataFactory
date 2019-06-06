@@ -189,7 +189,7 @@
 						"type": "String"
 					},
 					{
-						"name": "Calendar_Week_Number",
+						"name": "Week",
 						"type": "String"
 					}
 				],
@@ -337,7 +337,7 @@
 						"type": "String"
 					},
 					{
-						"name": "Calendar_Week_Number",
+						"name": "Week",
 						"type": "String"
 					}
 				],

@@ -8057,7 +8057,7 @@
 									"Score": "Score",
 									"Avg. Response": "Avg_Response",
 									"Year": "Year",
-									"Calendar_Week_Number": "Calendar_Week_Number"
+									"Week": "Calendar_Week_Number"
 								}
 							}
 						},
@@ -8270,7 +8270,7 @@
 									"Response_Distribution_9": "Response_Distribution_9",
 									"Response_Distribution_10": "Response_Distribution_10",
 									"Year": "Year",
-									"Calendar_Week_Number": "Calendar_Week_Number"
+									"Week": "Calendar_Week_Number"
 								}
 							}
 						},
@@ -16270,7 +16270,7 @@
 						"type": "String"
 					},
 					{
-						"name": "Calendar_Week_Number",
+						"name": "Week",
 						"type": "String"
 					}
 				],
@@ -16422,7 +16422,7 @@
 						"type": "String"
 					},
 					{
-						"name": "Calendar_Week_Number",
+						"name": "Week",
 						"type": "String"
 					}
 				],
