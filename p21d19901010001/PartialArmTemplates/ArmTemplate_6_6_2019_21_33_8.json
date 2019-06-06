@@ -1,0 +1,359 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory Name",
+			"defaultValue": "p21d19901010001"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/FactEXMSCORE')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Loading Int tables",
+						"type": "SqlServerStoredProcedure",
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_FactEXMSCORE]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Loading dbo table",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Hash Generate",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_ApplyFactEXMSCORE]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Hash Generate",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading Int tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
+							"storedProcedureParameters": {
+								"TableName": {
+									"value": "FactEXMSCORE",
+									"type": "String"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Archiving data in DL",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Loading dbo table",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureDataLakeStoreWriteSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSetting",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "EXMSCORE_Source",
+								"type": "DatasetReference"
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "FactEXMScore_Dest_Arch",
+								"type": "DatasetReference"
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "HR"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/EXMSCORE_Source')]",
+				"[concat(variables('factoryId'), '/datasets/FactEXMScore_Dest_Arch')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/EXMSCORE_Source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "EXM_SCORE_SK",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "EXM_SCORE_BK",
+						"type": "varchar"
+					},
+					{
+						"name": "EXM_Score_Type",
+						"type": "varchar"
+					},
+					{
+						"name": "EXM_Score_Type_Details",
+						"type": "varchar"
+					},
+					{
+						"name": "Responses",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Detractors_Percentage",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Passives_Percentage",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Promoters_Percentage",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Score",
+						"type": "decimal",
+						"precision": 6,
+						"scale": 2
+					},
+					{
+						"name": "Avg_Response",
+						"type": "decimal",
+						"precision": 16,
+						"scale": 2
+					},
+					{
+						"name": "Response_Distribution_0",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_1",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_2",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_3",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_4",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_5",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_6",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_7",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_8",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_9",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_10",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Year",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Calendar_Week_Number",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Detractors",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Passives",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Promoters",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "dwEffectiveFrom",
+						"type": "date"
+					},
+					{
+						"name": "dwEffectiveTo",
+						"type": "date"
+					},
+					{
+						"name": "dwActiveRec",
+						"type": "bit"
+					},
+					{
+						"name": "dwCreateDate",
+						"type": "date"
+					},
+					{
+						"name": "dwUpdateDate",
+						"type": "date"
+					},
+					{
+						"name": "dwType1Hash",
+						"type": "varbinary"
+					},
+					{
+						"name": "dwType2Hash",
+						"type": "varbinary"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[dbo].[FactEXMSCORE]"
+				}
+			}
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FactEXMScore_Dest_Arch')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStore",
+					"type": "LinkedServiceReference"
+				},
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureDataLakeStoreLocation",
+						"fileName": {
+							"value": "@concat ('FactEXMScore_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
+							"type": "Expression"
+						},
+						"folderPath": "LandingArchive/CEOCFO/HR"
+					},
+					"columnDelimiter": ",",
+					"compressionCodec": "gzip",
+					"compressionLevel": "Optimal",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			}
+		}
+	]
+}

@@ -45,85 +45,6 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlTable11')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "Opportunity_18chr_Id",
-						"type": "varchar"
-					},
-					{
-						"name": "Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Opportunity_Number",
-						"type": "varchar"
-					},
-					{
-						"name": "AccountId",
-						"type": "varchar"
-					},
-					{
-						"name": "Sales_Region_FY07",
-						"type": "varchar"
-					},
-					{
-						"name": "Status",
-						"type": "varchar"
-					},
-					{
-						"name": "StageName",
-						"type": "varchar"
-					},
-					{
-						"name": "Probability",
-						"type": "varchar"
-					},
-					{
-						"name": "Date_opportunity_moved_to_SS2",
-						"type": "varchar"
-					},
-					{
-						"name": "Date_opportunity_moved_to_SS4",
-						"type": "varchar"
-					},
-					{
-						"name": "ILF_CommValue_CSH",
-						"type": "varchar"
-					},
-					{
-						"name": "ACV_ACV_Equiv_CSH",
-						"type": "varchar"
-					},
-					{
-						"name": "IST_Rep",
-						"type": "varchar"
-					},
-					{
-						"name": "CreatedDate",
-						"type": "date"
-					},
-					{
-						"name": "LastModifiedDate",
-						"type": "date"
-					}
-				],
-				"typeProperties": {
-					"tableName": "[[STG].[V_Marketing_SFDC_Opportunity]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/AzureSqlTable12')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -2602,6 +2523,23 @@
 						"type": "Expression"
 					},
 					"folderPath": "[parameters('CS_FF_NPS_Source_properties_typeProperties_folderPath')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CS_FF_NPS_Source_Archive')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"typeProperties": {
+					"tableName": "[[STG].[V_CS_FF_NPS]"
 				}
 			},
 			"dependsOn": []

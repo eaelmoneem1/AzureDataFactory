@@ -62,14 +62,6 @@
 		"Finace_RevenueCost_Destination_properties_typeProperties_folderPath": {
 			"type": "string",
 			"defaultValue": "LandingArchive/CEOCFO/Finance/dbo"
-		},
-		"HR_Maclean_EXM_Location_Directory_Source_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "@concat ('EXM_Geographical_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
-		},
-		"HR_Maclean_EXM_Location_Directory_Source_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "CEOCFO/HR"
 		}
 	},
 	"variables": {
@@ -206,6 +198,37 @@
 				"typeProperties": {
 					"tableName": "[[STG].[HR_Maclean_EXM_Region]"
 				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FactEXMScore_Dest_Arch')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStore",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureDataLakeStoreLocation",
+						"fileName": {
+							"value": "@concat ('FactEXMScore_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
+							"type": "Expression"
+						},
+						"folderPath": "LandingArchive/CEOCFO/HR"
+					},
+					"columnDelimiter": ",",
+					"compressionCodec": "gzip",
+					"compressionLevel": "Optimal",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
 			},
 			"dependsOn": []
 		},
@@ -845,51 +868,6 @@
 				],
 				"typeProperties": {
 					"tableName": "[[STG].[HR_Maclean_EXM_Location_Directory]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HR_Maclean_EXM_Location_Directory_Source')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileShare",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "FileShare",
-				"structure": [
-					{
-						"name": "Location",
-						"type": "String"
-					},
-					{
-						"name": "Country",
-						"type": "String"
-					},
-					{
-						"name": "Region",
-						"type": "String"
-					}
-				],
-				"typeProperties": {
-					"format": {
-						"type": "TextFormat",
-						"columnDelimiter": ",",
-						"rowDelimiter": "",
-						"quoteChar": "\"",
-						"nullValue": "",
-						"treatEmptyAsNull": true,
-						"skipLineCount": 0,
-						"firstRowAsHeader": true
-					},
-					"fileName": {
-						"value": "[parameters('HR_Maclean_EXM_Location_Directory_Source_properties_typeProperties_fileName')]",
-						"type": "Expression"
-					},
-					"folderPath": "[parameters('HR_Maclean_EXM_Location_Directory_Source_properties_typeProperties_folderPath')]"
 				}
 			},
 			"dependsOn": []

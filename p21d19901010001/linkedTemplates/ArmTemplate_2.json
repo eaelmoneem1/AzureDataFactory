@@ -13,23 +13,6 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/CS_FF_NPS_Source_Archive')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"typeProperties": {
-					"tableName": "[[STG].[V_CS_FF_NPS]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/Campaign_Archive')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1082,6 +1065,182 @@
 						"type": "String"
 					}
 				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/EXMSCORE_Source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "EXM_SCORE_SK",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "EXM_SCORE_BK",
+						"type": "varchar"
+					},
+					{
+						"name": "EXM_Score_Type",
+						"type": "varchar"
+					},
+					{
+						"name": "EXM_Score_Type_Details",
+						"type": "varchar"
+					},
+					{
+						"name": "Responses",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Detractors_Percentage",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Passives_Percentage",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Promoters_Percentage",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Score",
+						"type": "decimal",
+						"precision": 6,
+						"scale": 2
+					},
+					{
+						"name": "Avg_Response",
+						"type": "decimal",
+						"precision": 16,
+						"scale": 2
+					},
+					{
+						"name": "Response_Distribution_0",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_1",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_2",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_3",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_4",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_5",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_6",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_7",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_8",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_9",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_10",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Year",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Calendar_Week_Number",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Detractors",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Passives",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Promoters",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "dwEffectiveFrom",
+						"type": "date"
+					},
+					{
+						"name": "dwEffectiveTo",
+						"type": "date"
+					},
+					{
+						"name": "dwActiveRec",
+						"type": "bit"
+					},
+					{
+						"name": "dwCreateDate",
+						"type": "date"
+					},
+					{
+						"name": "dwUpdateDate",
+						"type": "date"
+					},
+					{
+						"name": "dwType1Hash",
+						"type": "varbinary"
+					},
+					{
+						"name": "dwType2Hash",
+						"type": "varbinary"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[dbo].[FactEXMSCORE]"
+				}
 			},
 			"dependsOn": []
 		},

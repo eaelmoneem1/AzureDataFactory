@@ -14,20 +14,87 @@
 		"Opportunity_Incremintal_Archiving_properties_typeProperties_folderPath": {
 			"type": "string",
 			"defaultValue": "LandingArchive/CEOCFO/Sales/Opportunity"
-		},
-		"Revenue_Archive_Destination_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
-		},
-		"Revenue_Archive_Destination_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "LandingArchive/CEOCFO/Finance"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_Termination_Destination')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Employee_ID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Worker_Type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Termination_Date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ELT",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ELT_1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ELT_2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Cost_Centre_ID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Function",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Finastra_Product",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Finastra_FAM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Finastra_LINE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Country",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Location",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Rec_CRE_TMS",
+						"type": "date"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[HR_WORKDAY_Terminations]"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/LND_SFDC_1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -4731,41 +4798,6 @@
 				"type": "AzureSqlTable",
 				"typeProperties": {
 					"tableName": "[[STG].[V_Sales_SFDC_Booking]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Revenue_Archive_Destination')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStore",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureDataLakeStoreFile",
-				"typeProperties": {
-					"format": {
-						"type": "TextFormat",
-						"columnDelimiter": ",",
-						"rowDelimiter": "",
-						"quoteChar": "\"",
-						"nullValue": "",
-						"treatEmptyAsNull": true,
-						"skipLineCount": 0,
-						"firstRowAsHeader": true
-					},
-					"compression": {
-						"type": "GZip",
-						"level": "Optimal"
-					},
-					"fileName": {
-						"value": "[parameters('Revenue_Archive_Destination_properties_typeProperties_fileName')]",
-						"type": "Expression"
-					},
-					"folderPath": "[parameters('Revenue_Archive_Destination_properties_typeProperties_folderPath')]"
 				}
 			},
 			"dependsOn": []
