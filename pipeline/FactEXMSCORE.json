@@ -77,6 +77,54 @@
 					"referenceName": "AzureSqlDatabase_finastra",
 					"type": "LinkedServiceReference"
 				}
+			},
+			{
+				"name": "Archiving data in DL",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Loading dbo table",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureDataLakeStoreWriteSetting"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSetting",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "EXMSCORE_Source",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "FactEXMScore_Dest_Arch",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"folder": {
