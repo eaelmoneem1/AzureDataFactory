@@ -14904,7 +14904,10 @@
 				"typeProperties": {
 					"location": {
 						"type": "FileServerLocation",
-						"fileName": "EXM_Gender_20190522.csv",
+						"fileName": {
+							"value": "@concat ('EXM_Gender_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+							"type": "Expression"
+						},
 						"folderPath": "CEOCFO/HR"
 					},
 					"columnDelimiter": ",",
