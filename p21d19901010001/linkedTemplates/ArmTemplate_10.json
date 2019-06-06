@@ -2461,6 +2461,26 @@
 											"name": "Response_Distribution_10",
 											"type": "String"
 										}
+									},
+									{
+										"source": {
+											"name": "Year",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Year",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Week",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Calendar_Week_Number",
+											"type": "String"
+										}
 									}
 								]
 							}

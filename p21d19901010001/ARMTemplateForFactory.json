@@ -7656,6 +7656,26 @@
 											"name": "Response_Distribution_10",
 											"type": "String"
 										}
+									},
+									{
+										"source": {
+											"name": "Year",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Year",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Week",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Calendar_Week_Number",
+											"type": "String"
+										}
 									}
 								]
 							}
@@ -14848,6 +14868,14 @@
 						"type": "nvarchar"
 					},
 					{
+						"name": "Year",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Calendar_Week_Number",
+						"type": "nvarchar"
+					},
+					{
 						"name": "Rec_CRE_TMS",
 						"type": "datetime",
 						"precision": 23,
@@ -14876,10 +14904,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "FileServerLocation",
-						"fileName": {
-							"value": "@concat ('EXM_Gender_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
-							"type": "Expression"
-						},
+						"fileName": "EXM_Gender_20190522.csv",
 						"folderPath": "CEOCFO/HR"
 					},
 					"columnDelimiter": ",",
@@ -14958,6 +14983,14 @@
 					},
 					{
 						"name": "Response Distribution 10",
+						"type": "String"
+					},
+					{
+						"name": "Year",
+						"type": "String"
+					},
+					{
+						"name": "Week",
 						"type": "String"
 					}
 				]
