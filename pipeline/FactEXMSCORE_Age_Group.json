@@ -168,7 +168,7 @@
 						"mappings": [
 							{
 								"source": {
-									"name": "Age Group",
+									"name": "Age_Group",
 									"type": "String"
 								},
 								"sink": {
@@ -358,7 +358,7 @@
 							},
 							{
 								"source": {
-									"name": "Week",
+									"name": "Calendar_Week_Number ",
 									"type": "String"
 								},
 								"sink": {
