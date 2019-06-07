@@ -422,7 +422,10 @@
 				"typeProperties": {
 					"location": {
 						"type": "FileServerLocation",
-						"fileName": "EXM_AgeGroup_20190607.csv",
+						"fileName": {
+							"value": "@concat ('EXM_AgeGroup_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+							"type": "Expression"
+						},
 						"folderPath": "CEOCFO/HR"
 					},
 					"columnDelimiter": ",",
