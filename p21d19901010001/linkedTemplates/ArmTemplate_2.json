@@ -422,10 +422,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "FileServerLocation",
-						"fileName": {
-							"value": "@concat ('EXM_AgeGroup_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
-							"type": "Expression"
-						},
+						"fileName": "EXM_AgeGroup_20190607.csv",
 						"folderPath": "CEOCFO/HR"
 					},
 					"columnDelimiter": ",",
@@ -435,7 +432,7 @@
 				},
 				"schema": [
 					{
-						"name": "Age Group",
+						"name": "Age_Group",
 						"type": "String"
 					},
 					{
@@ -511,7 +508,7 @@
 						"type": "String"
 					},
 					{
-						"name": "Week",
+						"name": "Calendar_Week_Number ",
 						"type": "String"
 					}
 				]
