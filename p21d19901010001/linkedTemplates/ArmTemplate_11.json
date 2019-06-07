@@ -873,7 +873,7 @@
 						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "FactHC_Diversity",
+								"activity": "DimEmployee_Diversity",
 								"dependencyConditions": [
 									"Completed"
 								]
@@ -995,7 +995,7 @@
 						}
 					},
 					{
-						"name": "FactHC_Diversity",
+						"name": "DimEmployee_Diversity",
 						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
