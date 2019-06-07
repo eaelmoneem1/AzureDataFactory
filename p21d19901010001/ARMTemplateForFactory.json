@@ -14993,10 +14993,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "FileServerLocation",
-						"fileName": {
-							"value": "@concat ('EXM_Gender_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
-							"type": "Expression"
-						},
+						"fileName": "EXM_Gender_20190607.csv",
 						"folderPath": "CEOCFO/HR"
 					},
 					"columnDelimiter": ",",
@@ -15082,7 +15079,7 @@
 						"type": "String"
 					},
 					{
-						"name": "Week",
+						"name": "Calendar_Week_Number ",
 						"type": "String"
 					}
 				]
