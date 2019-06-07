@@ -7742,7 +7742,7 @@
 									},
 									{
 										"source": {
-											"name": "Calendar_Week_Number",
+											"name": "Calendar_Week_Number ",
 											"type": "String"
 										},
 										"sink": {
