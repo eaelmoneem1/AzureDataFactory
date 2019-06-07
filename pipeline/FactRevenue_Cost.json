@@ -31,34 +31,7 @@
 						"type": "SqlSink",
 						"writeBatchSize": 10000
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"columnMappings": {
-							"Account": "Account",
-							"Account Type": "Account_Type",
-							"Cost Centre": "Cost_Centre",
-							"CC code": "CC_Code",
-							"Function": "Function",
-							"Product Family": "Product_Family",
-							"Product Line": "Product_line",
-							"Sub Region": "Sub_Region",
-							"Region": "Region",
-							"Source System": "Source_System",
-							"Jun": "Jun",
-							"Jul": "Jul",
-							"Aug": "Aug",
-							"Sep": "Sep",
-							"Oct": "Oct",
-							"Nov": "Nov",
-							"Dec": "Dec",
-							"Jan": "Jan",
-							"Feb": "Feb",
-							"Mar": "Mar",
-							"Apr": "Apr",
-							"May": "May"
-						}
-					}
+					"enableStaging": false
 				},
 				"inputs": [
 					{
@@ -68,7 +41,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "Revenue_cost_Destination",
+						"referenceName": "RevenueCost_Dest",
 						"type": "DatasetReference"
 					}
 				]

@@ -1,0 +1,14 @@
+{
+	"name": "RevenueCost_Dest",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"tableName": "[STG].[Finance_FF_Revenue&Cost]"
+		}
+	}
+}
