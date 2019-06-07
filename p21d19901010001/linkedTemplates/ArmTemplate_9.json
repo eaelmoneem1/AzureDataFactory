@@ -1151,7 +1151,7 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "HR_WORKDAY_FUTURE_HIRES_SOURCE",
+								"referenceName": "HR_FUTURE_HIRES_SOURCE",
 								"type": "DatasetReference",
 								"parameters": {}
 							}

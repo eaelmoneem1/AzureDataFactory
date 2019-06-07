@@ -1582,7 +1582,7 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "HR_WORKDAY_FUTURE_HIRES_SOURCE",
+								"referenceName": "HR_FUTURE_HIRES_SOURCE",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -1742,9 +1742,8 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase_finastra')]",
-				"[concat(variables('factoryId'), '/datasets/HR_WORKDAY_FUTURE_HIRES_SOURCE')]",
-				"[concat(variables('factoryId'), '/datasets/HR_FUTURE_HIRES_ARCH_DEST')]",
 				"[concat(variables('factoryId'), '/datasets/HR_FUTURE_HIRES_SOURCE')]",
+				"[concat(variables('factoryId'), '/datasets/HR_FUTURE_HIRES_ARCH_DEST')]",
 				"[concat(variables('factoryId'), '/datasets/HR_WORKDAY_FUTURE_HIRES_DEST')]"
 			]
 		},
