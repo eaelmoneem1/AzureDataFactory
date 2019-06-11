@@ -1,0 +1,210 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory Name",
+			"defaultValue": "p21d19901010001"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/Delete old Landing Files')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Delete files more than 30 days",
+				"activities": [
+					{
+						"name": "Delete HR",
+						"type": "Delete",
+						"dependsOn": [
+							{
+								"activity": "Delete Forecast Plan",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "FileShareDelete",
+								"type": "DatasetReference"
+							},
+							"enableLogging": false
+						}
+					},
+					{
+						"name": "Delete Customer Support",
+						"type": "Delete",
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "FileShareDelete2",
+								"type": "DatasetReference"
+							},
+							"enableLogging": false
+						}
+					},
+					{
+						"name": "Delete Finance",
+						"type": "Delete",
+						"dependsOn": [
+							{
+								"activity": "Delete HR",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "FileShareDelete3",
+								"type": "DatasetReference"
+							},
+							"enableLogging": false
+						}
+					},
+					{
+						"name": "Delete Marketing",
+						"type": "Delete",
+						"dependsOn": [
+							{
+								"activity": "Delete Finance",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "FileShareDelete4",
+								"type": "DatasetReference"
+							},
+							"enableLogging": false
+						}
+					},
+					{
+						"name": "Delete Sales",
+						"type": "Delete",
+						"dependsOn": [
+							{
+								"activity": "Delete Marketing",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "FileShareDelete5",
+								"type": "DatasetReference"
+							},
+							"enableLogging": false
+						}
+					},
+					{
+						"name": "Delete Forecast Plan",
+						"type": "Delete",
+						"dependsOn": [
+							{
+								"activity": "Delete Customer Support",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "FileShareDelete6",
+								"type": "DatasetReference"
+							},
+							"enableLogging": false
+						}
+					}
+				],
+				"folder": {
+					"name": "ETL Jobs"
+				}
+			}
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Sales_FF_Forecast_Archive_Destination')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStore",
+					"type": "LinkedServiceReference"
+				},
+				"type": "AzureDataLakeStoreFile",
+				"typeProperties": {
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"rowDelimiter": "",
+						"quoteChar": "\"",
+						"nullValue": "",
+						"treatEmptyAsNull": true,
+						"skipLineCount": 0,
+						"firstRowAsHeader": true
+					},
+					"compression": {
+						"type": "GZip",
+						"level": "Optimal"
+					},
+					"fileName": {
+						"value": "@concat ('FinancialPlan_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
+						"type": "Expression"
+					},
+					"folderPath": "LandingArchive/CEOCFO/Dimentions/Forecast Plan"
+				}
+			}
+		}
+	]
+}

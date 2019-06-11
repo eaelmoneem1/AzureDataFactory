@@ -393,7 +393,7 @@
 		},
 		"Sales_FF_Forecast_Archive_Destination_properties_typeProperties_folderPath": {
 			"type": "string",
-			"defaultValue": "LandingArchive/CEOCFO/Dimentions/Forcecast Plan"
+			"defaultValue": "LandingArchive/CEOCFO/Dimentions/Forecast Plan"
 		},
 		"Sales_FF_Forecast_source_properties_typeProperties_fileName": {
 			"type": "string",
@@ -1067,12 +1067,6 @@
 					},
 					"V_HR_Maclean_EXM_Location_Directory_Archive_Destination_properties_typeProperties_folderPath": {
 						"value": "[parameters('V_HR_Maclean_EXM_Location_Directory_Archive_Destination_properties_typeProperties_folderPath')]"
-					},
-					"test_properties_typeProperties_fileName": {
-						"value": "[parameters('test_properties_typeProperties_fileName')]"
-					},
-					"test_properties_typeProperties_folderPath": {
-						"value": "[parameters('test_properties_typeProperties_folderPath')]"
 					}
 				}
 			},
@@ -1093,6 +1087,12 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"test_properties_typeProperties_fileName": {
+						"value": "[parameters('test_properties_typeProperties_fileName')]"
+					},
+					"test_properties_typeProperties_folderPath": {
+						"value": "[parameters('test_properties_typeProperties_folderPath')]"
 					}
 				}
 			},

@@ -294,7 +294,7 @@
 			"value": "@concat ('FinancialPlan_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
 		},
 		"Sales_FF_Forecast_Archive_Destination_properties_typeProperties_folderPath": {
-			"value": "LandingArchive/CEOCFO/Dimentions/Forcecast Plan"
+			"value": "LandingArchive/CEOCFO/Dimentions/Forecast Plan"
 		},
 		"Sales_FF_Forecast_source_properties_typeProperties_fileName": {
 			"value": "@concat ('FinancialPlan_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"

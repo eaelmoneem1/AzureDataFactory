@@ -393,7 +393,7 @@
 		},
 		"Sales_FF_Forecast_Archive_Destination_properties_typeProperties_folderPath": {
 			"type": "string",
-			"defaultValue": "LandingArchive/CEOCFO/Dimentions/Forcecast Plan"
+			"defaultValue": "LandingArchive/CEOCFO/Dimentions/Forecast Plan"
 		},
 		"Sales_FF_Forecast_source_properties_typeProperties_fileName": {
 			"type": "string",
@@ -530,7 +530,7 @@
 							{
 								"activity": "Delete Forecast Plan",
 								"dependencyConditions": [
-									"Succeeded"
+									"Completed"
 								]
 							}
 						],
@@ -579,7 +579,7 @@
 							{
 								"activity": "Delete HR",
 								"dependencyConditions": [
-									"Succeeded"
+									"Completed"
 								]
 							}
 						],
@@ -607,7 +607,7 @@
 							{
 								"activity": "Delete Finance",
 								"dependencyConditions": [
-									"Succeeded"
+									"Completed"
 								]
 							}
 						],
@@ -635,7 +635,7 @@
 							{
 								"activity": "Delete Marketing",
 								"dependencyConditions": [
-									"Succeeded"
+									"Completed"
 								]
 							}
 						],
@@ -663,7 +663,7 @@
 							{
 								"activity": "Delete Customer Support",
 								"dependencyConditions": [
-									"Succeeded"
+									"Completed"
 								]
 							}
 						],
@@ -9558,34 +9558,7 @@
 								"type": "SqlSink",
 								"writeBatchSize": 10000
 							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"columnMappings": {
-									"Account": "Account",
-									"Account Type": "Account_Type",
-									"Cost Centre": "Cost_Centre",
-									"CC code": "CC_Code",
-									"Function": "Function",
-									"Product Family": "Product_Family",
-									"Product Line": "Product_line",
-									"Sub Region": "Sub_Region",
-									"Region": "Region",
-									"Source System": "Source_System",
-									"Jun": "Jun",
-									"Jul": "Jul",
-									"Aug": "Aug",
-									"Sep": "Sep",
-									"Oct": "Oct",
-									"Nov": "Nov",
-									"Dec": "Dec",
-									"Jan": "Jan",
-									"Feb": "Feb",
-									"Mar": "Mar",
-									"Apr": "Apr",
-									"May": "May"
-								}
-							}
+							"enableStaging": false
 						},
 						"inputs": [
 							{
@@ -9596,7 +9569,7 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "Revenue_cost_Destination",
+								"referenceName": "RevenueCost_Dest",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -9784,7 +9757,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/Revenue_cost_source')]",
-				"[concat(variables('factoryId'), '/datasets/Revenue_cost_Destination')]",
+				"[concat(variables('factoryId'), '/datasets/RevenueCost_Dest')]",
 				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase_finastra')]",
 				"[concat(variables('factoryId'), '/datasets/Revenue_Archive_Destination')]",
 				"[concat(variables('factoryId'), '/datasets/Finace_RevenueCost_Source')]",
@@ -24043,6 +24016,26 @@
 				"type": "AzureSqlTable",
 				"typeProperties": {
 					"tableName": "[[STG].[V_Sales_SFDC_Booking]"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase_finastra')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/RevenueCost_Dest')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"tableName": "[[STG].[Finance_FF_Revenue&Cost]"
 				}
 			},
 			"dependsOn": [
