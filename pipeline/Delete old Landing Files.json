@@ -10,7 +10,7 @@
 					{
 						"activity": "Delete Forecast Plan",
 						"dependencyConditions": [
-							"Succeeded"
+							"Completed"
 						]
 					}
 				],
@@ -54,7 +54,7 @@
 					{
 						"activity": "Delete HR",
 						"dependencyConditions": [
-							"Succeeded"
+							"Completed"
 						]
 					}
 				],
@@ -80,7 +80,7 @@
 					{
 						"activity": "Delete Finance",
 						"dependencyConditions": [
-							"Succeeded"
+							"Completed"
 						]
 					}
 				],
@@ -106,7 +106,7 @@
 					{
 						"activity": "Delete Marketing",
 						"dependencyConditions": [
-							"Succeeded"
+							"Completed"
 						]
 					}
 				],
@@ -132,7 +132,7 @@
 					{
 						"activity": "Delete Customer Support",
 						"dependencyConditions": [
-							"Succeeded"
+							"Completed"
 						]
 					}
 				],
