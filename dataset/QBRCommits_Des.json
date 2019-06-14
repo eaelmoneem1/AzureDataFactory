@@ -1,0 +1,37 @@
+{
+	"name": "QBRCommits_Des",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Fiscal_Year",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Quarter",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Sales_Region",
+				"type": "nvarchar"
+			},
+			{
+				"name": "QBR_Commit",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Rec_CRE_TMS",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"tableName": "[STG].[Sales_FF_QBRCommits]"
+		}
+	}
+}

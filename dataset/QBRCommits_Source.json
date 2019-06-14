@@ -1,0 +1,39 @@
+{
+	"name": "QBRCommits_Source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "FileShare",
+			"type": "LinkedServiceReference"
+		},
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "FileServerLocation",
+				"fileName": "QBRCommits_20190614.csv",
+				"folderPath": "CEOCFO/Sales"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Fiscal Year",
+				"type": "String"
+			},
+			{
+				"name": "Quarter",
+				"type": "String"
+			},
+			{
+				"name": "Sales Region",
+				"type": "String"
+			},
+			{
+				"name": "QBR Commit",
+				"type": "String"
+			}
+		]
+	}
+}
