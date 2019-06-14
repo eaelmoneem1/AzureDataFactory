@@ -10583,7 +10583,14 @@
 					{
 						"name": "Loading Int tables",
 						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "Copy Data1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "7.00:00:00",
 							"retry": 3,
@@ -10716,8 +10723,79 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"enableStaging": false
-						}
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Fiscal Year",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Fiscal_Year",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Quarter",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Quarter",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Sales Region",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Sales_Region",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "QBR Commit",
+											"type": "String"
+										},
+										"sink": {
+											"name": "QBR_Commit",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "QBRCommits_Source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "QBRCommits_Des",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
 					}
 				],
 				"folder": {
@@ -10728,7 +10806,9 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase_finastra')]",
 				"[concat(variables('factoryId'), '/datasets/HR_WORKDAY_HC_Source6')]",
-				"[concat(variables('factoryId'), '/datasets/HR_WORKDAY_HC_Archive_Destination8')]"
+				"[concat(variables('factoryId'), '/datasets/HR_WORKDAY_HC_Archive_Destination8')]",
+				"[concat(variables('factoryId'), '/datasets/QBRCommits_Source')]",
+				"[concat(variables('factoryId'), '/datasets/QBRCommits_Des')]"
 			]
 		},
 		{
@@ -24485,7 +24565,10 @@
 				"typeProperties": {
 					"location": {
 						"type": "FileServerLocation",
-						"fileName": "QBRCommits_20190614.csv",
+						"fileName": {
+							"value": "@concat ('QBRCommits_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+							"type": "Expression"
+						},
 						"folderPath": "CEOCFO/Sales"
 					},
 					"columnDelimiter": ",",
