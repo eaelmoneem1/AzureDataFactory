@@ -21,7 +21,7 @@
 					"secureInput": false
 				},
 				"typeProperties": {
-					"storedProcedureName": "[dbo].[sp_INT_DimEmployee]"
+					"storedProcedureName": "[dbo].[sp_INT_FactSALES_QBRCommits]"
 				},
 				"linkedServiceName": {
 					"referenceName": "AzureSqlDatabase_finastra",
@@ -50,7 +50,7 @@
 					"storedProcedureName": "[dbo].[sp_INT_GenerateHashes]",
 					"storedProcedureParameters": {
 						"TableName": {
-							"value": "DimEmployee"
+							"value": "FactSALES_QBRCommits"
 						}
 					}
 				},
@@ -78,7 +78,7 @@
 					"secureInput": false
 				},
 				"typeProperties": {
-					"storedProcedureName": "[dbo].[sp_INT_ApplyDimEmployee]"
+					"storedProcedureName": "[dbo].[sp_INT_ApplyFactSALES_QBRCommits]"
 				},
 				"linkedServiceName": {
 					"referenceName": "AzureSqlDatabase_finastra",
@@ -105,23 +105,36 @@
 				},
 				"typeProperties": {
 					"source": {
-						"type": "FileSystemSource",
-						"recursive": true
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "FileServerReadSetting"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSetting"
+						}
 					},
 					"sink": {
-						"type": "AzureDataLakeStoreSink"
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureDataLakeStoreWriteSetting"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSetting",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
 					},
 					"enableStaging": false
 				},
 				"inputs": [
 					{
-						"referenceName": "HR_WORKDAY_HC_Source6",
+						"referenceName": "QBRCommits_Source",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "HR_WORKDAY_HC_Archive_Destination8",
+						"referenceName": "QBRCommits_Arch",
 						"type": "DatasetReference"
 					}
 				]
