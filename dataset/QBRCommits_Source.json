@@ -9,7 +9,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "FileServerLocation",
-				"fileName": "QBRCommits_20190614.csv",
+				"fileName": {
+					"value": "@concat ('QBRCommits_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+					"type": "Expression"
+				},
 				"folderPath": "CEOCFO/Sales"
 			},
 			"columnDelimiter": ",",

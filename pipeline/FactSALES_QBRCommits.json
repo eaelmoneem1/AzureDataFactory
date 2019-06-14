@@ -7,7 +7,7 @@
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
-						"activity": "Loading STG tables",
+						"activity": "Copy Data1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -86,46 +86,6 @@
 				}
 			},
 			{
-				"name": "Loading STG tables",
-				"type": "Copy",
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"typeProperties": {
-					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "FileServerReadSetting",
-							"wildcardFileName": "*.*"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSetting"
-						}
-					},
-					"sink": {
-						"type": "SqlSink",
-						"writeBatchSize": 10000
-					},
-					"enableStaging": false
-				},
-				"inputs": [
-					{
-						"referenceName": "QBRCommits_Source",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "QBRCommits_Des",
-						"type": "DatasetReference"
-					}
-				]
-			},
-			{
 				"name": "Archiving data in DL",
 				"type": "Copy",
 				"dependsOn": [
@@ -162,6 +122,89 @@
 				"outputs": [
 					{
 						"referenceName": "HR_WORKDAY_HC_Archive_Destination8",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Copy Data1",
+				"type": "Copy",
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "FileServerReadSetting"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSetting"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Fiscal Year",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Fiscal_Year",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Quarter",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Quarter",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Sales Region",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Sales_Region",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "QBR Commit",
+									"type": "String"
+								},
+								"sink": {
+									"name": "QBR_Commit",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "QBRCommits_Source",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "QBRCommits_Des",
 						"type": "DatasetReference"
 					}
 				]
