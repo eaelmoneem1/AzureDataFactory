@@ -7,19 +7,160 @@
 			"metadata": "Data Factory Name",
 			"defaultValue": "p21d19901010001"
 		},
-		"Opportunity_Incremintal_Archiving_properties_typeProperties_fileName": {
+		"HR_WORKDAY_REQ_Source_properties_typeProperties_fileName": {
 			"type": "string",
-			"defaultValue": "@concat ('Opportunity_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')"
+			"defaultValue": "@concat ('Requisitions_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
 		},
-		"Opportunity_Incremintal_Archiving_properties_typeProperties_folderPath": {
+		"HR_WORKDAY_REQ_Source_properties_typeProperties_folderPath": {
 			"type": "string",
-			"defaultValue": "LandingArchive/CEOCFO/Sales/Opportunity"
+			"defaultValue": "CEOCFO/HR"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_REQ_Archive_Source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"typeProperties": {
+					"tableName": "[[STG].[V_HR_WORKDAY_REQ]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_REQ_Destination')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"structure": [
+					{
+						"name": "Job_Req_ID",
+						"type": "String"
+					},
+					{
+						"name": "Job_Requisition_Status",
+						"type": "String"
+					},
+					{
+						"name": "Primary_Location",
+						"type": "String"
+					},
+					{
+						"name": "Country",
+						"type": "String"
+					},
+					{
+						"name": "High_Low_Cost",
+						"type": "String"
+					},
+					{
+						"name": "Cost_Centre_ID",
+						"type": "String"
+					},
+					{
+						"name": "Product",
+						"type": "String"
+					},
+					{
+						"name": "Function",
+						"type": "String"
+					},
+					{
+						"name": "Worker_Type",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[HR_WORKDAY_REQ]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_REQ_Source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileShare",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "FileShare",
+				"structure": [
+					{
+						"name": "Job Req. ID",
+						"type": "String"
+					},
+					{
+						"name": "Job Requisition Status",
+						"type": "String"
+					},
+					{
+						"name": "Primary Location",
+						"type": "String"
+					},
+					{
+						"name": "Country",
+						"type": "String"
+					},
+					{
+						"name": "High/Low Cost Country",
+						"type": "String"
+					},
+					{
+						"name": "Cost Centre ID",
+						"type": "String"
+					},
+					{
+						"name": "Product",
+						"type": "String"
+					},
+					{
+						"name": "Function",
+						"type": "String"
+					},
+					{
+						"name": "Worker Type",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"rowDelimiter": "",
+						"quoteChar": "\"",
+						"nullValue": "",
+						"treatEmptyAsNull": true,
+						"skipLineCount": 0,
+						"firstRowAsHeader": true
+					},
+					"fileName": {
+						"value": "[parameters('HR_WORKDAY_REQ_Source_properties_typeProperties_fileName')]",
+						"type": "Expression"
+					},
+					"folderPath": "[parameters('HR_WORKDAY_REQ_Source_properties_typeProperties_folderPath')]"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_Termination_Destination')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -4740,64 +4881,6 @@
 				],
 				"typeProperties": {
 					"objectApiName": "Opportunity"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Opportunity_Incremintal_Archiving')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStore",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureDataLakeStoreFile",
-				"typeProperties": {
-					"format": {
-						"type": "OrcFormat"
-					},
-					"fileName": {
-						"value": "[parameters('Opportunity_Incremintal_Archiving_properties_typeProperties_fileName')]",
-						"type": "Expression"
-					},
-					"folderPath": "[parameters('Opportunity_Incremintal_Archiving_properties_typeProperties_folderPath')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Opportunity_Last_Load_Created')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"typeProperties": {
-					"tableName": "[[STG].[Sales_SFDC_Booking]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Opportunity_Last_Load_Modified')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"typeProperties": {
-					"tableName": "[[STG].[V_Sales_SFDC_Booking]"
 				}
 			},
 			"dependsOn": []

@@ -275,6 +275,14 @@
 			"type": "string",
 			"defaultValue": "LandingArchive/CEOCFO/HR"
 		},
+		"HR_WORKDAY_HC_Archive_Destination8_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"HR_WORKDAY_HC_Archive_Destination8_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "LandingArchive/CEOCFO/HR"
+		},
 		"HR_WORKDAY_HC_Source_properties_typeProperties_fileName": {
 			"type": "string",
 			"defaultValue": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
@@ -320,6 +328,14 @@
 			"defaultValue": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
 		},
 		"HR_WORKDAY_HC_Source5_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "CEOCFO/HR"
+		},
+		"HR_WORKDAY_HC_Source6_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"HR_WORKDAY_HC_Source6_properties_typeProperties_folderPath": {
 			"type": "string",
 			"defaultValue": "CEOCFO/HR"
 		},
@@ -858,6 +874,12 @@
 					"HR_WORKDAY_HC_Archive_Destination7_properties_typeProperties_folderPath": {
 						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination7_properties_typeProperties_folderPath')]"
 					},
+					"HR_WORKDAY_HC_Archive_Destination8_properties_typeProperties_fileName": {
+						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination8_properties_typeProperties_fileName')]"
+					},
+					"HR_WORKDAY_HC_Archive_Destination8_properties_typeProperties_folderPath": {
+						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination8_properties_typeProperties_folderPath')]"
+					},
 					"HR_WORKDAY_HC_Source_properties_typeProperties_fileName": {
 						"value": "[parameters('HR_WORKDAY_HC_Source_properties_typeProperties_fileName')]"
 					},
@@ -894,17 +916,17 @@
 					"HR_WORKDAY_HC_Source5_properties_typeProperties_folderPath": {
 						"value": "[parameters('HR_WORKDAY_HC_Source5_properties_typeProperties_folderPath')]"
 					},
+					"HR_WORKDAY_HC_Source6_properties_typeProperties_fileName": {
+						"value": "[parameters('HR_WORKDAY_HC_Source6_properties_typeProperties_fileName')]"
+					},
+					"HR_WORKDAY_HC_Source6_properties_typeProperties_folderPath": {
+						"value": "[parameters('HR_WORKDAY_HC_Source6_properties_typeProperties_folderPath')]"
+					},
 					"HR_WORKDAY_REQ_Archive_Destination_properties_typeProperties_fileName": {
 						"value": "[parameters('HR_WORKDAY_REQ_Archive_Destination_properties_typeProperties_fileName')]"
 					},
 					"HR_WORKDAY_REQ_Archive_Destination_properties_typeProperties_folderPath": {
 						"value": "[parameters('HR_WORKDAY_REQ_Archive_Destination_properties_typeProperties_folderPath')]"
-					},
-					"HR_WORKDAY_REQ_Source_properties_typeProperties_fileName": {
-						"value": "[parameters('HR_WORKDAY_REQ_Source_properties_typeProperties_fileName')]"
-					},
-					"HR_WORKDAY_REQ_Source_properties_typeProperties_folderPath": {
-						"value": "[parameters('HR_WORKDAY_REQ_Source_properties_typeProperties_folderPath')]"
 					}
 				}
 			},
@@ -926,11 +948,11 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"Opportunity_Incremintal_Archiving_properties_typeProperties_fileName": {
-						"value": "[parameters('Opportunity_Incremintal_Archiving_properties_typeProperties_fileName')]"
+					"HR_WORKDAY_REQ_Source_properties_typeProperties_fileName": {
+						"value": "[parameters('HR_WORKDAY_REQ_Source_properties_typeProperties_fileName')]"
 					},
-					"Opportunity_Incremintal_Archiving_properties_typeProperties_folderPath": {
-						"value": "[parameters('Opportunity_Incremintal_Archiving_properties_typeProperties_folderPath')]"
+					"HR_WORKDAY_REQ_Source_properties_typeProperties_folderPath": {
+						"value": "[parameters('HR_WORKDAY_REQ_Source_properties_typeProperties_folderPath')]"
 					}
 				}
 			},
@@ -951,6 +973,12 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"Opportunity_Incremintal_Archiving_properties_typeProperties_fileName": {
+						"value": "[parameters('Opportunity_Incremintal_Archiving_properties_typeProperties_fileName')]"
+					},
+					"Opportunity_Incremintal_Archiving_properties_typeProperties_folderPath": {
+						"value": "[parameters('Opportunity_Incremintal_Archiving_properties_typeProperties_folderPath')]"
 					},
 					"Revenue_Archive_Destination_properties_typeProperties_fileName": {
 						"value": "[parameters('Revenue_Archive_Destination_properties_typeProperties_fileName')]"
@@ -981,18 +1009,6 @@
 					},
 					"SFDC_Archive_Opportunity_properties_typeProperties_folderPath": {
 						"value": "[parameters('SFDC_Archive_Opportunity_properties_typeProperties_folderPath')]"
-					},
-					"Sales_FF_Forecast_Archive_Destination_properties_typeProperties_fileName": {
-						"value": "[parameters('Sales_FF_Forecast_Archive_Destination_properties_typeProperties_fileName')]"
-					},
-					"Sales_FF_Forecast_Archive_Destination_properties_typeProperties_folderPath": {
-						"value": "[parameters('Sales_FF_Forecast_Archive_Destination_properties_typeProperties_folderPath')]"
-					},
-					"Sales_FF_Forecast_source_properties_typeProperties_fileName": {
-						"value": "[parameters('Sales_FF_Forecast_source_properties_typeProperties_fileName')]"
-					},
-					"Sales_FF_Forecast_source_properties_typeProperties_folderPath": {
-						"value": "[parameters('Sales_FF_Forecast_source_properties_typeProperties_folderPath')]"
 					}
 				}
 			},
@@ -1013,6 +1029,18 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"Sales_FF_Forecast_Archive_Destination_properties_typeProperties_fileName": {
+						"value": "[parameters('Sales_FF_Forecast_Archive_Destination_properties_typeProperties_fileName')]"
+					},
+					"Sales_FF_Forecast_Archive_Destination_properties_typeProperties_folderPath": {
+						"value": "[parameters('Sales_FF_Forecast_Archive_Destination_properties_typeProperties_folderPath')]"
+					},
+					"Sales_FF_Forecast_source_properties_typeProperties_fileName": {
+						"value": "[parameters('Sales_FF_Forecast_source_properties_typeProperties_fileName')]"
+					},
+					"Sales_FF_Forecast_source_properties_typeProperties_folderPath": {
+						"value": "[parameters('Sales_FF_Forecast_source_properties_typeProperties_folderPath')]"
 					},
 					"Sales_MSCRM_Booking_Archive_DL_properties_typeProperties_fileName": {
 						"value": "[parameters('Sales_MSCRM_Booking_Archive_DL_properties_typeProperties_fileName')]"
@@ -1043,6 +1071,26 @@
 					},
 					"TimeDimensionDate_Source_properties_typeProperties_folderPath": {
 						"value": "[parameters('TimeDimensionDate_Source_properties_typeProperties_folderPath')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'ArmTemplate_7')]"
+			]
+		},
+		{
+			"name": "ArmTemplate_9",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_9.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
 					},
 					"TimeDimension_Archive_Destination_properties_typeProperties_fileName": {
 						"value": "[parameters('TimeDimension_Archive_Destination_properties_typeProperties_fileName')]"
@@ -1067,26 +1115,6 @@
 					},
 					"V_HR_Maclean_EXM_Location_Directory_Archive_Destination_properties_typeProperties_folderPath": {
 						"value": "[parameters('V_HR_Maclean_EXM_Location_Directory_Archive_Destination_properties_typeProperties_folderPath')]"
-					}
-				}
-			},
-			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'ArmTemplate_7')]"
-			]
-		},
-		{
-			"name": "ArmTemplate_9",
-			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2018-02-01",
-			"properties": {
-				"mode": "incremental",
-				"templateLink": {
-					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_9.json', parameters('containerSasToken'))]",
-					"contentVersion": "1.0.0.0"
-				},
-				"parameters": {
-					"factoryName": {
-						"value": "[parameters('factoryName')]"
 					},
 					"test_properties_typeProperties_fileName": {
 						"value": "[parameters('test_properties_typeProperties_fileName')]"
