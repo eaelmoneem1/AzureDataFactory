@@ -1,0 +1,604 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory Name",
+			"defaultValue": "p21d19901010001"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/FactCollectionReporting')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Loading Int tables",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading STG tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_DimEmployee]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Hash Generate",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading Int tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
+							"storedProcedureParameters": {
+								"TableName": {
+									"value": "DimEmployee"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Loading dbo table",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Hash Generate",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_ApplyDimEmployee]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Archiving data in DL",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Loading dbo table",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"typeProperties": {
+							"source": {
+								"type": "FileSystemSource",
+								"recursive": true
+							},
+							"sink": {
+								"type": "AzureDataLakeStoreSink"
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "HR_WORKDAY_HC_Source7",
+								"type": "DatasetReference"
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "HR_WORKDAY_HC_Archive_Destination9",
+								"type": "DatasetReference"
+							}
+						]
+					},
+					{
+						"name": "Loading STG tables",
+						"type": "Copy",
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting",
+									"recursive": true,
+									"wildcardFileName": "*.*"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"sink": {
+											"name": "Region",
+											"type": "String"
+										}
+									},
+									{
+										"sink": {
+											"name": "Reporting_Date",
+											"type": "String"
+										}
+									},
+									{
+										"sink": {
+											"name": "Calendar_Month",
+											"type": "String"
+										}
+									},
+									{
+										"sink": {
+											"name": "Amount_for_Week1",
+											"type": "String"
+										}
+									},
+									{
+										"sink": {
+											"name": "Amount_for_Week2",
+											"type": "String"
+										}
+									},
+									{
+										"sink": {
+											"name": "Amount_for_Week3",
+											"type": "String"
+										}
+									},
+									{
+										"sink": {
+											"name": "Amount_for_Week4",
+											"type": "String"
+										}
+									},
+									{
+										"sink": {
+											"name": "Amount_for_Week5",
+											"type": "String"
+										}
+									},
+									{
+										"sink": {
+											"name": "Monthly_Target_Amount",
+											"type": "String"
+										}
+									},
+									{
+										"sink": {
+											"name": "Rec_CRE_TMS",
+											"type": "DateTime"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "FactCollection_source",
+								"type": "DatasetReference"
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "FactCollection_dest",
+								"type": "DatasetReference"
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "HR"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/HR_WORKDAY_HC_Source7')]",
+				"[concat(variables('factoryId'), '/datasets/HR_WORKDAY_HC_Archive_Destination9')]",
+				"[concat(variables('factoryId'), '/datasets/FactCollection_source')]",
+				"[concat(variables('factoryId'), '/datasets/FactCollection_dest')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FactCollection_dest')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Region",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Reporting_Date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Calendar_Month",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Amount_for_Week1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Amount_for_Week2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Amount_for_Week3",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Amount_for_Week4",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Amount_for_Week5",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Monthly_Target_Amount",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Rec_CRE_TMS",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[Finance_FF_CollectionReporting]"
+				}
+			}
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FactCollection_source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileShare",
+					"type": "LinkedServiceReference"
+				},
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"fileName": "CollectionReporting_20190619.csv",
+						"folderPath": "CEOCFO/Finance"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Region",
+						"type": "String"
+					},
+					{
+						"name": "Reporting Date",
+						"type": "String"
+					},
+					{
+						"name": "Calendar Month",
+						"type": "String"
+					},
+					{
+						"name": "Amount for Week1",
+						"type": "String"
+					},
+					{
+						"name": "Amount for Week2",
+						"type": "String"
+					},
+					{
+						"name": "Amount for Week3",
+						"type": "String"
+					},
+					{
+						"name": "Amount for Week4",
+						"type": "String"
+					},
+					{
+						"name": "Amount for Week5",
+						"type": "String"
+					},
+					{
+						"name": "Monthly Target Amount",
+						"type": "String"
+					}
+				]
+			}
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_HC_Archive_Destination9')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStore",
+					"type": "LinkedServiceReference"
+				},
+				"type": "AzureDataLakeStoreFile",
+				"typeProperties": {
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"rowDelimiter": "",
+						"quoteChar": "\"",
+						"nullValue": "",
+						"treatEmptyAsNull": true,
+						"skipLineCount": 0,
+						"firstRowAsHeader": true
+					},
+					"fileName": {
+						"value": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+						"type": "Expression"
+					},
+					"folderPath": "LandingArchive/CEOCFO/HR"
+				}
+			}
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_HC_Destination8')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"type": "AzureSqlTable",
+				"structure": [
+					{
+						"name": "Employee_ID",
+						"type": "String"
+					},
+					{
+						"name": "On_Leave",
+						"type": "String"
+					},
+					{
+						"name": "Hire_Date",
+						"type": "Date"
+					},
+					{
+						"name": "Number_of_Direct_Reports",
+						"type": "String"
+					},
+					{
+						"name": "Worker_Type",
+						"type": "String"
+					},
+					{
+						"name": "Location",
+						"type": "String"
+					},
+					{
+						"name": "Country",
+						"type": "String"
+					},
+					{
+						"name": "Org_Layer",
+						"type": "String"
+					},
+					{
+						"name": "Product",
+						"type": "String"
+					},
+					{
+						"name": "Product_Family",
+						"type": "String"
+					},
+					{
+						"name": "Product_Line",
+						"type": "String"
+					},
+					{
+						"name": "Cost_Center_ID",
+						"type": "String"
+					},
+					{
+						"name": "Cost_Center_Name",
+						"type": "String"
+					},
+					{
+						"name": "Cost_Centre_Hierarchy_Finastra",
+						"type": "String"
+					},
+					{
+						"name": "Function_Finastra",
+						"type": "String"
+					},
+					{
+						"name": "Cost_Centre_Legacy_DH_Mapping_to_Finastra",
+						"type": "String"
+					},
+					{
+						"name": "Reporting_Region",
+						"type": "String"
+					},
+					{
+						"name": "High_Low_Cost",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[HR_WORKDAY_HC]"
+				}
+			}
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_HC_Source7')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileShare",
+					"type": "LinkedServiceReference"
+				},
+				"type": "FileShare",
+				"structure": [
+					{
+						"name": "Employee ID",
+						"type": "String"
+					},
+					{
+						"name": "On Leave",
+						"type": "String"
+					},
+					{
+						"name": "Hire Date",
+						"type": "String"
+					},
+					{
+						"name": "Number of Direct Reports",
+						"type": "String"
+					},
+					{
+						"name": "Worker Type",
+						"type": "String"
+					},
+					{
+						"name": "Location",
+						"type": "String"
+					},
+					{
+						"name": "Country",
+						"type": "String"
+					},
+					{
+						"name": "Org Layer",
+						"type": "String"
+					},
+					{
+						"name": "Product",
+						"type": "String"
+					},
+					{
+						"name": "Product Family",
+						"type": "String"
+					},
+					{
+						"name": "Product Line",
+						"type": "String"
+					},
+					{
+						"name": "Cost Center - ID",
+						"type": "String"
+					},
+					{
+						"name": "Cost Center",
+						"type": "String"
+					},
+					{
+						"name": "Cost Center Hierarchy",
+						"type": "String"
+					},
+					{
+						"name": "Function",
+						"type": "String"
+					},
+					{
+						"name": "Cost Centre - Legacy DH Mapping to Finastra",
+						"type": "String"
+					},
+					{
+						"name": "Reporting Region",
+						"type": "String"
+					},
+					{
+						"name": "High / Low Cost",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"rowDelimiter": "",
+						"quoteChar": "\"",
+						"nullValue": "",
+						"treatEmptyAsNull": true,
+						"skipLineCount": 0,
+						"firstRowAsHeader": true
+					},
+					"fileName": {
+						"value": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+						"type": "Expression"
+					},
+					"folderPath": "CEOCFO/HR"
+				}
+			}
+		}
+	]
+}

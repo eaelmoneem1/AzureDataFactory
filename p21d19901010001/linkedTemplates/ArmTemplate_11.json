@@ -13,6 +13,1802 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/FactCustomer_NPS')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Loading STG tables",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "FileSystemSource",
+								"recursive": true
+							},
+							"sink": {
+								"type": "SqlSink",
+								"writeBatchSize": 10000
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"columnMappings": {
+									"Start Date": "Start_Date",
+									"End Date": "End_Date",
+									"Survey Details": "Survey_Details",
+									"Contact Name": "Contact_Name",
+									"Contact Email": "Contact_Email",
+									"Contact Record ID": "Contact_Record_ID",
+									"Company ID": "Company_ID",
+									"Company": "Company",
+									"Company Country Code": "Company_Country_Code",
+									"Company Country": "Company_Country",
+									"Company Email": "Company_Email",
+									"Region Code": "Region_Code",
+									"Region": "Region",
+									"Survey Name": "Survey_Name",
+									"Invitation Date": "Invitation_Date",
+									"Survey Language": "Survey_Language",
+									"Survey Medium": "Survey_Medium",
+									"Reminder1 Date": "Reminder1_Date",
+									"Reminder2 Date": "Reminder2_Date",
+									"Reminder3 Date": "Reminder3_Date",
+									"Response Received Date": "Response_Received_Date",
+									"Response Collected Date": "Response_Collected_Date",
+									"Address Line 1": "Address_Line_1",
+									"Address Line 2": "Address_Line_2",
+									"Address Line 3": "Address_Line_3",
+									"Primary Addr Postal code": "Primary_Addr_Postal_code",
+									"Person ID": "Person_ID",
+									"Salutation": "Salutation",
+									"First Name": "First_Name",
+									"Person Middle Name": "Person_Middle_Name",
+									"Last Name": "Last_Name",
+									"Person Gender Code": "Person_Gender_Code",
+									"Person Age": "Person_Age",
+									"Person Age Group Code": "Person_Age_Group_Code",
+									"Primary Address Text": "Primary_Address_Text",
+									"Primary addr city name": "Primary_addr_city_name",
+									"Primary addr state code": "Primary_addr_state_code",
+									"Primary addr state name": "Primary_addr_state_name",
+									"Primary Addr Country Code": "Primary_Addr_Country_Code",
+									"Primary Addr Country Name": "Primary_Addr_Country_Name",
+									"Purchase Influence Level": "Purchase_Influence_Level",
+									"Primary Job Role Name": "Primary_Job_Role_Name",
+									"Primary Job Role Title": "Primary_Job_Role_Title",
+									"Primary Job Department Name": "Primary_Job_Department_Name",
+									"Primary Phone Number": "Primary_Phone_Number",
+									"Assignee": "Assignee",
+									"Last Follow-up Date": "Last_Follow-up_Date",
+									"Last Follow-Up Comment": "Last_Follow-Up_Comment",
+									"Follow-up Status": "Follow-up_Status",
+									"Assignee Email": "Assignee_Email",
+									"Assignee Title": "Assignee_Title",
+									"Person Identifier": "Person_Identifier",
+									"Survey ID": "Survey_ID",
+									"Initiating Event TimeStamp": "Initiating_Event_TimeStamp",
+									"Person Identifier Type Code": "Person_Identifier_Type_Code",
+									"Followup Contact Party ID": "Followup_Contact_Party_ID",
+									"Initiating Event Description": "Initiating_Event_Description",
+									"Company Duns Number": "Company_Duns_Number",
+									"Person Birth Date": "Person_Birth_Date",
+									"Person Name Suffix": "Person_Name_Suffix",
+									"Person Income Amount": "Person_Income_Amount",
+									"Person Income Group Code": "Person_Income_Group_Code",
+									"Primary Fax Number": "Primary_Fax_Number",
+									"Primary Mobile Phone Number": "Primary_Mobile_Phone_Number",
+									"Primary Phone Extension Number": "Primary_Phone_Extension_Number",
+									"Prefer Text Only Email Y/N?": "Prefer_Text_Only_Email_Y/N?",
+									"Survey Locale Select Enabled Y/N?": "Survey_Locale_Select_Enabled_Y/N?",
+									"Response Rate Notification Recipient": "Response_Rate_Notification_Recipient",
+									"Response Rate Notification CC 1": "Response_Rate_Notification_CC_1",
+									"Response Rate Notification CC 2": "Response_Rate_Notification_CC_2",
+									"Follow-up Escalation ID": "Follow-up_Escalation_ID",
+									"Integration Reference Id": "Integration_Reference_Id",
+									"How satisfied are you for Adoption-Value": "How_satisfied_are_you_for_Adoption-Value",
+									"How satisfied are you for Delivery-Value": "How_satisfied_are_you_for_Delivery-Value",
+									"How satisfied are you for Onboarding-Value": "How_satisfied_are_you_for_Onboarding-Value",
+									"How satisfied are you for Product-Value": "How_satisfied_are_you_for_Product-Value",
+									"How satisfied are you for Responsiveness to new business demands-Value": "How_satisfied_are_you_for_Responsiveness_to_new_business_demands-Value",
+									"How satisfied are you for Support-Value": "How_satisfied_are_you_for_Support-Value",
+									"How satisfied are you for Your purchase process-Value": "How_satisfied_are_you_for_Your_purchase_process-Value",
+									"How satisfied are you for Your renewal process-Value": "How_satisfied_are_you_for_Your_renewal_process-Value",
+									"How satisfied are you with Brand-Value": "How_satisfied_are_you_with_Brand-Value",
+									"How satisfied are you with Product-Value": "How_satisfied_are_you_with_Product-Value",
+									"How satisfied are you with Service-Value": "How_satisfied_are_you_with_Service-Value",
+									"How satisfied are you with Value for Money-Value": "How_satisfied_are_you_with_Value_for_Money-Value",
+									"Improvement Comment": "Improvement_Comment",
+									"LTR-Value": "LTR-Value",
+									"Next action you are most likely to take": "Next_action_you_are_most_likely_to_take",
+									"Product List": "Product_List",
+									"Relationship with Finastra": "Relationship_with_Finastra",
+									"Satisfaction Comment": "Satisfaction_Comment",
+									"Satisfaction for supported by a Finastra partner-Value": "Satisfaction_for_supported_by_a_Finastra_partner-Value",
+									"Supported by a Finastra partner": "Supported_by_a_Finastra_partner",
+									"What is the problem for Adopting your solution to get business value": "What_is_the_problem_for_Adopting_your_solution_to_get_business_value",
+									"What is the problem for Delivery": "What_is_the_problem_for_Delivery",
+									"What is the problem for Onboarding your solution to get business value": "What_is_the_problem_for_Onboarding_your_solution_to_get_business_value",
+									"What is the problem for Product": "What_is_the_problem_for_Product",
+									"What is the problem for Responsiveness to new business demands": "What_is_the_problem_for_Responsiveness_to_new_business_demands",
+									"What is the problem for Support": "What_is_the_problem_for_Support",
+									"What is the problem for Your purchase process": "What_is_the_problem_for_Your_purchase_process",
+									"What is the problem for Your renewal process": "What_is_the_problem_for_Your_renewal_process",
+									"NewBusiness": "NewBusiness",
+									"Go To Market": "Go_To_Market",
+									"Closed Loop Alert": "Closed_Loop_Alert",
+									"Modified On": "Modified_On",
+									"Created On": "Created_On",
+									"Title": "Title",
+									"C-Level": "C-Level",
+									"Do not allow Emails": "Do_not_allow_Emails",
+									"Do not allow Bulk Emails": "Do_not_allow_Bulk_Emails",
+									"Case Management User": "Case_Management_User",
+									"Customer Center Admin": "Customer_Center_Admin",
+									"Softrax ID": "Softrax_ID",
+									"Account Name": "Account_Name",
+									"websiteurl": "websiteurl",
+									"Asset": "Asset",
+									"Core Risk Level": "Core_Risk_Level",
+									"Core Segment": "Core_Segment",
+									"Lending Risk Level": "Lending_Risk_Level",
+									"Lending Segment": "Lending_Segment",
+									"Active Product Family Owned for Support": "Active_Product_Family_Owned_for_Support",
+									"No. of Employees": "No._of_Employees",
+									"NPS Survey": "NPS_Survey",
+									"Last NPS Survey Sent": "Last_NPS_Survey_Sent",
+									"Selected for Survey?": "Selected_for_Survey?",
+									"Asset Tier": "Asset_Tier",
+									"Account Type": "Account_Type",
+									"Region_1": "Region_1",
+									"Lending Account Exec": "Lending_Account_Exec",
+									"Core RM": "Core_RM",
+									"Trailing 12 Rev Rank": "Trailing_12_Rev_Rank",
+									"Prior Year Revenue": "Prior_Year_Revenue",
+									"Prior Year Lending Rev": "Prior_Year_Lending_Rev",
+									"Prior Year Mortgage Rev": "Prior_Year_Mortgage_Rev",
+									"Prior Year Retail Rev": "Prior_Year_Retail_Rev",
+									"3 Yr Revenue Rank": "3_Yr_Revenue_Rank",
+									"3 Year Avg Rev": "3_Year_Avg_Rev",
+									"Count of Won Opportunities": "Count_of_Won_Opportunities",
+									"Count of Lost Opportunities": "Count_of_Lost_Opportunities",
+									"Parent account": "Parent_account",
+									"Account Governance profile": "Account_Governance_profile",
+									"Account 18chr Id": "Account_18chr_Id",
+									"GTM Target": "GTM_Target",
+									"Full Name": "Full_Name",
+									"Mobile": "Mobile",
+									"GTM Persona": "GTM_Persona",
+									"Max of Annual Revenue": "Max_of_Annual_Revenue",
+									"Map Name": "Map_Name"
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "CS_FF_NPS_Source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "CS_FF_NPS_Destination",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Archiving data in DL",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Loading dbo table",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "FileSystemSource",
+								"recursive": true
+							},
+							"sink": {
+								"type": "AzureDataLakeStoreSink"
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "CS_FF_NPS_Source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "CS_FF_NPS_Destination_Archive",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Loading Int tables",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading STG tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_FactCustomer_NPS]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Hash Generate",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading Int tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
+							"storedProcedureParameters": {
+								"TableName": {
+									"value": "FactCustomer_NPS",
+									"type": "String"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Loading dbo table",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Hash Generate",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_ApplyFactCustomer_NPS]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"folder": {
+					"name": "CustomerSupport"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FactEXMSCORE')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Loading Int tables",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_FactEXMSCORE]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Loading dbo table",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Hash Generate",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_ApplyFactEXMSCORE]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Hash Generate",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading Int tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
+							"storedProcedureParameters": {
+								"TableName": {
+									"value": "FactEXMSCORE",
+									"type": "String"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Archiving data in DL",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Loading dbo table",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureDataLakeStoreWriteSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSetting",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "EXMSCORE_Source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "FactEXMScore_Dest_Arch",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "HR"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FactEXMSCORE_Age_Group')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Loading Int tables",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading STG tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_FactEXMSCORE_Age_Group]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Hash Generate",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading Int tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
+							"storedProcedureParameters": {
+								"TableName": {
+									"value": "FactEXMSCORE_Age_Group"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Loading dbo table",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Hash Generate",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_ApplyFactEXMSCORE_Age_Group]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Archiving data in DL",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Loading dbo table",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureDataLakeStoreWriteSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSetting",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "EXMSCORE_Age_Group_Source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "EXMSCORE_Age_Group_Arch",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Loading STG tables",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Age_Group",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Age_Group",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Responses",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Responses",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Detractors",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Detractors_Percentage",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Passives",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Passives_Percentage",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Promoters",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Promoters_Percentage",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Score",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Score",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Avg. Response",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Avg_Response",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 0",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_0",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 1",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_1",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 2",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_2",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 3",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_3",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 4",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_4",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 5",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_5",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 6",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_6",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 7",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_7",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 8",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_8",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 9",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_9",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 10",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_10",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Year",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Year",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Calendar_Week_Number ",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Calendar_Week_Number",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "EXMSCORE_Age_Group_Source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "EXMSCORE_Age_Group_Dest",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "HR"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FactEXMSCORE_Gender')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Loading Int tables",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading STG tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_FactEXMSCORE_Gender]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Hash Generate",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading Int tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
+							"storedProcedureParameters": {
+								"TableName": {
+									"value": "FactEXMSCORE_Gender"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Loading dbo table",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Hash Generate",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_ApplyFactEXMSCORE_Gender]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Archiving data in DL",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Loading dbo table",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureDataLakeStoreWriteSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSetting",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "EXMSCORE_Gender_Source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "EXMSCORE_Gender",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Loading STG tables",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Gender",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Gender",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Responses",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Responses",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Detractors",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Detractors_Percentage",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Passives",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Passives_Percentage",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Promoters",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Promoters_Percentage",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Score",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Score",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Avg. Response",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Avg_Response",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 0",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_0",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 1",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_1",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 2",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_2",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 3",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_3",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 4",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_4",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 5",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_5",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 6",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_6",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 7",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_7",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 8",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_8",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 9",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_9",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Response Distribution 10",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Response_Distribution_10",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Year",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Year",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Calendar_Week_Number ",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Calendar_Week_Number",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "EXMSCORE_Gender_Source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "EXMSCORE_Gender_Dest",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "HR"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FactEXMSCORE_History')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Loading Int tables",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading STG tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_FactEXMSCORE_History]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Hash Generate",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading Int tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
+							"storedProcedureParameters": {
+								"TableName": {
+									"value": "FactEXMSCORE_History"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Loading dbo table",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Hash Generate",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_ApplyFactEXMSCORE_History]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Archiving data in DL",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Loading dbo table",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureDataLakeStoreWriteSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSetting",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "EXMSCORE_History_Source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "EXMSCORE_History_Arch",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Loading STG tables",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "EXM_Score_Type",
+											"type": "String"
+										},
+										"sink": {
+											"name": "EXM_Score_Type",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "EXM_Score_Type_Details",
+											"type": "String"
+										},
+										"sink": {
+											"name": "EXM_Score_Type_Details",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Detractors",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Detractors",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Passives",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Passives",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Promoters",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Promoters",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Year",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Year",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Week",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Calendar_Week_Number",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Sum",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Sum",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "EXM Score",
+											"type": "String"
+										},
+										"sink": {
+											"name": "EXM_Score",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "EXMSCORE_History_Source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "EXMSCORE_History_Dest",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "HR"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FactEXMSCORE_Location')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Loading STG tables",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "FileSystemSource",
+								"recursive": true
+							},
+							"sink": {
+								"type": "SqlSink",
+								"writeBatchSize": 10000
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"columnMappings": {
+									"0": "Response_Distribution_0",
+									"1": "Response_Distribution_1",
+									"2": "Response_Distribution_2",
+									"3": "Response_Distribution_3",
+									"4": "Response_Distribution_4",
+									"5": "Response_Distribution_5",
+									"6": "Response_Distribution_6",
+									"7": "Response_Distribution_7",
+									"8": "Response_Distribution_8",
+									"9": "Response_Distribution_9",
+									"10": "Response_Distribution_10",
+									"Location": "Location",
+									"Responses": "Responses",
+									"Detractors": "Detractors_Percentage",
+									"Passives": "Passives_Percentage",
+									"Promoters": "Promoters_Percentage",
+									"Score": "Score",
+									"Avg. Response": "Avg_Response",
+									"Year": "Year",
+									"Calendar_Week_Number ": "Calendar_Week_Number"
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "HR_Maclean_EXM_Location_Source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "HR_Maclean_EXM_Location_Destination",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Archiving data in DL",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Loading dbo table",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "FileSystemSource",
+								"recursive": true
+							},
+							"sink": {
+								"type": "AzureDataLakeStoreSink"
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "HR_Maclean_EXM_Location_Source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "V_HR_Maclean_EXM_Location_Archive_Destination",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Loading Int tables",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading STG tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_FactEXMSCORE_Location]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Hash Generate",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading Int tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
+							"storedProcedureParameters": {
+								"TableName": {
+									"value": "FactEXMSCORE_Location",
+									"type": "String"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Loading dbo table",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Hash Generate",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_ApplyFactEXMSCORE_Location]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"folder": {
+					"name": "HR"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/FactEXMSCORE_Region')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -2925,372 +4721,6 @@
 				}
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Weekly Job')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "FactSALES_MSCRM_Bookings",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "FactOpportunity_All",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "FactSALES_MSCRM_Bookings",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "FactSALES_MSCRM_Orderbook",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "FactSALES_MSCRM_Bookings",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "FactSALES_MSCRM_Orderbook",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "FactEXMSCORE_Location",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "FactSALES_MSCRM_Orderbook",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "FactEXMSCORE_Location",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "FactEXMSCORE_Region",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "FactEXMSCORE_Location",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "FactEXMSCORE_Region",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "DimEmployee",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "DimEmployee_Future_Termination",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "DimEmployee",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "FactOpportunity_All",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "FactOpportunity_All Job",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "DimEmployee_Requisitions",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "DimEmployee_Termination",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "DimEmployee_Requisitions",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "DimEmployee_Termination",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "DimEmployee_Diversity",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "DimEmployee_Terminations",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "FactEXMSCORE_Gender",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "FactEXMSCORE_Region",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "FactEXMSCORE_Gender",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "FactEXMSCORE_Age_Group",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "FactEXMSCORE_Gender",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "FactEXMSCORE_Age_Group",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "FACTEXMSCORE",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "FactEXMSCORE_Age_Group",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "FactEXMSCORE",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "DimEmployee_Future-hires",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "FACTEXMSCORE",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "DimEmployee_Future_Hires",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "DimEmployee_Future_Termination",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "DimEmployee_Future-hires",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "DimEmployee_Future_Termiantions",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "DimEmployee_Diversity",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "DimEmployee",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "DimEmployee_Diversity",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					}
-				],
-				"folder": {
-					"name": "ETL Jobs"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/FactSALES_MSCRM_Bookings')]",
-				"[concat(variables('factoryId'), '/pipelines/FactSALES_MSCRM_Orderbook')]",
-				"[concat(variables('factoryId'), '/pipelines/FactEXMSCORE_Region')]",
-				"[concat(variables('factoryId'), '/pipelines/FactOpportunity_All Job')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Salesforce1')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Stopped",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "FactOpportunity_All Job",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Day",
-						"interval": 1,
-						"startTime": "2019-04-21T01:00:00Z",
-						"timeZone": "UTC"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/FactOpportunity_All Job')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Weekly Job')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Stopped",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "Weekly Job",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Week",
-						"interval": 1,
-						"startTime": "2019-05-23T23:00:00.000Z",
-						"timeZone": "UTC"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Weekly Job')]"
-			]
 		}
 	]
 }

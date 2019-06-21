@@ -78,28 +78,60 @@
 		"HR_WORKDAY_HC_Archive_Destination3_properties_typeProperties_folderPath": {
 			"type": "string",
 			"defaultValue": "LandingArchive/CEOCFO/HR"
-		},
-		"HR_WORKDAY_HC_Archive_Destination4_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
-		},
-		"HR_WORKDAY_HC_Archive_Destination4_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "LandingArchive/CEOCFO/HR"
-		},
-		"HR_WORKDAY_HC_Archive_Destination5_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
-		},
-		"HR_WORKDAY_HC_Archive_Destination5_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "LandingArchive/CEOCFO/HR"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/HR_Maclean_EXM_Location_Directory_Archive_Source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"typeProperties": {
+					"tableName": "[[STG].[V_HR_Maclean_EXM_Location_Directory]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/HR_Maclean_EXM_Location_Directory_Destination')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"structure": [
+					{
+						"name": "Location",
+						"type": "String"
+					},
+					{
+						"name": "Country",
+						"type": "String"
+					},
+					{
+						"name": "Region",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[HR_Maclean_EXM_Location_Directory]"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/HR_Maclean_EXM_Location_Directory_Source')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -1210,68 +1242,6 @@
 						"type": "Expression"
 					},
 					"folderPath": "[parameters('HR_WORKDAY_HC_Archive_Destination3_properties_typeProperties_folderPath')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_HC_Archive_Destination4')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStore",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureDataLakeStoreFile",
-				"typeProperties": {
-					"format": {
-						"type": "TextFormat",
-						"columnDelimiter": ",",
-						"rowDelimiter": "",
-						"quoteChar": "\"",
-						"nullValue": "",
-						"treatEmptyAsNull": true,
-						"skipLineCount": 0,
-						"firstRowAsHeader": true
-					},
-					"fileName": {
-						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination4_properties_typeProperties_fileName')]",
-						"type": "Expression"
-					},
-					"folderPath": "[parameters('HR_WORKDAY_HC_Archive_Destination4_properties_typeProperties_folderPath')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_HC_Archive_Destination5')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStore",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureDataLakeStoreFile",
-				"typeProperties": {
-					"format": {
-						"type": "TextFormat",
-						"columnDelimiter": ",",
-						"rowDelimiter": "",
-						"quoteChar": "\"",
-						"nullValue": "",
-						"treatEmptyAsNull": true,
-						"skipLineCount": 0,
-						"firstRowAsHeader": true
-					},
-					"fileName": {
-						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination5_properties_typeProperties_fileName')]",
-						"type": "Expression"
-					},
-					"folderPath": "[parameters('HR_WORKDAY_HC_Archive_Destination5_properties_typeProperties_folderPath')]"
 				}
 			},
 			"dependsOn": []

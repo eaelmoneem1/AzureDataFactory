@@ -86,6 +86,130 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/FactCollection_dest')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Region",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Reporting_Date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Calendar_Month",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Amount_for_Week1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Amount_for_Week2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Amount_for_Week3",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Amount_for_Week4",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Amount_for_Week5",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Monthly_Target_Amount",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Rec_CRE_TMS",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[Finance_FF_CollectionReporting]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FactCollection_source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileShare",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"fileName": "CollectionReporting_20190619.csv",
+						"folderPath": "CEOCFO/Finance"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Region",
+						"type": "String"
+					},
+					{
+						"name": "Reporting Date",
+						"type": "String"
+					},
+					{
+						"name": "Calendar Month",
+						"type": "String"
+					},
+					{
+						"name": "Amount for Week1",
+						"type": "String"
+					},
+					{
+						"name": "Amount for Week2",
+						"type": "String"
+					},
+					{
+						"name": "Amount for Week3",
+						"type": "String"
+					},
+					{
+						"name": "Amount for Week4",
+						"type": "String"
+					},
+					{
+						"name": "Amount for Week5",
+						"type": "String"
+					},
+					{
+						"name": "Monthly Target Amount",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/FactEXMSCORE_Region_Archive_Source')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -820,54 +944,6 @@
 				],
 				"typeProperties": {
 					"tableName": "[[STG].[HR_Maclean_EXM_Location]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HR_Maclean_EXM_Location_Directory_Archive_Source')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"typeProperties": {
-					"tableName": "[[STG].[V_HR_Maclean_EXM_Location_Directory]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HR_Maclean_EXM_Location_Directory_Destination')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"structure": [
-					{
-						"name": "Location",
-						"type": "String"
-					},
-					{
-						"name": "Country",
-						"type": "String"
-					},
-					{
-						"name": "Region",
-						"type": "String"
-					}
-				],
-				"typeProperties": {
-					"tableName": "[[STG].[HR_Maclean_EXM_Location_Directory]"
 				}
 			},
 			"dependsOn": []
