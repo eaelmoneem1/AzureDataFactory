@@ -10,7 +10,7 @@
 			"location": {
 				"type": "FileServerLocation",
 				"fileName": {
-					"value": "@concat ('FinanceActuals_History_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+					"value": "@concat ('FinanceActuals_History','.csv')",
 					"type": "Expression"
 				},
 				"folderPath": "CEOCFO/Finance"
