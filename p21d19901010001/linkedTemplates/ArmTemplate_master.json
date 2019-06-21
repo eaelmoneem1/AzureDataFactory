@@ -1065,12 +1065,6 @@
 					},
 					"TimeDimensionDate_Archive_Destination_properties_typeProperties_folderPath": {
 						"value": "[parameters('TimeDimensionDate_Archive_Destination_properties_typeProperties_folderPath')]"
-					},
-					"TimeDimensionDate_Source_properties_typeProperties_fileName": {
-						"value": "[parameters('TimeDimensionDate_Source_properties_typeProperties_fileName')]"
-					},
-					"TimeDimensionDate_Source_properties_typeProperties_folderPath": {
-						"value": "[parameters('TimeDimensionDate_Source_properties_typeProperties_folderPath')]"
 					}
 				}
 			},
@@ -1091,6 +1085,12 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"TimeDimensionDate_Source_properties_typeProperties_fileName": {
+						"value": "[parameters('TimeDimensionDate_Source_properties_typeProperties_fileName')]"
+					},
+					"TimeDimensionDate_Source_properties_typeProperties_folderPath": {
+						"value": "[parameters('TimeDimensionDate_Source_properties_typeProperties_folderPath')]"
 					},
 					"TimeDimension_Archive_Destination_properties_typeProperties_fileName": {
 						"value": "[parameters('TimeDimension_Archive_Destination_properties_typeProperties_fileName')]"
