@@ -1,0 +1,57 @@
+{
+	"name": "FactCollection_dest",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Region",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Reporting_Date",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Calendar_Month",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Amount_for_Week1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Amount_for_Week2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Amount_for_Week3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Amount_for_Week4",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Amount_for_Week5",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Monthly_Target_Amount",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Rec_CRE_TMS",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"tableName": "[STG].[Finance_FF_CollectionReporting]"
+		}
+	}
+}

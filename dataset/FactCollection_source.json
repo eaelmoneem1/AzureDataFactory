@@ -1,0 +1,59 @@
+{
+	"name": "FactCollection_source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "FileShare",
+			"type": "LinkedServiceReference"
+		},
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "FileServerLocation",
+				"fileName": "CollectionReporting_20190619.csv",
+				"folderPath": "CEOCFO/Finance"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Region",
+				"type": "String"
+			},
+			{
+				"name": "Reporting Date",
+				"type": "String"
+			},
+			{
+				"name": "Calendar Month",
+				"type": "String"
+			},
+			{
+				"name": "Amount for Week1",
+				"type": "String"
+			},
+			{
+				"name": "Amount for Week2",
+				"type": "String"
+			},
+			{
+				"name": "Amount for Week3",
+				"type": "String"
+			},
+			{
+				"name": "Amount for Week4",
+				"type": "String"
+			},
+			{
+				"name": "Amount for Week5",
+				"type": "String"
+			},
+			{
+				"name": "Monthly Target Amount",
+				"type": "String"
+			}
+		]
+	}
+}
