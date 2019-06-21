@@ -5,14 +5,6 @@
 			{
 				"name": "Loading Int tables",
 				"type": "SqlServerStoredProcedure",
-				"dependsOn": [
-					{
-						"activity": "Loading STG tables",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 3,
@@ -141,8 +133,7 @@
 						"type": "DelimitedTextSource",
 						"storeSettings": {
 							"type": "FileServerReadSetting",
-							"recursive": true,
-							"wildcardFileName": "*.*"
+							"recursive": true
 						},
 						"formatSettings": {
 							"type": "DelimitedTextReadSetting"
@@ -151,7 +142,102 @@
 					"sink": {
 						"type": "AzureSqlSink"
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Region",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Region",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Reporting Date",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Reporting_Date",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Calendar Month",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Calendar_Month",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Amount for Week1",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Amount_for_Week1",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Amount for Week2",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Amount_for_Week2",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Amount for Week3",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Amount_for_Week3",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Amount for Week4",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Amount_for_Week4",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Amount for Week5",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Amount_for_Week5",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Monthly Target Amount",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Monthly_Target_Amount",
+									"type": "String"
+								}
+							}
+						]
+					}
 				},
 				"inputs": [
 					{
@@ -168,7 +254,7 @@
 			}
 		],
 		"folder": {
-			"name": "HR"
+			"name": "Finance"
 		}
 	}
 }
