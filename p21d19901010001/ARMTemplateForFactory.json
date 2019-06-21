@@ -6529,7 +6529,14 @@
 					{
 						"name": "Loading Int tables",
 						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "Loading STG tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "7.00:00:00",
 							"retry": 3,
@@ -6539,7 +6546,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_DimEmployee]"
+							"storedProcedureName": "[[dbo].[sp_INT_FactCollectionReporting]"
 						},
 						"linkedServiceName": {
 							"referenceName": "AzureSqlDatabase_finastra",
@@ -6569,7 +6576,7 @@
 							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
 							"storedProcedureParameters": {
 								"TableName": {
-									"value": "DimEmployee"
+									"value": "FactCollectionReporting"
 								}
 							}
 						},
@@ -6598,7 +6605,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_ApplyDimEmployee]"
+							"storedProcedureName": "[[dbo].[sp_INT_ApplyFactCollectionReporting]"
 						},
 						"linkedServiceName": {
 							"referenceName": "AzureSqlDatabase_finastra",
@@ -6626,24 +6633,38 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "FileSystemSource",
-								"recursive": true
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
 							},
 							"sink": {
-								"type": "AzureDataLakeStoreSink"
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureDataLakeStoreWriteSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSetting",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
 							},
 							"enableStaging": false
 						},
 						"inputs": [
 							{
-								"referenceName": "HR_WORKDAY_HC_Source7",
+								"referenceName": "FactCollection_source",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "HR_WORKDAY_HC_Archive_Destination9",
+								"referenceName": "FactCollection_arch",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -6795,9 +6816,8 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase_finastra')]",
-				"[concat(variables('factoryId'), '/datasets/HR_WORKDAY_HC_Source7')]",
-				"[concat(variables('factoryId'), '/datasets/HR_WORKDAY_HC_Archive_Destination9')]",
 				"[concat(variables('factoryId'), '/datasets/FactCollection_source')]",
+				"[concat(variables('factoryId'), '/datasets/FactCollection_arch')]",
 				"[concat(variables('factoryId'), '/datasets/FactCollection_dest')]"
 			]
 		},
@@ -16375,6 +16395,39 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/FactCollection_arch')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStore",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureDataLakeStoreLocation",
+						"fileName": {
+							"value": "@concat ('CollectionReporting_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
+							"type": "Expression"
+						},
+						"folderPath": "LandingArchive/CEOCFO/Finance"
+					},
+					"columnDelimiter": ",",
+					"compressionCodec": "gzip",
+					"compressionLevel": "Optimal",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStore')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/FactCollection_dest')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -16451,7 +16504,10 @@
 				"typeProperties": {
 					"location": {
 						"type": "FileServerLocation",
-						"fileName": "CollectionReporting_20190619.csv",
+						"fileName": {
+							"value": "@concat ('CollectionReporting_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+							"type": "Expression"
+						},
 						"folderPath": "CEOCFO/Finance"
 					},
 					"columnDelimiter": ",",

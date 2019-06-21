@@ -839,12 +839,6 @@
 					},
 					"HR_WORKDAY_HC_Archive_Destination2_properties_typeProperties_folderPath": {
 						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination2_properties_typeProperties_folderPath')]"
-					},
-					"HR_WORKDAY_HC_Archive_Destination3_properties_typeProperties_fileName": {
-						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination3_properties_typeProperties_fileName')]"
-					},
-					"HR_WORKDAY_HC_Archive_Destination3_properties_typeProperties_folderPath": {
-						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination3_properties_typeProperties_folderPath')]"
 					}
 				}
 			},
@@ -865,6 +859,12 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"HR_WORKDAY_HC_Archive_Destination3_properties_typeProperties_fileName": {
+						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination3_properties_typeProperties_fileName')]"
+					},
+					"HR_WORKDAY_HC_Archive_Destination3_properties_typeProperties_folderPath": {
+						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination3_properties_typeProperties_folderPath')]"
 					},
 					"HR_WORKDAY_HC_Archive_Destination4_properties_typeProperties_fileName": {
 						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination4_properties_typeProperties_fileName')]"
@@ -919,12 +919,6 @@
 					},
 					"HR_WORKDAY_HC_Source2_properties_typeProperties_folderPath": {
 						"value": "[parameters('HR_WORKDAY_HC_Source2_properties_typeProperties_folderPath')]"
-					},
-					"HR_WORKDAY_HC_Source3_properties_typeProperties_fileName": {
-						"value": "[parameters('HR_WORKDAY_HC_Source3_properties_typeProperties_fileName')]"
-					},
-					"HR_WORKDAY_HC_Source3_properties_typeProperties_folderPath": {
-						"value": "[parameters('HR_WORKDAY_HC_Source3_properties_typeProperties_folderPath')]"
 					}
 				}
 			},
@@ -945,6 +939,12 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"HR_WORKDAY_HC_Source3_properties_typeProperties_fileName": {
+						"value": "[parameters('HR_WORKDAY_HC_Source3_properties_typeProperties_fileName')]"
+					},
+					"HR_WORKDAY_HC_Source3_properties_typeProperties_folderPath": {
+						"value": "[parameters('HR_WORKDAY_HC_Source3_properties_typeProperties_folderPath')]"
 					},
 					"HR_WORKDAY_HC_Source4_properties_typeProperties_fileName": {
 						"value": "[parameters('HR_WORKDAY_HC_Source4_properties_typeProperties_fileName')]"
@@ -1019,12 +1019,6 @@
 					},
 					"Revenue_cost_source_properties_typeProperties_folderPath": {
 						"value": "[parameters('Revenue_cost_source_properties_typeProperties_folderPath')]"
-					},
-					"SFDC_Archive_Campaign_properties_typeProperties_fileName": {
-						"value": "[parameters('SFDC_Archive_Campaign_properties_typeProperties_fileName')]"
-					},
-					"SFDC_Archive_Campaign_properties_typeProperties_folderPath": {
-						"value": "[parameters('SFDC_Archive_Campaign_properties_typeProperties_folderPath')]"
 					}
 				}
 			},
@@ -1045,6 +1039,12 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"SFDC_Archive_Campaign_properties_typeProperties_fileName": {
+						"value": "[parameters('SFDC_Archive_Campaign_properties_typeProperties_fileName')]"
+					},
+					"SFDC_Archive_Campaign_properties_typeProperties_folderPath": {
+						"value": "[parameters('SFDC_Archive_Campaign_properties_typeProperties_folderPath')]"
 					},
 					"SFDC_Archive_FX_Rate_properties_typeProperties_fileName": {
 						"value": "[parameters('SFDC_Archive_FX_Rate_properties_typeProperties_fileName')]"
