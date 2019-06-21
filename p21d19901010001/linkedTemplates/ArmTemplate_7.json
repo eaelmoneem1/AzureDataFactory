@@ -247,7 +247,106 @@
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
-				"schema": [],
+				"schema": [
+					{
+						"name": "Account",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Account_Type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Cost_Centre",
+						"type": "nvarchar"
+					},
+					{
+						"name": "CC_Code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Function",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Product_Family",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Product_line",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Sub_Region",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Region",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Source_System",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Year",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Jun",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Jul",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Aug",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Sep",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Oct",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Nov",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Dec",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Jan",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Feb",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Mar",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Apr",
+						"type": "nvarchar"
+					},
+					{
+						"name": "May",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Rec_CRE_TMS",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
 				"typeProperties": {
 					"tableName": "[[STG].[Finance_FF_Revenue&Cost]"
 				}
