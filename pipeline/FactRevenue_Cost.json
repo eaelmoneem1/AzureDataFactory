@@ -31,7 +31,213 @@
 						"type": "SqlSink",
 						"writeBatchSize": 10000
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Account"
+								},
+								"sink": {
+									"name": "Account",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Account Type"
+								},
+								"sink": {
+									"name": "Account_Type",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Cost Centre"
+								},
+								"sink": {
+									"name": "Cost_Centre",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CC code"
+								},
+								"sink": {
+									"name": "CC_Code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Function"
+								},
+								"sink": {
+									"name": "Function",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Product Family",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Product_Family",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Product Line"
+								},
+								"sink": {
+									"name": "Product_line",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Sub Region",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Sub_Region",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Region"
+								},
+								"sink": {
+									"name": "Region",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Source System",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Source_System",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Jun"
+								},
+								"sink": {
+									"name": "Jun",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Jul"
+								},
+								"sink": {
+									"name": "Jul",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Aug"
+								},
+								"sink": {
+									"name": "Aug",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Sep"
+								},
+								"sink": {
+									"name": "Sep",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Oct"
+								},
+								"sink": {
+									"name": "Oct",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Nov"
+								},
+								"sink": {
+									"name": "Nov",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Dec"
+								},
+								"sink": {
+									"name": "Dec",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Jan"
+								},
+								"sink": {
+									"name": "Jan",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Feb"
+								},
+								"sink": {
+									"name": "Feb",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Mar"
+								},
+								"sink": {
+									"name": "Mar",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Apr"
+								},
+								"sink": {
+									"name": "Apr",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "May"
+								},
+								"sink": {
+									"name": "May",
+									"type": "String"
+								}
+							}
+						]
+					}
 				},
 				"inputs": [
 					{
