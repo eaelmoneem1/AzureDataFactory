@@ -5,6 +5,14 @@
 			{
 				"name": "Loading Int tables",
 				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Loading STG tables",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 3,
@@ -13,7 +21,7 @@
 					"secureInput": false
 				},
 				"typeProperties": {
-					"storedProcedureName": "[dbo].[sp_INT_DimEmployee]"
+					"storedProcedureName": "[dbo].[sp_INT_FactCollectionReporting]"
 				},
 				"linkedServiceName": {
 					"referenceName": "AzureSqlDatabase_finastra",
@@ -42,7 +50,7 @@
 					"storedProcedureName": "[dbo].[sp_INT_GenerateHashes]",
 					"storedProcedureParameters": {
 						"TableName": {
-							"value": "DimEmployee"
+							"value": "FactCollectionReporting"
 						}
 					}
 				},
@@ -70,7 +78,7 @@
 					"secureInput": false
 				},
 				"typeProperties": {
-					"storedProcedureName": "[dbo].[sp_INT_ApplyDimEmployee]"
+					"storedProcedureName": "[dbo].[sp_INT_ApplyFactCollectionReporting]"
 				},
 				"linkedServiceName": {
 					"referenceName": "AzureSqlDatabase_finastra",
@@ -97,23 +105,37 @@
 				},
 				"typeProperties": {
 					"source": {
-						"type": "FileSystemSource",
-						"recursive": true
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "FileServerReadSetting",
+							"recursive": true
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSetting"
+						}
 					},
 					"sink": {
-						"type": "AzureDataLakeStoreSink"
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureDataLakeStoreWriteSetting"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSetting",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
 					},
 					"enableStaging": false
 				},
 				"inputs": [
 					{
-						"referenceName": "HR_WORKDAY_HC_Source7",
+						"referenceName": "FactCollection_source",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "HR_WORKDAY_HC_Archive_Destination9",
+						"referenceName": "FactCollection_arch",
 						"type": "DatasetReference"
 					}
 				]

@@ -9,7 +9,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "FileServerLocation",
-				"fileName": "CollectionReporting_20190619.csv",
+				"fileName": {
+					"value": "@concat ('CollectionReporting_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+					"type": "Expression"
+				},
 				"folderPath": "CEOCFO/Finance"
 			},
 			"columnDelimiter": ",",
