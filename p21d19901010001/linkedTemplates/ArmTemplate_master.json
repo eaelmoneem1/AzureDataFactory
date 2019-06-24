@@ -227,6 +227,14 @@
 			"type": "string",
 			"defaultValue": "LandingArchive/CEOCFO/HR"
 		},
+		"HR_WORKDAY_HC_Archive_Destination10_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"HR_WORKDAY_HC_Archive_Destination10_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "LandingArchive/CEOCFO/HR"
+		},
 		"HR_WORKDAY_HC_Archive_Destination2_properties_typeProperties_fileName": {
 			"type": "string",
 			"defaultValue": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
@@ -352,6 +360,14 @@
 			"defaultValue": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
 		},
 		"HR_WORKDAY_HC_Source7_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "CEOCFO/HR"
+		},
+		"HR_WORKDAY_HC_Source8_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"HR_WORKDAY_HC_Source8_properties_typeProperties_folderPath": {
 			"type": "string",
 			"defaultValue": "CEOCFO/HR"
 		},
@@ -827,18 +843,6 @@
 					},
 					"HR_WORKDAY_HC_Archive_Destination_properties_typeProperties_folderPath": {
 						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination_properties_typeProperties_folderPath')]"
-					},
-					"HR_WORKDAY_HC_Archive_Destination1_properties_typeProperties_fileName": {
-						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination1_properties_typeProperties_fileName')]"
-					},
-					"HR_WORKDAY_HC_Archive_Destination1_properties_typeProperties_folderPath": {
-						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination1_properties_typeProperties_folderPath')]"
-					},
-					"HR_WORKDAY_HC_Archive_Destination2_properties_typeProperties_fileName": {
-						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination2_properties_typeProperties_fileName')]"
-					},
-					"HR_WORKDAY_HC_Archive_Destination2_properties_typeProperties_folderPath": {
-						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination2_properties_typeProperties_folderPath')]"
 					}
 				}
 			},
@@ -859,6 +863,24 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"HR_WORKDAY_HC_Archive_Destination1_properties_typeProperties_fileName": {
+						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination1_properties_typeProperties_fileName')]"
+					},
+					"HR_WORKDAY_HC_Archive_Destination1_properties_typeProperties_folderPath": {
+						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination1_properties_typeProperties_folderPath')]"
+					},
+					"HR_WORKDAY_HC_Archive_Destination10_properties_typeProperties_fileName": {
+						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination10_properties_typeProperties_fileName')]"
+					},
+					"HR_WORKDAY_HC_Archive_Destination10_properties_typeProperties_folderPath": {
+						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination10_properties_typeProperties_folderPath')]"
+					},
+					"HR_WORKDAY_HC_Archive_Destination2_properties_typeProperties_fileName": {
+						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination2_properties_typeProperties_fileName')]"
+					},
+					"HR_WORKDAY_HC_Archive_Destination2_properties_typeProperties_folderPath": {
+						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination2_properties_typeProperties_folderPath')]"
 					},
 					"HR_WORKDAY_HC_Archive_Destination3_properties_typeProperties_fileName": {
 						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination3_properties_typeProperties_fileName')]"
@@ -901,24 +923,6 @@
 					},
 					"HR_WORKDAY_HC_Archive_Destination9_properties_typeProperties_folderPath": {
 						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination9_properties_typeProperties_folderPath')]"
-					},
-					"HR_WORKDAY_HC_Source_properties_typeProperties_fileName": {
-						"value": "[parameters('HR_WORKDAY_HC_Source_properties_typeProperties_fileName')]"
-					},
-					"HR_WORKDAY_HC_Source_properties_typeProperties_folderPath": {
-						"value": "[parameters('HR_WORKDAY_HC_Source_properties_typeProperties_folderPath')]"
-					},
-					"HR_WORKDAY_HC_Source1_properties_typeProperties_fileName": {
-						"value": "[parameters('HR_WORKDAY_HC_Source1_properties_typeProperties_fileName')]"
-					},
-					"HR_WORKDAY_HC_Source1_properties_typeProperties_folderPath": {
-						"value": "[parameters('HR_WORKDAY_HC_Source1_properties_typeProperties_folderPath')]"
-					},
-					"HR_WORKDAY_HC_Source2_properties_typeProperties_fileName": {
-						"value": "[parameters('HR_WORKDAY_HC_Source2_properties_typeProperties_fileName')]"
-					},
-					"HR_WORKDAY_HC_Source2_properties_typeProperties_folderPath": {
-						"value": "[parameters('HR_WORKDAY_HC_Source2_properties_typeProperties_folderPath')]"
 					}
 				}
 			},
@@ -939,6 +943,24 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"HR_WORKDAY_HC_Source_properties_typeProperties_fileName": {
+						"value": "[parameters('HR_WORKDAY_HC_Source_properties_typeProperties_fileName')]"
+					},
+					"HR_WORKDAY_HC_Source_properties_typeProperties_folderPath": {
+						"value": "[parameters('HR_WORKDAY_HC_Source_properties_typeProperties_folderPath')]"
+					},
+					"HR_WORKDAY_HC_Source1_properties_typeProperties_fileName": {
+						"value": "[parameters('HR_WORKDAY_HC_Source1_properties_typeProperties_fileName')]"
+					},
+					"HR_WORKDAY_HC_Source1_properties_typeProperties_folderPath": {
+						"value": "[parameters('HR_WORKDAY_HC_Source1_properties_typeProperties_folderPath')]"
+					},
+					"HR_WORKDAY_HC_Source2_properties_typeProperties_fileName": {
+						"value": "[parameters('HR_WORKDAY_HC_Source2_properties_typeProperties_fileName')]"
+					},
+					"HR_WORKDAY_HC_Source2_properties_typeProperties_folderPath": {
+						"value": "[parameters('HR_WORKDAY_HC_Source2_properties_typeProperties_folderPath')]"
 					},
 					"HR_WORKDAY_HC_Source3_properties_typeProperties_fileName": {
 						"value": "[parameters('HR_WORKDAY_HC_Source3_properties_typeProperties_fileName')]"
@@ -969,6 +991,12 @@
 					},
 					"HR_WORKDAY_HC_Source7_properties_typeProperties_folderPath": {
 						"value": "[parameters('HR_WORKDAY_HC_Source7_properties_typeProperties_folderPath')]"
+					},
+					"HR_WORKDAY_HC_Source8_properties_typeProperties_fileName": {
+						"value": "[parameters('HR_WORKDAY_HC_Source8_properties_typeProperties_fileName')]"
+					},
+					"HR_WORKDAY_HC_Source8_properties_typeProperties_folderPath": {
+						"value": "[parameters('HR_WORKDAY_HC_Source8_properties_typeProperties_folderPath')]"
 					},
 					"HR_WORKDAY_REQ_Archive_Destination_properties_typeProperties_fileName": {
 						"value": "[parameters('HR_WORKDAY_REQ_Archive_Destination_properties_typeProperties_fileName')]"
@@ -1013,12 +1041,6 @@
 					},
 					"Revenue_Archive_Destination_properties_typeProperties_folderPath": {
 						"value": "[parameters('Revenue_Archive_Destination_properties_typeProperties_folderPath')]"
-					},
-					"Revenue_cost_source_properties_typeProperties_fileName": {
-						"value": "[parameters('Revenue_cost_source_properties_typeProperties_fileName')]"
-					},
-					"Revenue_cost_source_properties_typeProperties_folderPath": {
-						"value": "[parameters('Revenue_cost_source_properties_typeProperties_folderPath')]"
 					}
 				}
 			},
@@ -1039,6 +1061,12 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"Revenue_cost_source_properties_typeProperties_fileName": {
+						"value": "[parameters('Revenue_cost_source_properties_typeProperties_fileName')]"
+					},
+					"Revenue_cost_source_properties_typeProperties_folderPath": {
+						"value": "[parameters('Revenue_cost_source_properties_typeProperties_folderPath')]"
 					},
 					"SFDC_Archive_Campaign_properties_typeProperties_fileName": {
 						"value": "[parameters('SFDC_Archive_Campaign_properties_typeProperties_fileName')]"
@@ -1075,18 +1103,6 @@
 					},
 					"Sales_MSCRM_Booking_Archive_DL_properties_typeProperties_folderPath": {
 						"value": "[parameters('Sales_MSCRM_Booking_Archive_DL_properties_typeProperties_folderPath')]"
-					},
-					"Sales_MSCRM_OrderBook_Archive_properties_typeProperties_fileName": {
-						"value": "[parameters('Sales_MSCRM_OrderBook_Archive_properties_typeProperties_fileName')]"
-					},
-					"Sales_MSCRM_OrderBook_Archive_properties_typeProperties_folderPath": {
-						"value": "[parameters('Sales_MSCRM_OrderBook_Archive_properties_typeProperties_folderPath')]"
-					},
-					"Sales_MSCRM_OrderBook_source_properties_typeProperties_fileName": {
-						"value": "[parameters('Sales_MSCRM_OrderBook_source_properties_typeProperties_fileName')]"
-					},
-					"Sales_MSCRM_OrderBook_source_properties_typeProperties_folderPath": {
-						"value": "[parameters('Sales_MSCRM_OrderBook_source_properties_typeProperties_folderPath')]"
 					}
 				}
 			},
@@ -1107,6 +1123,18 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"Sales_MSCRM_OrderBook_Archive_properties_typeProperties_fileName": {
+						"value": "[parameters('Sales_MSCRM_OrderBook_Archive_properties_typeProperties_fileName')]"
+					},
+					"Sales_MSCRM_OrderBook_Archive_properties_typeProperties_folderPath": {
+						"value": "[parameters('Sales_MSCRM_OrderBook_Archive_properties_typeProperties_folderPath')]"
+					},
+					"Sales_MSCRM_OrderBook_source_properties_typeProperties_fileName": {
+						"value": "[parameters('Sales_MSCRM_OrderBook_source_properties_typeProperties_fileName')]"
+					},
+					"Sales_MSCRM_OrderBook_source_properties_typeProperties_folderPath": {
+						"value": "[parameters('Sales_MSCRM_OrderBook_source_properties_typeProperties_folderPath')]"
 					},
 					"TimeDimensionDate_Archive_Destination_properties_typeProperties_fileName": {
 						"value": "[parameters('TimeDimensionDate_Archive_Destination_properties_typeProperties_fileName')]"
