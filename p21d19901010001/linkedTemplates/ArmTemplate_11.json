@@ -1545,7 +1545,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_ApplyFactCollectionReporting]"
+							"storedProcedureName": "[[dbo].[sp_INT_ApplyFactCollectionReporting_Monthly_Targets]"
 						},
 						"linkedServiceName": {
 							"referenceName": "AzureSqlDatabase_finastra",
@@ -1605,7 +1605,7 @@
 					}
 				],
 				"folder": {
-					"name": "HR"
+					"name": "Finance"
 				},
 				"annotations": []
 			},
