@@ -70,7 +70,7 @@
 					"secureInput": false
 				},
 				"typeProperties": {
-					"storedProcedureName": "[dbo].[sp_INT_ApplyFactCollectionReporting]"
+					"storedProcedureName": "[dbo].[sp_INT_ApplyFactCollectionReporting_Monthly_Targets]"
 				},
 				"linkedServiceName": {
 					"referenceName": "AzureSqlDatabase_finastra",
