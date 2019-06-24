@@ -1,0 +1,67 @@
+{
+	"name": "FactCollection_Monthly_Arch_Source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "BK",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Region",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Calendar_Period",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Fiscal_Period",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Monthly_Target_Amount",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 2
+			},
+			{
+				"name": "dwEffectiveFrom",
+				"type": "date"
+			},
+			{
+				"name": "dwEffectiveTo",
+				"type": "date"
+			},
+			{
+				"name": "dwActiveRec",
+				"type": "bit"
+			},
+			{
+				"name": "dwCreateDate",
+				"type": "date"
+			},
+			{
+				"name": "dwUpdateDate",
+				"type": "date"
+			},
+			{
+				"name": "dwType1Hash",
+				"type": "varbinary"
+			},
+			{
+				"name": "dwType2Hash",
+				"type": "varbinary"
+			}
+		],
+		"typeProperties": {
+			"tableName": "[dbo].[FactCollectionReporting_Monthly_Targets]"
+		}
+	}
+}

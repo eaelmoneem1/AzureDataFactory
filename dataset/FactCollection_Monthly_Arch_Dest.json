@@ -1,0 +1,268 @@
+{
+	"name": "FactCollection_Monthly_Arch_Dest",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStore",
+			"type": "LinkedServiceReference"
+		},
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureDataLakeStoreLocation",
+				"fileName": {
+					"value": "@concat ('FactCollectionReporting_Monthly_Targets_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
+					"type": "Expression"
+				},
+				"folderPath": "LandingArchive/CEOCFO/Finance"
+			},
+			"columnDelimiter": ",",
+			"compressionCodec": "gzip",
+			"compressionLevel": "Optimal",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "FISCAL_PERIOD_SKEY",
+				"type": "String"
+			},
+			{
+				"name": "FISCAL_PERIOD_CREAT_DT",
+				"type": "String"
+			},
+			{
+				"name": "FISCAL_PERIOD_LAST_UPD_DT",
+				"type": "String"
+			},
+			{
+				"name": "FISC_PERIOD_BKEY",
+				"type": "String"
+			},
+			{
+				"name": "FISC_PERIOD_CAPTION",
+				"type": "String"
+			},
+			{
+				"name": "FISC_PERIOD_CODE",
+				"type": "String"
+			},
+			{
+				"name": "FISC_PERIOD_NAME",
+				"type": "String"
+			},
+			{
+				"name": "FISC_PERIOD_SERIES",
+				"type": "String"
+			},
+			{
+				"name": "FISC_PERIOD_BEG_DT",
+				"type": "String"
+			},
+			{
+				"name": "FISC_PERIOD_END_DT",
+				"type": "String"
+			},
+			{
+				"name": "FISC_QTR_BKEY",
+				"type": "String"
+			},
+			{
+				"name": "FISC_QTR_CAPTION",
+				"type": "String"
+			},
+			{
+				"name": "FISC_QTR_CODE",
+				"type": "String"
+			},
+			{
+				"name": "FISC_QTR_NAME",
+				"type": "String"
+			},
+			{
+				"name": "FISC_QTR_SERIES",
+				"type": "String"
+			},
+			{
+				"name": "FISC_QTR_BEG_DT",
+				"type": "String"
+			},
+			{
+				"name": "FISC_QTR_END_DT",
+				"type": "String"
+			},
+			{
+				"name": "FISC_HALF_YEAR_BKEY",
+				"type": "String"
+			},
+			{
+				"name": "FISC_HALF_YEAR_CAPTION",
+				"type": "String"
+			},
+			{
+				"name": "FISC_HALF_YEAR_CODE",
+				"type": "String"
+			},
+			{
+				"name": "FISC_HALF_YEAR_NAME",
+				"type": "String"
+			},
+			{
+				"name": "FISC_HALF_YEAR_SERIES",
+				"type": "String"
+			},
+			{
+				"name": "FISC_HALF_YEAR_BEG_DT",
+				"type": "String"
+			},
+			{
+				"name": "FISC_HALF_YEAR_END_DT",
+				"type": "String"
+			},
+			{
+				"name": "FISC_YEAR_BKEY",
+				"type": "String"
+			},
+			{
+				"name": "FISC_YEAR_CAPTION",
+				"type": "String"
+			},
+			{
+				"name": "FISC_YEAR_CODE",
+				"type": "String"
+			},
+			{
+				"name": "FISC_YEAR_SERIES",
+				"type": "String"
+			},
+			{
+				"name": "FISC_YEAR_BEG_DT",
+				"type": "String"
+			},
+			{
+				"name": "FISC_YEAR_END_DT",
+				"type": "String"
+			},
+			{
+				"name": "FISC_YEAR_NAME",
+				"type": "String"
+			},
+			{
+				"name": "CAL_MONTH_BKEY",
+				"type": "String"
+			},
+			{
+				"name": "CAL_MONTH_CAPTION",
+				"type": "String"
+			},
+			{
+				"name": "CAL_MONTH_CODE",
+				"type": "String"
+			},
+			{
+				"name": "CAL_MONTH_NAME",
+				"type": "String"
+			},
+			{
+				"name": "CAL_MONTH_SERIES",
+				"type": "String"
+			},
+			{
+				"name": "CAL_MONTH_BEG_DT",
+				"type": "String"
+			},
+			{
+				"name": "CAL_MONTH_END_DT",
+				"type": "String"
+			},
+			{
+				"name": "CAL_QTR_BKEY",
+				"type": "String"
+			},
+			{
+				"name": "CAL_QTR_CAPTION",
+				"type": "String"
+			},
+			{
+				"name": "CAL_QTR_CODE",
+				"type": "String"
+			},
+			{
+				"name": "CAL_QTR_NAME",
+				"type": "String"
+			},
+			{
+				"name": "CAL_QTR_SERIES",
+				"type": "String"
+			},
+			{
+				"name": "CAL_QTR_BEG_DT",
+				"type": "String"
+			},
+			{
+				"name": "CAL_QTR_END_DT",
+				"type": "String"
+			},
+			{
+				"name": "CAL_HALF_YEAR_BKEY",
+				"type": "String"
+			},
+			{
+				"name": "CAL_HALF_YEAR_CAPTION",
+				"type": "String"
+			},
+			{
+				"name": "CAL_HALF_YEAR_CODE",
+				"type": "String"
+			},
+			{
+				"name": "CAL_HALF_YEAR_NAME",
+				"type": "String"
+			},
+			{
+				"name": "CAL_HALF_YEAR_SERIES",
+				"type": "String"
+			},
+			{
+				"name": "CAL_HALF_YEAR_BEG_DT",
+				"type": "String"
+			},
+			{
+				"name": "CAL_HALF_YEAR_END_DT",
+				"type": "String"
+			},
+			{
+				"name": "CAL_YEAR_BKEY",
+				"type": "String"
+			},
+			{
+				"name": "CAL_YEAR_CAPTION",
+				"type": "String"
+			},
+			{
+				"name": "CAL_YEAR_CODE",
+				"type": "String"
+			},
+			{
+				"name": "CAL_YEAR_SERIES",
+				"type": "String"
+			},
+			{
+				"name": "CAL_YEAR_BEG_DT",
+				"type": "String"
+			},
+			{
+				"name": "CAL_YEAR_END_DT",
+				"type": "String"
+			},
+			{
+				"name": "CAL_YEAR_NAME",
+				"type": "String"
+			},
+			{
+				"name": "SOURCE_SYSTEM",
+				"type": "String"
+			}
+		]
+	}
+}
