@@ -1,0 +1,13 @@
+{
+	"name": "Campaign_Archive1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"typeProperties": {
+			"tableName": "[STG].[V_Sales_SFDC_Campaign]"
+		}
+	}
+}

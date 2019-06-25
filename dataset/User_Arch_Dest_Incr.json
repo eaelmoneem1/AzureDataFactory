@@ -1,5 +1,5 @@
 {
-	"name": "User_Arch_Dest",
+	"name": "User_Arch_Dest_Incr",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStore",
@@ -11,7 +11,7 @@
 				"type": "OrcFormat"
 			},
 			"fileName": {
-				"value": "@concat ('User_Initial_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')",
+				"value": "@concat ('User_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')",
 				"type": "Expression"
 			},
 			"folderPath": "LandingArchive/CEOCFO/Sales/User"

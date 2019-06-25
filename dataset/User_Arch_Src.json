@@ -1,0 +1,67 @@
+{
+	"name": "User_Arch_Src",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Employee_ID_SUN_e_number",
+				"type": "varchar"
+			},
+			{
+				"name": "Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Firstname",
+				"type": "varchar"
+			},
+			{
+				"name": "Lastname",
+				"type": "varchar"
+			},
+			{
+				"name": "Country",
+				"type": "varchar"
+			},
+			{
+				"name": "Sub_Region",
+				"type": "varchar"
+			},
+			{
+				"name": "Regional_Manager",
+				"type": "varchar"
+			},
+			{
+				"name": "ProfileId",
+				"type": "varchar"
+			},
+			{
+				"name": "DefaultCurrencyIsoCode",
+				"type": "varchar"
+			},
+			{
+				"name": "Current_FY_ILF_Quota",
+				"type": "varchar"
+			},
+			{
+				"name": "CreatedDate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "LastModifiedDate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"tableName": "[STG].[V_Sales_SFDC_User]"
+		}
+	}
+}
