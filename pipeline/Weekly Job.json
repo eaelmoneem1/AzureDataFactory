@@ -100,6 +100,14 @@
 			{
 				"name": "FactOpportunity_All",
 				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "DimUser",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "FactOpportunity_All Job",
@@ -267,7 +275,7 @@
 					{
 						"activity": "DimEmployee_Requisitions",
 						"dependencyConditions": [
-							"Succeeded"
+							"Completed"
 						]
 					}
 				],
@@ -286,7 +294,7 @@
 					{
 						"activity": "FactSALES_QBRCommits",
 						"dependencyConditions": [
-							"Succeeded"
+							"Completed"
 						]
 					}
 				],
@@ -305,13 +313,43 @@
 					{
 						"activity": "FactCollectionReporting",
 						"dependencyConditions": [
-							"Succeeded"
+							"Completed"
 						]
 					}
 				],
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "FactCollectionReporting_Monthly_Targets",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "DimUser",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "DimProfile",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "DimUser_incremental",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "DimProfile",
+				"type": "ExecutePipeline",
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "DimProfile_incremental",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
