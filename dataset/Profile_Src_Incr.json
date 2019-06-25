@@ -1,0 +1,31 @@
+{
+	"name": "Profile_Src_Incr",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Salesforce1",
+			"type": "LinkedServiceReference"
+		},
+		"type": "SalesforceObject",
+		"structure": [
+			{
+				"name": "Id",
+				"type": "String"
+			},
+			{
+				"name": "Name",
+				"type": "String"
+			},
+			{
+				"name": "CreatedDate",
+				"type": "DateTime"
+			},
+			{
+				"name": "LastModifiedDate",
+				"type": "DateTime"
+			}
+		],
+		"typeProperties": {
+			"objectApiName": "Profile"
+		}
+	}
+}
