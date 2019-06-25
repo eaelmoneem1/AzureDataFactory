@@ -7,6 +7,14 @@
 			"metadata": "Data Factory Name",
 			"defaultValue": "p21d19901010001"
 		},
+		"HR_WORKDAY_REQ_Source_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "@concat ('Requisitions_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"HR_WORKDAY_REQ_Source_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "CEOCFO/HR"
+		},
 		"Opportunity_Incremintal_Archiving_properties_typeProperties_fileName": {
 			"type": "string",
 			"defaultValue": "@concat ('Opportunity_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')"
@@ -20,6 +28,608 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_REQ_Source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileShare",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "FileShare",
+				"structure": [
+					{
+						"name": "Job Req. ID",
+						"type": "String"
+					},
+					{
+						"name": "Job Requisition Status",
+						"type": "String"
+					},
+					{
+						"name": "Primary Location",
+						"type": "String"
+					},
+					{
+						"name": "Country",
+						"type": "String"
+					},
+					{
+						"name": "High/Low Cost Country",
+						"type": "String"
+					},
+					{
+						"name": "Cost Centre ID",
+						"type": "String"
+					},
+					{
+						"name": "Product",
+						"type": "String"
+					},
+					{
+						"name": "Function",
+						"type": "String"
+					},
+					{
+						"name": "Worker Type",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"rowDelimiter": "",
+						"quoteChar": "\"",
+						"nullValue": "",
+						"treatEmptyAsNull": true,
+						"skipLineCount": 0,
+						"firstRowAsHeader": true
+					},
+					"fileName": {
+						"value": "[parameters('HR_WORKDAY_REQ_Source_properties_typeProperties_fileName')]",
+						"type": "Expression"
+					},
+					"folderPath": "[parameters('HR_WORKDAY_REQ_Source_properties_typeProperties_folderPath')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_Termination_Destination')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Employee_ID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Worker_Type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Termination_Date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ELT",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ELT_1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ELT_2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Cost_Centre_ID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Function",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Finastra_Product",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Finastra_FAM",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Finastra_LINE",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Country",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Location",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Rec_CRE_TMS",
+						"type": "date"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[HR_WORKDAY_Terminations]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LND_SFDC_1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"structure": [
+					{
+						"name": "id",
+						"type": "String"
+					},
+					{
+						"name": "Name",
+						"type": "String"
+					},
+					{
+						"name": "Ownerid",
+						"type": "String"
+					},
+					{
+						"name": "owner_name",
+						"type": "String"
+					},
+					{
+						"name": "Owner_Sub_Region_c",
+						"type": "String"
+					},
+					{
+						"name": "CloseDate",
+						"type": "String"
+					},
+					{
+						"name": "StageName",
+						"type": "String"
+					},
+					{
+						"name": "Deal_Type_c",
+						"type": "String"
+					},
+					{
+						"name": "MainProduct_c",
+						"type": "String"
+					},
+					{
+						"name": "OpportunityHEALTH_c",
+						"type": "String"
+					},
+					{
+						"name": "RLF_percent_c",
+						"type": "String"
+					},
+					{
+						"name": "Regional_Sales_Manager_Comments_c",
+						"type": "String"
+					},
+					{
+						"name": "Accountid",
+						"type": "String"
+					},
+					{
+						"name": "Account_Name",
+						"type": "String"
+					},
+					{
+						"name": "Opportunity_18chr_Id_c",
+						"type": "String"
+					},
+					{
+						"name": "Amount",
+						"type": "String"
+					},
+					{
+						"name": "Order_Number_c",
+						"type": "String"
+					},
+					{
+						"name": "Sales_Region_FY07_c",
+						"type": "String"
+					},
+					{
+						"name": "Pricing_Country_c",
+						"type": "String"
+					},
+					{
+						"name": "Misys_Forecast_c",
+						"type": "String"
+					},
+					{
+						"name": "Term_Estimate_Months_c",
+						"type": "String"
+					},
+					{
+						"name": "Commercial_Prop_c",
+						"type": "String"
+					},
+					{
+						"name": "ILF_Amount_c",
+						"type": "String"
+					},
+					{
+						"name": "Total_ILF_In_Qtr_c",
+						"type": "String"
+					},
+					{
+						"name": "Accretive_RLF_c",
+						"type": "String"
+					},
+					{
+						"name": "RLF_Amount_c",
+						"type": "String"
+					},
+					{
+						"name": "PS_Amount_c",
+						"type": "String"
+					},
+					{
+						"name": "ASP_Amount_c",
+						"type": "String"
+					},
+					{
+						"name": "TCV_CSH_c",
+						"type": "String"
+					},
+					{
+						"name": "ACV_ACV_Equiv_CSH_c",
+						"type": "String"
+					},
+					{
+						"name": "Strength_of_Sale_c",
+						"type": "String"
+					},
+					{
+						"name": "Global_Account_Manager_Comments_c",
+						"type": "String"
+					},
+					{
+						"name": "Executive_Sponsor_alignment_c",
+						"type": "String"
+					},
+					{
+						"name": "Next_Step_Due_Date_c",
+						"type": "String"
+					},
+					{
+						"name": "NextStep",
+						"type": "String"
+					},
+					{
+						"name": "Approval_Status_c",
+						"type": "String"
+					},
+					{
+						"name": "sbaa_ApprovalStatus_c",
+						"type": "String"
+					},
+					{
+						"name": "Term_CSH_c",
+						"type": "String"
+					},
+					{
+						"name": "Deal_Category_c",
+						"type": "String"
+					},
+					{
+						"name": "Service_Type_c",
+						"type": "String"
+					},
+					{
+						"name": "Service_Sub_Type_c",
+						"type": "String"
+					},
+					{
+						"name": "Campaignid",
+						"type": "String"
+					},
+					{
+						"name": "Opportunity_Partner_c",
+						"type": "String"
+					},
+					{
+						"name": "Original_Opportunity_c",
+						"type": "String"
+					},
+					{
+						"name": "RecordTypeid",
+						"type": "String"
+					},
+					{
+						"name": "RecordType_Name",
+						"type": "String"
+					},
+					{
+						"name": "LastModifiedDate",
+						"type": "String"
+					},
+					{
+						"name": "CreatedDate",
+						"type": "String"
+					},
+					{
+						"name": "Existing_RLF_Currency_c",
+						"type": "String"
+					},
+					{
+						"name": "CurrencyIsoCode",
+						"type": "String"
+					},
+					{
+						"name": "SBU_Strategic_Business_Unit_c",
+						"type": "String"
+					},
+					{
+						"name": "FiscalPeriod_c",
+						"type": "String"
+					},
+					{
+						"name": "Total_PS_Amount__c",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[Sales_SFDC_Booking]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LND_SFDC_2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"structure": [
+					{
+						"name": "id",
+						"type": "String"
+					},
+					{
+						"name": "Name",
+						"type": "String"
+					},
+					{
+						"name": "Ownerid",
+						"type": "String"
+					},
+					{
+						"name": "owner_name",
+						"type": "String"
+					},
+					{
+						"name": "Owner_Sub_Region_c",
+						"type": "String"
+					},
+					{
+						"name": "CloseDate",
+						"type": "String"
+					},
+					{
+						"name": "StageName",
+						"type": "String"
+					},
+					{
+						"name": "Deal_Type_c",
+						"type": "String"
+					},
+					{
+						"name": "MainProduct_c",
+						"type": "String"
+					},
+					{
+						"name": "OpportunityHEALTH_c",
+						"type": "String"
+					},
+					{
+						"name": "RLF_percent_c",
+						"type": "String"
+					},
+					{
+						"name": "Regional_Sales_Manager_Comments_c",
+						"type": "String"
+					},
+					{
+						"name": "Accountid",
+						"type": "String"
+					},
+					{
+						"name": "Account_Name",
+						"type": "String"
+					},
+					{
+						"name": "Opportunity_18chr_Id_c",
+						"type": "String"
+					},
+					{
+						"name": "Amount",
+						"type": "String"
+					},
+					{
+						"name": "Order_Number_c",
+						"type": "String"
+					},
+					{
+						"name": "Sales_Region_FY07_c",
+						"type": "String"
+					},
+					{
+						"name": "Pricing_Country_c",
+						"type": "String"
+					},
+					{
+						"name": "Misys_Forecast_c",
+						"type": "String"
+					},
+					{
+						"name": "Term_Estimate_Months_c",
+						"type": "String"
+					},
+					{
+						"name": "Commercial_Prop_c",
+						"type": "String"
+					},
+					{
+						"name": "ILF_Amount_c",
+						"type": "String"
+					},
+					{
+						"name": "Total_ILF_In_Qtr_c",
+						"type": "String"
+					},
+					{
+						"name": "Accretive_RLF_c",
+						"type": "String"
+					},
+					{
+						"name": "RLF_Amount_c",
+						"type": "String"
+					},
+					{
+						"name": "PS_Amount_c",
+						"type": "String"
+					},
+					{
+						"name": "ASP_Amount_c",
+						"type": "String"
+					},
+					{
+						"name": "TCV_CSH_c",
+						"type": "String"
+					},
+					{
+						"name": "ACV_ACV_Equiv_CSH_c",
+						"type": "String"
+					},
+					{
+						"name": "Strength_of_Sale_c",
+						"type": "String"
+					},
+					{
+						"name": "Global_Account_Manager_Comments_c",
+						"type": "String"
+					},
+					{
+						"name": "Executive_Sponsor_alignment_c",
+						"type": "String"
+					},
+					{
+						"name": "Next_Step_Due_Date_c",
+						"type": "String"
+					},
+					{
+						"name": "NextStep",
+						"type": "String"
+					},
+					{
+						"name": "Approval_Status_c",
+						"type": "String"
+					},
+					{
+						"name": "sbaa_ApprovalStatus_c",
+						"type": "String"
+					},
+					{
+						"name": "Term_CSH_c",
+						"type": "String"
+					},
+					{
+						"name": "Deal_Category_c",
+						"type": "String"
+					},
+					{
+						"name": "Service_Type_c",
+						"type": "String"
+					},
+					{
+						"name": "Service_Sub_Type_c",
+						"type": "String"
+					},
+					{
+						"name": "Campaignid",
+						"type": "String"
+					},
+					{
+						"name": "Opportunity_Partner_c",
+						"type": "String"
+					},
+					{
+						"name": "Original_Opportunity_c",
+						"type": "String"
+					},
+					{
+						"name": "RecordTypeid",
+						"type": "String"
+					},
+					{
+						"name": "RecordType_Name",
+						"type": "String"
+					},
+					{
+						"name": "LastModifiedDate",
+						"type": "String"
+					},
+					{
+						"name": "CreatedDate",
+						"type": "String"
+					},
+					{
+						"name": "Existing_RLF_Currency_c",
+						"type": "String"
+					},
+					{
+						"name": "CurrencyIsoCode",
+						"type": "String"
+					},
+					{
+						"name": "SBU_Strategic_Business_Unit_c",
+						"type": "String"
+					},
+					{
+						"name": "FiscalPeriod_c",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[Sales_SFDC_Booking]"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/LND_SFDC_3')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -4249,141 +4859,6 @@
 				"typeProperties": {
 					"tableName": "[[STG].[Sales_SFDC_Booking]"
 				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Opportunity_Last_Load_Modified')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"typeProperties": {
-					"tableName": "[[STG].[V_Sales_SFDC_Booking]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/QBRCommits_Arch')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStore",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureDataLakeStoreLocation",
-						"fileName": {
-							"value": "@concat ('QBRCommits_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
-							"type": "Expression"
-						},
-						"folderPath": "LandingArchive/CEOCFO/Sales/QBRCommits"
-					},
-					"columnDelimiter": ",",
-					"compressionCodec": "gzip",
-					"compressionLevel": "Optimal",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/QBRCommits_Des')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "Fiscal_Year",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Quarter",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Sales_Region",
-						"type": "nvarchar"
-					},
-					{
-						"name": "QBR_Commit",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Rec_CRE_TMS",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"tableName": "[[STG].[Sales_FF_QBRCommits]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/QBRCommits_Source')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileShare",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "FileServerLocation",
-						"fileName": {
-							"value": "@concat ('QBRCommits_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
-							"type": "Expression"
-						},
-						"folderPath": "CEOCFO/Sales"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "Fiscal Year",
-						"type": "String"
-					},
-					{
-						"name": "Quarter",
-						"type": "String"
-					},
-					{
-						"name": "Sales Region",
-						"type": "String"
-					},
-					{
-						"name": "QBR Commit",
-						"type": "String"
-					}
-				]
 			},
 			"dependsOn": []
 		}

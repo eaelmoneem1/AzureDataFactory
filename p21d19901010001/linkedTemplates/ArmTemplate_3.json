@@ -69,6 +69,328 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/EXMSCORE_History_Source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileShare",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"fileName": {
+							"value": "@concat ('EXM_History_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+							"type": "Expression"
+						},
+						"folderPath": "CEOCFO/HR"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "EXM_Score_Type",
+						"type": "String"
+					},
+					{
+						"name": "EXM_Score_Type_Details",
+						"type": "String"
+					},
+					{
+						"name": "Detractors",
+						"type": "String"
+					},
+					{
+						"name": "Passives",
+						"type": "String"
+					},
+					{
+						"name": "Promoters",
+						"type": "String"
+					},
+					{
+						"name": "Year",
+						"type": "String"
+					},
+					{
+						"name": "Week",
+						"type": "String"
+					},
+					{
+						"name": "Sum",
+						"type": "String"
+					},
+					{
+						"name": "EXM Score",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/EXMSCORE_Source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "EXM_SCORE_SK",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "EXM_SCORE_BK",
+						"type": "varchar"
+					},
+					{
+						"name": "EXM_Score_Type",
+						"type": "varchar"
+					},
+					{
+						"name": "EXM_Score_Type_Details",
+						"type": "varchar"
+					},
+					{
+						"name": "Responses",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Detractors_Percentage",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Passives_Percentage",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Promoters_Percentage",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Score",
+						"type": "decimal",
+						"precision": 6,
+						"scale": 2
+					},
+					{
+						"name": "Avg_Response",
+						"type": "decimal",
+						"precision": 16,
+						"scale": 2
+					},
+					{
+						"name": "Response_Distribution_0",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_1",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_2",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_3",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_4",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_5",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_6",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_7",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_8",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_9",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Response_Distribution_10",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Year",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Calendar_Week_Number",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Detractors",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Passives",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Promoters",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "dwEffectiveFrom",
+						"type": "date"
+					},
+					{
+						"name": "dwEffectiveTo",
+						"type": "date"
+					},
+					{
+						"name": "dwActiveRec",
+						"type": "bit"
+					},
+					{
+						"name": "dwCreateDate",
+						"type": "date"
+					},
+					{
+						"name": "dwUpdateDate",
+						"type": "date"
+					},
+					{
+						"name": "dwType1Hash",
+						"type": "varbinary"
+					},
+					{
+						"name": "dwType2Hash",
+						"type": "varbinary"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[dbo].[FactEXMSCORE]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FF_Cash_Dest_DL')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStore",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureDataLakeStoreLocation",
+						"fileName": {
+							"value": "@concat ('FinanceCash_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
+							"type": "Expression"
+						},
+						"folderPath": "LandingArchive/CEOCFO/Finance"
+					},
+					"columnDelimiter": ",",
+					"compressionCodec": "gzip",
+					"compressionLevel": "Optimal",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FF_Cash_Source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileShare",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"fileName": {
+							"value": "@concat ('FinanceCash_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+							"type": "Expression"
+						},
+						"folderPath": "CEOCFO/Finance"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Date",
+						"type": "String"
+					},
+					{
+						"name": "Cash Balance",
+						"type": "String"
+					},
+					{
+						"name": "RCF drawn",
+						"type": "String"
+					},
+					{
+						"name": "Trapped Cash",
+						"type": "String"
+					},
+					{
+						"name": "Cash Net of RCF",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/FX_Conversion_Archive')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -905,276 +1227,6 @@
 					},
 					"folderPath": "[parameters('Finace_RevenueCost_Destination_properties_typeProperties_folderPath')]"
 				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Finace_RevenueCost_Source')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"structure": [
-					{
-						"name": "RevenuelSK",
-						"type": "Int64"
-					},
-					{
-						"name": "RevenueBK",
-						"type": "String"
-					},
-					{
-						"name": "Account",
-						"type": "String"
-					},
-					{
-						"name": "Cost_Centre",
-						"type": "String"
-					},
-					{
-						"name": "CC_Code",
-						"type": "String"
-					},
-					{
-						"name": "Product_Function",
-						"type": "String"
-					},
-					{
-						"name": "Product_Family",
-						"type": "String"
-					},
-					{
-						"name": "Product_line",
-						"type": "String"
-					},
-					{
-						"name": "Sub_Region",
-						"type": "String"
-					},
-					{
-						"name": "Region",
-						"type": "String"
-					},
-					{
-						"name": "Source_System",
-						"type": "String"
-					},
-					{
-						"name": "Fiscal_Period",
-						"type": "Int32"
-					},
-					{
-						"name": "Actuals",
-						"type": "Decimal"
-					},
-					{
-						"name": "Year",
-						"type": "String"
-					},
-					{
-						"name": "dwEffectiveFrom",
-						"type": "Date"
-					},
-					{
-						"name": "dwEffectiveTo",
-						"type": "Date"
-					},
-					{
-						"name": "dwActiveRec",
-						"type": "Boolean"
-					},
-					{
-						"name": "dwCreateDate",
-						"type": "Date"
-					},
-					{
-						"name": "dwUpdateDate",
-						"type": "Date"
-					},
-					{
-						"name": "dwType1Hash",
-						"type": "Byte[]"
-					},
-					{
-						"name": "dwType2Hash",
-						"type": "Byte[]"
-					}
-				],
-				"typeProperties": {
-					"tableName": "[[dbo].[FactRevenue_Cost]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HR_FUTURE_HIRES_ARCH_DEST')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStore",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureDataLakeStoreLocation",
-						"fileName": {
-							"value": "@concat ('FutureHires_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
-							"type": "Expression"
-						},
-						"folderPath": "LandingArchive/CEOCFO/HR"
-					},
-					"columnDelimiter": ",",
-					"compressionCodec": "gzip",
-					"compressionLevel": "Optimal",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HR_FUTURE_HIRES_SOURCE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileShare",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "FileServerLocation",
-						"fileName": {
-							"value": "@concat ('FutureHires_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
-							"type": "Expression"
-						},
-						"folderPath": "CEOCFO/HR"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "Employee ID",
-						"type": "String"
-					},
-					{
-						"name": "Worker Type",
-						"type": "String"
-					},
-					{
-						"name": "Hire Date",
-						"type": "String"
-					},
-					{
-						"name": "Function",
-						"type": "String"
-					},
-					{
-						"name": "Location",
-						"type": "String"
-					},
-					{
-						"name": "Country",
-						"type": "String"
-					},
-					{
-						"name": "High/Low Cost",
-						"type": "String"
-					},
-					{
-						"name": "Cost Centre",
-						"type": "String"
-					},
-					{
-						"name": "Product",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HR_FUTURE_TERMINATIONS')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileShare",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "FileServerLocation",
-						"fileName": {
-							"value": "@concat ('FutureTerminations_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
-							"type": "Expression"
-						},
-						"folderPath": "CEOCFO/HR"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "Worker Type",
-						"type": "String"
-					},
-					{
-						"name": "Termination Date",
-						"type": "String"
-					},
-					{
-						"name": "Location",
-						"type": "String"
-					},
-					{
-						"name": "Country",
-						"type": "String"
-					},
-					{
-						"name": "High/Low Cost",
-						"type": "String"
-					},
-					{
-						"name": "Product",
-						"type": "String"
-					},
-					{
-						"name": "Product Family",
-						"type": "String"
-					},
-					{
-						"name": "Product Line",
-						"type": "String"
-					},
-					{
-						"name": "Cost Centre",
-						"type": "String"
-					},
-					{
-						"name": "Function",
-						"type": "String"
-					}
-				]
 			},
 			"dependsOn": []
 		}

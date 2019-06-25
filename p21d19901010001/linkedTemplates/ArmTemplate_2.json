@@ -13,7 +13,41 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/CS_FF_NPS_Source_Archive')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"typeProperties": {
+					"tableName": "[[STG].[V_CS_FF_NPS]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Campaign_Archive')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"typeProperties": {
+					"tableName": "[[STG].[V_Sales_SFDC_Campaign]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Campaign_Archive1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -47,7 +81,41 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Campaign_Last_Created1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"typeProperties": {
+					"tableName": "[[STG].[Sales_SFDC_Campaign]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Campaign_last_modified')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"typeProperties": {
+					"tableName": "[[STG].[Sales_SFDC_Campaign]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Campaign_last_modified1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -999,328 +1067,6 @@
 				"typeProperties": {
 					"tableName": "[[STG].[HR_Maclean_EXM_History]"
 				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/EXMSCORE_History_Source')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileShare",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "FileServerLocation",
-						"fileName": {
-							"value": "@concat ('EXM_History_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
-							"type": "Expression"
-						},
-						"folderPath": "CEOCFO/HR"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "EXM_Score_Type",
-						"type": "String"
-					},
-					{
-						"name": "EXM_Score_Type_Details",
-						"type": "String"
-					},
-					{
-						"name": "Detractors",
-						"type": "String"
-					},
-					{
-						"name": "Passives",
-						"type": "String"
-					},
-					{
-						"name": "Promoters",
-						"type": "String"
-					},
-					{
-						"name": "Year",
-						"type": "String"
-					},
-					{
-						"name": "Week",
-						"type": "String"
-					},
-					{
-						"name": "Sum",
-						"type": "String"
-					},
-					{
-						"name": "EXM Score",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/EXMSCORE_Source')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "EXM_SCORE_SK",
-						"type": "bigint",
-						"precision": 19
-					},
-					{
-						"name": "EXM_SCORE_BK",
-						"type": "varchar"
-					},
-					{
-						"name": "EXM_Score_Type",
-						"type": "varchar"
-					},
-					{
-						"name": "EXM_Score_Type_Details",
-						"type": "varchar"
-					},
-					{
-						"name": "Responses",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Detractors_Percentage",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Passives_Percentage",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Promoters_Percentage",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Score",
-						"type": "decimal",
-						"precision": 6,
-						"scale": 2
-					},
-					{
-						"name": "Avg_Response",
-						"type": "decimal",
-						"precision": 16,
-						"scale": 2
-					},
-					{
-						"name": "Response_Distribution_0",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Response_Distribution_1",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Response_Distribution_2",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Response_Distribution_3",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Response_Distribution_4",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Response_Distribution_5",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Response_Distribution_6",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Response_Distribution_7",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Response_Distribution_8",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Response_Distribution_9",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Response_Distribution_10",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Year",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Calendar_Week_Number",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Detractors",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Passives",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Promoters",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "dwEffectiveFrom",
-						"type": "date"
-					},
-					{
-						"name": "dwEffectiveTo",
-						"type": "date"
-					},
-					{
-						"name": "dwActiveRec",
-						"type": "bit"
-					},
-					{
-						"name": "dwCreateDate",
-						"type": "date"
-					},
-					{
-						"name": "dwUpdateDate",
-						"type": "date"
-					},
-					{
-						"name": "dwType1Hash",
-						"type": "varbinary"
-					},
-					{
-						"name": "dwType2Hash",
-						"type": "varbinary"
-					}
-				],
-				"typeProperties": {
-					"tableName": "[[dbo].[FactEXMSCORE]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/FF_Cash_Dest_DL')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStore",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureDataLakeStoreLocation",
-						"fileName": {
-							"value": "@concat ('FinanceCash_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
-							"type": "Expression"
-						},
-						"folderPath": "LandingArchive/CEOCFO/Finance"
-					},
-					"columnDelimiter": ",",
-					"compressionCodec": "gzip",
-					"compressionLevel": "Optimal",
-					"escapeChar": "\\",
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/FF_Cash_Source')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileShare",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "FileServerLocation",
-						"fileName": {
-							"value": "@concat ('FinanceCash_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
-							"type": "Expression"
-						},
-						"folderPath": "CEOCFO/Finance"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "Date",
-						"type": "String"
-					},
-					{
-						"name": "Cash Balance",
-						"type": "String"
-					},
-					{
-						"name": "RCF drawn",
-						"type": "String"
-					},
-					{
-						"name": "Trapped Cash",
-						"type": "String"
-					},
-					{
-						"name": "Cash Net of RCF",
-						"type": "String"
-					}
-				]
 			},
 			"dependsOn": []
 		}

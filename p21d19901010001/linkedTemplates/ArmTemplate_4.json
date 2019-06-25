@@ -38,28 +38,282 @@
 		"HR_Maclean_EXM_Region_Source_properties_typeProperties_folderPath": {
 			"type": "string",
 			"defaultValue": "CEOCFO/HR"
-		},
-		"HR_WORKDAY_HC_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "HR_Workday_HeadCount.csv"
-		},
-		"HR_WORKDAY_HC_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "Landing"
-		},
-		"HR_WORKDAY_HC_Archive_Destination_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
-		},
-		"HR_WORKDAY_HC_Archive_Destination_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "LandingArchive/CEOCFO/HR"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/Finace_RevenueCost_Source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"structure": [
+					{
+						"name": "RevenuelSK",
+						"type": "Int64"
+					},
+					{
+						"name": "RevenueBK",
+						"type": "String"
+					},
+					{
+						"name": "Account",
+						"type": "String"
+					},
+					{
+						"name": "Cost_Centre",
+						"type": "String"
+					},
+					{
+						"name": "CC_Code",
+						"type": "String"
+					},
+					{
+						"name": "Product_Function",
+						"type": "String"
+					},
+					{
+						"name": "Product_Family",
+						"type": "String"
+					},
+					{
+						"name": "Product_line",
+						"type": "String"
+					},
+					{
+						"name": "Sub_Region",
+						"type": "String"
+					},
+					{
+						"name": "Region",
+						"type": "String"
+					},
+					{
+						"name": "Source_System",
+						"type": "String"
+					},
+					{
+						"name": "Fiscal_Period",
+						"type": "Int32"
+					},
+					{
+						"name": "Actuals",
+						"type": "Decimal"
+					},
+					{
+						"name": "Year",
+						"type": "String"
+					},
+					{
+						"name": "dwEffectiveFrom",
+						"type": "Date"
+					},
+					{
+						"name": "dwEffectiveTo",
+						"type": "Date"
+					},
+					{
+						"name": "dwActiveRec",
+						"type": "Boolean"
+					},
+					{
+						"name": "dwCreateDate",
+						"type": "Date"
+					},
+					{
+						"name": "dwUpdateDate",
+						"type": "Date"
+					},
+					{
+						"name": "dwType1Hash",
+						"type": "Byte[]"
+					},
+					{
+						"name": "dwType2Hash",
+						"type": "Byte[]"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[dbo].[FactRevenue_Cost]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/HR_FUTURE_HIRES_ARCH_DEST')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStore",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureDataLakeStoreLocation",
+						"fileName": {
+							"value": "@concat ('FutureHires_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
+							"type": "Expression"
+						},
+						"folderPath": "LandingArchive/CEOCFO/HR"
+					},
+					"columnDelimiter": ",",
+					"compressionCodec": "gzip",
+					"compressionLevel": "Optimal",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/HR_FUTURE_HIRES_SOURCE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileShare",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"fileName": {
+							"value": "@concat ('FutureHires_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+							"type": "Expression"
+						},
+						"folderPath": "CEOCFO/HR"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Employee ID",
+						"type": "String"
+					},
+					{
+						"name": "Worker Type",
+						"type": "String"
+					},
+					{
+						"name": "Hire Date",
+						"type": "String"
+					},
+					{
+						"name": "Function",
+						"type": "String"
+					},
+					{
+						"name": "Location",
+						"type": "String"
+					},
+					{
+						"name": "Country",
+						"type": "String"
+					},
+					{
+						"name": "High/Low Cost",
+						"type": "String"
+					},
+					{
+						"name": "Cost Centre",
+						"type": "String"
+					},
+					{
+						"name": "Product",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/HR_FUTURE_TERMINATIONS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileShare",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"fileName": {
+							"value": "@concat ('FutureTerminations_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+							"type": "Expression"
+						},
+						"folderPath": "CEOCFO/HR"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Worker Type",
+						"type": "String"
+					},
+					{
+						"name": "Termination Date",
+						"type": "String"
+					},
+					{
+						"name": "Location",
+						"type": "String"
+					},
+					{
+						"name": "Country",
+						"type": "String"
+					},
+					{
+						"name": "High/Low Cost",
+						"type": "String"
+					},
+					{
+						"name": "Product",
+						"type": "String"
+					},
+					{
+						"name": "Product Family",
+						"type": "String"
+					},
+					{
+						"name": "Product Line",
+						"type": "String"
+					},
+					{
+						"name": "Cost Centre",
+						"type": "String"
+					},
+					{
+						"name": "Function",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/HR_FUTURE_TERMINATION_ARCH_DEST')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -1081,197 +1335,6 @@
 				],
 				"typeProperties": {
 					"tableName": "[[STG].[HR_WORKDAY_FUTURE_HIRES]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_FUTURE_HIRES_SOURCE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileShare",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "FileServerLocation",
-						"fileName": "FutureHires_20190531.csv",
-						"folderPath": "CEOCFO/HR"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "Employee ID",
-						"type": "String"
-					},
-					{
-						"name": "Worker Type",
-						"type": "String"
-					},
-					{
-						"name": "Hire Date",
-						"type": "String"
-					},
-					{
-						"name": "Function",
-						"type": "String"
-					},
-					{
-						"name": "Location",
-						"type": "String"
-					},
-					{
-						"name": "Country",
-						"type": "String"
-					},
-					{
-						"name": "High/Low Cost",
-						"type": "String"
-					},
-					{
-						"name": "Cost Centre",
-						"type": "String"
-					},
-					{
-						"name": "Product",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_FUTURE_TERMINATION')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "Worker_Type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Termination_Date",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Location",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Country",
-						"type": "nvarchar"
-					},
-					{
-						"name": "High/Low_Cost",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Product",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Product_Family",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Product_Line",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Cost_Centre",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Function",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Rec_CRE_TMS",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"tableName": "[[STG].[HR_WORKDAY_FUTURE_Terminations]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_HC')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStore",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureDataLakeStoreFile",
-				"typeProperties": {
-					"format": {
-						"type": "TextFormat",
-						"columnDelimiter": ",",
-						"rowDelimiter": "",
-						"quoteChar": "\"",
-						"nullValue": "",
-						"treatEmptyAsNull": true,
-						"skipLineCount": 0,
-						"firstRowAsHeader": true
-					},
-					"fileName": "[parameters('HR_WORKDAY_HC_properties_typeProperties_fileName')]",
-					"folderPath": "[parameters('HR_WORKDAY_HC_properties_typeProperties_folderPath')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_HC_Archive_Destination')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStore",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureDataLakeStoreFile",
-				"typeProperties": {
-					"format": {
-						"type": "TextFormat",
-						"columnDelimiter": ",",
-						"rowDelimiter": "",
-						"quoteChar": "\"",
-						"nullValue": "",
-						"treatEmptyAsNull": true,
-						"skipLineCount": 0,
-						"firstRowAsHeader": true
-					},
-					"compression": {
-						"type": "GZip",
-						"level": "Optimal"
-					},
-					"fileName": {
-						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination_properties_typeProperties_fileName')]",
-						"type": "Expression"
-					},
-					"folderPath": "[parameters('HR_WORKDAY_HC_Archive_Destination_properties_typeProperties_folderPath')]"
 				}
 			},
 			"dependsOn": []

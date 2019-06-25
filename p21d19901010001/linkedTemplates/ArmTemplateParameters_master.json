@@ -326,6 +326,12 @@
 		"SFDC_Archive_Campaign_properties_typeProperties_folderPath": {
 			"value": "LandingArchive/CEOCFO/Sales/Campaign"
 		},
+		"SFDC_Archive_Campaign1_properties_typeProperties_fileName": {
+			"value": "@concat ('Campaign_Initial_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')"
+		},
+		"SFDC_Archive_Campaign1_properties_typeProperties_folderPath": {
+			"value": "LandingArchive/CEOCFO/Sales/Campaign"
+		},
 		"SFDC_Archive_FX_Rate_properties_typeProperties_fileName": {
 			"value": "@concat ('FXRate_Conversion_Initial_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')"
 		},
@@ -393,9 +399,15 @@
 			"value": "CEOCFO/Dimentions/Time"
 		},
 		"User_Arch_Dest_properties_typeProperties_fileName": {
-			"value": ""
+			"value": "@concat ('User_Initial_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')"
 		},
 		"User_Arch_Dest_properties_typeProperties_folderPath": {
+			"value": "LandingArchive/CEOCFO/Sales/User"
+		},
+		"User_Arch_Dest_Incr_properties_typeProperties_fileName": {
+			"value": "@concat ('User_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')"
+		},
+		"User_Arch_Dest_Incr_properties_typeProperties_folderPath": {
 			"value": "LandingArchive/CEOCFO/Sales/User"
 		},
 		"V_HR_Maclean_EXM_Location_Archive_Destination_properties_typeProperties_fileName": {
