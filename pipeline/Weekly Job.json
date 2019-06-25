@@ -259,6 +259,63 @@
 					},
 					"waitOnCompletion": true
 				}
+			},
+			{
+				"name": "FactSALES_QBRCommits",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "DimEmployee_Requisitions",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "FactSALES_QBRCommits",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "FactCollectionReporting",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "FactSALES_QBRCommits",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "FactCollectionReporting",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "FactCollectionReporting_Monthly_Targets",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "FactCollectionReporting",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "FactCollectionReporting_Monthly_Targets",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
 			}
 		],
 		"folder": {
