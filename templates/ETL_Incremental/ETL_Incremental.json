@@ -1,0 +1,411 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory Name"
+		},
+		"AzureSqlDatabase_finastra": {
+			"type": "string"
+		},
+		"Salesforce1": {
+			"type": "string"
+		},
+		"AzureDataLakeStore": {
+			"type": "string"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/DimSales_SFDC_Campaign_incremental')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Loading STG tables",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Get Last Modified Record",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "Get Last Created Record",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceSource",
+								"query": {
+									"value": "select Id,Name,CreatedDate,LastModifiedDate\nfrom Campaign\nwhere CreatedDate >@{activity('Get Last Created Record').output.firstRow.Created}Z OR  LastModifiedDate >@{activity('Get Last Modified Record').output.firstRow.Modified}Z\n",
+									"type": "Expression"
+								},
+								"readBehavior": "query"
+							},
+							"sink": {
+								"type": "SqlSink",
+								"writeBatchSize": 10000
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"columnMappings": {
+									"Id": "id",
+									"Name": "Name",
+									"CreatedDate": "CreatedDate",
+									"LastModifiedDate": "LastModifiedDate"
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Salesforce_Campaign",
+								"type": "DatasetReference"
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSqlTable1",
+								"type": "DatasetReference"
+							}
+						]
+					},
+					{
+						"name": "Archiving data in DL",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Loading dbo table",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"typeProperties": {
+							"source": {
+								"type": "SqlSource"
+							},
+							"sink": {
+								"type": "AzureDataLakeStoreSink"
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "Campaign_Archive",
+								"type": "DatasetReference"
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SFDC_Archive_Campaign",
+								"type": "DatasetReference"
+							}
+						]
+					},
+					{
+						"name": "Loading Int tables",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading STG tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"typeProperties": {
+							"storedProcedureName": "sp_INT_DimSales_SFDC_Campaign"
+						},
+						"linkedServiceName": {
+							"referenceName": "[parameters('AzureSqlDatabase_finastra')]",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Hash Generate",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading Int tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
+							"storedProcedureParameters": {
+								"TableName": {
+									"value": "DimSales_SFDC_Campaign",
+									"type": "String"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "[parameters('AzureSqlDatabase_finastra')]",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Loading dbo table",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Hash Generate",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_ApplyDimSales_SFDC_Campaign]"
+						},
+						"linkedServiceName": {
+							"referenceName": "[parameters('AzureSqlDatabase_finastra')]",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Get Last Modified Record",
+						"type": "Lookup",
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"typeProperties": {
+							"source": {
+								"type": "SqlSource",
+								"sqlReaderQuery": "select max(cast (Lastmodifieddate AS datetime)) AS Modified\n  FROM [STG].[Sales_SFDC_Campaign]"
+							},
+							"dataset": {
+								"referenceName": "Campaign_last_modified",
+								"type": "DatasetReference"
+							}
+						}
+					},
+					{
+						"name": "Get Last Created Record",
+						"type": "Lookup",
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"typeProperties": {
+							"source": {
+								"type": "SqlSource",
+								"sqlReaderQuery": "  select max(cast (CreatedDate AS datetime)) AS Created\n  FROM [STG].[Sales_SFDC_Campaign]\n"
+							},
+							"dataset": {
+								"referenceName": "Campaign_Last_Created",
+								"type": "DatasetReference"
+							}
+						}
+					}
+				],
+				"folder": {
+					"name": "Sales"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Salesforce_Campaign')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]",
+				"[concat(variables('factoryId'), '/datasets/Campaign_Archive')]",
+				"[concat(variables('factoryId'), '/datasets/SFDC_Archive_Campaign')]",
+				"[concat(variables('factoryId'), '/datasets/Campaign_last_modified')]",
+				"[concat(variables('factoryId'), '/datasets/Campaign_Last_Created')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Salesforce_Campaign')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "[parameters('Salesforce1')]",
+					"type": "LinkedServiceReference"
+				},
+				"type": "SalesforceObject",
+				"structure": [
+					{
+						"name": "Id",
+						"type": "String"
+					},
+					{
+						"name": "Name",
+						"type": "String"
+					},
+					{
+						"name": "CreatedDate",
+						"type": "DateTime"
+					},
+					{
+						"name": "LastModifiedDate",
+						"type": "DateTime"
+					}
+				],
+				"typeProperties": {
+					"objectApiName": "Campaign"
+				}
+			}
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "[parameters('AzureSqlDatabase_finastra')]",
+					"type": "LinkedServiceReference"
+				},
+				"type": "AzureSqlTable",
+				"structure": [
+					{
+						"name": "id",
+						"type": "String"
+					},
+					{
+						"name": "Name",
+						"type": "String"
+					},
+					{
+						"name": "CreatedDate",
+						"type": "String"
+					},
+					{
+						"name": "LastModifiedDate",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[Sales_SFDC_Campaign]"
+				}
+			}
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Campaign_Archive')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "[parameters('AzureSqlDatabase_finastra')]",
+					"type": "LinkedServiceReference"
+				},
+				"type": "AzureSqlTable",
+				"typeProperties": {
+					"tableName": "[[STG].[V_Sales_SFDC_Campaign]"
+				}
+			}
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SFDC_Archive_Campaign')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "[parameters('AzureDataLakeStore')]",
+					"type": "LinkedServiceReference"
+				},
+				"type": "AzureDataLakeStoreFile",
+				"typeProperties": {
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"rowDelimiter": "",
+						"quoteChar": "\"",
+						"nullValue": "",
+						"treatEmptyAsNull": true,
+						"skipLineCount": 0,
+						"firstRowAsHeader": true
+					},
+					"fileName": {
+						"value": "@concat ('Campaign_Initial_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')",
+						"type": "Expression"
+					},
+					"folderPath": "LandingArchive/CEOCFO/Sales/Campaign"
+				}
+			}
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Campaign_last_modified')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "[parameters('AzureSqlDatabase_finastra')]",
+					"type": "LinkedServiceReference"
+				},
+				"type": "AzureSqlTable",
+				"typeProperties": {
+					"tableName": "[[STG].[Sales_SFDC_Campaign]"
+				}
+			}
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Campaign_Last_Created')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "[parameters('AzureSqlDatabase_finastra')]",
+					"type": "LinkedServiceReference"
+				},
+				"type": "AzureSqlTable",
+				"typeProperties": {
+					"tableName": "[[STG].[Sales_SFDC_Campaign]"
+				}
+			}
+		}
+	]
+}
