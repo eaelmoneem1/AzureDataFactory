@@ -21,7 +21,7 @@
 					"secureInput": false
 				},
 				"typeProperties": {
-					"storedProcedureName": "[dbo].[sp_INT_DimEmployee]"
+					"storedProcedureName": "[dbo].[sp_INT_DimUser]"
 				},
 				"linkedServiceName": {
 					"referenceName": "AzureSqlDatabase_finastra",
@@ -78,7 +78,7 @@
 					"secureInput": false
 				},
 				"typeProperties": {
-					"storedProcedureName": "[dbo].[sp_INT_ApplyDimEmployee]"
+					"storedProcedureName": "[dbo].[sp_INT_ApplyDimUser]"
 				},
 				"linkedServiceName": {
 					"referenceName": "AzureSqlDatabase_finastra",
