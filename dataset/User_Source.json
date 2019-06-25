@@ -1,0 +1,63 @@
+{
+	"name": "User_Source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Salesforce1",
+			"type": "LinkedServiceReference"
+		},
+		"type": "SalesforceObject",
+		"structure": [
+			{
+				"name": "Employee_ID_SUN_e_number__c",
+				"type": "String"
+			},
+			{
+				"name": "Name",
+				"type": "String"
+			},
+			{
+				"name": "FirstName",
+				"type": "String"
+			},
+			{
+				"name": "LastName",
+				"type": "String"
+			},
+			{
+				"name": "Country",
+				"type": "String"
+			},
+			{
+				"name": "Sub_Region__c",
+				"type": "String"
+			},
+			{
+				"name": "Regional_Manager__c",
+				"type": "String"
+			},
+			{
+				"name": "ProfileId",
+				"type": "String"
+			},
+			{
+				"name": "DefaultCurrencyIsoCode",
+				"type": "String"
+			},
+			{
+				"name": "Current_FY_ILF_Quota__c",
+				"type": "Decimal"
+			},
+			{
+				"name": "CreatedDate",
+				"type": "DateTime"
+			},
+			{
+				"name": "LastModifiedDate",
+				"type": "DateTime"
+			}
+		],
+		"typeProperties": {
+			"objectApiName": "User"
+		}
+	}
+}

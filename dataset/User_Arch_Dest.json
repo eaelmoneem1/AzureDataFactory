@@ -1,0 +1,17 @@
+{
+	"name": "User_Arch_Dest",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStore",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureDataLakeStoreFile",
+		"typeProperties": {
+			"format": {
+				"type": "OrcFormat"
+			},
+			"fileName": "",
+			"folderPath": "LandingArchive/CEOCFO/Sales/User"
+		}
+	}
+}
