@@ -1,0 +1,20 @@
+{
+	"name": "Profile_Arch_Dest",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStore",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureDataLakeStoreFile",
+		"typeProperties": {
+			"format": {
+				"type": "OrcFormat"
+			},
+			"fileName": {
+				"value": "@concat ('Profile_Initial_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')",
+				"type": "Expression"
+			},
+			"folderPath": "LandingArchive/CEOCFO/Sales/Profile"
+		}
+	}
+}
