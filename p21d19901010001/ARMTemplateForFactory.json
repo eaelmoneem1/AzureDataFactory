@@ -13229,7 +13229,14 @@
 					{
 						"name": "FactOpportunity_All",
 						"type": "ExecutePipeline",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "DimUser",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
@@ -13415,7 +13422,7 @@
 							{
 								"activity": "DimEmployee_Requisitions",
 								"dependencyConditions": [
-									"Succeeded"
+									"Completed"
 								]
 							}
 						],
@@ -13436,7 +13443,7 @@
 							{
 								"activity": "FactSALES_QBRCommits",
 								"dependencyConditions": [
-									"Succeeded"
+									"Completed"
 								]
 							}
 						],
@@ -13457,7 +13464,7 @@
 							{
 								"activity": "FactCollectionReporting",
 								"dependencyConditions": [
-									"Succeeded"
+									"Completed"
 								]
 							}
 						],
@@ -13465,6 +13472,41 @@
 						"typeProperties": {
 							"pipeline": {
 								"referenceName": "FactCollectionReporting_Monthly_Targets",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "DimUser",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "DimProfile",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "DimUser_incremental",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "DimProfile",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "DimProfile_incremental",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
@@ -13494,7 +13536,9 @@
 				"[concat(variables('factoryId'), '/pipelines/DimEmployee_Diversity')]",
 				"[concat(variables('factoryId'), '/pipelines/FactSALES_QBRCommits')]",
 				"[concat(variables('factoryId'), '/pipelines/FactCollectionReporting')]",
-				"[concat(variables('factoryId'), '/pipelines/FactCollectionReporting_Monthly_Targets')]"
+				"[concat(variables('factoryId'), '/pipelines/FactCollectionReporting_Monthly_Targets')]",
+				"[concat(variables('factoryId'), '/pipelines/DimUser_incremental')]",
+				"[concat(variables('factoryId'), '/pipelines/DimProfile_incremental')]"
 			]
 		},
 		{
