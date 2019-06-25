@@ -1,5 +1,5 @@
 {
-	"name": "DimEmployee1",
+	"name": "DimProfile",
 	"properties": {
 		"activities": [
 			{
@@ -203,7 +203,7 @@
 			}
 		],
 		"folder": {
-			"name": "HR"
+			"name": "Sales"
 		}
 	}
 }
