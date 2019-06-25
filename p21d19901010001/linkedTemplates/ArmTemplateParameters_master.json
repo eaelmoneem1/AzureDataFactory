@@ -176,6 +176,12 @@
 		"HR_WORKDAY_HC_Archive_Destination10_properties_typeProperties_folderPath": {
 			"value": "LandingArchive/CEOCFO/HR"
 		},
+		"HR_WORKDAY_HC_Archive_Destination11_properties_typeProperties_fileName": {
+			"value": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"HR_WORKDAY_HC_Archive_Destination11_properties_typeProperties_folderPath": {
+			"value": "LandingArchive/CEOCFO/HR"
+		},
 		"HR_WORKDAY_HC_Archive_Destination2_properties_typeProperties_fileName": {
 			"value": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
 		},
@@ -276,6 +282,12 @@
 			"value": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
 		},
 		"HR_WORKDAY_HC_Source8_properties_typeProperties_folderPath": {
+			"value": "CEOCFO/HR"
+		},
+		"HR_WORKDAY_HC_Source9_properties_typeProperties_fileName": {
+			"value": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"HR_WORKDAY_HC_Source9_properties_typeProperties_folderPath": {
 			"value": "CEOCFO/HR"
 		},
 		"HR_WORKDAY_REQ_Archive_Destination_properties_typeProperties_fileName": {
@@ -379,6 +391,12 @@
 		},
 		"TimeDimension_Source_properties_typeProperties_folderPath": {
 			"value": "CEOCFO/Dimentions/Time"
+		},
+		"User_Arch_Dest_properties_typeProperties_fileName": {
+			"value": ""
+		},
+		"User_Arch_Dest_properties_typeProperties_folderPath": {
+			"value": "LandingArchive/CEOCFO/Sales/User"
 		},
 		"V_HR_Maclean_EXM_Location_Archive_Destination_properties_typeProperties_fileName": {
 			"value": "@concat ('EXM_Location_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"

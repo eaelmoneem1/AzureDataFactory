@@ -235,6 +235,14 @@
 			"type": "string",
 			"defaultValue": "LandingArchive/CEOCFO/HR"
 		},
+		"HR_WORKDAY_HC_Archive_Destination11_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"HR_WORKDAY_HC_Archive_Destination11_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "LandingArchive/CEOCFO/HR"
+		},
 		"HR_WORKDAY_HC_Archive_Destination2_properties_typeProperties_fileName": {
 			"type": "string",
 			"defaultValue": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
@@ -368,6 +376,14 @@
 			"defaultValue": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
 		},
 		"HR_WORKDAY_HC_Source8_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "CEOCFO/HR"
+		},
+		"HR_WORKDAY_HC_Source9_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"HR_WORKDAY_HC_Source9_properties_typeProperties_folderPath": {
 			"type": "string",
 			"defaultValue": "CEOCFO/HR"
 		},
@@ -506,6 +522,14 @@
 		"TimeDimension_Source_properties_typeProperties_folderPath": {
 			"type": "string",
 			"defaultValue": "CEOCFO/Dimentions/Time"
+		},
+		"User_Arch_Dest_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": ""
+		},
+		"User_Arch_Dest_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "LandingArchive/CEOCFO/Sales/User"
 		},
 		"V_HR_Maclean_EXM_Location_Archive_Destination_properties_typeProperties_fileName": {
 			"type": "string",
@@ -876,6 +900,12 @@
 					"HR_WORKDAY_HC_Archive_Destination10_properties_typeProperties_folderPath": {
 						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination10_properties_typeProperties_folderPath')]"
 					},
+					"HR_WORKDAY_HC_Archive_Destination11_properties_typeProperties_fileName": {
+						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination11_properties_typeProperties_fileName')]"
+					},
+					"HR_WORKDAY_HC_Archive_Destination11_properties_typeProperties_folderPath": {
+						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination11_properties_typeProperties_folderPath')]"
+					},
 					"HR_WORKDAY_HC_Archive_Destination2_properties_typeProperties_fileName": {
 						"value": "[parameters('HR_WORKDAY_HC_Archive_Destination2_properties_typeProperties_fileName')]"
 					},
@@ -998,6 +1028,12 @@
 					"HR_WORKDAY_HC_Source8_properties_typeProperties_folderPath": {
 						"value": "[parameters('HR_WORKDAY_HC_Source8_properties_typeProperties_folderPath')]"
 					},
+					"HR_WORKDAY_HC_Source9_properties_typeProperties_fileName": {
+						"value": "[parameters('HR_WORKDAY_HC_Source9_properties_typeProperties_fileName')]"
+					},
+					"HR_WORKDAY_HC_Source9_properties_typeProperties_folderPath": {
+						"value": "[parameters('HR_WORKDAY_HC_Source9_properties_typeProperties_folderPath')]"
+					},
 					"HR_WORKDAY_REQ_Archive_Destination_properties_typeProperties_fileName": {
 						"value": "[parameters('HR_WORKDAY_REQ_Archive_Destination_properties_typeProperties_fileName')]"
 					},
@@ -1035,12 +1071,6 @@
 					},
 					"Opportunity_Incremintal_Archiving_properties_typeProperties_folderPath": {
 						"value": "[parameters('Opportunity_Incremintal_Archiving_properties_typeProperties_folderPath')]"
-					},
-					"Revenue_Archive_Destination_properties_typeProperties_fileName": {
-						"value": "[parameters('Revenue_Archive_Destination_properties_typeProperties_fileName')]"
-					},
-					"Revenue_Archive_Destination_properties_typeProperties_folderPath": {
-						"value": "[parameters('Revenue_Archive_Destination_properties_typeProperties_folderPath')]"
 					}
 				}
 			},
@@ -1061,6 +1091,12 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"Revenue_Archive_Destination_properties_typeProperties_fileName": {
+						"value": "[parameters('Revenue_Archive_Destination_properties_typeProperties_fileName')]"
+					},
+					"Revenue_Archive_Destination_properties_typeProperties_folderPath": {
+						"value": "[parameters('Revenue_Archive_Destination_properties_typeProperties_folderPath')]"
 					},
 					"Revenue_cost_source_properties_typeProperties_fileName": {
 						"value": "[parameters('Revenue_cost_source_properties_typeProperties_fileName')]"
@@ -1097,12 +1133,6 @@
 					},
 					"Sales_FF_Forecast_source_properties_typeProperties_folderPath": {
 						"value": "[parameters('Sales_FF_Forecast_source_properties_typeProperties_folderPath')]"
-					},
-					"Sales_MSCRM_Booking_Archive_DL_properties_typeProperties_fileName": {
-						"value": "[parameters('Sales_MSCRM_Booking_Archive_DL_properties_typeProperties_fileName')]"
-					},
-					"Sales_MSCRM_Booking_Archive_DL_properties_typeProperties_folderPath": {
-						"value": "[parameters('Sales_MSCRM_Booking_Archive_DL_properties_typeProperties_folderPath')]"
 					}
 				}
 			},
@@ -1123,6 +1153,12 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"Sales_MSCRM_Booking_Archive_DL_properties_typeProperties_fileName": {
+						"value": "[parameters('Sales_MSCRM_Booking_Archive_DL_properties_typeProperties_fileName')]"
+					},
+					"Sales_MSCRM_Booking_Archive_DL_properties_typeProperties_folderPath": {
+						"value": "[parameters('Sales_MSCRM_Booking_Archive_DL_properties_typeProperties_folderPath')]"
 					},
 					"Sales_MSCRM_OrderBook_Archive_properties_typeProperties_fileName": {
 						"value": "[parameters('Sales_MSCRM_OrderBook_Archive_properties_typeProperties_fileName')]"
@@ -1160,23 +1196,11 @@
 					"TimeDimension_Source_properties_typeProperties_folderPath": {
 						"value": "[parameters('TimeDimension_Source_properties_typeProperties_folderPath')]"
 					},
-					"V_HR_Maclean_EXM_Location_Archive_Destination_properties_typeProperties_fileName": {
-						"value": "[parameters('V_HR_Maclean_EXM_Location_Archive_Destination_properties_typeProperties_fileName')]"
+					"User_Arch_Dest_properties_typeProperties_fileName": {
+						"value": "[parameters('User_Arch_Dest_properties_typeProperties_fileName')]"
 					},
-					"V_HR_Maclean_EXM_Location_Archive_Destination_properties_typeProperties_folderPath": {
-						"value": "[parameters('V_HR_Maclean_EXM_Location_Archive_Destination_properties_typeProperties_folderPath')]"
-					},
-					"V_HR_Maclean_EXM_Location_Directory_Archive_Destination_properties_typeProperties_fileName": {
-						"value": "[parameters('V_HR_Maclean_EXM_Location_Directory_Archive_Destination_properties_typeProperties_fileName')]"
-					},
-					"V_HR_Maclean_EXM_Location_Directory_Archive_Destination_properties_typeProperties_folderPath": {
-						"value": "[parameters('V_HR_Maclean_EXM_Location_Directory_Archive_Destination_properties_typeProperties_folderPath')]"
-					},
-					"test_properties_typeProperties_fileName": {
-						"value": "[parameters('test_properties_typeProperties_fileName')]"
-					},
-					"test_properties_typeProperties_folderPath": {
-						"value": "[parameters('test_properties_typeProperties_folderPath')]"
+					"User_Arch_Dest_properties_typeProperties_folderPath": {
+						"value": "[parameters('User_Arch_Dest_properties_typeProperties_folderPath')]"
 					}
 				}
 			},
@@ -1197,6 +1221,24 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"V_HR_Maclean_EXM_Location_Archive_Destination_properties_typeProperties_fileName": {
+						"value": "[parameters('V_HR_Maclean_EXM_Location_Archive_Destination_properties_typeProperties_fileName')]"
+					},
+					"V_HR_Maclean_EXM_Location_Archive_Destination_properties_typeProperties_folderPath": {
+						"value": "[parameters('V_HR_Maclean_EXM_Location_Archive_Destination_properties_typeProperties_folderPath')]"
+					},
+					"V_HR_Maclean_EXM_Location_Directory_Archive_Destination_properties_typeProperties_fileName": {
+						"value": "[parameters('V_HR_Maclean_EXM_Location_Directory_Archive_Destination_properties_typeProperties_fileName')]"
+					},
+					"V_HR_Maclean_EXM_Location_Directory_Archive_Destination_properties_typeProperties_folderPath": {
+						"value": "[parameters('V_HR_Maclean_EXM_Location_Directory_Archive_Destination_properties_typeProperties_folderPath')]"
+					},
+					"test_properties_typeProperties_fileName": {
+						"value": "[parameters('test_properties_typeProperties_fileName')]"
+					},
+					"test_properties_typeProperties_folderPath": {
+						"value": "[parameters('test_properties_typeProperties_folderPath')]"
 					}
 				}
 			},

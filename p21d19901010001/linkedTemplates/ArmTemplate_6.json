@@ -79,6 +79,14 @@
 			"type": "string",
 			"defaultValue": "CEOCFO/HR"
 		},
+		"HR_WORKDAY_HC_Source9_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"HR_WORKDAY_HC_Source9_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "CEOCFO/HR"
+		},
 		"HR_WORKDAY_REQ_Archive_Destination_properties_typeProperties_fileName": {
 			"type": "string",
 			"defaultValue": "@concat ('Requisitions_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
@@ -100,6 +108,188 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_HC_Destination7')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"structure": [
+					{
+						"name": "Employee_ID",
+						"type": "String"
+					},
+					{
+						"name": "On_Leave",
+						"type": "String"
+					},
+					{
+						"name": "Hire_Date",
+						"type": "Date"
+					},
+					{
+						"name": "Number_of_Direct_Reports",
+						"type": "String"
+					},
+					{
+						"name": "Worker_Type",
+						"type": "String"
+					},
+					{
+						"name": "Location",
+						"type": "String"
+					},
+					{
+						"name": "Country",
+						"type": "String"
+					},
+					{
+						"name": "Org_Layer",
+						"type": "String"
+					},
+					{
+						"name": "Product",
+						"type": "String"
+					},
+					{
+						"name": "Product_Family",
+						"type": "String"
+					},
+					{
+						"name": "Product_Line",
+						"type": "String"
+					},
+					{
+						"name": "Cost_Center_ID",
+						"type": "String"
+					},
+					{
+						"name": "Cost_Center_Name",
+						"type": "String"
+					},
+					{
+						"name": "Cost_Centre_Hierarchy_Finastra",
+						"type": "String"
+					},
+					{
+						"name": "Function_Finastra",
+						"type": "String"
+					},
+					{
+						"name": "Cost_Centre_Legacy_DH_Mapping_to_Finastra",
+						"type": "String"
+					},
+					{
+						"name": "Reporting_Region",
+						"type": "String"
+					},
+					{
+						"name": "High_Low_Cost",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[HR_WORKDAY_HC]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_HC_Destination8')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"structure": [
+					{
+						"name": "Employee_ID",
+						"type": "String"
+					},
+					{
+						"name": "On_Leave",
+						"type": "String"
+					},
+					{
+						"name": "Hire_Date",
+						"type": "Date"
+					},
+					{
+						"name": "Number_of_Direct_Reports",
+						"type": "String"
+					},
+					{
+						"name": "Worker_Type",
+						"type": "String"
+					},
+					{
+						"name": "Location",
+						"type": "String"
+					},
+					{
+						"name": "Country",
+						"type": "String"
+					},
+					{
+						"name": "Org_Layer",
+						"type": "String"
+					},
+					{
+						"name": "Product",
+						"type": "String"
+					},
+					{
+						"name": "Product_Family",
+						"type": "String"
+					},
+					{
+						"name": "Product_Line",
+						"type": "String"
+					},
+					{
+						"name": "Cost_Center_ID",
+						"type": "String"
+					},
+					{
+						"name": "Cost_Center_Name",
+						"type": "String"
+					},
+					{
+						"name": "Cost_Centre_Hierarchy_Finastra",
+						"type": "String"
+					},
+					{
+						"name": "Function_Finastra",
+						"type": "String"
+					},
+					{
+						"name": "Cost_Centre_Legacy_DH_Mapping_to_Finastra",
+						"type": "String"
+					},
+					{
+						"name": "Reporting_Region",
+						"type": "String"
+					},
+					{
+						"name": "High_Low_Cost",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[HR_WORKDAY_HC]"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_HC_Destination9')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -1145,6 +1335,111 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_HC_Source9')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileShare",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "FileShare",
+				"structure": [
+					{
+						"name": "Employee ID",
+						"type": "String"
+					},
+					{
+						"name": "On Leave",
+						"type": "String"
+					},
+					{
+						"name": "Hire Date",
+						"type": "String"
+					},
+					{
+						"name": "Number of Direct Reports",
+						"type": "String"
+					},
+					{
+						"name": "Worker Type",
+						"type": "String"
+					},
+					{
+						"name": "Location",
+						"type": "String"
+					},
+					{
+						"name": "Country",
+						"type": "String"
+					},
+					{
+						"name": "Org Layer",
+						"type": "String"
+					},
+					{
+						"name": "Product",
+						"type": "String"
+					},
+					{
+						"name": "Product Family",
+						"type": "String"
+					},
+					{
+						"name": "Product Line",
+						"type": "String"
+					},
+					{
+						"name": "Cost Center - ID",
+						"type": "String"
+					},
+					{
+						"name": "Cost Center",
+						"type": "String"
+					},
+					{
+						"name": "Cost Center Hierarchy",
+						"type": "String"
+					},
+					{
+						"name": "Function",
+						"type": "String"
+					},
+					{
+						"name": "Cost Centre - Legacy DH Mapping to Finastra",
+						"type": "String"
+					},
+					{
+						"name": "Reporting Region",
+						"type": "String"
+					},
+					{
+						"name": "High / Low Cost",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"rowDelimiter": "",
+						"quoteChar": "\"",
+						"nullValue": "",
+						"treatEmptyAsNull": true,
+						"skipLineCount": 0,
+						"firstRowAsHeader": true
+					},
+					"fileName": {
+						"value": "[parameters('HR_WORKDAY_HC_Source9_properties_typeProperties_fileName')]",
+						"type": "Expression"
+					},
+					"folderPath": "[parameters('HR_WORKDAY_HC_Source9_properties_typeProperties_folderPath')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/HR_WORKDAY_REQ_Archive_Destination')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1849,397 +2144,6 @@
 				],
 				"typeProperties": {
 					"tableName": "[[STG].[Sales_SFDC_Booking]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/LND_SFDC_3')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"structure": [
-					{
-						"name": "id",
-						"type": "String"
-					},
-					{
-						"name": "Name",
-						"type": "String"
-					},
-					{
-						"name": "Ownerid",
-						"type": "String"
-					},
-					{
-						"name": "owner_name",
-						"type": "String"
-					},
-					{
-						"name": "Owner_Sub_Region_c",
-						"type": "String"
-					},
-					{
-						"name": "CloseDate",
-						"type": "String"
-					},
-					{
-						"name": "StageName",
-						"type": "String"
-					},
-					{
-						"name": "Deal_Type_c",
-						"type": "String"
-					},
-					{
-						"name": "MainProduct_c",
-						"type": "String"
-					},
-					{
-						"name": "OpportunityHEALTH_c",
-						"type": "String"
-					},
-					{
-						"name": "RLF_percent_c",
-						"type": "String"
-					},
-					{
-						"name": "Regional_Sales_Manager_Comments_c",
-						"type": "String"
-					},
-					{
-						"name": "Accountid",
-						"type": "String"
-					},
-					{
-						"name": "Account_Name",
-						"type": "String"
-					},
-					{
-						"name": "Opportunity_18chr_Id_c",
-						"type": "String"
-					},
-					{
-						"name": "Amount",
-						"type": "String"
-					},
-					{
-						"name": "Order_Number_c",
-						"type": "String"
-					},
-					{
-						"name": "Sales_Region_FY07_c",
-						"type": "String"
-					},
-					{
-						"name": "Pricing_Country_c",
-						"type": "String"
-					},
-					{
-						"name": "Misys_Forecast_c",
-						"type": "String"
-					},
-					{
-						"name": "Term_Estimate_Months_c",
-						"type": "String"
-					},
-					{
-						"name": "Commercial_Prop_c",
-						"type": "String"
-					},
-					{
-						"name": "ILF_Amount_c",
-						"type": "String"
-					},
-					{
-						"name": "Total_ILF_In_Qtr_c",
-						"type": "String"
-					},
-					{
-						"name": "Accretive_RLF_c",
-						"type": "String"
-					},
-					{
-						"name": "RLF_Amount_c",
-						"type": "String"
-					},
-					{
-						"name": "PS_Amount_c",
-						"type": "String"
-					},
-					{
-						"name": "ASP_Amount_c",
-						"type": "String"
-					},
-					{
-						"name": "TCV_CSH_c",
-						"type": "String"
-					},
-					{
-						"name": "ACV_ACV_Equiv_CSH_c",
-						"type": "String"
-					},
-					{
-						"name": "Strength_of_Sale_c",
-						"type": "String"
-					},
-					{
-						"name": "Global_Account_Manager_Comments_c",
-						"type": "String"
-					},
-					{
-						"name": "Executive_Sponsor_alignment_c",
-						"type": "String"
-					},
-					{
-						"name": "Next_Step_Due_Date_c",
-						"type": "String"
-					},
-					{
-						"name": "NextStep",
-						"type": "String"
-					},
-					{
-						"name": "Approval_Status_c",
-						"type": "String"
-					},
-					{
-						"name": "sbaa_ApprovalStatus_c",
-						"type": "String"
-					},
-					{
-						"name": "Term_CSH_c",
-						"type": "String"
-					},
-					{
-						"name": "Deal_Category_c",
-						"type": "String"
-					},
-					{
-						"name": "Service_Type_c",
-						"type": "String"
-					},
-					{
-						"name": "Service_Sub_Type_c",
-						"type": "String"
-					},
-					{
-						"name": "Campaignid",
-						"type": "String"
-					},
-					{
-						"name": "Opportunity_Partner_c",
-						"type": "String"
-					},
-					{
-						"name": "Original_Opportunity_c",
-						"type": "String"
-					},
-					{
-						"name": "RecordTypeid",
-						"type": "String"
-					},
-					{
-						"name": "RecordType_Name",
-						"type": "String"
-					},
-					{
-						"name": "LastModifiedDate",
-						"type": "String"
-					},
-					{
-						"name": "CreatedDate",
-						"type": "String"
-					},
-					{
-						"name": "Existing_RLF_Currency_c",
-						"type": "String"
-					},
-					{
-						"name": "CurrencyIsoCode",
-						"type": "String"
-					},
-					{
-						"name": "SBU_Strategic_Business_Unit_c",
-						"type": "String"
-					},
-					{
-						"name": "FiscalPeriod_c",
-						"type": "String"
-					},
-					{
-						"name": "Total_PS_Amount__c",
-						"type": "String"
-					}
-				],
-				"typeProperties": {
-					"tableName": "[[STG].[Sales_SFDC_Booking]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Lead_SQL')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"structure": [
-					{
-						"name": "Lead_18chr_Id",
-						"type": "String"
-					},
-					{
-						"name": "MQL_Datestamp",
-						"type": "String"
-					},
-					{
-						"name": "MTL_Datestamp",
-						"type": "String"
-					},
-					{
-						"name": "SQL_Datestamp",
-						"type": "String"
-					},
-					{
-						"name": "Status",
-						"type": "String"
-					},
-					{
-						"name": "Company",
-						"type": "String"
-					},
-					{
-						"name": "Lead_Country",
-						"type": "String"
-					},
-					{
-						"name": "Title",
-						"type": "String"
-					},
-					{
-						"name": "FirstName",
-						"type": "String"
-					},
-					{
-						"name": "LastName",
-						"type": "String"
-					},
-					{
-						"name": "Email",
-						"type": "String"
-					},
-					{
-						"name": "MQL_Program",
-						"type": "String"
-					},
-					{
-						"name": "Qualified_Out_Reason",
-						"type": "String"
-					},
-					{
-						"name": "Status_Reason",
-						"type": "String"
-					},
-					{
-						"name": "Sales_Region",
-						"type": "String"
-					},
-					{
-						"name": "Sub_Region",
-						"type": "String"
-					},
-					{
-						"name": "ConvertedAccountId",
-						"type": "String"
-					},
-					{
-						"name": "ConvertedContactId",
-						"type": "String"
-					},
-					{
-						"name": "ConvertedOpportunityId",
-						"type": "String"
-					},
-					{
-						"name": "CreatedDate",
-						"type": "String"
-					},
-					{
-						"name": "Owner_ID",
-						"type": "String"
-					},
-					{
-						"name": "LastModifiedDate",
-						"type": "String"
-					}
-				],
-				"typeProperties": {
-					"tableName": "[[STG].[Marketing_SFDC_Lead]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Marketing_Account_Source')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "Account_18chr_Id",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Account_Number",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Owner_ID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Country",
-						"type": "nvarchar"
-					},
-					{
-						"name": "CreatedDate",
-						"type": "nvarchar"
-					},
-					{
-						"name": "LastModifiedDate",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Rec_CRE_TMS",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"tableName": "[[STG].[Marketing_SFDC_Account]"
 				}
 			},
 			"dependsOn": []
