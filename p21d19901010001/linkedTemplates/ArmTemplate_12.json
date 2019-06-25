@@ -684,7 +684,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_DimEmployee]"
+							"storedProcedureName": "[[dbo].[sp_INT_DimUser]"
 						},
 						"linkedServiceName": {
 							"referenceName": "AzureSqlDatabase_finastra",
@@ -743,7 +743,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_ApplyDimEmployee]"
+							"storedProcedureName": "[[dbo].[sp_INT_ApplyDimUser]"
 						},
 						"linkedServiceName": {
 							"referenceName": "AzureSqlDatabase_finastra",
@@ -1082,7 +1082,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"storedProcedureName": "sp_INT_DimSales_SFDC_Campaign"
+							"storedProcedureName": "[[dbo].[sp_INT_DimUser]"
 						},
 						"linkedServiceName": {
 							"referenceName": "AzureSqlDatabase_finastra",
@@ -1142,7 +1142,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"storedProcedureName": "[[dbo].[sp_INT_ApplyDimSales_SFDC_Campaign]"
+							"storedProcedureName": "[[dbo].[sp_INT_ApplyDimUser]"
 						},
 						"linkedServiceName": {
 							"referenceName": "AzureSqlDatabase_finastra",
