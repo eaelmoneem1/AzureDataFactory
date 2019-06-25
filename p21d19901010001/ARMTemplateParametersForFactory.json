@@ -182,6 +182,12 @@
 		"HR_WORKDAY_HC_Archive_Destination11_properties_typeProperties_folderPath": {
 			"value": "LandingArchive/CEOCFO/HR"
 		},
+		"HR_WORKDAY_HC_Archive_Destination12_properties_typeProperties_fileName": {
+			"value": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"HR_WORKDAY_HC_Archive_Destination12_properties_typeProperties_folderPath": {
+			"value": "LandingArchive/CEOCFO/HR"
+		},
 		"HR_WORKDAY_HC_Archive_Destination2_properties_typeProperties_fileName": {
 			"value": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
 		},
@@ -240,6 +246,12 @@
 			"value": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
 		},
 		"HR_WORKDAY_HC_Source1_properties_typeProperties_folderPath": {
+			"value": "CEOCFO/HR"
+		},
+		"HR_WORKDAY_HC_Source10_properties_typeProperties_fileName": {
+			"value": "@concat ('HeadCount_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"HR_WORKDAY_HC_Source10_properties_typeProperties_folderPath": {
 			"value": "CEOCFO/HR"
 		},
 		"HR_WORKDAY_HC_Source2_properties_typeProperties_fileName": {
@@ -307,6 +319,12 @@
 		},
 		"Opportunity_Incremintal_Archiving_properties_typeProperties_folderPath": {
 			"value": "LandingArchive/CEOCFO/Sales/Opportunity"
+		},
+		"Profile_Arch_Dest_properties_typeProperties_fileName": {
+			"value": "@concat ('Profile_Initial_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')"
+		},
+		"Profile_Arch_Dest_properties_typeProperties_folderPath": {
+			"value": "LandingArchive/CEOCFO/Sales/Profile"
 		},
 		"Revenue_Archive_Destination_properties_typeProperties_fileName": {
 			"value": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"

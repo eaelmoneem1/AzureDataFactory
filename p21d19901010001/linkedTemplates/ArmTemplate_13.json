@@ -13,6 +13,2267 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/FactEXMSCORE_History')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Loading Int tables",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading STG tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_FactEXMSCORE_History]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Hash Generate",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading Int tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
+							"storedProcedureParameters": {
+								"TableName": {
+									"value": "FactEXMSCORE_History"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Loading dbo table",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Hash Generate",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_ApplyFactEXMSCORE_History]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Archiving data in DL",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Loading dbo table",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureDataLakeStoreWriteSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSetting",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "EXMSCORE_History_Source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "EXMSCORE_History_Arch",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Loading STG tables",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "EXM_Score_Type",
+											"type": "String"
+										},
+										"sink": {
+											"name": "EXM_Score_Type",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "EXM_Score_Type_Details",
+											"type": "String"
+										},
+										"sink": {
+											"name": "EXM_Score_Type_Details",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Detractors",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Detractors",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Passives",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Passives",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Promoters",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Promoters",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Year",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Year",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Week",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Calendar_Week_Number",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Sum",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Sum",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "EXM Score",
+											"type": "String"
+										},
+										"sink": {
+											"name": "EXM_Score",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "EXMSCORE_History_Source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "EXMSCORE_History_Dest",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "HR"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FactEXMSCORE_Location')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Loading STG tables",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "FileSystemSource",
+								"recursive": true
+							},
+							"sink": {
+								"type": "SqlSink",
+								"writeBatchSize": 10000
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"columnMappings": {
+									"0": "Response_Distribution_0",
+									"1": "Response_Distribution_1",
+									"2": "Response_Distribution_2",
+									"3": "Response_Distribution_3",
+									"4": "Response_Distribution_4",
+									"5": "Response_Distribution_5",
+									"6": "Response_Distribution_6",
+									"7": "Response_Distribution_7",
+									"8": "Response_Distribution_8",
+									"9": "Response_Distribution_9",
+									"10": "Response_Distribution_10",
+									"Location": "Location",
+									"Responses": "Responses",
+									"Detractors": "Detractors_Percentage",
+									"Passives": "Passives_Percentage",
+									"Promoters": "Promoters_Percentage",
+									"Score": "Score",
+									"Avg. Response": "Avg_Response",
+									"Year": "Year",
+									"Calendar_Week_Number ": "Calendar_Week_Number"
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "HR_Maclean_EXM_Location_Source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "HR_Maclean_EXM_Location_Destination",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Archiving data in DL",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Loading dbo table",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "FileSystemSource",
+								"recursive": true
+							},
+							"sink": {
+								"type": "AzureDataLakeStoreSink"
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "HR_Maclean_EXM_Location_Source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "V_HR_Maclean_EXM_Location_Archive_Destination",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Loading Int tables",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading STG tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_FactEXMSCORE_Location]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Hash Generate",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading Int tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
+							"storedProcedureParameters": {
+								"TableName": {
+									"value": "FactEXMSCORE_Location",
+									"type": "String"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Loading dbo table",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Hash Generate",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_ApplyFactEXMSCORE_Location]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"folder": {
+					"name": "HR"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FactEXMSCORE_Region')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Loading STG tables",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "FileSystemSource",
+								"recursive": true
+							},
+							"sink": {
+								"type": "SqlSink",
+								"writeBatchSize": 10000
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"columnMappings": {
+									"Region": "Region",
+									"Responses": "Responses",
+									"Detractors_Percentage": "Detractors_Percentage",
+									"Passives_Percentage": "Passives_Percentage",
+									"Promoters_Percentage": "Promoters_Percentage",
+									"Score": "Score",
+									"Avg_Response": "Avg_Response",
+									"Response_Distribution_0": "Response_Distribution_0",
+									"Response_Distribution_1": "Response_Distribution_1",
+									"Response_Distribution_2": "Response_Distribution_2",
+									"Response_Distribution_3": "Response_Distribution_3",
+									"Response_Distribution_4": "Response_Distribution_4",
+									"Response_Distribution_5": "Response_Distribution_5",
+									"Response_Distribution_6": "Response_Distribution_6",
+									"Response_Distribution_7": "Response_Distribution_7",
+									"Response_Distribution_8": "Response_Distribution_8",
+									"Response_Distribution_9": "Response_Distribution_9",
+									"Response_Distribution_10": "Response_Distribution_10",
+									"Year": "Year",
+									"Calendar_Week_Number ": "Calendar_Week_Number"
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "HR_Maclean_EXM_Region_Source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "FactEXMSCORE_Region_Destination",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Archiving data in DL",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Loading dbo table",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "FileSystemSource",
+								"recursive": true
+							},
+							"sink": {
+								"type": "AzureDataLakeStoreSink"
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "HR_Maclean_EXM_Region_Source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "HR_Maclean_EXM_Region_Archive_Destination",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Loading Int tables",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading STG tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_FactEXMSCORE_Region]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Hash Generate",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading Int tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
+							"storedProcedureParameters": {
+								"TableName": {
+									"value": "FactEXMSCORE_Region",
+									"type": "String"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Loading dbo table",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Hash Generate",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_ApplyFactEXMSCORE_Region]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"folder": {
+					"name": "HR"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FactFinancial_Plan')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Loading STG tables",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "FileSystemSource",
+								"recursive": true
+							},
+							"sink": {
+								"type": "SqlSink",
+								"writeBatchSize": 10000
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"columnMappings": {
+									"Account": "Account",
+									"Account Type": "Account_Type",
+									"Cost Centre": "Cost_Centre",
+									"CC code": "CC_code",
+									"Function": "Function",
+									"Product Family": "Product_Family",
+									"Product Line": "Product_Line",
+									"Sub Region": "Sub_Region",
+									"Region": "Region",
+									"Source System": "Source_System",
+									"Jun": "Jun",
+									"Jul": "Jul",
+									"Aug": "Aug",
+									"Sep": "Sep",
+									"Oct": "Oct",
+									"Nov": "Nov",
+									"Dec": "Dec",
+									"Jan": "Jan",
+									"Feb": "Feb",
+									"Mar": "Mar",
+									"Apr": "Apr",
+									"May": "May"
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Sales_FF_Forecast_source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Sales_FF_Forecast_Destination",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Loading Int tables",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading STG tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_FactFinancial_Plan]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Loading dbo table",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Hash Generate",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_ApplyFactFinancial_Plan]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Hash Generate",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading Int tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
+							"storedProcedureParameters": {
+								"TableName": {
+									"value": "FactFinancial_Plan",
+									"type": "String"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Archiving data in DL",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Loading dbo table",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "FileSystemSource",
+								"recursive": true
+							},
+							"sink": {
+								"type": "AzureDataLakeStoreSink"
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "Sales_FF_Forecast_source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Sales_FF_Forecast_Archive_Destination",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "Forecast"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FactOpportunity_All_incremental')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Loading STG tables",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Get Last Modified Record",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "Get Last Created Record",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceSource",
+								"query": {
+									"value": "select\n id\n,Name\n,Ownerid\n,owner.name\n,Owner.Sub_Region__c\n,CloseDate\n,StageName\n,Deal_Type__c\n,MainProduct__c\n,OpportunityHEALTH__c\n,RLF_percent__c\n,Regional_Sales_Manager_Comments__c\n,Accountid\n,Account.Name\n,Opportunity_18chr_Id__c\n,Amount\n,Order_Number__c\n,Sales_Region_FY07__c\n,Pricing_Country__c\n,Misys_Forecast__c\n,Term_Estimate_Months__c\n,Commercial_Prop__c\n,ILF_Amount__c\n,Total_ILF_In_Qtr__c\n,Accretive_RLF__c\n,RLF_Amount__c\n,PS_Amount__c\n,ASP_Amount__c\n,TCV_CSH__c\n,ACV_ACV_Equiv_CSH__c\n,Strength_of_Sale__c\n,Global_Account_Manager_Comments__c\n,Executive_Sponsor_alignment__c\n,Next_Step_Due_Date__c\n,NextStep\n,Approval_Status__c\n,sbaa__ApprovalStatus__c\n,Term_CSH__c\n,Deal_Category__c\n,Service_Type__c\n,Service_Sub_Type__c\n,Campaignid\n,Opportunity_Partner__c\n,Original_Opportunity__c\n,RecordTypeid\n,RecordType.Name\n,LastModifiedDate\n,CreatedDate\n,Existing_RLF_Currency__c\n,CurrencyIsoCode\n,SBU_Strategic_Business_Unit__c\n,FiscalPeriod__c\n,Total_PS_Amount__c \n\nfrom Opportunity\n\nwhere CreatedDate >@{activity('Get Last Created Record').output.firstRow.Created}Z OR  LastModifiedDate >@{activity('Get Last Modified Record').output.firstRow.Modified}Z\n",
+									"type": "Expression"
+								},
+								"readBehavior": "query"
+							},
+							"sink": {
+								"type": "SqlSink",
+								"writeBatchSize": 10000
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "Opportunity_Incremental_load",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "LND_SFDC_3",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Get Last Modified Record",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlSource",
+								"sqlReaderQuery": "select max(cast (Lastmodifieddate AS datetime)) AS Modified\n  FROM [STG].[Sales_SFDC_Booking]"
+							},
+							"dataset": {
+								"referenceName": "Opportunity_Last_Load_Modified",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Get Last Created Record",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlSource",
+								"sqlReaderQuery": "select max(cast (createddate AS datetime))  AS Created\n  FROM [STG].[Sales_SFDC_Booking]"
+							},
+							"dataset": {
+								"referenceName": "Opportunity_Last_Load_Created",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Archiving data in DL",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Loading dbo table",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceSource",
+								"query": {
+									"value": "select\n id\n,Name\n,Ownerid\n,owner.name\n,Owner.Sub_Region__c\n,CloseDate\n,StageName\n,Deal_Type__c\n,MainProduct__c\n,OpportunityHEALTH__c\n,RLF_percent__c\n,Regional_Sales_Manager_Comments__c\n,Accountid\n,Account.Name\n,Opportunity_18chr_Id__c\n,Amount\n,Order_Number__c\n,Sales_Region_FY07__c\n,Pricing_Country__c\n,Misys_Forecast__c\n,Term_Estimate_Months__c\n,Commercial_Prop__c\n,ILF_Amount__c\n,Total_ILF_In_Qtr__c\n,Accretive_RLF__c\n,RLF_Amount__c\n,PS_Amount__c\n,ASP_Amount__c\n,TCV_CSH__c\n,ACV_ACV_Equiv_CSH__c\n,Strength_of_Sale__c\n,Global_Account_Manager_Comments__c\n,Executive_Sponsor_alignment__c\n,Next_Step_Due_Date__c\n,NextStep\n,Approval_Status__c\n,sbaa__ApprovalStatus__c\n,Term_CSH__c\n,Deal_Category__c\n,Service_Type__c\n,Service_Sub_Type__c\n,Campaignid\n,Opportunity_Partner__c\n,Original_Opportunity__c\n,RecordTypeid\n,RecordType.Name\n,LastModifiedDate\n,CreatedDate\n,Existing_RLF_Currency__c\n,CurrencyIsoCode\n,SBU_Strategic_Business_Unit__c\n,FiscalPeriod__c\n\nfrom Opportunity\n\nwhere CreatedDate >@{activity('Get Last Created Record').output.firstRow.Created}Z OR  LastModifiedDate >@{activity('Get Last Modified Record').output.firstRow.Modified}Z\n",
+									"type": "Expression"
+								},
+								"readBehavior": "query"
+							},
+							"sink": {
+								"type": "AzureDataLakeStoreSink"
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "Opportunity_Incremental_load",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Opportunity_Incremintal_Archiving",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Loading Int tables",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading STG tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_Fact_Opportunity_All]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Hash Generate",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading Int tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
+							"storedProcedureParameters": {
+								"TableName": {
+									"value": "FactSales_SFDC_Booking"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Loading dbo table",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Hash Generate",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_ApplyFact_Opportunity_All]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"folder": {
+					"name": "Sales"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FactOpportunity_All_initial')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Loading STG tables Created date",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Loading STG tables LST_Modified2",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceSource",
+								"query": "select id\n,Name\n,Ownerid\n,owner.name\n,Owner.Sub_Region__c\n,CloseDate\n,StageName\n,Deal_Type__c\n,MainProduct__c\n,OpportunityHEALTH__c\n,RLF_percent__c\n,Regional_Sales_Manager_Comments__c\n,Accountid\n,Account.Name\n,Opportunity_18chr_Id__c\n,Amount\n,Order_Number__c\n,Sales_Region_FY07__c\n,Pricing_Country__c\n,Misys_Forecast__c\n,Term_Estimate_Months__c\n,Commercial_Prop__c\n,ILF_Amount__c\n,Total_ILF_In_Qtr__c\n,Accretive_RLF__c\n,RLF_Amount__c\n,PS_Amount__c\n,ASP_Amount__c\n,TCV_CSH__c\n,ACV_ACV_Equiv_CSH__c\n,Strength_of_Sale__c\n,Global_Account_Manager_Comments__c\n,Executive_Sponsor_alignment__c\n,Next_Step_Due_Date__c\n,NextStep\n,Approval_Status__c\n,sbaa__ApprovalStatus__c\n,Term_CSH__c\n,Deal_Category__c\n,Service_Type__c\n,Service_Sub_Type__c\n,Campaignid\n,Opportunity_Partner__c\n,Original_Opportunity__c\n,RecordTypeid\n,RecordType.Name\n,LastModifiedDate\n,CreatedDate\n,Existing_RLF_Currency__c\n,CurrencyIsoCode\n,SBU_Strategic_Business_Unit__c\n,FiscalPeriod__c\n,Total_PS_Amount__c \n\nfrom Opportunity\nwhere DAY_ONLY(CreatedDate) >=2017-06-01\n\n\n\n\n",
+								"readBehavior": "query"
+							},
+							"sink": {
+								"type": "SqlSink",
+								"writeBatchSize": 10000
+							},
+							"enableStaging": false,
+							"enableSkipIncompatibleRow": true
+						},
+						"inputs": [
+							{
+								"referenceName": "Salesforce_Opportunity",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "LND_SFDC_1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Archiving data in DL",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Loading dbo table",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlSource"
+							},
+							"sink": {
+								"type": "AzureDataLakeStoreSink"
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "SFDC_Archive",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SFDC_Archive_Opportunity",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Loading Int tables",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading STG tables Created date",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_Fact_Opportunity_All]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Hash Generate",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading Int tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
+							"storedProcedureParameters": {
+								"TableName": {
+									"value": "FactSales_SFDC_Booking"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Loading dbo table",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Hash Generate",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_ApplyFact_Opportunity_All]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Loading STG tables LST_Modified",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceSource",
+								"query": "select id\n,Name\n,Ownerid\n,owner.name\n,Owner.Sub_Region__c\n,CloseDate\n,StageName\n,Deal_Type__c\n,MainProduct__c\n,OpportunityHEALTH__c\n,RLF_percent__c\n,Regional_Sales_Manager_Comments__c\n,Accountid\n,Account.Name\n,Opportunity_18chr_Id__c\n,Amount\n,Order_Number__c\n,Sales_Region_FY07__c\n,Pricing_Country__c\n,Misys_Forecast__c\n,Term_Estimate_Months__c\n,Commercial_Prop__c\n,ILF_Amount__c\n,Total_ILF_In_Qtr__c\n,Accretive_RLF__c\n,RLF_Amount__c\n,PS_Amount__c\n,ASP_Amount__c\n,TCV_CSH__c\n,ACV_ACV_Equiv_CSH__c\n,Strength_of_Sale__c\n,Global_Account_Manager_Comments__c\n,Executive_Sponsor_alignment__c\n,Next_Step_Due_Date__c\n,NextStep\n,Approval_Status__c\n,sbaa__ApprovalStatus__c\n,Term_CSH__c\n,Deal_Category__c\n,Service_Type__c\n,Service_Sub_Type__c\n,Campaignid\n,Opportunity_Partner__c\n,Original_Opportunity__c\n,RecordTypeid\n,RecordType.Name\n,LastModifiedDate\n,CreatedDate\n,Existing_RLF_Currency__c\n,CurrencyIsoCode\n,SBU_Strategic_Business_Unit__c\n,FiscalPeriod__c\n,Total_PS_Amount__c \n\nfrom Opportunity\nwhere DAY_ONLY(LastModifiedDate) >=2017-06-01 and DAY_ONLY(LastModifiedDate) <= 2018-10-08\n",
+								"readBehavior": "query"
+							},
+							"sink": {
+								"type": "SqlSink",
+								"writeBatchSize": 10000
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "Salesforce_Opportunity",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "LND_SFDC_1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Loading STG tables LST_Modified2",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Loading STG tables LST_Modified",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceSource",
+								"query": "select id\n,Name\n,Ownerid\n,owner.name\n,Owner.Sub_Region__c\n,CloseDate\n,StageName\n,Deal_Type__c\n,MainProduct__c\n,OpportunityHEALTH__c\n,RLF_percent__c\n,Regional_Sales_Manager_Comments__c\n,Accountid\n,Account.Name\n,Opportunity_18chr_Id__c\n,Amount\n,Order_Number__c\n,Sales_Region_FY07__c\n,Pricing_Country__c\n,Misys_Forecast__c\n,Term_Estimate_Months__c\n,Commercial_Prop__c\n,ILF_Amount__c\n,Total_ILF_In_Qtr__c\n,Accretive_RLF__c\n,RLF_Amount__c\n,PS_Amount__c\n,ASP_Amount__c\n,TCV_CSH__c\n,ACV_ACV_Equiv_CSH__c\n,Strength_of_Sale__c\n,Global_Account_Manager_Comments__c\n,Executive_Sponsor_alignment__c\n,Next_Step_Due_Date__c\n,NextStep\n,Approval_Status__c\n,sbaa__ApprovalStatus__c\n,Term_CSH__c\n,Deal_Category__c\n,Service_Type__c\n,Service_Sub_Type__c\n,Campaignid\n,Opportunity_Partner__c\n,Original_Opportunity__c\n,RecordTypeid\n,RecordType.Name\n,LastModifiedDate\n,CreatedDate\n,Existing_RLF_Currency__c\n,CurrencyIsoCode\n,SBU_Strategic_Business_Unit__c\n,FiscalPeriod__c\n,Total_PS_Amount__c \n\nfrom Opportunity\nwhere DAY_ONLY(LastModifiedDate) >=2018-10-10\n",
+								"readBehavior": "query"
+							},
+							"sink": {
+								"type": "SqlSink",
+								"writeBatchSize": 10000
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "Salesforce_Opportunity",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "LND_SFDC_1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "Sales"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FactRevenue_Cost')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Loading STG tables",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "Finance/OD April 17th v2.1.csv"
+							},
+							{
+								"name": "Destination",
+								"value": "[[STG].[Finace_FF_Revenue&Cost]"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "FileSystemSource",
+								"recursive": true
+							},
+							"sink": {
+								"type": "SqlSink",
+								"writeBatchSize": 10000
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Account"
+										},
+										"sink": {
+											"name": "Account",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Account Type"
+										},
+										"sink": {
+											"name": "Account_Type",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Cost Centre"
+										},
+										"sink": {
+											"name": "Cost_Centre",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CC code"
+										},
+										"sink": {
+											"name": "CC_Code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Function"
+										},
+										"sink": {
+											"name": "Function",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Product Family",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Product_Family",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Product Line"
+										},
+										"sink": {
+											"name": "Product_line",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Sub Region",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Sub_Region",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Region"
+										},
+										"sink": {
+											"name": "Region",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Source System",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Source_System",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Jun"
+										},
+										"sink": {
+											"name": "Jun",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Jul"
+										},
+										"sink": {
+											"name": "Jul",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Aug"
+										},
+										"sink": {
+											"name": "Aug",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Sep"
+										},
+										"sink": {
+											"name": "Sep",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Oct"
+										},
+										"sink": {
+											"name": "Oct",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Nov"
+										},
+										"sink": {
+											"name": "Nov",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Dec"
+										},
+										"sink": {
+											"name": "Dec",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Jan"
+										},
+										"sink": {
+											"name": "Jan",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Feb"
+										},
+										"sink": {
+											"name": "Feb",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Mar"
+										},
+										"sink": {
+											"name": "Mar",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Apr"
+										},
+										"sink": {
+											"name": "Apr",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "May"
+										},
+										"sink": {
+											"name": "May",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Revenue_cost_source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "RevenueCost_Dest",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Loading Int tables",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading STG tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_FactFinanceRevenue_Cost]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Hash Generate",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading Int tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
+							"storedProcedureParameters": {
+								"TableName": {
+									"value": "FactFinanceRevenue_Cost",
+									"type": "String"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Loading dbo table",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Hash Generate",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_ApplyFactFinanceRevenue_Cost]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Archiving data in DL",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Loading dbo table",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "FileSystemSource",
+								"recursive": true
+							},
+							"sink": {
+								"type": "AzureDataLakeStoreSink"
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "Revenue_cost_source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Revenue_Archive_Destination",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "dbo data backup",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Loading dbo table",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlSource"
+							},
+							"sink": {
+								"type": "AzureDataLakeStoreSink"
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "Finace_RevenueCost_Source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Finace_RevenueCost_Destination",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "Finance"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FactRevenue_Cost_History')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Loading Int tables",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading STG tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_FactFinanceRevenue_Cost_History]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Loading dbo table",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading Int tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_ApplyFactFinanceRevenue_Cost_History]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Archiving data in DL",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Loading dbo table",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureDataLakeStoreWriteSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSetting",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "Revenue_cost_source_historical",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Revenue_Historical_Arch_dest",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Loading STG tables",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Account",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Account"
+										}
+									},
+									{
+										"source": {
+											"name": "Account Type",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Account_Type"
+										}
+									},
+									{
+										"source": {
+											"name": "Cost Centre",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Cost_Centre"
+										}
+									},
+									{
+										"source": {
+											"name": "CC code",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CC_Code"
+										}
+									},
+									{
+										"source": {
+											"name": "Function",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Function"
+										}
+									},
+									{
+										"source": {
+											"name": "Product Family",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Product_Family"
+										}
+									},
+									{
+										"source": {
+											"name": "Product Line",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Product_line"
+										}
+									},
+									{
+										"source": {
+											"name": "Sub Region",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Sub_Region"
+										}
+									},
+									{
+										"source": {
+											"name": "Region",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Region"
+										}
+									},
+									{
+										"source": {
+											"name": "Source System",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Source_System"
+										}
+									},
+									{
+										"source": {
+											"name": "Jun",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Jun"
+										}
+									},
+									{
+										"source": {
+											"name": "Jul",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Jul"
+										}
+									},
+									{
+										"source": {
+											"name": "Aug",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Aug"
+										}
+									},
+									{
+										"source": {
+											"name": "Sep",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Sep"
+										}
+									},
+									{
+										"source": {
+											"name": "Oct",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Oct"
+										}
+									},
+									{
+										"source": {
+											"name": "Nov",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Nov"
+										}
+									},
+									{
+										"source": {
+											"name": "Dec",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Dec"
+										}
+									},
+									{
+										"source": {
+											"name": "Jan",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Jan"
+										}
+									},
+									{
+										"source": {
+											"name": "Feb",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Feb"
+										}
+									},
+									{
+										"source": {
+											"name": "Mar",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Mar"
+										}
+									},
+									{
+										"source": {
+											"name": "Apr",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Apr"
+										}
+									},
+									{
+										"source": {
+											"name": "May",
+											"type": "String"
+										},
+										"sink": {
+											"name": "May"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Revenue_cost_source_historical",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Revenue_cost_Destination",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "Finance"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/FactSALES_MSCRM_Bookings')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -960,7 +3221,9 @@
 				},
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/FactOpportunity_All_incremental')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Search for file')]",
@@ -1135,7 +3398,9 @@
 				},
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/FactOpportunity_All_incremental')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Clean Old Landing Files Job-Monthly')]",
@@ -1530,6 +3795,8 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/FactSALES_MSCRM_Bookings')]",
 				"[concat(variables('factoryId'), '/pipelines/FactSALES_MSCRM_Orderbook')]",
+				"[concat(variables('factoryId'), '/pipelines/FactEXMSCORE_Location')]",
+				"[concat(variables('factoryId'), '/pipelines/FactEXMSCORE_Region')]",
 				"[concat(variables('factoryId'), '/pipelines/FactOpportunity_All Job')]",
 				"[concat(variables('factoryId'), '/pipelines/FactSALES_QBRCommits')]"
 			]

@@ -7,6 +7,14 @@
 			"metadata": "Data Factory Name",
 			"defaultValue": "p21d19901010001"
 		},
+		"TimeDimensionDate_Archive_Destination_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "@concat ('TimeDimensionDate_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
+		},
+		"TimeDimensionDate_Archive_Destination_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "LandingArchive/CEOCFO/Dimentions/Time"
+		},
 		"TimeDimensionDate_Source_properties_typeProperties_fileName": {
 			"type": "string",
 			"defaultValue": "TimeDimensionDate.csv"
@@ -46,36 +54,761 @@
 		"User_Arch_Dest_Incr_properties_typeProperties_folderPath": {
 			"type": "string",
 			"defaultValue": "LandingArchive/CEOCFO/Sales/User"
-		},
-		"V_HR_Maclean_EXM_Location_Archive_Destination_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "@concat ('EXM_Location_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
-		},
-		"V_HR_Maclean_EXM_Location_Archive_Destination_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "LandingArchive/CEOCFO/HR"
-		},
-		"V_HR_Maclean_EXM_Location_Directory_Archive_Destination_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "@concat ('HR_Maclean_EXM_Location_Directory_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
-		},
-		"V_HR_Maclean_EXM_Location_Directory_Archive_Destination_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "LandingArchive/HR"
-		},
-		"test_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "TimeDimens.csv"
-		},
-		"test_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "Time"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/SalesforceObject1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Salesforce1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"date": {
+						"type": "String",
+						"defaultValue": "@{activity('Look').output.firstRow.lst_run}"
+					}
+				},
+				"annotations": [],
+				"type": "SalesforceObject",
+				"typeProperties": {
+					"objectApiName": "Campaign"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Salesforce_Campaign')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Salesforce1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SalesforceObject",
+				"structure": [
+					{
+						"name": "Id",
+						"type": "String"
+					},
+					{
+						"name": "Name",
+						"type": "String"
+					},
+					{
+						"name": "CreatedDate",
+						"type": "DateTime"
+					},
+					{
+						"name": "LastModifiedDate",
+						"type": "DateTime"
+					}
+				],
+				"typeProperties": {
+					"objectApiName": "Campaign"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Salesforce_Campaign1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Salesforce1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SalesforceObject",
+				"structure": [
+					{
+						"name": "Id",
+						"type": "String"
+					},
+					{
+						"name": "Name",
+						"type": "String"
+					},
+					{
+						"name": "CreatedDate",
+						"type": "DateTime"
+					},
+					{
+						"name": "LastModifiedDate",
+						"type": "DateTime"
+					}
+				],
+				"typeProperties": {
+					"objectApiName": "Campaign"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Salesforce_Marketing')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Salesforce1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SalesforceObject",
+				"structure": [
+					{
+						"name": "Opportunity_18chr_Id__c",
+						"type": "String"
+					},
+					{
+						"name": "Name",
+						"type": "String"
+					},
+					{
+						"name": "Opportunity_Number__c",
+						"type": "String"
+					},
+					{
+						"name": "AccountId",
+						"type": "String"
+					},
+					{
+						"name": "Sales_Region_FY07__c",
+						"type": "String"
+					},
+					{
+						"name": "Status__c",
+						"type": "String"
+					},
+					{
+						"name": "StageName",
+						"type": "String"
+					},
+					{
+						"name": "Probability",
+						"type": "Decimal"
+					},
+					{
+						"name": "Date_opportunity_moved_to_SS2__c",
+						"type": "DateTime"
+					},
+					{
+						"name": "Date_opportunity_moved_to_SS4__c",
+						"type": "DateTime"
+					},
+					{
+						"name": "ILF_CommValue_CSH__c",
+						"type": "Decimal"
+					},
+					{
+						"name": "ACV_ACV_Equiv_CSH__c",
+						"type": "Decimal"
+					},
+					{
+						"name": "IST_Rep",
+						"type": "String"
+					},
+					{
+						"name": "CreatedDate",
+						"type": "DateTime"
+					},
+					{
+						"name": "LastModifiedDate",
+						"type": "DateTime"
+					}
+				],
+				"typeProperties": {
+					"objectApiName": "Opportunity"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Salesforce_Opportunity')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Salesforce1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SalesforceObject",
+				"structure": [
+					{
+						"name": "Id",
+						"type": "String"
+					},
+					{
+						"name": "Name",
+						"type": "String"
+					},
+					{
+						"name": "OwnerId",
+						"type": "String"
+					},
+					{
+						"name": "Owner.Name",
+						"type": "String"
+					},
+					{
+						"name": "Owner.Sub_Region__c",
+						"type": "String"
+					},
+					{
+						"name": "CloseDate",
+						"type": "DateTime"
+					},
+					{
+						"name": "StageName",
+						"type": "String"
+					},
+					{
+						"name": "Deal_Type__c",
+						"type": "String"
+					},
+					{
+						"name": "MainProduct__c",
+						"type": "String"
+					},
+					{
+						"name": "OpportunityHEALTH__c",
+						"type": "String"
+					},
+					{
+						"name": "RLF_percent__c",
+						"type": "Decimal"
+					},
+					{
+						"name": "Regional_Sales_Manager_Comments__c",
+						"type": "String"
+					},
+					{
+						"name": "AccountId",
+						"type": "String"
+					},
+					{
+						"name": "Account.Name",
+						"type": "String"
+					},
+					{
+						"name": "Opportunity_18chr_Id__c",
+						"type": "String"
+					},
+					{
+						"name": "Amount",
+						"type": "Decimal"
+					},
+					{
+						"name": "Order_Number__c",
+						"type": "String"
+					},
+					{
+						"name": "Sales_Region_FY07__c",
+						"type": "String"
+					},
+					{
+						"name": "Pricing_Country__c",
+						"type": "String"
+					},
+					{
+						"name": "Misys_Forecast__c",
+						"type": "String"
+					},
+					{
+						"name": "Term_Estimate_Months__c",
+						"type": "Decimal"
+					},
+					{
+						"name": "Commercial_Prop__c",
+						"type": "String"
+					},
+					{
+						"name": "ILF_Amount__c",
+						"type": "Decimal"
+					},
+					{
+						"name": "Total_ILF_In_Qtr__c",
+						"type": "Decimal"
+					},
+					{
+						"name": "Accretive_RLF__c",
+						"type": "Decimal"
+					},
+					{
+						"name": "RLF_Amount__c",
+						"type": "Decimal"
+					},
+					{
+						"name": "PS_Amount__c",
+						"type": "Decimal"
+					},
+					{
+						"name": "ASP_Amount__c",
+						"type": "Decimal"
+					},
+					{
+						"name": "TCV_CSH__c",
+						"type": "Decimal"
+					},
+					{
+						"name": "ACV_ACV_Equiv_CSH__c",
+						"type": "Decimal"
+					},
+					{
+						"name": "Strength_of_Sale__c",
+						"type": "Decimal"
+					},
+					{
+						"name": "Global_Account_Manager_Comments__c",
+						"type": "String"
+					},
+					{
+						"name": "Executive_Sponsor_alignment__c",
+						"type": "String"
+					},
+					{
+						"name": "Next_Step_Due_Date__c",
+						"type": "DateTime"
+					},
+					{
+						"name": "NextStep",
+						"type": "String"
+					},
+					{
+						"name": "Approval_Status__c",
+						"type": "String"
+					},
+					{
+						"name": "sbaa__ApprovalStatus__c",
+						"type": "String"
+					},
+					{
+						"name": "Term_CSH__c",
+						"type": "Decimal"
+					},
+					{
+						"name": "Deal_Category__c",
+						"type": "String"
+					},
+					{
+						"name": "Service_Type__c",
+						"type": "String"
+					},
+					{
+						"name": "Service_Sub_Type__c",
+						"type": "String"
+					},
+					{
+						"name": "CampaignId",
+						"type": "String"
+					},
+					{
+						"name": "Opportunity_Partner__c",
+						"type": "String"
+					},
+					{
+						"name": "Original_Opportunity__c",
+						"type": "String"
+					},
+					{
+						"name": "RecordTypeId",
+						"type": "String"
+					},
+					{
+						"name": "RecordType.Name",
+						"type": "String"
+					},
+					{
+						"name": "LastModifiedDate",
+						"type": "DateTime"
+					},
+					{
+						"name": "CreatedDate",
+						"type": "DateTime"
+					},
+					{
+						"name": "Existing_RLF_Currency__c",
+						"type": "String"
+					},
+					{
+						"name": "CurrencyIsoCode",
+						"type": "String"
+					},
+					{
+						"name": "SBU_Strategic_Business_Unit__c",
+						"type": "String"
+					},
+					{
+						"name": "FiscalPeriod__c",
+						"type": "String"
+					},
+					{
+						"name": "Total_PS_Amount__c",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"objectApiName": "Opportunity"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TimeDimensionDate_Archive_Destination')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStore",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureDataLakeStoreFile",
+				"typeProperties": {
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"rowDelimiter": "",
+						"quoteChar": "\"",
+						"nullValue": "",
+						"treatEmptyAsNull": true,
+						"skipLineCount": 0,
+						"firstRowAsHeader": true
+					},
+					"compression": {
+						"type": "GZip",
+						"level": "Optimal"
+					},
+					"fileName": {
+						"value": "[parameters('TimeDimensionDate_Archive_Destination_properties_typeProperties_fileName')]",
+						"type": "Expression"
+					},
+					"folderPath": "[parameters('TimeDimensionDate_Archive_Destination_properties_typeProperties_folderPath')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TimeDimensionDate_Destination')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"structure": [
+					{
+						"name": "DATE_SKEY",
+						"type": "String"
+					},
+					{
+						"name": "DATE_CREAT_DT",
+						"type": "String"
+					},
+					{
+						"name": "DATE_LAST_UPD_DT",
+						"type": "String"
+					},
+					{
+						"name": "DATE_BKEY",
+						"type": "String"
+					},
+					{
+						"name": "DATE_CAPTION",
+						"type": "String"
+					},
+					{
+						"name": "DATE_CODE",
+						"type": "String"
+					},
+					{
+						"name": "DATE_DT",
+						"type": "String"
+					},
+					{
+						"name": "DATE_DAY_NAME",
+						"type": "String"
+					},
+					{
+						"name": "DATE_SERIES",
+						"type": "String"
+					},
+					{
+						"name": "DATE_DAY_OF_WEEK",
+						"type": "String"
+					},
+					{
+						"name": "CAL_MONTH_BKEY",
+						"type": "String"
+					},
+					{
+						"name": "CAL_MONTH_CAPTION",
+						"type": "String"
+					},
+					{
+						"name": "CAL_MONTH_CODE",
+						"type": "String"
+					},
+					{
+						"name": "CAL_MONTH_NAME",
+						"type": "String"
+					},
+					{
+						"name": "CAL_MONTH_SERIES",
+						"type": "String"
+					},
+					{
+						"name": "CAL_MONTH_BEG_DT",
+						"type": "String"
+					},
+					{
+						"name": "CAL_MONTH_END_DT",
+						"type": "String"
+					},
+					{
+						"name": "CAL_QTR_BKEY",
+						"type": "String"
+					},
+					{
+						"name": "CAL_QTR_CAPTION",
+						"type": "String"
+					},
+					{
+						"name": "CAL_QTR_CODE",
+						"type": "String"
+					},
+					{
+						"name": "CAL_QTR_NAME",
+						"type": "String"
+					},
+					{
+						"name": "CAL_QTR_SERIES",
+						"type": "String"
+					},
+					{
+						"name": "CAL_QTR_BEG_DT",
+						"type": "String"
+					},
+					{
+						"name": "CAL_QTR_END_DT",
+						"type": "String"
+					},
+					{
+						"name": "CAL_HALF_YEAR_BKEY",
+						"type": "String"
+					},
+					{
+						"name": "CAL_HALF_YEAR_CAPTION",
+						"type": "String"
+					},
+					{
+						"name": "CAL_HALF_YEAR_CODE",
+						"type": "String"
+					},
+					{
+						"name": "CAL_HALF_YEAR_NAME",
+						"type": "String"
+					},
+					{
+						"name": "CAL_HALF_YEAR_SERIES",
+						"type": "String"
+					},
+					{
+						"name": "CAL_HALF_YEAR_BEG_DT",
+						"type": "String"
+					},
+					{
+						"name": "CAL_HALF_YEAR_END_DT",
+						"type": "String"
+					},
+					{
+						"name": "CAL_YEAR_BKEY",
+						"type": "String"
+					},
+					{
+						"name": "CAL_YEAR_CAPTION",
+						"type": "String"
+					},
+					{
+						"name": "CAL_YEAR_CODE",
+						"type": "String"
+					},
+					{
+						"name": "CAL_YEAR_SERIES",
+						"type": "String"
+					},
+					{
+						"name": "CAL_YEAR_BEG_DT",
+						"type": "String"
+					},
+					{
+						"name": "CAL_YEAR_END_DT",
+						"type": "String"
+					},
+					{
+						"name": "FISC_PERIOD_BKEY",
+						"type": "String"
+					},
+					{
+						"name": "FISC_PERIOD_CAPTION",
+						"type": "String"
+					},
+					{
+						"name": "FISC_PERIOD_CODE",
+						"type": "String"
+					},
+					{
+						"name": "FISC_PERIOD_NAME",
+						"type": "String"
+					},
+					{
+						"name": "FISC_PERIOD_SERIES",
+						"type": "String"
+					},
+					{
+						"name": "FISC_PERIOD_BEG_DT",
+						"type": "String"
+					},
+					{
+						"name": "FISC_PERIOD_END_DT",
+						"type": "String"
+					},
+					{
+						"name": "FISC_QTR_BKEY",
+						"type": "String"
+					},
+					{
+						"name": "FISC_QTR_CAPTION",
+						"type": "String"
+					},
+					{
+						"name": "FISC_QTR_CODE",
+						"type": "String"
+					},
+					{
+						"name": "FISC_QTR_NAME",
+						"type": "String"
+					},
+					{
+						"name": "FISC_QTR_SERIES",
+						"type": "String"
+					},
+					{
+						"name": "FISC_QTR_BEG_DT",
+						"type": "String"
+					},
+					{
+						"name": "FISC_QTR_END_DT",
+						"type": "String"
+					},
+					{
+						"name": "FISC_HALF_YEAR_BKEY",
+						"type": "String"
+					},
+					{
+						"name": "FISC_HALF_YEAR_CAPTION",
+						"type": "String"
+					},
+					{
+						"name": "FISC_HALF_YEAR_CODE",
+						"type": "String"
+					},
+					{
+						"name": "FISC_HALF_YEAR_NAME",
+						"type": "String"
+					},
+					{
+						"name": "FISC_HALF_YEAR_SERIES",
+						"type": "String"
+					},
+					{
+						"name": "FISC_HALF_YEAR_BEG_DT",
+						"type": "String"
+					},
+					{
+						"name": "FISC_HALF_YEAR_END_DT",
+						"type": "String"
+					},
+					{
+						"name": "FISC_YEAR_BKEY",
+						"type": "String"
+					},
+					{
+						"name": "FISC_YEAR_CAPTION",
+						"type": "String"
+					},
+					{
+						"name": "FISC_YEAR_CODE",
+						"type": "String"
+					},
+					{
+						"name": "FISC_YEAR_SERIES",
+						"type": "String"
+					},
+					{
+						"name": "FISC_YEAR_BEG_DT",
+						"type": "String"
+					},
+					{
+						"name": "FISC_YEAR_END_DT",
+						"type": "String"
+					},
+					{
+						"name": "FISC_YEAR_NAME",
+						"type": "String"
+					},
+					{
+						"name": "FISC_WEEK_BKEY",
+						"type": "String"
+					},
+					{
+						"name": "FISC_WEEK_CAPTION",
+						"type": "String"
+					},
+					{
+						"name": "FISC_WEEK_CODE",
+						"type": "String"
+					},
+					{
+						"name": "FISC_WEEK_NAME",
+						"type": "String"
+					},
+					{
+						"name": "FISC_WEEK_SERIES",
+						"type": "String"
+					},
+					{
+						"name": "FISC_WEEK_BEG_DT",
+						"type": "String"
+					},
+					{
+						"name": "FISC_WEEK_END_DT",
+						"type": "String"
+					},
+					{
+						"name": "SOURCE_SYSTEM",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[TimeDimensionDate]"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/TimeDimensionDate_Source')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -1395,390 +2128,6 @@
 				"typeProperties": {
 					"tableName": "[[STG].[V_Sales_SFDC_User]"
 				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/User_lastMod')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/V_HR_Maclean_EXM_Location_Archive_Destination')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStore",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureDataLakeStoreFile",
-				"typeProperties": {
-					"format": {
-						"type": "TextFormat",
-						"columnDelimiter": ",",
-						"rowDelimiter": "",
-						"quoteChar": "\"",
-						"nullValue": "",
-						"treatEmptyAsNull": true,
-						"skipLineCount": 0,
-						"firstRowAsHeader": true
-					},
-					"compression": {
-						"type": "GZip",
-						"level": "Optimal"
-					},
-					"fileName": {
-						"value": "[parameters('V_HR_Maclean_EXM_Location_Archive_Destination_properties_typeProperties_fileName')]",
-						"type": "Expression"
-					},
-					"folderPath": "[parameters('V_HR_Maclean_EXM_Location_Archive_Destination_properties_typeProperties_folderPath')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/V_HR_Maclean_EXM_Location_Directory_Archive_Destination')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStore",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureDataLakeStoreFile",
-				"typeProperties": {
-					"format": {
-						"type": "TextFormat",
-						"columnDelimiter": ",",
-						"rowDelimiter": "",
-						"quoteChar": "\"",
-						"nullValue": "",
-						"treatEmptyAsNull": true,
-						"skipLineCount": 0,
-						"firstRowAsHeader": true
-					},
-					"compression": {
-						"type": "GZip",
-						"level": "Optimal"
-					},
-					"fileName": {
-						"value": "[parameters('V_HR_Maclean_EXM_Location_Directory_Archive_Destination_properties_typeProperties_fileName')]",
-						"type": "Expression"
-					},
-					"folderPath": "[parameters('V_HR_Maclean_EXM_Location_Directory_Archive_Destination_properties_typeProperties_folderPath')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/test')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileShare",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "FileShare",
-				"typeProperties": {
-					"format": {
-						"type": "TextFormat",
-						"columnDelimiter": ",",
-						"rowDelimiter": "",
-						"nullValue": "\\N",
-						"treatEmptyAsNull": true,
-						"skipLineCount": 0,
-						"firstRowAsHeader": false
-					},
-					"fileName": "[parameters('test_properties_typeProperties_fileName')]",
-					"folderPath": "[parameters('test_properties_typeProperties_folderPath')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/test1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileShare",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "FileServerLocation",
-						"fileName": "FinanceActuals_20190430.csv",
-						"folderPath": "CEOCFO/Finance"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "GL Period",
-						"type": "String"
-					},
-					{
-						"name": "TransID",
-						"type": "String"
-					},
-					{
-						"name": "Region",
-						"type": "String"
-					},
-					{
-						"name": "Softrax",
-						"type": "String"
-					},
-					{
-						"name": "Name",
-						"type": "String"
-					},
-					{
-						"name": "Sales Rep",
-						"type": "String"
-					},
-					{
-						"name": "LOB",
-						"type": "String"
-					},
-					{
-						"name": "Product",
-						"type": "String"
-					},
-					{
-						"name": "Sum of Booking ACV",
-						"type": "String"
-					},
-					{
-						"name": "Sum of Renewal ACV",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/test11')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStore",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureDataLakeStoreLocation",
-						"fileName": "Financial_Actuals",
-						"folderPath": "LandingArchive/CEOCFO/Sales/CM_OrderBook"
-					},
-					"columnDelimiter": ",",
-					"compressionCodec": "gzip",
-					"compressionLevel": "Optimal",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Delete old Landing Files')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "Delete files more than 30 days",
-				"activities": [
-					{
-						"name": "Delete HR",
-						"type": "Delete",
-						"dependsOn": [
-							{
-								"activity": "Delete Forecast Plan",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataset": {
-								"referenceName": "FileShareDelete",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"enableLogging": false
-						}
-					},
-					{
-						"name": "Delete Customer Support",
-						"type": "Delete",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataset": {
-								"referenceName": "FileShareDelete2",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"enableLogging": false
-						}
-					},
-					{
-						"name": "Delete Finance",
-						"type": "Delete",
-						"dependsOn": [
-							{
-								"activity": "Delete HR",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataset": {
-								"referenceName": "FileShareDelete3",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"enableLogging": false
-						}
-					},
-					{
-						"name": "Delete Marketing",
-						"type": "Delete",
-						"dependsOn": [
-							{
-								"activity": "Delete Finance",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataset": {
-								"referenceName": "FileShareDelete4",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"enableLogging": false
-						}
-					},
-					{
-						"name": "Delete Sales",
-						"type": "Delete",
-						"dependsOn": [
-							{
-								"activity": "Delete Marketing",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataset": {
-								"referenceName": "FileShareDelete5",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"enableLogging": false
-						}
-					},
-					{
-						"name": "Delete Forecast Plan",
-						"type": "Delete",
-						"dependsOn": [
-							{
-								"activity": "Delete Customer Support",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataset": {
-								"referenceName": "FileShareDelete6",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"enableLogging": false
-						}
-					}
-				],
-				"folder": {
-					"name": "ETL Jobs"
-				},
-				"annotations": []
 			},
 			"dependsOn": []
 		}
