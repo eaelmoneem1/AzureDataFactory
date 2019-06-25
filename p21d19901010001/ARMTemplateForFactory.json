@@ -12241,6 +12241,69 @@
 							"waitOnCompletion": true,
 							"parameters": {}
 						}
+					},
+					{
+						"name": "FactSALES_QBRCommits",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "DimEmployee_Requisitions",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactSALES_QBRCommits",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "FactCollectionReporting",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FactSALES_QBRCommits",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactCollectionReporting",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "FactCollectionReporting_Monthly_Targets",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FactCollectionReporting",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactCollectionReporting_Monthly_Targets",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
 					}
 				],
 				"folder": {
@@ -12262,7 +12325,10 @@
 				"[concat(variables('factoryId'), '/pipelines/FactEXMSCORE')]",
 				"[concat(variables('factoryId'), '/pipelines/DimEmployee_Future_Hires')]",
 				"[concat(variables('factoryId'), '/pipelines/DimEmployee_Future_Termiantions')]",
-				"[concat(variables('factoryId'), '/pipelines/DimEmployee_Diversity')]"
+				"[concat(variables('factoryId'), '/pipelines/DimEmployee_Diversity')]",
+				"[concat(variables('factoryId'), '/pipelines/FactSALES_QBRCommits')]",
+				"[concat(variables('factoryId'), '/pipelines/FactCollectionReporting')]",
+				"[concat(variables('factoryId'), '/pipelines/FactCollectionReporting_Monthly_Targets')]"
 			]
 		},
 		{
