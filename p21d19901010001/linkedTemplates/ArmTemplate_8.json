@@ -23,35 +23,234 @@
 			"type": "string",
 			"defaultValue": "LandingArchive/CEOCFO/Sales/Profile"
 		},
-		"Revenue_Archive_Destination_properties_typeProperties_fileName": {
+		"Profile_Arch_Dest_incr_properties_typeProperties_fileName": {
 			"type": "string",
-			"defaultValue": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
+			"defaultValue": "@concat ('Profile_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')"
 		},
-		"Revenue_Archive_Destination_properties_typeProperties_folderPath": {
+		"Profile_Arch_Dest_incr_properties_typeProperties_folderPath": {
 			"type": "string",
-			"defaultValue": "LandingArchive/CEOCFO/Finance"
-		},
-		"Revenue_cost_source_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
-		},
-		"Revenue_cost_source_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "CEOCFO/Finance"
-		},
-		"SFDC_Archive_Campaign_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "@concat ('Campaign_Initial_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')"
-		},
-		"SFDC_Archive_Campaign_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "LandingArchive/CEOCFO/Sales/Campaign"
+			"defaultValue": "LandingArchive/CEOCFO/Sales/Profile"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/Marketing_Targets_Dest')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "FiscalYear",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Category",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Target",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Rec_CRE_TMS",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[Marketing_Targets]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Marketing_Targets_Source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileShare",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"fileName": "Marketing_Targets.csv",
+						"folderPath": "ELT/Marketing"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "FiscalYear",
+						"type": "String"
+					},
+					{
+						"name": "Category",
+						"type": "String"
+					},
+					{
+						"name": "Target",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Marketing_lkp_Country_Dest')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Country",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Sales_Region",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Sub_Region",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Rec_CRE_TMS",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[Marketing_lkp_Country]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Marketing_lkp_Country_Source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileShare",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"fileName": {
+							"value": "@concat ('Marketing_lkp_Country_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+							"type": "Expression"
+						},
+						"folderPath": "ELT/Marketing"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "/",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Country",
+						"type": "String"
+					},
+					{
+						"name": "Sales Region",
+						"type": "String"
+					},
+					{
+						"name": "Sub-Region",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Marketing_lkp_TAMlist_Dest')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Account_Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Rec_CRE_TMS",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[Marketing_lkp_TAMlist]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Marketing_lkp_TAMlist_Source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileShare",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"fileName": "Marketing_lkp_TAMlist.csv",
+						"folderPath": "ELT/Marketing"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Account Name (TAM List)",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Opportunity_Incremental_load')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -3374,7 +3573,70 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Profile_Arch_Dest_incr')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStore",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureDataLakeStoreFile",
+				"typeProperties": {
+					"format": {
+						"type": "OrcFormat"
+					},
+					"fileName": {
+						"value": "[parameters('Profile_Arch_Dest_incr_properties_typeProperties_fileName')]",
+						"type": "Expression"
+					},
+					"folderPath": "[parameters('Profile_Arch_Dest_incr_properties_typeProperties_folderPath')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Profile_Arch_Source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "CreatedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Id",
+						"type": "varchar"
+					},
+					{
+						"name": "Name",
+						"type": "varchar"
+					},
+					{
+						"name": "LastModifiedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[V_Sales_SFDC_Profile]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Profile_Arch_src')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -3454,6 +3716,47 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Profile_Dest_Incr')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "CreatedDate",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "LastModifiedDate ",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Rec_CRE_TMS",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[Sales_SFDC_Profile]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Profile_Src')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -3476,6 +3779,41 @@
 					{
 						"name": "Name",
 						"type": "String"
+					},
+					{
+						"name": "LastModifiedDate",
+						"type": "DateTime"
+					}
+				],
+				"typeProperties": {
+					"objectApiName": "Profile"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Profile_Src_Incr')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Salesforce1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SalesforceObject",
+				"structure": [
+					{
+						"name": "Id",
+						"type": "String"
+					},
+					{
+						"name": "Name",
+						"type": "String"
+					},
+					{
+						"name": "CreatedDate",
+						"type": "DateTime"
 					},
 					{
 						"name": "LastModifiedDate",
@@ -3556,676 +3894,6 @@
 				],
 				"typeProperties": {
 					"tableName": "[[STG].[Sales_FF_QBRCommits]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/QBRCommits_Source')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileShare",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "FileServerLocation",
-						"fileName": {
-							"value": "@concat ('QBRCommits_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
-							"type": "Expression"
-						},
-						"folderPath": "CEOCFO/Sales"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "Fiscal Year",
-						"type": "String"
-					},
-					{
-						"name": "Quarter",
-						"type": "String"
-					},
-					{
-						"name": "Sales Region",
-						"type": "String"
-					},
-					{
-						"name": "QBR Commit",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/RevenueCost_Dest')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "Account",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Account_Type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Cost_Centre",
-						"type": "nvarchar"
-					},
-					{
-						"name": "CC_Code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Function",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Product_Family",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Product_line",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Sub_Region",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Region",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Source_System",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Year",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Jun",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Jul",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Aug",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Sep",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Oct",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Nov",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Dec",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Jan",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Feb",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Mar",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Apr",
-						"type": "nvarchar"
-					},
-					{
-						"name": "May",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Rec_CRE_TMS",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"tableName": "[[STG].[Finance_FF_Revenue&Cost]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Revenue_Archive_Destination')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStore",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureDataLakeStoreFile",
-				"typeProperties": {
-					"format": {
-						"type": "TextFormat",
-						"columnDelimiter": ",",
-						"rowDelimiter": "",
-						"quoteChar": "\"",
-						"nullValue": "",
-						"treatEmptyAsNull": true,
-						"skipLineCount": 0,
-						"firstRowAsHeader": true
-					},
-					"compression": {
-						"type": "GZip",
-						"level": "Optimal"
-					},
-					"fileName": {
-						"value": "[parameters('Revenue_Archive_Destination_properties_typeProperties_fileName')]",
-						"type": "Expression"
-					},
-					"folderPath": "[parameters('Revenue_Archive_Destination_properties_typeProperties_folderPath')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Revenue_Historical_Arch_dest')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStore",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureDataLakeStoreLocation",
-						"fileName": {
-							"value": "@concat ('FinanceActuals_History_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
-							"type": "Expression"
-						},
-						"folderPath": "LandingArchive/CEOCFO/Finance"
-					},
-					"columnDelimiter": ",",
-					"compressionCodec": "gzip",
-					"compressionLevel": "Optimal",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Revenue_cost_Destination')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"structure": [
-					{
-						"name": "Account",
-						"type": "String"
-					},
-					{
-						"name": "Account_Type",
-						"type": "String"
-					},
-					{
-						"name": "Cost_Centre",
-						"type": "String"
-					},
-					{
-						"name": "CC_Code",
-						"type": "String"
-					},
-					{
-						"name": "Function",
-						"type": "String"
-					},
-					{
-						"name": "Product_Family",
-						"type": "String"
-					},
-					{
-						"name": "Product_line",
-						"type": "String"
-					},
-					{
-						"name": "Sub_Region",
-						"type": "String"
-					},
-					{
-						"name": "Region",
-						"type": "String"
-					},
-					{
-						"name": "Source_System",
-						"type": "String"
-					},
-					{
-						"name": "Jun",
-						"type": "String"
-					},
-					{
-						"name": "Jul",
-						"type": "String"
-					},
-					{
-						"name": "Aug",
-						"type": "String"
-					},
-					{
-						"name": "Sep",
-						"type": "String"
-					},
-					{
-						"name": "Oct",
-						"type": "String"
-					},
-					{
-						"name": "Nov",
-						"type": "String"
-					},
-					{
-						"name": "Dec",
-						"type": "String"
-					},
-					{
-						"name": "Jan",
-						"type": "String"
-					},
-					{
-						"name": "Feb",
-						"type": "String"
-					},
-					{
-						"name": "Mar",
-						"type": "String"
-					},
-					{
-						"name": "Apr",
-						"type": "String"
-					},
-					{
-						"name": "May",
-						"type": "String"
-					}
-				],
-				"typeProperties": {
-					"tableName": "[[STG].[Finance_FF_Revenue&Cost_History]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Revenue_cost_source')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileShare",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "FileShare",
-				"structure": [
-					{
-						"name": "Account",
-						"type": "String"
-					},
-					{
-						"name": "Account Type",
-						"type": "String"
-					},
-					{
-						"name": "Cost Centre",
-						"type": "String"
-					},
-					{
-						"name": "CC code",
-						"type": "String"
-					},
-					{
-						"name": "Function",
-						"type": "String"
-					},
-					{
-						"name": "Product Family",
-						"type": "String"
-					},
-					{
-						"name": "Product Line",
-						"type": "String"
-					},
-					{
-						"name": "Sub Region",
-						"type": "String"
-					},
-					{
-						"name": "Region",
-						"type": "String"
-					},
-					{
-						"name": "Source System",
-						"type": "String"
-					},
-					{
-						"name": "Jun",
-						"type": "String"
-					},
-					{
-						"name": "Jul",
-						"type": "String"
-					},
-					{
-						"name": "Aug",
-						"type": "String"
-					},
-					{
-						"name": "Sep",
-						"type": "String"
-					},
-					{
-						"name": "Oct",
-						"type": "String"
-					},
-					{
-						"name": "Nov",
-						"type": "String"
-					},
-					{
-						"name": "Dec",
-						"type": "String"
-					},
-					{
-						"name": "Jan",
-						"type": "String"
-					},
-					{
-						"name": "Feb",
-						"type": "String"
-					},
-					{
-						"name": "Mar",
-						"type": "String"
-					},
-					{
-						"name": "Apr",
-						"type": "String"
-					},
-					{
-						"name": "May",
-						"type": "String"
-					}
-				],
-				"typeProperties": {
-					"format": {
-						"type": "TextFormat",
-						"columnDelimiter": ",",
-						"rowDelimiter": "",
-						"quoteChar": "\"",
-						"nullValue": "",
-						"treatEmptyAsNull": true,
-						"skipLineCount": 0,
-						"firstRowAsHeader": true
-					},
-					"fileName": {
-						"value": "[parameters('Revenue_cost_source_properties_typeProperties_fileName')]",
-						"type": "Expression"
-					},
-					"folderPath": "[parameters('Revenue_cost_source_properties_typeProperties_folderPath')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Revenue_cost_source_historical')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileShare",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "FileServerLocation",
-						"fileName": {
-							"value": "@concat ('FinanceActuals_History','.csv')",
-							"type": "Expression"
-						},
-						"folderPath": "CEOCFO/Finance"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "Account",
-						"type": "String"
-					},
-					{
-						"name": "Account Type",
-						"type": "String"
-					},
-					{
-						"name": "Cost Centre",
-						"type": "String"
-					},
-					{
-						"name": "CC code",
-						"type": "String"
-					},
-					{
-						"name": "Function",
-						"type": "String"
-					},
-					{
-						"name": "Product Family",
-						"type": "String"
-					},
-					{
-						"name": "Product Line",
-						"type": "String"
-					},
-					{
-						"name": "Sub Region",
-						"type": "String"
-					},
-					{
-						"name": "Region",
-						"type": "String"
-					},
-					{
-						"name": "Source System",
-						"type": "String"
-					},
-					{
-						"name": "Jun",
-						"type": "String"
-					},
-					{
-						"name": "Jul",
-						"type": "String"
-					},
-					{
-						"name": "Aug",
-						"type": "String"
-					},
-					{
-						"name": "Sep",
-						"type": "String"
-					},
-					{
-						"name": "Oct",
-						"type": "String"
-					},
-					{
-						"name": "Nov",
-						"type": "String"
-					},
-					{
-						"name": "Dec",
-						"type": "String"
-					},
-					{
-						"name": "Jan",
-						"type": "String"
-					},
-					{
-						"name": "Feb",
-						"type": "String"
-					},
-					{
-						"name": "Mar",
-						"type": "String"
-					},
-					{
-						"name": "Apr",
-						"type": "String"
-					},
-					{
-						"name": "May",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SFDC_Account')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Salesforce1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SalesforceObject",
-				"structure": [
-					{
-						"name": "Account_18chr_Id__c",
-						"type": "String"
-					},
-					{
-						"name": "Account_Number__c",
-						"type": "String"
-					},
-					{
-						"name": "Name",
-						"type": "String"
-					},
-					{
-						"name": "OwnerId",
-						"type": "String"
-					},
-					{
-						"name": "Country__c",
-						"type": "String"
-					},
-					{
-						"name": "CreatedDate",
-						"type": "DateTime"
-					},
-					{
-						"name": "LastModifiedDate",
-						"type": "DateTime"
-					}
-				],
-				"typeProperties": {
-					"objectApiName": "Account"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SFDC_Archive')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"typeProperties": {
-					"tableName": "[[STG].[V_Sales_SFDC_Booking]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SFDC_Archive_Campaign')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStore",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureDataLakeStoreFile",
-				"typeProperties": {
-					"format": {
-						"type": "TextFormat",
-						"columnDelimiter": ",",
-						"rowDelimiter": "",
-						"quoteChar": "\"",
-						"nullValue": "",
-						"treatEmptyAsNull": true,
-						"skipLineCount": 0,
-						"firstRowAsHeader": true
-					},
-					"fileName": {
-						"value": "[parameters('SFDC_Archive_Campaign_properties_typeProperties_fileName')]",
-						"type": "Expression"
-					},
-					"folderPath": "[parameters('SFDC_Archive_Campaign_properties_typeProperties_folderPath')]"
 				}
 			},
 			"dependsOn": []

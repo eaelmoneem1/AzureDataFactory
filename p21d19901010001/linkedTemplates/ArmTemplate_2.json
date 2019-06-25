@@ -6,12 +6,641 @@
 			"type": "string",
 			"metadata": "Data Factory Name",
 			"defaultValue": "p21d19901010001"
+		},
+		"CS_FF_NPS_Source_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": "@concat ('NPS_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')"
+		},
+		"CS_FF_NPS_Source_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "CEOCFO/CustomerSupport"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/CS_FF_NPS_Source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileShare",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "FileShare",
+				"structure": [
+					{
+						"name": "Start Date",
+						"type": "String"
+					},
+					{
+						"name": "End Date",
+						"type": "String"
+					},
+					{
+						"name": "Survey Details",
+						"type": "String"
+					},
+					{
+						"name": "Contact Name",
+						"type": "String"
+					},
+					{
+						"name": "Contact Email",
+						"type": "String"
+					},
+					{
+						"name": "Contact Record ID",
+						"type": "String"
+					},
+					{
+						"name": "Company ID",
+						"type": "String"
+					},
+					{
+						"name": "Company",
+						"type": "String"
+					},
+					{
+						"name": "Company Country Code",
+						"type": "String"
+					},
+					{
+						"name": "Company Country",
+						"type": "String"
+					},
+					{
+						"name": "Company Email",
+						"type": "String"
+					},
+					{
+						"name": "Region Code",
+						"type": "String"
+					},
+					{
+						"name": "Region",
+						"type": "String"
+					},
+					{
+						"name": "Survey Name",
+						"type": "String"
+					},
+					{
+						"name": "Invitation Date",
+						"type": "String"
+					},
+					{
+						"name": "Survey Language",
+						"type": "String"
+					},
+					{
+						"name": "Survey Medium",
+						"type": "String"
+					},
+					{
+						"name": "Reminder1 Date",
+						"type": "String"
+					},
+					{
+						"name": "Reminder2 Date",
+						"type": "String"
+					},
+					{
+						"name": "Reminder3 Date",
+						"type": "String"
+					},
+					{
+						"name": "Response Received Date",
+						"type": "String"
+					},
+					{
+						"name": "Response Collected Date",
+						"type": "String"
+					},
+					{
+						"name": "Address Line 1",
+						"type": "String"
+					},
+					{
+						"name": "Address Line 2",
+						"type": "String"
+					},
+					{
+						"name": "Address Line 3",
+						"type": "String"
+					},
+					{
+						"name": "Primary Addr Postal code",
+						"type": "String"
+					},
+					{
+						"name": "Person ID",
+						"type": "String"
+					},
+					{
+						"name": "Salutation",
+						"type": "String"
+					},
+					{
+						"name": "First Name",
+						"type": "String"
+					},
+					{
+						"name": "Person Middle Name",
+						"type": "String"
+					},
+					{
+						"name": "Last Name",
+						"type": "String"
+					},
+					{
+						"name": "Person Gender Code",
+						"type": "String"
+					},
+					{
+						"name": "Person Age",
+						"type": "String"
+					},
+					{
+						"name": "Person Age Group Code",
+						"type": "String"
+					},
+					{
+						"name": "Primary Address Text",
+						"type": "String"
+					},
+					{
+						"name": "Primary addr city name",
+						"type": "String"
+					},
+					{
+						"name": "Primary addr state code",
+						"type": "String"
+					},
+					{
+						"name": "Primary addr state name",
+						"type": "String"
+					},
+					{
+						"name": "Primary Addr Country Code",
+						"type": "String"
+					},
+					{
+						"name": "Primary Addr Country Name",
+						"type": "String"
+					},
+					{
+						"name": "Purchase Influence Level",
+						"type": "String"
+					},
+					{
+						"name": "Primary Job Role Name",
+						"type": "String"
+					},
+					{
+						"name": "Primary Job Role Title",
+						"type": "String"
+					},
+					{
+						"name": "Primary Job Department Name",
+						"type": "String"
+					},
+					{
+						"name": "Primary Phone Number",
+						"type": "String"
+					},
+					{
+						"name": "Assignee",
+						"type": "String"
+					},
+					{
+						"name": "Last Follow-up Date",
+						"type": "String"
+					},
+					{
+						"name": "Last Follow-Up Comment",
+						"type": "String"
+					},
+					{
+						"name": "Follow-up Status",
+						"type": "String"
+					},
+					{
+						"name": "Assignee Email",
+						"type": "String"
+					},
+					{
+						"name": "Assignee Title",
+						"type": "String"
+					},
+					{
+						"name": "Person Identifier",
+						"type": "String"
+					},
+					{
+						"name": "Survey ID",
+						"type": "String"
+					},
+					{
+						"name": "Initiating Event TimeStamp",
+						"type": "String"
+					},
+					{
+						"name": "Person Identifier Type Code",
+						"type": "String"
+					},
+					{
+						"name": "Followup Contact Party ID",
+						"type": "String"
+					},
+					{
+						"name": "Initiating Event Description",
+						"type": "String"
+					},
+					{
+						"name": "Company Duns Number",
+						"type": "String"
+					},
+					{
+						"name": "Person Birth Date",
+						"type": "String"
+					},
+					{
+						"name": "Person Name Suffix",
+						"type": "String"
+					},
+					{
+						"name": "Person Income Amount",
+						"type": "String"
+					},
+					{
+						"name": "Person Income Group Code",
+						"type": "String"
+					},
+					{
+						"name": "Primary Fax Number",
+						"type": "String"
+					},
+					{
+						"name": "Primary Mobile Phone Number",
+						"type": "String"
+					},
+					{
+						"name": "Primary Phone Extension Number",
+						"type": "String"
+					},
+					{
+						"name": "Prefer Text Only Email Y/N?",
+						"type": "String"
+					},
+					{
+						"name": "Survey Locale Select Enabled Y/N?",
+						"type": "String"
+					},
+					{
+						"name": "Response Rate Notification Recipient",
+						"type": "String"
+					},
+					{
+						"name": "Response Rate Notification CC 1",
+						"type": "String"
+					},
+					{
+						"name": "Response Rate Notification CC 2",
+						"type": "String"
+					},
+					{
+						"name": "Follow-up Escalation ID",
+						"type": "String"
+					},
+					{
+						"name": "Integration Reference Id",
+						"type": "String"
+					},
+					{
+						"name": "How satisfied are you for Adoption-Value",
+						"type": "String"
+					},
+					{
+						"name": "How satisfied are you for Delivery-Value",
+						"type": "String"
+					},
+					{
+						"name": "How satisfied are you for Onboarding-Value",
+						"type": "String"
+					},
+					{
+						"name": "How satisfied are you for Product-Value",
+						"type": "String"
+					},
+					{
+						"name": "How satisfied are you for Responsiveness to new business demands-Value",
+						"type": "String"
+					},
+					{
+						"name": "How satisfied are you for Support-Value",
+						"type": "String"
+					},
+					{
+						"name": "How satisfied are you for Your purchase process-Value",
+						"type": "String"
+					},
+					{
+						"name": "How satisfied are you for Your renewal process-Value",
+						"type": "String"
+					},
+					{
+						"name": "How satisfied are you with Brand-Value",
+						"type": "String"
+					},
+					{
+						"name": "How satisfied are you with Product-Value",
+						"type": "String"
+					},
+					{
+						"name": "How satisfied are you with Service-Value",
+						"type": "String"
+					},
+					{
+						"name": "How satisfied are you with Value for Money-Value",
+						"type": "String"
+					},
+					{
+						"name": "Improvement Comment",
+						"type": "String"
+					},
+					{
+						"name": "LTR-Value",
+						"type": "String"
+					},
+					{
+						"name": "Next action you are most likely to take",
+						"type": "String"
+					},
+					{
+						"name": "Product List",
+						"type": "String"
+					},
+					{
+						"name": "Relationship with Finastra",
+						"type": "String"
+					},
+					{
+						"name": "Satisfaction Comment",
+						"type": "String"
+					},
+					{
+						"name": "Satisfaction for supported by a Finastra partner-Value",
+						"type": "String"
+					},
+					{
+						"name": "Supported by a Finastra partner",
+						"type": "String"
+					},
+					{
+						"name": "What is the problem for Adopting your solution to get business value",
+						"type": "String"
+					},
+					{
+						"name": "What is the problem for Delivery",
+						"type": "String"
+					},
+					{
+						"name": "What is the problem for Onboarding your solution to get business value",
+						"type": "String"
+					},
+					{
+						"name": "What is the problem for Product",
+						"type": "String"
+					},
+					{
+						"name": "What is the problem for Responsiveness to new business demands",
+						"type": "String"
+					},
+					{
+						"name": "What is the problem for Support",
+						"type": "String"
+					},
+					{
+						"name": "What is the problem for Your purchase process",
+						"type": "String"
+					},
+					{
+						"name": "What is the problem for Your renewal process",
+						"type": "String"
+					},
+					{
+						"name": "NewBusiness",
+						"type": "String"
+					},
+					{
+						"name": "Go To Market",
+						"type": "String"
+					},
+					{
+						"name": "Closed Loop Alert",
+						"type": "String"
+					},
+					{
+						"name": "Modified On",
+						"type": "String"
+					},
+					{
+						"name": "Created On",
+						"type": "String"
+					},
+					{
+						"name": "Title",
+						"type": "String"
+					},
+					{
+						"name": "C-Level",
+						"type": "String"
+					},
+					{
+						"name": "Do not allow Emails",
+						"type": "String"
+					},
+					{
+						"name": "Do not allow Bulk Emails",
+						"type": "String"
+					},
+					{
+						"name": "Case Management User",
+						"type": "String"
+					},
+					{
+						"name": "Customer Center Admin",
+						"type": "String"
+					},
+					{
+						"name": "Softrax ID",
+						"type": "String"
+					},
+					{
+						"name": "Account Name",
+						"type": "String"
+					},
+					{
+						"name": "websiteurl",
+						"type": "String"
+					},
+					{
+						"name": "Asset",
+						"type": "String"
+					},
+					{
+						"name": "Core Risk Level",
+						"type": "String"
+					},
+					{
+						"name": "Core Segment",
+						"type": "String"
+					},
+					{
+						"name": "Lending Risk Level",
+						"type": "String"
+					},
+					{
+						"name": "Lending Segment",
+						"type": "String"
+					},
+					{
+						"name": "Active Product Family Owned for Support",
+						"type": "String"
+					},
+					{
+						"name": "No. of Employees",
+						"type": "String"
+					},
+					{
+						"name": "NPS Survey",
+						"type": "String"
+					},
+					{
+						"name": "Last NPS Survey Sent",
+						"type": "String"
+					},
+					{
+						"name": "Selected for Survey?",
+						"type": "String"
+					},
+					{
+						"name": "Asset Tier",
+						"type": "String"
+					},
+					{
+						"name": "Account Type",
+						"type": "String"
+					},
+					{
+						"name": "Region_1",
+						"type": "String"
+					},
+					{
+						"name": "Lending Account Exec",
+						"type": "String"
+					},
+					{
+						"name": "Core RM",
+						"type": "String"
+					},
+					{
+						"name": "Trailing 12 Rev Rank",
+						"type": "String"
+					},
+					{
+						"name": "Prior Year Revenue",
+						"type": "String"
+					},
+					{
+						"name": "Prior Year Lending Rev",
+						"type": "String"
+					},
+					{
+						"name": "Prior Year Mortgage Rev",
+						"type": "String"
+					},
+					{
+						"name": "Prior Year Retail Rev",
+						"type": "String"
+					},
+					{
+						"name": "3 Yr Revenue Rank",
+						"type": "String"
+					},
+					{
+						"name": "3 Year Avg Rev",
+						"type": "String"
+					},
+					{
+						"name": "Count of Won Opportunities",
+						"type": "String"
+					},
+					{
+						"name": "Count of Lost Opportunities",
+						"type": "String"
+					},
+					{
+						"name": "Parent account",
+						"type": "String"
+					},
+					{
+						"name": "Account Governance profile",
+						"type": "String"
+					},
+					{
+						"name": "Account 18chr Id",
+						"type": "String"
+					},
+					{
+						"name": "GTM Target",
+						"type": "String"
+					},
+					{
+						"name": "Full Name",
+						"type": "String"
+					},
+					{
+						"name": "Mobile",
+						"type": "String"
+					},
+					{
+						"name": "GTM Persona",
+						"type": "String"
+					},
+					{
+						"name": "Max of Annual Revenue",
+						"type": "String"
+					},
+					{
+						"name": "Map Name",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"rowDelimiter": "",
+						"quoteChar": "\"",
+						"nullValue": "",
+						"treatEmptyAsNull": true,
+						"skipLineCount": 0,
+						"firstRowAsHeader": true
+					},
+					"fileName": {
+						"value": "[parameters('CS_FF_NPS_Source_properties_typeProperties_fileName')]",
+						"type": "Expression"
+					},
+					"folderPath": "[parameters('CS_FF_NPS_Source_properties_typeProperties_folderPath')]"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/CS_FF_NPS_Source_Archive')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -64,6 +693,23 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Campaign_Archive2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"typeProperties": {
+					"tableName": "[[STG].[V_Sales_SFDC_Campaign]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Campaign_Last_Created')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -98,6 +744,23 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Campaign_Last_Created2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"typeProperties": {
+					"tableName": "[[STG].[Sales_SFDC_Campaign]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Campaign_last_modified')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -116,6 +779,23 @@
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Campaign_last_modified1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"typeProperties": {
+					"tableName": "[[STG].[Sales_SFDC_Campaign]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Campaign_last_modified2')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -687,386 +1367,6 @@
 						"type": "String"
 					}
 				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/EXMSCORE_Gender_Dest')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "Gender",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Responses",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Detractors_Percentage",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Passives_Percentage",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Promoters_Percentage",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Score",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Avg_Response",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Response_Distribution_0",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Response_Distribution_1",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Response_Distribution_2",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Response_Distribution_3",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Response_Distribution_4",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Response_Distribution_5",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Response_Distribution_6",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Response_Distribution_7",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Response_Distribution_8",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Response_Distribution_9",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Response_Distribution_10",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Year",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Calendar_Week_Number",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Rec_CRE_TMS",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"tableName": "[[STG].[HR_Maclean_EXM_Gender]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/EXMSCORE_Gender_Source')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileShare",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "FileServerLocation",
-						"fileName": {
-							"value": "@concat ('EXM_Gender_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
-							"type": "Expression"
-						},
-						"folderPath": "CEOCFO/HR"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "Gender",
-						"type": "String"
-					},
-					{
-						"name": "Responses",
-						"type": "String"
-					},
-					{
-						"name": "Detractors",
-						"type": "String"
-					},
-					{
-						"name": "Passives",
-						"type": "String"
-					},
-					{
-						"name": "Promoters",
-						"type": "String"
-					},
-					{
-						"name": "Score",
-						"type": "String"
-					},
-					{
-						"name": "Avg. Response",
-						"type": "String"
-					},
-					{
-						"name": "Response Distribution 0",
-						"type": "String"
-					},
-					{
-						"name": "Response Distribution 1",
-						"type": "String"
-					},
-					{
-						"name": "Response Distribution 2",
-						"type": "String"
-					},
-					{
-						"name": "Response Distribution 3",
-						"type": "String"
-					},
-					{
-						"name": "Response Distribution 4",
-						"type": "String"
-					},
-					{
-						"name": "Response Distribution 5",
-						"type": "String"
-					},
-					{
-						"name": "Response Distribution 6",
-						"type": "String"
-					},
-					{
-						"name": "Response Distribution 7",
-						"type": "String"
-					},
-					{
-						"name": "Response Distribution 8",
-						"type": "String"
-					},
-					{
-						"name": "Response Distribution 9",
-						"type": "String"
-					},
-					{
-						"name": "Response Distribution 10",
-						"type": "String"
-					},
-					{
-						"name": "Year",
-						"type": "String"
-					},
-					{
-						"name": "Calendar_Week_Number ",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/EXMSCORE_History_Arch')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStore",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureDataLakeStoreLocation",
-						"fileName": {
-							"value": "@concat ('EXM_History_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
-							"type": "Expression"
-						},
-						"folderPath": "LandingArchive/CEOCFO/HR"
-					},
-					"columnDelimiter": ",",
-					"compressionCodec": "gzip",
-					"compressionLevel": "Optimal",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "Location",
-						"type": "String"
-					},
-					{
-						"name": "Responses",
-						"type": "String"
-					},
-					{
-						"name": "Detractors_Percentage",
-						"type": "String"
-					},
-					{
-						"name": "Passives_Percentage",
-						"type": "String"
-					},
-					{
-						"name": "Promoters_Percentage",
-						"type": "String"
-					},
-					{
-						"name": "Score",
-						"type": "String"
-					},
-					{
-						"name": "Avg_Response",
-						"type": "String"
-					},
-					{
-						"name": "Response_Distribution_0",
-						"type": "String"
-					},
-					{
-						"name": "Response_Distribution_1",
-						"type": "String"
-					},
-					{
-						"name": "Response_Distribution_2",
-						"type": "String"
-					},
-					{
-						"name": "Response_Distribution_3",
-						"type": "String"
-					},
-					{
-						"name": "Response_Distribution_4",
-						"type": "String"
-					},
-					{
-						"name": "Response_Distribution_5",
-						"type": "String"
-					},
-					{
-						"name": "Response_Distribution_6",
-						"type": "String"
-					},
-					{
-						"name": "Response_Distribution_7",
-						"type": "String"
-					},
-					{
-						"name": "Response_Distribution_8",
-						"type": "String"
-					},
-					{
-						"name": "Response_Distribution_9",
-						"type": "String"
-					},
-					{
-						"name": "Response_Distribution_10",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/EXMSCORE_History_Dest')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "EXM_Score_Type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "EXM_Score_Type_Details",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Detractors",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Passives",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Promoters",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Year",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Calendar_Week_Number",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Sum",
-						"type": "nvarchar"
-					},
-					{
-						"name": "EXM_Score",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Rec_CRE_TMS",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"tableName": "[[STG].[HR_Maclean_EXM_History]"
-				}
 			},
 			"dependsOn": []
 		}

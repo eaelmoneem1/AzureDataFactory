@@ -1,0 +1,1970 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory Name",
+			"defaultValue": "p21d19901010001"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/FactRevenue_Cost_History')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Loading Int tables",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading STG tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_FactFinanceRevenue_Cost_History]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Loading dbo table",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading Int tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_ApplyFactFinanceRevenue_Cost_History]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Archiving data in DL",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Loading dbo table",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureDataLakeStoreWriteSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSetting",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "Revenue_cost_source_historical",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Revenue_Historical_Arch_dest",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Loading STG tables",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Account",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Account"
+										}
+									},
+									{
+										"source": {
+											"name": "Account Type",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Account_Type"
+										}
+									},
+									{
+										"source": {
+											"name": "Cost Centre",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Cost_Centre"
+										}
+									},
+									{
+										"source": {
+											"name": "CC code",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CC_Code"
+										}
+									},
+									{
+										"source": {
+											"name": "Function",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Function"
+										}
+									},
+									{
+										"source": {
+											"name": "Product Family",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Product_Family"
+										}
+									},
+									{
+										"source": {
+											"name": "Product Line",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Product_line"
+										}
+									},
+									{
+										"source": {
+											"name": "Sub Region",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Sub_Region"
+										}
+									},
+									{
+										"source": {
+											"name": "Region",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Region"
+										}
+									},
+									{
+										"source": {
+											"name": "Source System",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Source_System"
+										}
+									},
+									{
+										"source": {
+											"name": "Jun",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Jun"
+										}
+									},
+									{
+										"source": {
+											"name": "Jul",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Jul"
+										}
+									},
+									{
+										"source": {
+											"name": "Aug",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Aug"
+										}
+									},
+									{
+										"source": {
+											"name": "Sep",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Sep"
+										}
+									},
+									{
+										"source": {
+											"name": "Oct",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Oct"
+										}
+									},
+									{
+										"source": {
+											"name": "Nov",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Nov"
+										}
+									},
+									{
+										"source": {
+											"name": "Dec",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Dec"
+										}
+									},
+									{
+										"source": {
+											"name": "Jan",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Jan"
+										}
+									},
+									{
+										"source": {
+											"name": "Feb",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Feb"
+										}
+									},
+									{
+										"source": {
+											"name": "Mar",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Mar"
+										}
+									},
+									{
+										"source": {
+											"name": "Apr",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Apr"
+										}
+									},
+									{
+										"source": {
+											"name": "May",
+											"type": "String"
+										},
+										"sink": {
+											"name": "May"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Revenue_cost_source_historical",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Revenue_cost_Destination",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "Finance"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FactSALES_MSCRM_Bookings')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Loading Int tables",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading STG tables Actuals Detail Q1 - Q3",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_FactSALES_MSCRM_Bookings]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Hash Generate",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading Int tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
+							"storedProcedureParameters": {
+								"TableName": {
+									"value": "FactSALES_MSCRM_Bookings"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Loading dbo table",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Hash Generate",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_ApplyFactSALES_MSCRM_Bookings]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Loading STG tables Actuals Detail Q1 - Q3",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "FileSystemSource",
+								"recursive": true
+							},
+							"sink": {
+								"type": "SqlSink",
+								"writeBatchSize": 10000
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"columnMappings": {
+									"GL Period": "GL_Period",
+									"TransID": "TransID",
+									"Region": "Region",
+									"Softrax": "Softrax",
+									"Name": "Name",
+									"Sales Rep": "Sales_Rep",
+									"LOB": "LOB",
+									"Product": "Product",
+									"Booking ACV": "Booking_ACV",
+									"Renewal ACV": "Renewal_ACV",
+									"Term": "Term"
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Booking_Actuals",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Sales_MSCRM_Booking_Actual",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Archiving data in DL",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Loading dbo table",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlSource"
+							},
+							"sink": {
+								"type": "AzureDataLakeStoreSink"
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "Sales_MSCRM_Booking_Archive",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Sales_MSCRM_Booking_Archive_DL",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "Sales"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FactSALES_MSCRM_Orderbook')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Loading Int tables",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading STG tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_FactSALES_MSCRM_Orderbook]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Hash Generate",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading Int tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
+							"storedProcedureParameters": {
+								"TableName": {
+									"value": "FactSALES_MSCRM_Orderbook"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Loading dbo table",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Hash Generate",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_ApplyFactSALES_MSCRM_Orderbook]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Loading STG tables",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "FileSystemSource",
+								"recursive": true
+							},
+							"sink": {
+								"type": "SqlSink",
+								"writeBatchSize": 10000
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"columnMappings": {
+									"accountid (Custom_SQL_Query)": "Accountid (Custom_SQL_Query)",
+									"AccountName": "AccountName",
+									"Createdon (DAY)": "Createdon (DAY)",
+									"Estimated Close Date (DAY)": "Estimated Close Date (DAY)",
+									"Modifiedon (DAY)": "Modifiedon (DAY)",
+									"Employeeid": "Employeeid",
+									"Forecast Category": "Forecast Category",
+									"LOB": "LOB",
+									"Main Product": "Main Product",
+									"Name": "Name",
+									"Opportunityid": "Opportunityid",
+									"Quarter": "Quarter",
+									"Region": "Region",
+									"Sale Type": "Sale Type",
+									"Sales Rep": "Sales Rep",
+									"Sales Stage": "Sales Stage",
+									"Statecodename": "Statecodename",
+									"ACV + ACV Equiv (AVG)": "ACV + ACV Equiv (AVG)",
+									"ACV Booking (AVG)": "ACV Booking (AVG)",
+									"ACV Renewal (AVG)": "ACV Renewal (AVG)",
+									"Contract Term (Months) (AVG)": "Contract Term (Months) (AVG)",
+									"ILF (AVG)": "ILF (AVG)",
+									"Services (AVG)": "Services (AVG)",
+									"Term in Years (AVG)": "Term in Years (AVG)"
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Sales_MSCRM_OrderBook_source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Sales_MSCRM_OrderBook_Destination",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Archiving data in DL",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Loading dbo table",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "FileSystemSource",
+								"recursive": true
+							},
+							"sink": {
+								"type": "AzureDataLakeStoreSink"
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "Sales_MSCRM_OrderBook_source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Sales_MSCRM_OrderBook_Archive",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "Sales"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FactSALES_QBRCommits')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Loading Int tables",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Copy Data1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_FactSALES_QBRCommits]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Hash Generate",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Loading Int tables",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_GenerateHashes]",
+							"storedProcedureParameters": {
+								"TableName": {
+									"value": "FactSALES_QBRCommits"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Loading dbo table",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Hash Generate",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[sp_INT_ApplyFactSALES_QBRCommits]"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase_finastra",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Archiving data in DL",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Loading dbo table",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureDataLakeStoreWriteSetting"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSetting",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "QBRCommits_Source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "QBRCommits_Arch",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Copy Data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSetting",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSetting"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Fiscal Year",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Fiscal_Year",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Quarter",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Quarter",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Sales Region",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Sales_Region",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "QBR Commit",
+											"type": "String"
+										},
+										"sink": {
+											"name": "QBR_Commit",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "QBRCommits_Source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "QBRCommits_Des",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "Sales"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Marketing_Sunny')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "FileSystemSource",
+								"recursive": true
+							},
+							"sink": {
+								"type": "SqlSink",
+								"writeBatchSize": 10000
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"columnMappings": {
+									"GL Period": "GL_Period",
+									"TransID": "TransID",
+									"Region": "Region",
+									"Softrax": "Softrax",
+									"Name": "Name",
+									"Sales Rep": "Sales_Rep",
+									"LOB": "LOB",
+									"Product": "Product",
+									"Booking ACV": "Booking_ACV",
+									"Renewal ACV": "Renewal_ACV",
+									"Term": "Term"
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Booking_Actuals",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Sales_MSCRM_Booking_Actual",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "Sunny"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TimeDimension')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "STG",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "FileSystemSource",
+								"recursive": true
+							},
+							"sink": {
+								"type": "SqlSink",
+								"writeBatchSize": 10000
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"columnMappings": {
+									"FISCAL_PERIOD_SKEY": "FISCAL_PERIOD_SKEY",
+									"FISCAL_PERIOD_CREAT_DT": "FISCAL_PERIOD_CREAT_DT",
+									"FISCAL_PERIOD_LAST_UPD_DT": "FISCAL_PERIOD_LAST_UPD_DT",
+									"FISC_PERIOD_BKEY": "FISC_PERIOD_BKEY",
+									"FISC_PERIOD_CAPTION": "FISC_PERIOD_CAPTION",
+									"FISC_PERIOD_CODE": "FISC_PERIOD_CODE",
+									"FISC_PERIOD_NAME": "FISC_PERIOD_NAME",
+									"FISC_PERIOD_SERIES": "FISC_PERIOD_SERIES",
+									"FISC_PERIOD_BEG_DT": "FISC_PERIOD_BEG_DT",
+									"FISC_PERIOD_END_DT": "FISC_PERIOD_END_DT",
+									"FISC_QTR_BKEY": "FISC_QTR_BKEY",
+									"FISC_QTR_CAPTION": "FISC_QTR_CAPTION",
+									"FISC_QTR_CODE": "FISC_QTR_CODE",
+									"FISC_QTR_NAME": "FISC_QTR_NAME",
+									"FISC_QTR_SERIES": "FISC_QTR_SERIES",
+									"FISC_QTR_BEG_DT": "FISC_QTR_BEG_DT",
+									"FISC_QTR_END_DT": "FISC_QTR_END_DT",
+									"FISC_HALF_YEAR_BKEY": "FISC_HALF_YEAR_BKEY",
+									"FISC_HALF_YEAR_CAPTION": "FISC_HALF_YEAR_CAPTION",
+									"FISC_HALF_YEAR_CODE": "FISC_HALF_YEAR_CODE",
+									"FISC_HALF_YEAR_NAME": "FISC_HALF_YEAR_NAME",
+									"FISC_HALF_YEAR_SERIES": "FISC_HALF_YEAR_SERIES",
+									"FISC_HALF_YEAR_BEG_DT": "FISC_HALF_YEAR_BEG_DT",
+									"FISC_HALF_YEAR_END_DT": "FISC_HALF_YEAR_END_DT",
+									"FISC_YEAR_BKEY": "FISC_YEAR_BKEY",
+									"FISC_YEAR_CAPTION": "FISC_YEAR_CAPTION",
+									"FISC_YEAR_CODE": "FISC_YEAR_CODE",
+									"FISC_YEAR_SERIES": "FISC_YEAR_SERIES",
+									"FISC_YEAR_BEG_DT": "FISC_YEAR_BEG_DT",
+									"FISC_YEAR_END_DT": "FISC_YEAR_END_DT",
+									"FISC_YEAR_NAME": "FISC_YEAR_NAME",
+									"CAL_MONTH_BKEY": "CAL_MONTH_BKEY",
+									"CAL_MONTH_CAPTION": "CAL_MONTH_CAPTION",
+									"CAL_MONTH_CODE": "CAL_MONTH_CODE",
+									"CAL_MONTH_NAME": "CAL_MONTH_NAME",
+									"CAL_MONTH_SERIES": "CAL_MONTH_SERIES",
+									"CAL_MONTH_BEG_DT": "CAL_MONTH_BEG_DT",
+									"CAL_MONTH_END_DT": "CAL_MONTH_END_DT",
+									"CAL_QTR_BKEY": "CAL_QTR_BKEY",
+									"CAL_QTR_CAPTION": "CAL_QTR_CAPTION",
+									"CAL_QTR_CODE": "CAL_QTR_CODE",
+									"CAL_QTR_NAME": "CAL_QTR_NAME",
+									"CAL_QTR_SERIES": "CAL_QTR_SERIES",
+									"CAL_QTR_BEG_DT": "CAL_QTR_BEG_DT",
+									"CAL_QTR_END_DT": "CAL_QTR_END_DT",
+									"CAL_HALF_YEAR_BKEY": "CAL_HALF_YEAR_BKEY",
+									"CAL_HALF_YEAR_CAPTION": "CAL_HALF_YEAR_CAPTION",
+									"CAL_HALF_YEAR_CODE": "CAL_HALF_YEAR_CODE",
+									"CAL_HALF_YEAR_NAME": "CAL_HALF_YEAR_NAME",
+									"CAL_HALF_YEAR_SERIES": "CAL_HALF_YEAR_SERIES",
+									"CAL_HALF_YEAR_BEG_DT": "CAL_HALF_YEAR_BEG_DT",
+									"CAL_HALF_YEAR_END_DT": "CAL_HALF_YEAR_END_DT",
+									"CAL_YEAR_BKEY": "CAL_YEAR_BKEY",
+									"CAL_YEAR_CAPTION": "CAL_YEAR_CAPTION",
+									"CAL_YEAR_CODE": "CAL_YEAR_CODE",
+									"CAL_YEAR_SERIES": "CAL_YEAR_SERIES",
+									"CAL_YEAR_BEG_DT": "CAL_YEAR_BEG_DT",
+									"CAL_YEAR_END_DT": "CAL_YEAR_END_DT",
+									"CAL_YEAR_NAME": "CAL_YEAR_NAME",
+									"SOURCE_SYSTEM": "SOURCE_SYSTEM"
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "TimeDimension_Source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "TimeDimension_Destination",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Archiving data in DL",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "STG",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "FileSystemSource",
+								"recursive": true
+							},
+							"sink": {
+								"type": "AzureDataLakeStoreSink"
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "TimeDimension_Source",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "TimeDimension_Archive_Destination",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"folder": {
+					"name": "Time"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FactOpportunity_All Job')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Execute Campaign",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "DimSales_SFDC_Campaign_incremental",
+								"type": "PipelineReference"
+							},
+							"parameters": {}
+						}
+					},
+					{
+						"name": "FXRate_Conversion",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "Execute Campaign",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "DimSales_SFDC_FXRate_Conversion_incremental",
+								"type": "PipelineReference"
+							},
+							"parameters": {}
+						}
+					},
+					{
+						"name": "Opportunity",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FXRate_Conversion",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactOpportunity_All_incremental",
+								"type": "PipelineReference"
+							},
+							"parameters": {}
+						}
+					}
+				],
+				"folder": {
+					"name": "ETL Jobs"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Search for file')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Get Metadata1",
+						"type": "GetMetadata",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "test",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"fieldList": [
+								"exists"
+							]
+						}
+					},
+					{
+						"name": "d",
+						"type": "IfCondition",
+						"dependsOn": [
+							{
+								"activity": "GetMetadata2",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"expression": {
+								"value": "@activity('GetMetadata2').output.exists",
+								"type": "Expression"
+							},
+							"ifFalseActivities": [
+								{
+									"name": "Wait3",
+									"type": "Wait",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"waitTimeInSeconds": 1
+									}
+								}
+							],
+							"ifTrueActivities": [
+								{
+									"name": "Execute Pipeline1",
+									"type": "ExecutePipeline",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "FactOpportunity_All_incremental",
+											"type": "PipelineReference"
+										},
+										"parameters": {}
+									}
+								}
+							]
+						}
+					},
+					{
+						"name": "Wait1",
+						"type": "Wait",
+						"dependsOn": [
+							{
+								"activity": "Filter1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"waitTimeInSeconds": 1
+						}
+					},
+					{
+						"name": "GetMetadata2",
+						"type": "GetMetadata",
+						"dependsOn": [
+							{
+								"activity": "Wait1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "test",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"fieldList": [
+								"exists"
+							]
+						}
+					},
+					{
+						"name": "Wait2",
+						"type": "Wait",
+						"dependsOn": [
+							{
+								"activity": "GetMetadata2",
+								"dependencyConditions": [
+									"Failed"
+								]
+							},
+							{
+								"activity": "Filter1",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"waitTimeInSeconds": 10
+						}
+					},
+					{
+						"name": "Filter1",
+						"type": "Filter",
+						"dependsOn": [
+							{
+								"activity": "Get Metadata1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@array(activity('Get Metadata1').output.exists)",
+								"type": "Expression"
+							},
+							"condition": {
+								"value": "@equals(item(),'xx')",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"variables": {
+					"exists": {
+						"type": "Boolean"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Clean Old Landing Files Job-Monthly')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Delete old Landing Files",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Month",
+						"interval": 1,
+						"startTime": "2019-06-01T23:59:00.000Z",
+						"timeZone": "UTC"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Weekly Job')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "FactSALES_MSCRM_Bookings",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FactOpportunity_All",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactSALES_MSCRM_Bookings",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "FactSALES_MSCRM_Orderbook",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FactSALES_MSCRM_Bookings",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactSALES_MSCRM_Orderbook",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "FactEXMSCORE_Location",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FactSALES_MSCRM_Orderbook",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactEXMSCORE_Location",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "FactEXMSCORE_Region",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FactEXMSCORE_Location",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactEXMSCORE_Region",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "DimEmployee",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "DimEmployee_Future_Termination",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "DimEmployee",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "FactOpportunity_All",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactOpportunity_All Job",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "DimEmployee_Requisitions",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "DimEmployee_Termination",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "DimEmployee_Requisitions",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "DimEmployee_Termination",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "DimEmployee_Diversity",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "DimEmployee_Terminations",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "FactEXMSCORE_Gender",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FactEXMSCORE_Region",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactEXMSCORE_Gender",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "FactEXMSCORE_Age_Group",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FactEXMSCORE_Gender",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactEXMSCORE_Age_Group",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "FACTEXMSCORE",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FactEXMSCORE_Age_Group",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactEXMSCORE",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "DimEmployee_Future-hires",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FACTEXMSCORE",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "DimEmployee_Future_Hires",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "DimEmployee_Future_Termination",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "DimEmployee_Future-hires",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "DimEmployee_Future_Termiantions",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "DimEmployee_Diversity",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "DimEmployee",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "DimEmployee_Diversity",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "FactSALES_QBRCommits",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "DimEmployee_Requisitions",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactSALES_QBRCommits",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "FactCollectionReporting",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FactSALES_QBRCommits",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactCollectionReporting",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "FactCollectionReporting_Monthly_Targets",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "FactCollectionReporting",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "FactCollectionReporting_Monthly_Targets",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"folder": {
+					"name": "ETL Jobs"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/FactSALES_MSCRM_Bookings')]",
+				"[concat(variables('factoryId'), '/pipelines/FactSALES_MSCRM_Orderbook')]",
+				"[concat(variables('factoryId'), '/pipelines/FactOpportunity_All Job')]",
+				"[concat(variables('factoryId'), '/pipelines/FactSALES_QBRCommits')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Salesforce1')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "FactOpportunity_All Job",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2019-04-21T01:00:00Z",
+						"timeZone": "UTC"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/FactOpportunity_All Job')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Weekly Job')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Weekly Job",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Week",
+						"interval": 1,
+						"startTime": "2019-05-23T23:00:00.000Z",
+						"timeZone": "UTC"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Weekly Job')]"
+			]
+		}
+	]
+}

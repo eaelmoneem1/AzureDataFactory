@@ -326,6 +326,12 @@
 		"Profile_Arch_Dest_properties_typeProperties_folderPath": {
 			"value": "LandingArchive/CEOCFO/Sales/Profile"
 		},
+		"Profile_Arch_Dest_incr_properties_typeProperties_fileName": {
+			"value": "@concat ('Profile_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')"
+		},
+		"Profile_Arch_Dest_incr_properties_typeProperties_folderPath": {
+			"value": "LandingArchive/CEOCFO/Sales/Profile"
+		},
 		"Revenue_Archive_Destination_properties_typeProperties_fileName": {
 			"value": "@concat ('FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
 		},
@@ -348,6 +354,12 @@
 			"value": "@concat ('Campaign_Initial_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')"
 		},
 		"SFDC_Archive_Campaign1_properties_typeProperties_folderPath": {
+			"value": "LandingArchive/CEOCFO/Sales/Campaign"
+		},
+		"SFDC_Archive_Campaign2_properties_typeProperties_fileName": {
+			"value": "@concat ('Campaign_Initial_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.orc')"
+		},
+		"SFDC_Archive_Campaign2_properties_typeProperties_folderPath": {
 			"value": "LandingArchive/CEOCFO/Sales/Campaign"
 		},
 		"SFDC_Archive_FX_Rate_properties_typeProperties_fileName": {

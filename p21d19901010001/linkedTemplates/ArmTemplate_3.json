@@ -30,44 +30,392 @@
 		"FileShareDelete3_properties_typeProperties_folderPath": {
 			"type": "string",
 			"defaultValue": "CEOCFO/Finance"
-		},
-		"FileShareDelete4_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": ""
-		},
-		"FileShareDelete4_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "CEOCFO/Marketing"
-		},
-		"FileShareDelete5_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": ""
-		},
-		"FileShareDelete5_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "CEOCFO/Sales"
-		},
-		"FileShareDelete6_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": ""
-		},
-		"FileShareDelete6_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "CEOCFO/Dimentions/Forecast Plan"
-		},
-		"Finace_RevenueCost_Destination_properties_typeProperties_fileName": {
-			"type": "string",
-			"defaultValue": "@concat ('dbo_FinanceActuals_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))"
-		},
-		"Finace_RevenueCost_Destination_properties_typeProperties_folderPath": {
-			"type": "string",
-			"defaultValue": "LandingArchive/CEOCFO/Finance/dbo"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/EXMSCORE_Gender_Dest')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Gender",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Responses",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Detractors_Percentage",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Passives_Percentage",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Promoters_Percentage",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Score",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Avg_Response",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Response_Distribution_0",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Response_Distribution_1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Response_Distribution_2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Response_Distribution_3",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Response_Distribution_4",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Response_Distribution_5",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Response_Distribution_6",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Response_Distribution_7",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Response_Distribution_8",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Response_Distribution_9",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Response_Distribution_10",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Year",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Calendar_Week_Number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Rec_CRE_TMS",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[HR_Maclean_EXM_Gender]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/EXMSCORE_Gender_Source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileShare",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"fileName": {
+							"value": "@concat ('EXM_Gender_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
+							"type": "Expression"
+						},
+						"folderPath": "CEOCFO/HR"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Gender",
+						"type": "String"
+					},
+					{
+						"name": "Responses",
+						"type": "String"
+					},
+					{
+						"name": "Detractors",
+						"type": "String"
+					},
+					{
+						"name": "Passives",
+						"type": "String"
+					},
+					{
+						"name": "Promoters",
+						"type": "String"
+					},
+					{
+						"name": "Score",
+						"type": "String"
+					},
+					{
+						"name": "Avg. Response",
+						"type": "String"
+					},
+					{
+						"name": "Response Distribution 0",
+						"type": "String"
+					},
+					{
+						"name": "Response Distribution 1",
+						"type": "String"
+					},
+					{
+						"name": "Response Distribution 2",
+						"type": "String"
+					},
+					{
+						"name": "Response Distribution 3",
+						"type": "String"
+					},
+					{
+						"name": "Response Distribution 4",
+						"type": "String"
+					},
+					{
+						"name": "Response Distribution 5",
+						"type": "String"
+					},
+					{
+						"name": "Response Distribution 6",
+						"type": "String"
+					},
+					{
+						"name": "Response Distribution 7",
+						"type": "String"
+					},
+					{
+						"name": "Response Distribution 8",
+						"type": "String"
+					},
+					{
+						"name": "Response Distribution 9",
+						"type": "String"
+					},
+					{
+						"name": "Response Distribution 10",
+						"type": "String"
+					},
+					{
+						"name": "Year",
+						"type": "String"
+					},
+					{
+						"name": "Calendar_Week_Number ",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/EXMSCORE_History_Arch')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStore",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureDataLakeStoreLocation",
+						"fileName": {
+							"value": "@concat ('EXM_History_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'))",
+							"type": "Expression"
+						},
+						"folderPath": "LandingArchive/CEOCFO/HR"
+					},
+					"columnDelimiter": ",",
+					"compressionCodec": "gzip",
+					"compressionLevel": "Optimal",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Location",
+						"type": "String"
+					},
+					{
+						"name": "Responses",
+						"type": "String"
+					},
+					{
+						"name": "Detractors_Percentage",
+						"type": "String"
+					},
+					{
+						"name": "Passives_Percentage",
+						"type": "String"
+					},
+					{
+						"name": "Promoters_Percentage",
+						"type": "String"
+					},
+					{
+						"name": "Score",
+						"type": "String"
+					},
+					{
+						"name": "Avg_Response",
+						"type": "String"
+					},
+					{
+						"name": "Response_Distribution_0",
+						"type": "String"
+					},
+					{
+						"name": "Response_Distribution_1",
+						"type": "String"
+					},
+					{
+						"name": "Response_Distribution_2",
+						"type": "String"
+					},
+					{
+						"name": "Response_Distribution_3",
+						"type": "String"
+					},
+					{
+						"name": "Response_Distribution_4",
+						"type": "String"
+					},
+					{
+						"name": "Response_Distribution_5",
+						"type": "String"
+					},
+					{
+						"name": "Response_Distribution_6",
+						"type": "String"
+					},
+					{
+						"name": "Response_Distribution_7",
+						"type": "String"
+					},
+					{
+						"name": "Response_Distribution_8",
+						"type": "String"
+					},
+					{
+						"name": "Response_Distribution_9",
+						"type": "String"
+					},
+					{
+						"name": "Response_Distribution_10",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/EXMSCORE_History_Dest')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase_finastra",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "EXM_Score_Type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "EXM_Score_Type_Details",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Detractors",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Passives",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Promoters",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Year",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Calendar_Week_Number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Sum",
+						"type": "nvarchar"
+					},
+					{
+						"name": "EXM_Score",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Rec_CRE_TMS",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"tableName": "[[STG].[HR_Maclean_EXM_History]"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/EXMSCORE_History_Source')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -1125,107 +1473,6 @@
 						"value": "@adddays(pipeline().triggerTime, -30)",
 						"type": "Expression"
 					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/FileShareDelete4')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileShare",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "FileShare",
-				"typeProperties": {
-					"fileName": "[parameters('FileShareDelete4_properties_typeProperties_fileName')]",
-					"folderPath": "[parameters('FileShareDelete4_properties_typeProperties_folderPath')]",
-					"modifiedDatetimeEnd": {
-						"value": "@adddays(pipeline().triggerTime, -30)",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/FileShareDelete5')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileShare",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "FileShare",
-				"typeProperties": {
-					"fileName": "[parameters('FileShareDelete5_properties_typeProperties_fileName')]",
-					"folderPath": "[parameters('FileShareDelete5_properties_typeProperties_folderPath')]",
-					"modifiedDatetimeEnd": {
-						"value": "@adddays(pipeline().triggerTime, -30)",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/FileShareDelete6')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileShare",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "FileShare",
-				"typeProperties": {
-					"fileName": "[parameters('FileShareDelete6_properties_typeProperties_fileName')]",
-					"folderPath": "[parameters('FileShareDelete6_properties_typeProperties_folderPath')]",
-					"modifiedDatetimeEnd": {
-						"value": "@adddays(pipeline().triggerTime, -30)",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Finace_RevenueCost_Destination')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStore",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureDataLakeStoreFile",
-				"typeProperties": {
-					"format": {
-						"type": "TextFormat",
-						"columnDelimiter": ",",
-						"rowDelimiter": "",
-						"quoteChar": "\"",
-						"nullValue": "",
-						"treatEmptyAsNull": true,
-						"skipLineCount": 0,
-						"firstRowAsHeader": true
-					},
-					"compression": {
-						"type": "GZip",
-						"level": "Optimal"
-					},
-					"fileName": {
-						"value": "[parameters('Finace_RevenueCost_Destination_properties_typeProperties_fileName')]",
-						"type": "Expression"
-					},
-					"folderPath": "[parameters('Finace_RevenueCost_Destination_properties_typeProperties_folderPath')]"
 				}
 			},
 			"dependsOn": []
