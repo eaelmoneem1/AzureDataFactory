@@ -954,6 +954,18 @@
 					{
 						"name": "Total_PS_Amount__c",
 						"type": "String"
+					},
+					{
+						"name": "Date_opportunity_moved_to_SS2__c",
+						"type": "String"
+					},
+					{
+						"name": "Date_opportunity_moved_to_SS4__c",
+						"type": "String"
+					},
+					{
+						"name": "IST_Rep__c",
+						"type": "String"
 					}
 				],
 				"typeProperties": {
@@ -1411,6 +1423,18 @@
 					},
 					{
 						"name": "Total_PS_Amount__c",
+						"type": "String"
+					},
+					{
+						"name": "Date_opportunity_moved_to_SS2__c",
+						"type": "String"
+					},
+					{
+						"name": "Date_opportunity_moved_to_SS4__c",
+						"type": "String"
+					},
+					{
+						"name": "IST_Rep__c",
 						"type": "String"
 					}
 				],
