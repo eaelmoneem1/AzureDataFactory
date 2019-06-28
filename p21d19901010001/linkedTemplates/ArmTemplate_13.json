@@ -1249,7 +1249,7 @@
 							"source": {
 								"type": "SalesforceSource",
 								"query": {
-									"value": "SELECT \nEmployee_ID_SUN_e_number__c,\nname,\nfirstname,\nlastname,\ncountry,\nSub_Region__c,\nRegional_Manager__c,\nProfileId,\nDefaultCurrencyIsoCode,\nCurrent_FY_ILF_Quota__c,\nCreatedDate,\nLastModifiedDate \nFROM User\nwhere CreatedDate >@{activity('Get Last Created Record').output.firstRow.Created}Z OR  LastModifiedDate >@{activity('Get Last Modified Record').output.firstRow.Modified}Z\n",
+									"value": "SELECT\nid, \nEmployee_ID_SUN_e_number__c,\nname,\nfirstname,\nlastname,\ncountry,\nSub_Region__c,\nRegional_Manager__c,\nProfileId,\nDefaultCurrencyIsoCode,\nCurrent_FY_ILF_Quota__c,\nCreatedDate,\nLastModifiedDate \nFROM User\nwhere CreatedDate >@{activity('Get Last Created Record').output.firstRow.Created}Z OR  LastModifiedDate >@{activity('Get Last Modified Record').output.firstRow.Modified}Z\n",
 									"type": "Expression"
 								},
 								"readBehavior": "query"
