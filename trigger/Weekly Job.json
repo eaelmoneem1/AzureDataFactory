@@ -1,7 +1,8 @@
 {
 	"name": "Weekly Job",
 	"properties": {
-		"runtimeState": "Stopped",
+		"annotations": [],
+		"runtimeState": "Started",
 		"pipelines": [
 			{
 				"pipelineReference": {
@@ -15,7 +16,7 @@
 			"recurrence": {
 				"frequency": "Week",
 				"interval": 1,
-				"startTime": "2019-05-23T23:00:00.000Z",
+				"startTime": "2019-07-04T19:00:00.000Z",
 				"timeZone": "UTC"
 			}
 		}
