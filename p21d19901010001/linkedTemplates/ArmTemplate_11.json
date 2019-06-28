@@ -764,6 +764,10 @@
 				"type": "AzureSqlTable",
 				"schema": [
 					{
+						"name": "Id",
+						"type": "nvarchar"
+					},
+					{
 						"name": "Employee_ID_SUN_e_number",
 						"type": "nvarchar"
 					},
@@ -925,6 +929,10 @@
 				"annotations": [],
 				"type": "SalesforceObject",
 				"structure": [
+					{
+						"name": "Id",
+						"type": "String"
+					},
 					{
 						"name": "Employee_ID_SUN_e_number__c",
 						"type": "String"
