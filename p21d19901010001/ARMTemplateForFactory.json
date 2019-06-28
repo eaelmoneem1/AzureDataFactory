@@ -6986,7 +6986,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "SalesforceSource",
-								"query": "SELECT \nEmployee_ID_SUN_e_number__c,\nname,\nfirstname,\nlastname,\ncountry,\nSub_Region__c,\nRegional_Manager__c,\nProfileId,\nDefaultCurrencyIsoCode,\nCurrent_FY_ILF_Quota__c,\nCreatedDate,\nLastModifiedDate \nFROM User\n",
+								"query": "SELECT \nid,\nEmployee_ID_SUN_e_number__c,\nname,\nfirstname,\nlastname,\ncountry,\nSub_Region__c,\nRegional_Manager__c,\nProfileId,\nDefaultCurrencyIsoCode,\nCurrent_FY_ILF_Quota__c,\nCreatedDate,\nLastModifiedDate \nFROM User\n",
 								"readBehavior": "query"
 							},
 							"sink": {
@@ -33012,7 +33012,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Stopped",
+				"runtimeState": "Started",
 				"pipelines": [
 					{
 						"pipelineReference": {
@@ -33027,7 +33027,7 @@
 					"recurrence": {
 						"frequency": "Week",
 						"interval": 1,
-						"startTime": "2019-05-23T23:00:00.000Z",
+						"startTime": "2019-07-04T19:00:00.000Z",
 						"timeZone": "UTC"
 					}
 				}
