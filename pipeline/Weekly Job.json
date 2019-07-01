@@ -13,6 +13,7 @@
 						]
 					}
 				],
+				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "FactSALES_MSCRM_Bookings",
@@ -32,6 +33,7 @@
 						]
 					}
 				],
+				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "FactSALES_MSCRM_Orderbook",
@@ -51,6 +53,7 @@
 						]
 					}
 				],
+				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "FactEXMSCORE_Location",
@@ -70,6 +73,7 @@
 						]
 					}
 				],
+				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "FactEXMSCORE_Region",
@@ -89,6 +93,7 @@
 						]
 					}
 				],
+				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "DimEmployee",
@@ -102,12 +107,13 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "DimUser",
+						"activity": "Marketing",
 						"dependencyConditions": [
 							"Completed"
 						]
 					}
 				],
+				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "FactOpportunity_All Job",
@@ -127,6 +133,7 @@
 						]
 					}
 				],
+				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "DimEmployee_Requisitions",
@@ -146,6 +153,7 @@
 						]
 					}
 				],
+				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "DimEmployee_Terminations",
@@ -165,6 +173,7 @@
 						]
 					}
 				],
+				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "FactEXMSCORE_Gender",
@@ -184,6 +193,7 @@
 						]
 					}
 				],
+				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "FactEXMSCORE_Age_Group",
@@ -203,6 +213,7 @@
 						]
 					}
 				],
+				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "FactEXMSCORE",
@@ -222,6 +233,7 @@
 						]
 					}
 				],
+				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "DimEmployee_Future_Hires",
@@ -241,6 +253,7 @@
 						]
 					}
 				],
+				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "DimEmployee_Future_Termiantions",
@@ -260,6 +273,7 @@
 						]
 					}
 				],
+				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "DimEmployee_Diversity",
@@ -279,6 +293,7 @@
 						]
 					}
 				],
+				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "FactSALES_QBRCommits",
@@ -298,6 +313,7 @@
 						]
 					}
 				],
+				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "FactCollectionReporting",
@@ -317,6 +333,7 @@
 						]
 					}
 				],
+				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "FactCollectionReporting_Monthly_Targets",
@@ -336,6 +353,7 @@
 						]
 					}
 				],
+				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "DimUser_incremental",
@@ -347,9 +365,31 @@
 			{
 				"name": "DimProfile",
 				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "DimProfile_incremental",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Marketing",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "DimUser",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Marketing",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
@@ -358,7 +398,8 @@
 		],
 		"folder": {
 			"name": "ETL Jobs"
-		}
+		},
+		"annotations": []
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }
