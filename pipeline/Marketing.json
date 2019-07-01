@@ -1,0 +1,61 @@
+{
+	"name": "Marketing",
+	"properties": {
+		"activities": [
+			{
+				"name": "DimMarketing_SFDC_Lead",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "DimMarketing_SFDC_Lead_Incremental",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "DimMarketing_SFDC_Contact",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "DimMarketing_SFDC_Lead",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "DimMarketing_SFDC_Contact_incremental",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "DimMQL",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "DimMarketing_SFDC_Contact",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "DimDate",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"annotations": []
+	}
+}
