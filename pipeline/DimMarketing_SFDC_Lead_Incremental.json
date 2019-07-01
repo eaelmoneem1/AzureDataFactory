@@ -40,34 +40,7 @@
 						"type": "SqlSink",
 						"writeBatchSize": 10000
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"columnMappings": {
-							"Lead_18chr_Id__c": "Lead_18chr_Id",
-							"MQL_Datestamp__c": "MQL_Datestamp",
-							"MTL_Datestamp__c": "MTL_Datestamp",
-							"SQL_Datestamp__c": "SQL_Datestamp",
-							"Status": "Status",
-							"Company": "Company",
-							"Lead_Country__c": "Lead_Country",
-							"Title": "Title",
-							"FirstName": "FirstName",
-							"LastName": "LastName",
-							"Email": "Email",
-							"MQL_Program__c": "MQL_Program",
-							"Qualified_Out_Reason__c": "Qualified_Out_Reason",
-							"Status_Reason__c": "Status_Reason",
-							"Sales_Region__c": "Sales_Region",
-							"Sub_Region__c": "Sub_Region",
-							"ConvertedAccountId": "ConvertedAccountId",
-							"ConvertedContactId": "ConvertedContactId",
-							"ConvertedOpportunityId": "ConvertedOpportunityId",
-							"CreatedDate": "CreatedDate",
-							"OwnerId": "Owner_ID",
-							"LastModifiedDate": "LastModifiedDate"
-						}
-					}
+					"enableStaging": false
 				},
 				"inputs": [
 					{
