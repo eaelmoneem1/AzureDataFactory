@@ -5,6 +5,7 @@
 			{
 				"name": "Landing",
 				"type": "Copy",
+				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -12,13 +13,11 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
+				"userProperties": [],
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceSource",
-						"query": {
-							"value": "SELECT \nLead_18chr_Id__c,\nMQL_Datestamp__c,\nMTL_Datestamp__c,\nSQL_Datestamp__c,\nStatus,\nCompany,\nLead_Country__c,\nTitle,\nFirstName,\nLastName,\nEmail,\nMQL_Program__c,\nQualified_Out_Reason__c,\nStatus_Reason__c,\nSales_Region__c,\nSub_Region__c,\nConvertedAccountId,\nConvertedContactId,\nCreatedDate,\nOwnerID,\nConvertedOpportunityId,\nLastModifiedDate\n\nFROM Lead\nwhere \nMQL_Datestamp__c!= null or\nMTL_Datestamp__c!= null\n\n",
-							"type": "Expression"
-						},
+						"query": "SELECT\nId,\nMQL_Datestamp__c,\nMTL_Datestamp__c,\nStatus,\nCompany,\nLead_Country__c,\nTitle,\nFirstName,\nLastName,\nEmail,\nMQL_Program__c,\nQualified_Out_Reason__c,\nStatus_Reason__c,\nSales_Region__c,\nSub_Region__c,\nConvertedAccountId,\nCreatedDate,\nLastModifiedDate\nFROM Lead\nwhere\nMQL_Datestamp__c!=null or\nMTL_Datestamp__c!=null\n",
 						"readBehavior": "query"
 					},
 					"sink": {
@@ -85,6 +84,7 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
+				"userProperties": [],
 				"typeProperties": {
 					"storedProcedureName": "[dbo].[sp_INT_ApplyDimMarketing_SFDC_Lead]"
 				},
@@ -111,6 +111,7 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
+				"userProperties": [],
 				"typeProperties": {
 					"storedProcedureName": "[dbo].[sp_INT_GenerateHashes]",
 					"storedProcedureParameters": {
@@ -143,6 +144,7 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
+				"userProperties": [],
 				"typeProperties": {
 					"storedProcedureName": "[dbo].[sp_INT_DimMarketing_SFDC_Lead]"
 				},
@@ -154,7 +156,8 @@
 		],
 		"folder": {
 			"name": "Marketing"
-		}
+		},
+		"annotations": []
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }
