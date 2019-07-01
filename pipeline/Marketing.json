@@ -49,13 +49,16 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "DimDate",
+						"referenceName": "DimMQL",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
 				}
 			}
 		],
+		"folder": {
+			"name": "ETL Jobs"
+		},
 		"annotations": []
 	}
 }
