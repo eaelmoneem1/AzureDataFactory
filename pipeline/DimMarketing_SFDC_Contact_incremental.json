@@ -40,25 +40,7 @@
 						"type": "SqlSink",
 						"writeBatchSize": 10000
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"columnMappings": {
-							"AccountId": "AccountId",
-							"ContactId18__c": "ContactId18__c",
-							"Contact_Name__c": "Contact_Name__c",
-							"Contact_Type__c": "Contact_Type__c",
-							"CreatedDate": "CreatedDate",
-							"Salutation": "Salutation",
-							"FirstName": "FirstName",
-							"LastName": "LastName",
-							"Title": "Title",
-							"LeadSource": "LeadSource",
-							"Email": "Email",
-							"OwnerId": "Owner_ID",
-							"LastModifiedDate": "LastModifiedDate"
-						}
-					}
+					"enableStaging": false
 				},
 				"inputs": [
 					{
