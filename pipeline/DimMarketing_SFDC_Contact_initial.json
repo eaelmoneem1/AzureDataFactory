@@ -5,6 +5,7 @@
 			{
 				"name": "Landing",
 				"type": "Copy",
+				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -12,38 +13,18 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
+				"userProperties": [],
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceSource",
-						"query": {
-							"value": "SELECT \nAccountId,\nContactId18__c,\nContact_Name__c,\nContact_Type__c,\nCreatedDate,\nSalutation,\nFirstName,\nLastName,\nTitle,\nLeadSource,\nEmail,\nOwnerId,\nLastModifiedDate\nFROM Contact ",
-							"type": "Expression"
-						},
+						"query": "SELECT\nId\n,AccountId\n,IST_Rep__c\n,MQL_Program__c\n,Product__c\n,Qualify_Out_Reson__c\n,Region__c\n,Sales_Region__c\n,MailingCountry\n,Status__c\n,Sub_Region__c\n,FirstName\n,LastName\n,Email\n,MTL_Datestamp__c\n,MQL_Datestamp__c\n,CreatedDate\n,LastModifiedDate\n\nFROM Contact \n",
 						"readBehavior": "query"
 					},
 					"sink": {
 						"type": "SqlSink",
 						"writeBatchSize": 10000
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"columnMappings": {
-							"AccountId": "AccountId",
-							"ContactId18__c": "ContactId18__c",
-							"Contact_Name__c": "Contact_Name__c",
-							"Contact_Type__c": "Contact_Type__c",
-							"CreatedDate": "CreatedDate",
-							"Salutation": "Salutation",
-							"FirstName": "FirstName",
-							"LastName": "LastName",
-							"Title": "Title",
-							"LeadSource": "LeadSource",
-							"Email": "Email",
-							"OwnerId": "Owner_ID",
-							"LastModifiedDate": "LastModifiedDate"
-						}
-					}
+					"enableStaging": false
 				},
 				"inputs": [
 					{
@@ -76,6 +57,7 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
+				"userProperties": [],
 				"typeProperties": {
 					"storedProcedureName": "[dbo].[sp_INT_ApplyDimMarketing_SFDC_Contact]"
 				},
@@ -102,6 +84,7 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
+				"userProperties": [],
 				"typeProperties": {
 					"storedProcedureName": "[dbo].[sp_INT_GenerateHashes]",
 					"storedProcedureParameters": {
@@ -134,6 +117,7 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
+				"userProperties": [],
 				"typeProperties": {
 					"storedProcedureName": "[dbo].[sp_INT_DimMarketing_SFDC_Contact]"
 				},
@@ -145,7 +129,8 @@
 		],
 		"folder": {
 			"name": "Marketing"
-		}
+		},
+		"annotations": []
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

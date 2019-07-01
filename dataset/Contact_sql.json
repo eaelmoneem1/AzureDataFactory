@@ -5,61 +5,8 @@
 			"referenceName": "AzureSqlDatabase_finastra",
 			"type": "LinkedServiceReference"
 		},
+		"annotations": [],
 		"type": "AzureSqlTable",
-		"structure": [
-			{
-				"name": "AccountId",
-				"type": "String"
-			},
-			{
-				"name": "ContactId18__c",
-				"type": "String"
-			},
-			{
-				"name": "Contact_Name__c",
-				"type": "String"
-			},
-			{
-				"name": "Contact_Type__c",
-				"type": "String"
-			},
-			{
-				"name": "CreatedDate",
-				"type": "String"
-			},
-			{
-				"name": "Salutation",
-				"type": "String"
-			},
-			{
-				"name": "FirstName",
-				"type": "String"
-			},
-			{
-				"name": "LastName",
-				"type": "String"
-			},
-			{
-				"name": "Title",
-				"type": "String"
-			},
-			{
-				"name": "LeadSource",
-				"type": "String"
-			},
-			{
-				"name": "Email",
-				"type": "String"
-			},
-			{
-				"name": "Owner_ID",
-				"type": "String"
-			},
-			{
-				"name": "LastModifiedDate",
-				"type": "String"
-			}
-		],
 		"typeProperties": {
 			"tableName": "[STG].[Marketing_SFDC_Contact]"
 		}

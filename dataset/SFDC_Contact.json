@@ -5,61 +5,8 @@
 			"referenceName": "Salesforce1",
 			"type": "LinkedServiceReference"
 		},
+		"annotations": [],
 		"type": "SalesforceObject",
-		"structure": [
-			{
-				"name": "AccountId",
-				"type": "String"
-			},
-			{
-				"name": "ContactId18__c",
-				"type": "String"
-			},
-			{
-				"name": "Contact_Name__c",
-				"type": "String"
-			},
-			{
-				"name": "Contact_Type__c",
-				"type": "String"
-			},
-			{
-				"name": "CreatedDate",
-				"type": "DateTime"
-			},
-			{
-				"name": "Salutation",
-				"type": "String"
-			},
-			{
-				"name": "FirstName",
-				"type": "String"
-			},
-			{
-				"name": "LastName",
-				"type": "String"
-			},
-			{
-				"name": "Title",
-				"type": "String"
-			},
-			{
-				"name": "LeadSource",
-				"type": "String"
-			},
-			{
-				"name": "Email",
-				"type": "String"
-			},
-			{
-				"name": "OwnerId",
-				"type": "String"
-			},
-			{
-				"name": "LastModifiedDate",
-				"type": "DateTime"
-			}
-		],
 		"typeProperties": {
 			"objectApiName": "Contact"
 		}
