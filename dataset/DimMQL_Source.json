@@ -1,0 +1,100 @@
+{
+	"name": "DimMQL_Source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_finastra",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "BK",
+				"type": "varchar"
+			},
+			{
+				"name": "FirstName",
+				"type": "varchar"
+			},
+			{
+				"name": "LastName",
+				"type": "varchar"
+			},
+			{
+				"name": "Email",
+				"type": "varchar"
+			},
+			{
+				"name": "Accountid",
+				"type": "varchar"
+			},
+			{
+				"name": "MQL_Program",
+				"type": "varchar"
+			},
+			{
+				"name": "Qualified_Out_Reason",
+				"type": "varchar"
+			},
+			{
+				"name": "Sales_Region",
+				"type": "varchar"
+			},
+			{
+				"name": "Sub_Region",
+				"type": "varchar"
+			},
+			{
+				"name": "Country",
+				"type": "varchar"
+			},
+			{
+				"name": "MQL_Datestamp",
+				"type": "date"
+			},
+			{
+				"name": "MTL_Datestamp ",
+				"type": "date"
+			},
+			{
+				"name": "Derived_Sales_Region",
+				"type": "varchar"
+			},
+			{
+				"name": "Derived_Sub_Region",
+				"type": "varchar"
+			},
+			{
+				"name": "dwEffectiveFrom",
+				"type": "date"
+			},
+			{
+				"name": "dwEffectiveTo",
+				"type": "date"
+			},
+			{
+				"name": "dwActiveRec",
+				"type": "bit"
+			},
+			{
+				"name": "dwCreateDate",
+				"type": "date"
+			},
+			{
+				"name": "dwUpdateDate",
+				"type": "date"
+			},
+			{
+				"name": "dwType1Hash",
+				"type": "varbinary"
+			},
+			{
+				"name": "dwType2Hash",
+				"type": "varbinary"
+			}
+		],
+		"typeProperties": {
+			"tableName": "[dbo].[DimMQL]"
+		}
+	}
+}
