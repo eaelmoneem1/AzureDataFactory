@@ -3417,7 +3417,7 @@
 							"source": {
 								"type": "SalesforceSource",
 								"query": {
-									"value": "SELECT \nAccountId,\nContactId18__c,\nContact_Name__c,\nContact_Type__c,\nCreatedDate,\nSalutation,\nFirstName,\nLastName,\nTitle,\nLeadSource,\nEmail,\nOwnerId,\nLastModifiedDate\nFROM Contact \n\n\nwhere CreatedDate >@{activity('Get Last Created Record').output.firstRow.Created}Z OR  LastModifiedDate >@{activity('Get Last Modified Record').output.firstRow.Modified}Z\n\n",
+									"value": "SELECT \nId\n,AccountId\n,IST_Rep__c\n,MQL_Program__c\n,Product__c\n,Qualify_Out_Reson__c\n,Region__c\n,Sales_Region__c\n,MailingCountry\n,Status__c\n,Sub_Region__c\n,FirstName\n,LastName\n,Email\n,MTL_Datestamp__c\n,MQL_Datestamp__c\n,CreatedDate\n,LastModifiedDate\nFROM Contact \n\n\nwhere CreatedDate >@{activity('Get Last Created Record').output.firstRow.Created}Z OR  LastModifiedDate >@{activity('Get Last Modified Record').output.firstRow.Modified}Z\n\n",
 									"type": "Expression"
 								},
 								"readBehavior": "query"
@@ -3426,25 +3426,7 @@
 								"type": "SqlSink",
 								"writeBatchSize": 10000
 							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"columnMappings": {
-									"AccountId": "AccountId",
-									"ContactId18__c": "ContactId18__c",
-									"Contact_Name__c": "Contact_Name__c",
-									"Contact_Type__c": "Contact_Type__c",
-									"CreatedDate": "CreatedDate",
-									"Salutation": "Salutation",
-									"FirstName": "FirstName",
-									"LastName": "LastName",
-									"Title": "Title",
-									"LeadSource": "LeadSource",
-									"Email": "Email",
-									"OwnerId": "Owner_ID",
-									"LastModifiedDate": "LastModifiedDate"
-								}
-							}
+							"enableStaging": false
 						},
 						"inputs": [
 							{
@@ -3675,35 +3657,14 @@
 						"typeProperties": {
 							"source": {
 								"type": "SalesforceSource",
-								"query": {
-									"value": "SELECT \nAccountId,\nContactId18__c,\nContact_Name__c,\nContact_Type__c,\nCreatedDate,\nSalutation,\nFirstName,\nLastName,\nTitle,\nLeadSource,\nEmail,\nOwnerId,\nLastModifiedDate\nFROM Contact ",
-									"type": "Expression"
-								},
+								"query": "SELECT\nId\n,AccountId\n,IST_Rep__c\n,MQL_Program__c\n,Product__c\n,Qualify_Out_Reson__c\n,Region__c\n,Sales_Region__c\n,MailingCountry\n,Status__c\n,Sub_Region__c\n,FirstName\n,LastName\n,Email\n,MTL_Datestamp__c\n,MQL_Datestamp__c\n,CreatedDate\n,LastModifiedDate\n\nFROM Contact \n",
 								"readBehavior": "query"
 							},
 							"sink": {
 								"type": "SqlSink",
 								"writeBatchSize": 10000
 							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"columnMappings": {
-									"AccountId": "AccountId",
-									"ContactId18__c": "ContactId18__c",
-									"Contact_Name__c": "Contact_Name__c",
-									"Contact_Type__c": "Contact_Type__c",
-									"CreatedDate": "CreatedDate",
-									"Salutation": "Salutation",
-									"FirstName": "FirstName",
-									"LastName": "LastName",
-									"Title": "Title",
-									"LeadSource": "LeadSource",
-									"Email": "Email",
-									"OwnerId": "Owner_ID",
-									"LastModifiedDate": "LastModifiedDate"
-								}
-							}
+							"enableStaging": false
 						},
 						"inputs": [
 							{
@@ -3854,7 +3815,7 @@
 							"source": {
 								"type": "SalesforceSource",
 								"query": {
-									"value": "SELECT \nLead_18chr_Id__c,\nMQL_Datestamp__c,\nMTL_Datestamp__c,\nSQL_Datestamp__c,\nStatus,\nCompany,\nLead_Country__c,\nTitle,\nFirstName,\nLastName,\nEmail,\nMQL_Program__c,\nQualified_Out_Reason__c,\nStatus_Reason__c,\nSales_Region__c,\nSub_Region__c,\nConvertedAccountId,\nConvertedContactId,\nCreatedDate,\nOwnerID,\nConvertedOpportunityId,\nLastModifiedDate\n\nFROM Lead\nwhere \nMQL_Datestamp__c!= null or\nMTL_Datestamp__c!= null\n\nwhere CreatedDate >@{activity('Get Last Created Record').output.firstRow.Created}Z OR  LastModifiedDate >@{activity('Get Last Modified Record').output.firstRow.Modified}Z\n\n",
+									"value": "SELECT\nId,\nMQL_Datestamp__c,\nMTL_Datestamp__c,\nStatus,\nCompany,\nLead_Country__c,\nTitle,\nFirstName,\nLastName,\nEmail,\nMQL_Program__c,\nQualified_Out_Reason__c,\nStatus_Reason__c,\nSales_Region__c,\nSub_Region__c,\nConvertedAccountId,\nCreatedDate,\nLastModifiedDate\nFROM Lead\nwhere (CreatedDate >@{activity('Get Last Created Record').output.firstRow.Created}Z OR  LastModifiedDate >@{activity('Get Last Modified Record').output.firstRow.Modified}Z)\nand (MQL_Datestamp__c!=null or MTL_Datestamp__c!=null)\n",
 									"type": "Expression"
 								},
 								"readBehavior": "query"
@@ -3863,34 +3824,7 @@
 								"type": "SqlSink",
 								"writeBatchSize": 10000
 							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"columnMappings": {
-									"Lead_18chr_Id__c": "Lead_18chr_Id",
-									"MQL_Datestamp__c": "MQL_Datestamp",
-									"MTL_Datestamp__c": "MTL_Datestamp",
-									"SQL_Datestamp__c": "SQL_Datestamp",
-									"Status": "Status",
-									"Company": "Company",
-									"Lead_Country__c": "Lead_Country",
-									"Title": "Title",
-									"FirstName": "FirstName",
-									"LastName": "LastName",
-									"Email": "Email",
-									"MQL_Program__c": "MQL_Program",
-									"Qualified_Out_Reason__c": "Qualified_Out_Reason",
-									"Status_Reason__c": "Status_Reason",
-									"Sales_Region__c": "Sales_Region",
-									"Sub_Region__c": "Sub_Region",
-									"ConvertedAccountId": "ConvertedAccountId",
-									"ConvertedContactId": "ConvertedContactId",
-									"ConvertedOpportunityId": "ConvertedOpportunityId",
-									"CreatedDate": "CreatedDate",
-									"OwnerId": "Owner_ID",
-									"LastModifiedDate": "LastModifiedDate"
-								}
-							}
+							"enableStaging": false
 						},
 						"inputs": [
 							{
@@ -4121,44 +4055,14 @@
 						"typeProperties": {
 							"source": {
 								"type": "SalesforceSource",
-								"query": {
-									"value": "SELECT \nLead_18chr_Id__c,\nMQL_Datestamp__c,\nMTL_Datestamp__c,\nSQL_Datestamp__c,\nStatus,\nCompany,\nLead_Country__c,\nTitle,\nFirstName,\nLastName,\nEmail,\nMQL_Program__c,\nQualified_Out_Reason__c,\nStatus_Reason__c,\nSales_Region__c,\nSub_Region__c,\nConvertedAccountId,\nConvertedContactId,\nCreatedDate,\nOwnerID,\nConvertedOpportunityId,\nLastModifiedDate\n\nFROM Lead\nwhere \nMQL_Datestamp__c!= null or\nMTL_Datestamp__c!= null\n\n",
-									"type": "Expression"
-								},
+								"query": "SELECT\nId,\nMQL_Datestamp__c,\nMTL_Datestamp__c,\nStatus,\nCompany,\nLead_Country__c,\nTitle,\nFirstName,\nLastName,\nEmail,\nMQL_Program__c,\nQualified_Out_Reason__c,\nStatus_Reason__c,\nSales_Region__c,\nSub_Region__c,\nConvertedAccountId,\nCreatedDate,\nLastModifiedDate\nFROM Lead\nwhere\nMQL_Datestamp__c!=null or\nMTL_Datestamp__c!=null\n",
 								"readBehavior": "query"
 							},
 							"sink": {
 								"type": "SqlSink",
 								"writeBatchSize": 10000
 							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"columnMappings": {
-									"Lead_18chr_Id__c": "Lead_18chr_Id",
-									"MQL_Datestamp__c": "MQL_Datestamp",
-									"MTL_Datestamp__c": "MTL_Datestamp",
-									"SQL_Datestamp__c": "SQL_Datestamp",
-									"Status": "Status",
-									"Company": "Company",
-									"Lead_Country__c": "Lead_Country",
-									"Title": "Title",
-									"FirstName": "FirstName",
-									"LastName": "LastName",
-									"Email": "Email",
-									"MQL_Program__c": "MQL_Program",
-									"Qualified_Out_Reason__c": "Qualified_Out_Reason",
-									"Status_Reason__c": "Status_Reason",
-									"Sales_Region__c": "Sales_Region",
-									"Sub_Region__c": "Sub_Region",
-									"ConvertedAccountId": "ConvertedAccountId",
-									"ConvertedContactId": "ConvertedContactId",
-									"ConvertedOpportunityId": "ConvertedOpportunityId",
-									"CreatedDate": "CreatedDate",
-									"OwnerId": "Owner_ID",
-									"LastModifiedDate": "LastModifiedDate"
-								}
-							}
+							"enableStaging": false
 						},
 						"inputs": [
 							{
@@ -16775,60 +16679,6 @@
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
-				"structure": [
-					{
-						"name": "AccountId",
-						"type": "String"
-					},
-					{
-						"name": "ContactId18__c",
-						"type": "String"
-					},
-					{
-						"name": "Contact_Name__c",
-						"type": "String"
-					},
-					{
-						"name": "Contact_Type__c",
-						"type": "String"
-					},
-					{
-						"name": "CreatedDate",
-						"type": "String"
-					},
-					{
-						"name": "Salutation",
-						"type": "String"
-					},
-					{
-						"name": "FirstName",
-						"type": "String"
-					},
-					{
-						"name": "LastName",
-						"type": "String"
-					},
-					{
-						"name": "Title",
-						"type": "String"
-					},
-					{
-						"name": "LeadSource",
-						"type": "String"
-					},
-					{
-						"name": "Email",
-						"type": "String"
-					},
-					{
-						"name": "Owner_ID",
-						"type": "String"
-					},
-					{
-						"name": "LastModifiedDate",
-						"type": "String"
-					}
-				],
 				"typeProperties": {
 					"tableName": "[[STG].[Marketing_SFDC_Contact]"
 				}
@@ -24219,96 +24069,6 @@
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
-				"structure": [
-					{
-						"name": "Lead_18chr_Id",
-						"type": "String"
-					},
-					{
-						"name": "MQL_Datestamp",
-						"type": "String"
-					},
-					{
-						"name": "MTL_Datestamp",
-						"type": "String"
-					},
-					{
-						"name": "SQL_Datestamp",
-						"type": "String"
-					},
-					{
-						"name": "Status",
-						"type": "String"
-					},
-					{
-						"name": "Company",
-						"type": "String"
-					},
-					{
-						"name": "Lead_Country",
-						"type": "String"
-					},
-					{
-						"name": "Title",
-						"type": "String"
-					},
-					{
-						"name": "FirstName",
-						"type": "String"
-					},
-					{
-						"name": "LastName",
-						"type": "String"
-					},
-					{
-						"name": "Email",
-						"type": "String"
-					},
-					{
-						"name": "MQL_Program",
-						"type": "String"
-					},
-					{
-						"name": "Qualified_Out_Reason",
-						"type": "String"
-					},
-					{
-						"name": "Status_Reason",
-						"type": "String"
-					},
-					{
-						"name": "Sales_Region",
-						"type": "String"
-					},
-					{
-						"name": "Sub_Region",
-						"type": "String"
-					},
-					{
-						"name": "ConvertedAccountId",
-						"type": "String"
-					},
-					{
-						"name": "ConvertedContactId",
-						"type": "String"
-					},
-					{
-						"name": "ConvertedOpportunityId",
-						"type": "String"
-					},
-					{
-						"name": "CreatedDate",
-						"type": "String"
-					},
-					{
-						"name": "Owner_ID",
-						"type": "String"
-					},
-					{
-						"name": "LastModifiedDate",
-						"type": "String"
-					}
-				],
 				"typeProperties": {
 					"tableName": "[[STG].[Marketing_SFDC_Lead]"
 				}
@@ -29454,60 +29214,6 @@
 				},
 				"annotations": [],
 				"type": "SalesforceObject",
-				"structure": [
-					{
-						"name": "AccountId",
-						"type": "String"
-					},
-					{
-						"name": "ContactId18__c",
-						"type": "String"
-					},
-					{
-						"name": "Contact_Name__c",
-						"type": "String"
-					},
-					{
-						"name": "Contact_Type__c",
-						"type": "String"
-					},
-					{
-						"name": "CreatedDate",
-						"type": "DateTime"
-					},
-					{
-						"name": "Salutation",
-						"type": "String"
-					},
-					{
-						"name": "FirstName",
-						"type": "String"
-					},
-					{
-						"name": "LastName",
-						"type": "String"
-					},
-					{
-						"name": "Title",
-						"type": "String"
-					},
-					{
-						"name": "LeadSource",
-						"type": "String"
-					},
-					{
-						"name": "Email",
-						"type": "String"
-					},
-					{
-						"name": "OwnerId",
-						"type": "String"
-					},
-					{
-						"name": "LastModifiedDate",
-						"type": "DateTime"
-					}
-				],
 				"typeProperties": {
 					"objectApiName": "Contact"
 				}
@@ -29565,96 +29271,6 @@
 				},
 				"annotations": [],
 				"type": "SalesforceObject",
-				"structure": [
-					{
-						"name": "Lead_18chr_Id__c",
-						"type": "String"
-					},
-					{
-						"name": "MQL_Datestamp__c",
-						"type": "DateTime"
-					},
-					{
-						"name": "MTL_Datestamp__c",
-						"type": "DateTime"
-					},
-					{
-						"name": "SQL_Datestamp__c",
-						"type": "DateTime"
-					},
-					{
-						"name": "Status",
-						"type": "String"
-					},
-					{
-						"name": "Company",
-						"type": "String"
-					},
-					{
-						"name": "Lead_Country__c",
-						"type": "String"
-					},
-					{
-						"name": "Title",
-						"type": "String"
-					},
-					{
-						"name": "FirstName",
-						"type": "String"
-					},
-					{
-						"name": "LastName",
-						"type": "String"
-					},
-					{
-						"name": "Email",
-						"type": "String"
-					},
-					{
-						"name": "MQL_Program__c",
-						"type": "String"
-					},
-					{
-						"name": "Qualified_Out_Reason__c",
-						"type": "String"
-					},
-					{
-						"name": "Status_Reason__c",
-						"type": "String"
-					},
-					{
-						"name": "Sales_Region__c",
-						"type": "String"
-					},
-					{
-						"name": "Sub_Region__c",
-						"type": "String"
-					},
-					{
-						"name": "ConvertedAccountId",
-						"type": "String"
-					},
-					{
-						"name": "ConvertedContactId",
-						"type": "String"
-					},
-					{
-						"name": "CreatedDate",
-						"type": "DateTime"
-					},
-					{
-						"name": "OwnerId",
-						"type": "String"
-					},
-					{
-						"name": "ConvertedOpportunityId",
-						"type": "String"
-					},
-					{
-						"name": "LastModifiedDate",
-						"type": "DateTime"
-					}
-				],
 				"typeProperties": {
 					"objectApiName": "Lead"
 				}
