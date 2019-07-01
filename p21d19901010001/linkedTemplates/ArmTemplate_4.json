@@ -7,6 +7,22 @@
 			"metadata": "Data Factory Name",
 			"defaultValue": "p21d19901010001"
 		},
+		"FileShareDelete2_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": ""
+		},
+		"FileShareDelete2_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "CEOCFO/CustomerSupport"
+		},
+		"FileShareDelete3_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": ""
+		},
+		"FileShareDelete3_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "CEOCFO/Finance"
+		},
 		"FileShareDelete4_properties_typeProperties_fileName": {
 			"type": "string",
 			"defaultValue": ""
@@ -76,6 +92,50 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/FileShareDelete2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileShare",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "FileShare",
+				"typeProperties": {
+					"fileName": "[parameters('FileShareDelete2_properties_typeProperties_fileName')]",
+					"folderPath": "[parameters('FileShareDelete2_properties_typeProperties_folderPath')]",
+					"modifiedDatetimeEnd": {
+						"value": "@adddays(pipeline().triggerTime, -30)",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FileShareDelete3')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileShare",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "FileShare",
+				"typeProperties": {
+					"fileName": "[parameters('FileShareDelete3_properties_typeProperties_fileName')]",
+					"folderPath": "[parameters('FileShareDelete3_properties_typeProperties_folderPath')]",
+					"modifiedDatetimeEnd": {
+						"value": "@adddays(pipeline().triggerTime, -30)",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/FileShareDelete4')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -976,189 +1036,6 @@
 					"quoteChar": "\""
 				},
 				"schema": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HR_Termination_Dest')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase_finastra",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "Termination_Date",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Termination_Category",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Number_of_Direct_Reports",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Worker_Type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Location",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Country",
-						"type": "nvarchar"
-					},
-					{
-						"name": "High_Low_Cost",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Org_Layer",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Product",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Product_Family",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Product_Line",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Cost_Centre_ID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Cost_Center_Name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Cost_Center_Hierarchy_Finastra",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Function",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Reporting_Region",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Rec_CRE_TMS",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"tableName": "[[STG].[HR_WORKDAY_Terminations]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/HR_Termination_source')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileShare",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "FileServerLocation",
-						"fileName": {
-							"value": "@concat ('Terminations_' , formatDateTime(utcnow(), 'yyyy'), formatDateTime(utcnow(), 'MM'), formatDateTime(utcnow(), 'dd'),'.csv')",
-							"type": "Expression"
-						},
-						"folderPath": "CEOCFO/HR"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "Termination Date",
-						"type": "String"
-					},
-					{
-						"name": "Termination Category",
-						"type": "String"
-					},
-					{
-						"name": "Number of Direct Reports",
-						"type": "String"
-					},
-					{
-						"name": "Worker Type",
-						"type": "String"
-					},
-					{
-						"name": "Location",
-						"type": "String"
-					},
-					{
-						"name": "Country",
-						"type": "String"
-					},
-					{
-						"name": "High/Low Cost",
-						"type": "String"
-					},
-					{
-						"name": "Org Layer",
-						"type": "String"
-					},
-					{
-						"name": "Product",
-						"type": "String"
-					},
-					{
-						"name": "Product Family",
-						"type": "String"
-					},
-					{
-						"name": "Product Line",
-						"type": "String"
-					},
-					{
-						"name": "Cost Centre ID",
-						"type": "String"
-					},
-					{
-						"name": "Cost Center Name",
-						"type": "String"
-					},
-					{
-						"name": "Cost Center Hierarchy Finastra",
-						"type": "String"
-					},
-					{
-						"name": "Function",
-						"type": "String"
-					},
-					{
-						"name": "Reporting Region",
-						"type": "String"
-					}
-				]
 			},
 			"dependsOn": []
 		}
