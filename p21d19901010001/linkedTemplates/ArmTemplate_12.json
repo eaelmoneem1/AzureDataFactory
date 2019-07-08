@@ -2872,7 +2872,7 @@
 							"source": {
 								"type": "SalesforceSource",
 								"query": {
-									"value": "SELECT \nId\n,AccountId\n,IST_Rep__c\n,MQL_Program__c\n,Product__c\n,Qualify_Out_Reson__c\n,Region__c\n,Sales_Region__c\n,MailingCountry\n,Status__c\n,Sub_Region__c\n,FirstName\n,LastName\n,Email\n,MTL_Datestamp__c\n,MQL_Datestamp__c\n,CreatedDate\n,LastModifiedDate\nFROM Contact \n\n\nwhere CreatedDate >@{activity('Get Last Created Record').output.firstRow.Created}Z OR  LastModifiedDate >@{activity('Get Last Modified Record').output.firstRow.Modified}Z\n\n",
+									"value": "SELECT \nId\n,AccountId\n,IST_Rep__c\n,MQL_Program__c\n,Product__c\n,Qualify_Out_Reson__c\n,Region__c\n,Sales_Region__c\n,MailingCountry\n,Status__c\n,Sub_Region__c\n,FirstName\n,LastName\n,Email\n,MTL_Datestamp__c\n,MQL_Datestamp__c\n,CreatedDate\n,LastModifiedDate\nFROM Contact \n\n\nwhere (CreatedDate >@{activity('Get Last Created Record').output.firstRow.Created}Z OR  LastModifiedDate >@{activity('Get Last Modified Record').output.firstRow.Modified}Z)\nand (MQL_Datestamp__c!=null or MTL_Datestamp__c!=null)\n\n\n",
 									"type": "Expression"
 								},
 								"readBehavior": "query"
@@ -3105,7 +3105,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "SalesforceSource",
-								"query": "SELECT\nId\n,AccountId\n,IST_Rep__c\n,MQL_Program__c\n,Product__c\n,Qualify_Out_Reson__c\n,Region__c\n,Sales_Region__c\n,MailingCountry\n,Status__c\n,Sub_Region__c\n,FirstName\n,LastName\n,Email\n,MTL_Datestamp__c\n,MQL_Datestamp__c\n,CreatedDate\n,LastModifiedDate\n\nFROM Contact \n",
+								"query": "SELECT\nId\n,AccountId\n,IST_Rep__c\n,MQL_Program__c\n,Product__c\n,Qualify_Out_Reson__c\n,Region__c\n,Sales_Region__c\n,MailingCountry\n,Status__c\n,Sub_Region__c\n,FirstName\n,LastName\n,Email\n,MTL_Datestamp__c\n,MQL_Datestamp__c\n,CreatedDate\n,LastModifiedDate\n\nFROM Contact \nwhere\nMQL_Datestamp__c!=null or\nMTL_Datestamp__c!=null",
 								"readBehavior": "query"
 							},
 							"sink": {
