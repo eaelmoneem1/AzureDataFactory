@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceSource",
-						"query": "SELECT\nId\n,AccountId\n,IST_Rep__c\n,MQL_Program__c\n,Product__c\n,Qualify_Out_Reson__c\n,Region__c\n,Sales_Region__c\n,MailingCountry\n,Status__c\n,Sub_Region__c\n,FirstName\n,LastName\n,Email\n,MTL_Datestamp__c\n,MQL_Datestamp__c\n,CreatedDate\n,LastModifiedDate\n\nFROM Contact \n",
+						"query": "SELECT\nId\n,AccountId\n,IST_Rep__c\n,MQL_Program__c\n,Product__c\n,Qualify_Out_Reson__c\n,Region__c\n,Sales_Region__c\n,MailingCountry\n,Status__c\n,Sub_Region__c\n,FirstName\n,LastName\n,Email\n,MTL_Datestamp__c\n,MQL_Datestamp__c\n,CreatedDate\n,LastModifiedDate\n\nFROM Contact \nwhere\nMQL_Datestamp__c!=null or\nMTL_Datestamp__c!=null",
 						"readBehavior": "query"
 					},
 					"sink": {
