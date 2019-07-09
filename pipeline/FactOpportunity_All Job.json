@@ -5,6 +5,8 @@
 			{
 				"name": "Execute Campaign",
 				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "DimSales_SFDC_Campaign_incremental",
@@ -19,10 +21,11 @@
 					{
 						"activity": "Execute Campaign",
 						"dependencyConditions": [
-							"Completed"
+							"Succeeded"
 						]
 					}
 				],
+				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "DimSales_SFDC_FXRate_Conversion_incremental",
@@ -37,10 +40,11 @@
 					{
 						"activity": "FXRate_Conversion",
 						"dependencyConditions": [
-							"Completed"
+							"Succeeded"
 						]
 					}
 				],
+				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "FactOpportunity_All_incremental",
@@ -51,7 +55,8 @@
 		],
 		"folder": {
 			"name": "ETL Jobs"
-		}
+		},
+		"annotations": []
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }
