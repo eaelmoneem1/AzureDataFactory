@@ -2260,7 +2260,7 @@
 							{
 								"activity": "Execute Campaign",
 								"dependencyConditions": [
-									"Completed"
+									"Succeeded"
 								]
 							}
 						],
@@ -2280,7 +2280,7 @@
 							{
 								"activity": "FXRate_Conversion",
 								"dependencyConditions": [
-									"Completed"
+									"Succeeded"
 								]
 							}
 						],
